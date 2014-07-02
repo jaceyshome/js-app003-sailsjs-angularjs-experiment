@@ -127,6 +127,9 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-uglify/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-lesslint');
+  grunt.loadNpmTasks('grunt-coffeelint');
 
   // Project configuration.
   grunt.initConfig({
@@ -198,6 +201,24 @@ module.exports = function (grunt) {
     },
 
     less: {
+      dev: {
+        files: {
+          ".tmp/public/linker/styles/style.css": "src/main.less"
+        },
+        options: {
+          sourceMap: true
+        }
+      },
+      deploy: {
+        files: {
+          ".tmp/public/linker/styles/style.css": "src/main.less"
+        },
+        options: {
+          sourceMap: false,
+          cleancss: true,
+          compress: true
+        }
+      },
       bootstrap: {
         options: {
           paths: ['assets/linker/styles', 'bower_components/bootstrap/less']
@@ -215,7 +236,47 @@ module.exports = function (grunt) {
         ]
       }
     },
-    
+
+    'coffee': {
+      dev:{
+        expand: true,
+        cwd:"assets",
+        src:["**/*.coffee"],
+        dest:".tmp/public/",
+        ext:".js",
+        options:{
+          sourceMap:true,
+          bare:true
+        }
+      },
+      deploy:{
+
+      }
+    },
+
+    coffeelint: {
+      app: "assets/**/*.coffee",
+      options: {
+        force: true,
+        max_line_length: {
+          value: 120
+        }
+      }
+    },
+
+    lesslint: {
+      src: ['assets/styles/styles.less'],
+      options: {
+        imports: ['assets/**/*.less'],
+        csslint: {
+          "unqualified-attributes": false,
+          "adjoining-classes": false,
+          "qualified-headings": false,
+          "unique-headings": false
+        }
+      }
+    },
+
     concat: {
       js: {
         src: jsFilesToInject,
@@ -391,15 +452,12 @@ module.exports = function (grunt) {
 
     watch: {
       api: {
-
         // API files to watch:
         files: ['api/**/*']
       },
       assets: {
-
         // Assets to watch:
         files: ['assets/**/*'],
-
         // When assets are changed:
         tasks: ['compileAssets', 'linkAssets']
       }
@@ -413,10 +471,14 @@ module.exports = function (grunt) {
     'watch'
   ]);
 
+  grunt.registerTask('buildCoffee',['coffee:dev', 'coffeelint']);
+  grunt.registerTask('buildLess',['less:dev', 'lesslint']);
+
   grunt.registerTask('compileAssets', [
+    'buildCoffee',
+    'buildLess',
     'clean:dev',
     'jst:dev',
-    'less',
     'copy:dev'
   ]);
 
@@ -444,7 +506,8 @@ module.exports = function (grunt) {
   grunt.registerTask('prod', [
     'clean:dev',
     'jst:dev',
-    'less',
+    'buildCoffee',
+    'buildLess',
     'copy:dev',
     'copy:prod',
     'concat',
