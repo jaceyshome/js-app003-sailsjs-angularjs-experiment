@@ -1,8 +1,8 @@
 {
-  "name": "sailsjs-angularjs-bootstrap-example",
+  "name": "sails-angular-template",
   "private": true,
-  "version": "0.0.2",
-  "description": "A Sails.js / AngularJS / Twitter Bootstrap example application",
+  "version": "0.0.0",
+  "description": "sails-angular-template",
   "dependencies": {
     "sails": "0.9.16",
     "grunt": "0.4.2",
@@ -27,7 +27,7 @@
   },
   "main": "app.js",
   "repository": "",
-  "author": "Christopher Martin <cgmartin@gmail.com>",
+  "author": "Jake",
   "license": "MIT",
   "devDependencies": {
     "grunt-contrib-less": "~0.8.3"

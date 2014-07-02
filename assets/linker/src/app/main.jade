@@ -1,0 +1,17 @@
+div(data-ng-controller="MainCtrl")
+  div.container(data-ng-hide="true")
+    h2 Initialising application
+    div.progress.progress-striped.active
+      div.progress-bar(style="width:100%")
+  div.container(data-ng-cloak)
+    div(data-ng-hide="ready")
+      h2 Loading data
+      div.progress.progress-striped.active
+        div.progress-bar(style="width:100%")
+    div.initialiseWrapper(data-ng-show="ready")
+      header
+        h1.title 2and2 project
+        div(data-tnt-navigation)
+      div(data-ui-view)
+    div.videoContainer
+      div.videoPlayer(data-tnt-video, data-control="Video")
