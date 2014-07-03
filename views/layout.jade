@@ -18,10 +18,11 @@ html(lang="en")
     // STYLES END
     block styles
     +ie('if lt IE 9')
-      script(src="assets/js/lib/respond/dest/respond.min.js")
+      script(src="/linker/src/lib/respond.min.js")
   body
     block body
 
     // SCRIPTS
-    script(type="text/javascript", src="/linker/js/angular-socket.io.js")
+    
     // SCRIPTS END
+    script(type="text/javascript", data-main="/linker/src/app/main", src="/linker/src/lib/require.js")

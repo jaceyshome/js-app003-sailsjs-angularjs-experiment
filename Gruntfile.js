@@ -40,19 +40,12 @@ module.exports = function (grunt) {
 
   var jsFilesToInject = [
 
-    // Below, as a demonstration, you'll see the built-in dependencies 
-    // linked in the proper order order
-    'linker/js/jquery.js',
-    'linker/js/angular.js',
-    'linker/js/ui-bootstrap.js',
-    'linker/js/ui-bootstrap-tpls.js',
-    'linker/js/socket.io.js',
-    'linker/js/angular-socket.io.js',
-    'linker/js/angular-sails.io.js',
-    'linker/js/app.js',
+    // Below, as a demonstration, you'll see the built-in dependencies
+    // linked in the proper order
+    // 'linker/js/require.js'
 
     // All of the rest of your app scripts imported here
-    'linker/**/*.js'
+    // 'linker/**/*.js'
   ];
 
   /**
@@ -68,7 +61,6 @@ module.exports = function (grunt) {
   var templateFilesToInject = [
     'linker/**/*.html'
   ];
-
 
   /////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////
@@ -137,7 +129,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: './assets',
-            src: ['**/*.!(coffee|less|jade)'],
+            src: ['**/*.!(coffee|less|jade|map)'],
             dest: '.tmp/public'
           },
           {
@@ -152,8 +144,15 @@ module.exports = function (grunt) {
             src: ['**/*'],
             dest: '.tmp/public/linker/fonts'
           },
-          { '.tmp/public/linker/js/socket.io.js':         './bower_components/socket.io-client/dist/socket.io.js' },
-          { '.tmp/public/linker/js/angular-socket.io.js': './bower_components/angular-socket-io/socket.js' }
+          { '.tmp/public/linker/src/lib/respond.min.js': './bower_components/respond/dest/respond.min.js' },
+          { '.tmp/public/linker/src/lib/jquery.js': './bower_components/jquery/dist/jquery.js' },
+          { '.tmp/public/linker/src/lib/angular.js': './bower_components/angular/angular.js' },
+          { '.tmp/public/linker/src/lib/socket.io.js':         './bower_components/socket.io-client/dist/socket.io.js' },
+          { '.tmp/public/linker/src/lib/angular-socket.io.js': './bower_components/angular-socket-io/socket.js' },
+          { '.tmp/public/linker/src/lib/angular-animate.js': './bower_components/angular-animate/angular-animate.js' },
+          { '.tmp/public/linker/src/lib/angular-resource.js': './bower_components/angular-resource/angular-resource.js' },
+          { '.tmp/public/linker/src/lib/angular-sanitize.js': './bower_components/angular-sanitize/angular-sanitize.js' },
+          { '.tmp/public/linker/src/lib/angular-ui-router.js': './bower_components/angular-ui-router/release/angular-ui-router.js' }
         ]
       },
       prod : {

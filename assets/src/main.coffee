@@ -2,17 +2,22 @@ requirejs.config
   waitSeconds: 200
   urlArgs: "bust=" + (new Date()).getTime()
   paths:
-    jquery: "../linker/js/jquery/jquery"
-    bootstrap: "../linker/js/bootstrap/dist/js/bootstrap"
-    angular: "../linker/js/angular/angular"
-    angular_resource: "../linker/js/angular-resource/angular-resource"
-    angular_ui_router: "../linker/js/angular-ui-router/index"
-    angular_sanitize: "../linker/js/angular-sanitize/angular-sanitize"
-    angular_animate: "../linker/js/angular-animate/angular-animate"
+    jquery: "lib/jquery"
+    bootstrap: "lib/bootstrap"
+    socket_io: "lib/socket"
+    angular: "lib/angular"
+    angular_resource: "lib/angular-resource"
+    angular_ui_router: "lib/angular-ui-router"
+    angular_sanitize: "lib/angular-sanitize"
+    angular_animate: "lib/angular-animate"
+    angular_socket_io: "lib/angular-socket.io"
   shim:
     angular:
       deps: ['jquery']
       exports: 'angular'
+    angular_socket_io:
+      deps: ['angular', 'socket_io']
+      exports: 'angular_socket_io'
     bootstrap:
       deps: ['jquery']
       exports: 'bootstrap'
@@ -31,7 +36,9 @@ requirejs.config
 
 define [
   'jquery'
+  'socket_io'
   'angular'
+  'angular_socket_io'
   'angular_resource'
   'angular_ui_router'
   'angular_sanitize'
