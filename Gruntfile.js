@@ -209,7 +209,7 @@ module.exports = function (grunt) {
     less: {
       dev: {
         files: {
-          ".tmp/public/linker/styles/style.css": "src/main.less"
+          ".tmp/public/linker/styles/style.css": "assets/linker/styles/styles.less"
         },
         options: {
           sourceMap: true
@@ -217,7 +217,7 @@ module.exports = function (grunt) {
       },
       deploy: {
         files: {
-          ".tmp/public/linker/styles/style.css": "src/main.less"
+          ".tmp/public/linker/styles/style.css": "assets/linker/styles/styles.less"
         },
         options: {
           sourceMap: false,
@@ -271,9 +271,9 @@ module.exports = function (grunt) {
     },
 
     lesslint: {
-      src: ['assets/styles/styles.less'],
+      src: ['assets/linker/styles/styles.less'],
       options: {
-        imports: ['assets/**/*.less'],
+        imports: ['assets/linker/**/*.less'],
         csslint: {
           "unqualified-attributes": false,
           "adjoining-classes": false,
