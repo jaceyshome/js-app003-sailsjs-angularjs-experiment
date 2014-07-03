@@ -147,6 +147,7 @@ module.exports = function (grunt) {
           { '.tmp/public/linker/src/lib/respond.min.js': './bower_components/respond/dest/respond.min.js' },
           { '.tmp/public/linker/src/lib/jquery.js': './bower_components/jquery/dist/jquery.js' },
           { '.tmp/public/linker/src/lib/angular.js': './bower_components/angular/angular.js' },
+          { '.tmp/public/linker/src/lib/bootstrap.js': './bower_components/bootstrap/dist/js/bootstrap.js' },
           { '.tmp/public/linker/src/lib/socket.io.js':         './bower_components/socket.io-client/dist/socket.io.js' },
           { '.tmp/public/linker/src/lib/angular-socket.io.js': './bower_components/angular-socket-io/socket.js' },
           { '.tmp/public/linker/src/lib/angular-animate.js': './bower_components/angular-animate/angular-animate.js' },
