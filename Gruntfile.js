@@ -27,11 +27,8 @@ module.exports = function (grunt) {
    */
 
   var cssFilesToInject = [
-    'linker/styles/font-awesome.css',
-    'linker/styles/bootstrap.css',
-    'linker/**/*.css'
+    'linker/src/main.css'
   ];
-
 
   /**
    * Javascript files to inject in order
@@ -156,16 +153,12 @@ module.exports = function (grunt) {
             src: ['**/*'],
             dest: '.tmp/public/linker/fonts'
           },
-          { '.tmp/public/linker/js/jquery.js':            './bower_components/jquery/jquery.js' },
           { '.tmp/public/linker/js/socket.io.js':         './bower_components/socket.io-client/dist/socket.io.js' },
-          { '.tmp/public/linker/js/angular.js':           './bower_components/angular/angular.js' },
-          { '.tmp/public/linker/js/ui-bootstrap.js':      './bower_components/angular-bootstrap/ui-bootstrap.js' },
-          { '.tmp/public/linker/js/ui-bootstrap-tpls.js': './bower_components/angular-bootstrap/ui-bootstrap-tpls.js' },
           { '.tmp/public/linker/js/angular-socket.io.js': './bower_components/angular-socket-io/socket.js' }
         ]
       },
       prod : {
-	files : [
+        files : [
           {
             expand: true,
             cwd: './bower_components/font-awesome/fonts/',
@@ -193,7 +186,6 @@ module.exports = function (grunt) {
 
     jst: {
       dev: {
-
         // To use other sorts of templates (mustache), specify the regexp below:
 //        options: {
 //           templateSettings: {
@@ -202,6 +194,31 @@ module.exports = function (grunt) {
 //        },
         files: {
           '.tmp/public/jst.js': templateFilesToInject
+        }
+      }
+    },
+
+    coffee: {
+      dev:{
+        expand: true,
+        cwd:"assets",
+        src:["**/*.coffee"],
+        dest:".tmp/public/",
+        ext:".js",
+        options:{
+          sourceMap:true,
+          bare:true
+        }
+      },
+      deploy:{ }
+    },
+
+    coffeelint: {
+      app: "assets/**/*.coffee",
+      options: {
+        force: true,
+        max_line_length: {
+          value: 120
         }
       }
     },
@@ -240,33 +257,6 @@ module.exports = function (grunt) {
         files: [
           { '.tmp/public/linker/styles/font-awesome.css': 'assets/linker/styles/font-awesome.less' }
         ]
-      }
-    },
-
-    'coffee': {
-      dev:{
-        expand: true,
-        cwd:"assets",
-        src:["**/*.coffee"],
-        dest:".tmp/public/",
-        ext:".js",
-        options:{
-          sourceMap:true,
-          bare:true
-        }
-      },
-      deploy:{
-
-      }
-    },
-
-    coffeelint: {
-      app: "assets/**/*.coffee",
-      options: {
-        force: true,
-        max_line_length: {
-          value: 120
-        }
       }
     },
 
