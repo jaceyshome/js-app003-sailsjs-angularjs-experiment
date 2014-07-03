@@ -27,7 +27,7 @@ module.exports = function (grunt) {
    */
 
   var cssFilesToInject = [
-    'linker/src/main.css'
+    'linker/styles/style.css'
   ];
 
   /**
@@ -54,7 +54,6 @@ module.exports = function (grunt) {
     // All of the rest of your app scripts imported here
     'linker/**/*.js'
   ];
-
 
   /**
    * Client-side HTML templates are injected using the sources below
@@ -226,44 +225,28 @@ module.exports = function (grunt) {
     less: {
       dev: {
         files: {
-          ".tmp/public/linker/styles/style.css": "assets/linker/styles/styles.less"
+          "assets/linker/styles/style.css": "assets/src/main.less"
         },
         options: {
           sourceMap: true
         }
       },
-      deploy: {
+      prod: {
         files: {
-          ".tmp/public/linker/styles/style.css": "assets/linker/styles/styles.less"
+          ".tmp/public/linker/styles/style.css": "assets/src/main.less"
         },
         options: {
           sourceMap: false,
           cleancss: true,
           compress: true
         }
-      },
-      bootstrap: {
-        options: {
-          paths: ['assets/linker/styles', 'bower_components/bootstrap/less']
-        },
-        files: [
-          { '.tmp/public/linker/styles/bootstrap.css': 'assets/linker/styles/bootstrap.less' }
-        ]
-      },
-      fontawesome: {
-        options: {
-          paths: ['assets/linker/styles', 'bower_components/font-awesome/less']
-        },
-        files: [
-          { '.tmp/public/linker/styles/font-awesome.css': 'assets/linker/styles/font-awesome.less' }
-        ]
       }
     },
 
     lesslint: {
-      src: ['assets/linker/styles/styles.less'],
+      src: ['assets/src/main.less'],
       options: {
-        imports: ['assets/linker/**/*.less'],
+        imports: ['assets/src/**/*.less'],
         csslint: {
           "unqualified-attributes": false,
           "adjoining-classes": false,
@@ -302,7 +285,6 @@ module.exports = function (grunt) {
     },
 
     'sails-linker': {
-
       devJs: {
         options: {
           startTag: '<!--SCRIPTS-->',
@@ -473,8 +455,8 @@ module.exports = function (grunt) {
   grunt.registerTask('compileAssets', [
     'buildCoffee',
     'buildLess',
-    'clean:dev',
     'jst:dev',
+    'clean:dev',
     'copy:dev'
   ]);
 
@@ -487,7 +469,6 @@ module.exports = function (grunt) {
     'sails-linker:devStylesJADE',
     'sails-linker:devTplJADE'
   ]);
-
 
   // Build the assets into a web accessible folder.
   // (handy for phone gap apps, chrome extensions, etc.)
