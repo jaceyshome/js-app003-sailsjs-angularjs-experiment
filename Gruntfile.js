@@ -128,9 +128,9 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: './assets',
-            src: ['**/*.!(coffee|less|jade|map)'],
-            dest: '.tmp/public'
+            cwd: './assets/src/',
+            src: ['**/*.js'],
+            dest: '.tmp/public/linker/'
           },
           {
             expand: true,
@@ -144,6 +144,7 @@ module.exports = function (grunt) {
             src: ['**/*'],
             dest: '.tmp/public/linker/fonts'
           },
+          { '.tmp/public/linker/src/lib/require.js': './bower_components/requirejs/require.js' },
           { '.tmp/public/linker/src/lib/respond.min.js': './bower_components/respond/dest/respond.min.js' },
           { '.tmp/public/linker/src/lib/jquery.js': './bower_components/jquery/dist/jquery.js' },
           { '.tmp/public/linker/src/lib/angular.js': './bower_components/angular/angular.js' },
@@ -202,14 +203,24 @@ module.exports = function (grunt) {
         expand: true,
         cwd:"assets",
         src:["**/*.coffee"],
-        dest:".tmp/public/",
+        dest:".tmp/public/linker/",
         ext:".js",
         options:{
           sourceMap:true,
           bare:true
         }
       },
-      deploy:{ }
+      deploy:{
+        expand: true,
+        cwd:"assets",
+        src:["**/*.coffee"],
+        dest:".tmp/public/linker/",
+        ext:".js",
+        options:{
+          sourceMap:true,
+          bare:true
+        }
+      }
     },
 
     coffeelint: {
@@ -435,9 +446,9 @@ module.exports = function (grunt) {
       },
       assets: {
         // Assets to watch:
-        files: ['assets/**/*'],
+        files: ['assets/src/**/*'],
         // When assets are changed:
-        tasks: ['compileAssets', 'linkAssets']
+        tasks: ['watchAssets', 'linkAssets']
       }
     }
   });
@@ -452,11 +463,17 @@ module.exports = function (grunt) {
   grunt.registerTask('buildCoffee',['coffee:dev', 'coffeelint']);
   grunt.registerTask('buildLess',['less:dev', 'lesslint']);
 
-  grunt.registerTask('compileAssets', [
+  grunt.registerTask('watchAssets', [
+    'clean:dev',
     'buildCoffee',
     'buildLess',
-    'jst:dev',
+    'copy:dev'
+  ]);
+
+  grunt.registerTask('compileAssets', [
     'clean:dev',
+    'buildCoffee',
+    'buildLess',
     'copy:dev'
   ]);
 
@@ -473,9 +490,9 @@ module.exports = function (grunt) {
   // Build the assets into a web accessible folder.
   // (handy for phone gap apps, chrome extensions, etc.)
   grunt.registerTask('build', [
+    'clean:build',
     'compileAssets',
     'linkAssets',
-    'clean:build',
     'copy:build'
   ]);
 
