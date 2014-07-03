@@ -78,16 +78,3 @@ define [
           if screen.data.video.autoplay
             Video.play()
 
-    ###
-    $rootScope.$on '$stateChangeStart',(screen, toState, toParams, fromState, fromParams)->
-      screen = Screen.screen
-      console.log "screen", screen
-      Video.pause()
-      Video.seek 0
-      Video.setVisible false
-      if screen.data? and screen.data.video?
-        Video.setVisible true
-        Video.src screen.data.video.src
-        if screen.data.video.autoplay
-          Video.play()
-    ###

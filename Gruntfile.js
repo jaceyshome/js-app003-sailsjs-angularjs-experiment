@@ -142,9 +142,9 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
-            cwd: './assets',
+            cwd: './assets/src/',
             src: ['**/*.jade'],
-            dest: 'views/src'
+            dest: 'views/'
           },
           {
             expand: true,
