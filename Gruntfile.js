@@ -238,7 +238,7 @@ module.exports = function (grunt) {
     less: {
       dev: {
         files: {
-          "assets/linker/styles/style.css": "assets/src/main.less"
+          ".tmp/public/linker/styles/style.css": "assets/src/main.less"
         },
         options: {
           sourceMap: true
