@@ -22,6 +22,6 @@ define [
       controller:"TextCtrl"
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
-    $scope.ready = true
+    $scope.ready = false
 
 
