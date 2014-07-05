@@ -125,19 +125,22 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     copy: {
-      dev: {
-        files: [
-          {
-            expand: true,
-            cwd: './assets/src/',
-            src: ['**/*.js'],
-            dest: '.tmp/public/linker/'
-          },
+      jade:{
+        files:[
           {
             expand: true,
             cwd: './assets/src/',
             src: ['**/*.jade'],
             dest: 'views/'
+        }]
+      },
+      dev: {
+        files: [
+          {
+            expand: true,
+            cwd: './assets/src/',
+            src: ['**/*.!(coffee|less|js|jade)'],
+            dest: '.tmp/public/linker/'
           },
           {
             expand: true,
@@ -182,6 +185,7 @@ module.exports = function (grunt) {
     },
 
     clean: {
+      view:['views/**'],
       dev: ['.tmp/public/**'],
       build: ['www']
     },
@@ -464,18 +468,20 @@ module.exports = function (grunt) {
 
   grunt.registerTask('watchCoffee',['newer:coffee:dev', 'coffeelint']);
   grunt.registerTask('watchLess',['newer:less:dev', 'lesslint']);
+  grunt.registerTask('watchJade',['newer:copy:jade']);
   grunt.registerTask('buildCoffee',['coffee:dev', 'coffeelint']);
   grunt.registerTask('buildLess',['less:dev', 'lesslint']);
+  grunt.registerTask('buildJade',['copy:jade']);
   grunt.registerTask('watchAssets', [
-    'clean:dev',
     'watchCoffee',
     'watchLess',
-    'copy:dev'
+    'watchJade'
   ]);
   grunt.registerTask('buildAssets', [
     'clean:dev',
     'buildCoffee',
     'buildLess',
+    'buildJade',
     'copy:dev'
   ]);
   // Update link/script/template references in `assets` index.html
@@ -497,11 +503,7 @@ module.exports = function (grunt) {
   ]);
   // When sails is lifted in production
   grunt.registerTask('prod', [
-    'clean:dev',
-    'jst:dev',
-    'buildCoffee',
-    'buildLess',
-    'copy:dev',
+    'buildAssets',
     'copy:prod',
     'concat',
     'uglify',
