@@ -129,12 +129,6 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: './assets/src/',
-            src: ['**/*.!(coffee|less|js|jade)'],
-            dest: '.tmp/public/linker/'
-          },
-          {
-            expand: true,
             cwd: './bower_components/font-awesome/fonts/',
             src: ['**/*'],
             dest: '.tmp/public/linker/fonts'
