@@ -36,10 +36,8 @@ requirejs.config
 
 define [
   'angular'
-  'angular_socket_io'
   'angular_resource'
   'angular_ui_router'
-  'angular_sanitize'
   'app/app'
   ], (angular, jquery) ->
   return angular.element(document).ready ->
