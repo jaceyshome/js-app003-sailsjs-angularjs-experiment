@@ -35,16 +35,10 @@ requirejs.config
       exports: 'angular_animate'
 
 define [
-  'jquery'
   'angular'
+  'jquery'
   'socket_io'
   'app/app'
-  ], (angular, app) ->
-  angular.element document.getElementsByTagName("html")[0]
-  angular.element().ready ->
-    angular.resumeBootstrap [app.name]
-    return
-
-#
-#  return angular.element(document).ready ->
-#    angular.bootstrap document, ['app']
+  ], (angular, jquery) ->
+  return angular.element(document).ready ->
+    angular.bootstrap document, ['app']
