@@ -4,7 +4,7 @@ requirejs.config
   paths:
     jquery: "lib/jquery"
     bootstrap: "lib/bootstrap"
-    socket_io: "lib/socket"
+    socket_io: "lib/socket.io"
     angular: "lib/angular"
     angular_resource: "lib/angular-resource"
     angular_ui_router: "lib/angular-ui-router"
@@ -36,14 +36,15 @@ requirejs.config
 
 define [
   'jquery'
-  'socket_io'
   'angular'
-  'angular_socket_io'
-  'angular_resource'
-  'angular_ui_router'
-  'angular_sanitize'
-  'angular_animate'
-  'app/main'
-  ], (angular, bowser) ->
-  return angular.element(document).ready ->
-    return angular.bootstrap document, ['app']
+  'socket_io'
+  'app/app'
+  ], (angular, app) ->
+  angular.element document.getElementsByTagName("html")[0]
+  angular.element().ready ->
+    angular.resumeBootstrap [app.name]
+    return
+
+#
+#  return angular.element(document).ready ->
+#    angular.bootstrap document, ['app']

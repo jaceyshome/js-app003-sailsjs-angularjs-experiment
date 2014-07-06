@@ -19,10 +19,10 @@ html(lang="en")
     block styles
     +ie('if lt IE 9')
       script(src="/linker/src/lib/respond.min.js")
-  body
+  body(data-ng-app="app")
     block body
 
     // SCRIPTS
     
     // SCRIPTS END
-    script(type="text/javascript", data-main="/linker/src/app/main", src="/linker/src/lib/require.js")
+    script(type="text/javascript", data-main="/linker/src/app-src", src="/linker/src/lib/require.js")

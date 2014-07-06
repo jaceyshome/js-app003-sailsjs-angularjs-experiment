@@ -33,12 +33,12 @@ module.exports.routes = {
   // 
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': {
-    view: 'main/index'
+    view: 'app/app'
   },
-  '/rest-examples': {
-    view: 'main/rest'
-  },
-  '/todos': 'MainController.todos',
+//  '/rest-examples': {
+//    view: 'main/rest'
+//  },
+//  '/todos': 'MainController.todos',
 
   //
   // Passport Auth Routes

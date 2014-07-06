@@ -103,13 +103,13 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-watch/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-uglify/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
-
   //----------------------------------------------------------------------------------------------Packages for front end
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-lesslint');
   grunt.loadNpmTasks('grunt-coffeelint');
+  grunt.loadNpmTasks('grunt-requirejs-config');
 
   // ---------------------------------------------------------------------------------------------Project configuration.
   grunt.initConfig({
@@ -145,7 +145,7 @@ module.exports = function (grunt) {
           { '.tmp/public/linker/src/lib/jquery.js': './bower_components/jquery/dist/jquery.js' },
           { '.tmp/public/linker/src/lib/angular.js': './bower_components/angular/angular.js' },
           { '.tmp/public/linker/src/lib/bootstrap.js': './bower_components/bootstrap/dist/js/bootstrap.js' },
-          { '.tmp/public/linker/src/lib/socket.io.js':         './bower_components/socket.io-client/dist/socket.io.js' },
+          { '.tmp/public/linker/src/lib/socket.io.js':         './bower_components/socket.io-client/socket.io.js' },
           { '.tmp/public/linker/src/lib/angular-socket.io.js': './bower_components/angular-socket-io/socket.js' },
           { '.tmp/public/linker/src/lib/angular-animate.js': './bower_components/angular-animate/angular-animate.js' },
           { '.tmp/public/linker/src/lib/angular-resource.js': './bower_components/angular-resource/angular-resource.js' },
@@ -223,7 +223,7 @@ module.exports = function (grunt) {
     less: {
       dev: {
         files: {
-          ".tmp/public/linker/styles/style.css": "assets/src/main.less"
+          ".tmp/public/linker/styles/style.css": "assets/src/app-src.less"
         },
         options: {
           sourceMap: true
@@ -231,7 +231,7 @@ module.exports = function (grunt) {
       },
       prod: {
         files: {
-          ".tmp/public/linker/styles/style.css": "assets/src/main.less"
+          ".tmp/public/linker/styles/style.css": "assets/src/app-src.less"
         },
         options: {
           sourceMap: false,
@@ -241,7 +241,7 @@ module.exports = function (grunt) {
       }
     },
     lesslint: {
-      src: ['assets/src/main.less'],
+      src: ['assets/src/app-src.less'],
       options: {
         imports: ['assets/src/**/*.less'],
         csslint: {
@@ -252,6 +252,20 @@ module.exports = function (grunt) {
         }
       }
     },
+//    requirejs: {
+//      main: {
+//        options: {
+//          baseUrl: "linker/src/app",
+//          mainConfigFile: "linker/src/app/main.js",
+//          name: "main",
+//          wrap: true,
+//          optimize: "uglify2",
+//          out: "bin/assets/js/deploy/main.js",
+//          include: ['../lib/almond/almond.js'],
+//          insertRequire: ['main']
+//        }
+//      }
+//    },
     //----------------------------------------------------------------------------------- clean config
     clean: {
       view:['views/**'],
@@ -439,8 +453,6 @@ module.exports = function (grunt) {
 
   //-----------------------------------------------------------------------------------------------When Sails is lifted:
   grunt.registerTask('default', [
-    'buildAssets',
-    'linkAssets',
     'watch'
   ]);
 
