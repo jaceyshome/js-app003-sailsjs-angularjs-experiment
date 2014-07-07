@@ -103,6 +103,7 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-watch/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-uglify/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
+  grunt.loadTasks(depsPath + '/grunt-angular-templates/tasks');
   //----------------------------------------------------------------------------------------------Packages for front end
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-contrib-less');
@@ -243,6 +244,33 @@ module.exports = function (grunt) {
           "adjoining-classes": false,
           "qualified-headings": false,
           "unique-headings": false
+        }
+      }
+    },
+    //----------------------------------------------------------------------------------------------
+    ngtemplates: {
+      dev: {
+        cwd: "templates",
+        src: "**/*.html",
+        dest: "bin/assets/js/app/templates.js",
+        options: {
+          module: "app",
+          bootstrap: function(module, script) {
+            return "define(['angular'], function() {angular.module('templates', []).run([ '$templateCache', function($templateCache) {" + script + "} ]);});";
+          },
+          htmlmin: {
+            collapseBooleanAttributes: true,
+            collapseWhitespace: true,
+            removeAttributeQuotes: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true
+          },
+          url: function(url) {
+            return url.replace('.html', '');
+          }
         }
       }
     },
