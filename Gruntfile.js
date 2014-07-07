@@ -103,29 +103,21 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-watch/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-uglify/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
-  grunt.loadTasks(depsPath + '/grunt-angular-templates/tasks');
   //----------------------------------------------------------------------------------------------Packages for front end
   grunt.loadNpmTasks('grunt-newer');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-lesslint');
   grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-requirejs-config');
+  grunt.loadNpmTasks('grunt-angular-templates');
 
   // ---------------------------------------------------------------------------------------------Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
     copy: {
-      jade:{
-        files:[
-          {
-            expand: true,
-            cwd: './assets/src/',
-            src: ['**/*.jade'],
-            dest: 'views/'
-        }]
-      },
       dev: {
         files: [
           {
@@ -247,12 +239,37 @@ module.exports = function (grunt) {
         }
       }
     },
+    jade: {
+      dev: {
+        expand: true,
+        cwd: "assets/src",
+        src: ["**/*.jade"],
+        dest: "templates/",
+        ext: ".html",
+        options: {
+          pretty: true
+        }
+      },
+      prod: {
+        expand: true,
+        cwd: "assets/src",
+        src: ["**/*.jade"],
+        dest: "templates/",
+        ext: ".html",
+        options: {
+          pretty: false,
+          data: {
+            deploy: true
+          }
+        }
+      }
+    },
     //----------------------------------------------------------------------------------------------
     ngtemplates: {
       dev: {
-        cwd: "templates",
-        src: "**/*.html",
-        dest: "bin/assets/js/app/templates.js",
+        cwd:"templates",
+        src:"**/*.html",
+        dest: ".tmp/public/linker/src/templates.js",
         options: {
           module: "app",
           bootstrap: function(module, script) {
@@ -290,6 +307,7 @@ module.exports = function (grunt) {
 //    },
     //----------------------------------------------------------------------------------- clean config
     clean: {
+      templates:["templates"],
       dev: ['.tmp/public/**'],
       build: ['www']
     },
@@ -467,10 +485,10 @@ module.exports = function (grunt) {
   //----------------------------------------------------------------------------------------------------------base tasks
   grunt.registerTask('watchCoffee',['newer:coffee:dev', 'coffeelint']);
   grunt.registerTask('watchLess',['newer:less:dev', 'lesslint']);
-  grunt.registerTask('watchJade',['']);
+  grunt.registerTask('watchJade',['jade:dev','ngtemplates', 'clean:templates']);
   grunt.registerTask('buildCoffee',['coffee:dev', 'coffeelint']);
   grunt.registerTask('buildLess',['less:dev', 'lesslint']);
-  grunt.registerTask('buildJade',['']);
+  grunt.registerTask('buildJade',['jade:dev','ngtemplates', 'clean:templates']);
 
   //-----------------------------------------------------------------------------------------------When Sails is lifted:
   grunt.registerTask('default', [
