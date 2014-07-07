@@ -1,3 +1,9 @@
-h1 User Signup Form
+h2 User Signup Form
 div.userState
-
+  form.form-signin(action="/user/create", method="POST")
+  input.form-control(type="text", placeholder="your name", name="name")
+  input.form-control(type="text", placeholder="email address", name="email")
+  input.form-control(type="text", placeholder="password", name="password")
+  input.form-control(type="text", placeholder="password confirmation", name="confirmation")
+  input(type="hidden", name="_csrf" value="<%=_csrf%>")
+  input.btn.btn-lg.btn-primary.btn-block(type="submit", value="Create Account")

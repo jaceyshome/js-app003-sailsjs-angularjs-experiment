@@ -50,9 +50,6 @@ module.exports.routes = {
   '/logout':     'PassportAuthController.logout',
   '/protected':  'PassportAuthController.protected'
 
-
-
-
   /*
   // But what if you want your home page to display
   // a signup form located at `views/user/signup.ejs`?
