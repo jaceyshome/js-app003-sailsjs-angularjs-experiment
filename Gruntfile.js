@@ -262,7 +262,6 @@ module.exports = function (grunt) {
 //    },
     //----------------------------------------------------------------------------------- clean config
     clean: {
-      view:['views/**'],
       dev: ['.tmp/public/**'],
       build: ['www']
     },
@@ -440,10 +439,10 @@ module.exports = function (grunt) {
   //----------------------------------------------------------------------------------------------------------base tasks
   grunt.registerTask('watchCoffee',['newer:coffee:dev', 'coffeelint']);
   grunt.registerTask('watchLess',['newer:less:dev', 'lesslint']);
-  grunt.registerTask('watchJade',['newer:copy:jade']);
+  grunt.registerTask('watchJade',['']);
   grunt.registerTask('buildCoffee',['coffee:dev', 'coffeelint']);
   grunt.registerTask('buildLess',['less:dev', 'lesslint']);
-  grunt.registerTask('buildJade',['copy:jade']);
+  grunt.registerTask('buildJade',['']);
 
   //-----------------------------------------------------------------------------------------------When Sails is lifted:
   grunt.registerTask('default', [
