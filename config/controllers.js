@@ -30,7 +30,6 @@ module.exports.controllers = {
    * logic in the form of a JSON API, including support for sort, pagination, and filtering.
   */
   blueprints: {
-
     /**
      * `actions`
      *

@@ -16,9 +16,16 @@
  */
 
 module.exports = {
-  'new': function(req,res){
-     res.view();
+  schema: true, //only save attributes' key value to next step(database),
+  // show away other parameters like _csrf
+  attributes: {
+    name:{type:"string", required: true},
+    title:{type:"string"},
+    email:{type:"string", email:true, required: true},
+    encryptedPassword:{type:"string"}
   },
+
+
   
 
 
