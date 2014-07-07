@@ -9,5 +9,5 @@ define [
   module.config ($stateProvider)->
     $stateProvider.state "home",
       templateUrl: "app/states/home/home"
-      url: "/home"
+      url: "/"
       controller:"HomeCtrl"
