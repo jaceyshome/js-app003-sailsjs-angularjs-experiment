@@ -1,4 +1,4 @@
-extends ../layout
+extends layout
 block body
 
   div(data-ng-controller="MainCtrl")
@@ -13,6 +13,6 @@ block body
           div.progress-bar(style="width:100%")
       div.initialiseWrapper(data-ng-show="ready")
         header
-          h1.title Hello World
+          h1.title Main Ctrl
           div(data-tnt-navigation)
         div(data-ui-view)
