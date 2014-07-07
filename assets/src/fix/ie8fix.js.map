@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "ie8fix.js",
+  "sourceRoot": "..\\..\\..\\..\\..\\assets\\src\\fix\\",
+  "sources": [
+    "ie8fix.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,SAAS,CAAC,MAAV,CACE;AAAA,EAAA,WAAA,EAAa,GAAb;AAAA,EACA,OAAA,EAAS,OAAA,GAAU,CAAK,IAAA,IAAA,CAAA,CAAL,CAAY,CAAC,OAAb,CAAA,CADnB;AAAA,EAEA,KAAA,EACE;AAAA,IAAA,QAAA,EAAS,6BAAT;GAHF;CADF,CAAA,CAAA;;AAAA,MAKA,CAAO,CACL,UADK,CAAP,EAEK,SAAA,GAAA,CAFL,CALA,CAAA"
+}

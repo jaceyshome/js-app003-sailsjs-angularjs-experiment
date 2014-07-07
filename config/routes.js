@@ -35,6 +35,8 @@ module.exports.routes = {
   '/': {
     view: 'app'
   },
+  '/user':{view:'app'},
+  '/home':{view:'app'},
 //  '/rest-examples': {
 //    view: 'main/rest'
 //  },
