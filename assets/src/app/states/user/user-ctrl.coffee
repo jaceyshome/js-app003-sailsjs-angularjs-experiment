@@ -4,13 +4,20 @@ define [
 ], ->
   module = angular.module 'app.states.user'
   module.controller 'UserCtrl', ($scope, UserCreate) ->
-    console.log "user ctrl"
+    $scope.user = []
 
-    $scope.createUser = ->
+    init = ->
+      console.log "user controller"
+
+    $scope.createUser = (user)->
       data =
-        name: 'stacey1'
-        email: 'stacey1@gmail.com'
-        encryptedPassword: 'asdasd21321'
+        name: user.name
+        email: user.email
+        encryptedPassword: user.encryptedPassword
+      #      data =
+#        name: 'stacey1'
+#        email: 'stacey1@gmail.com'
+#        encryptedPassword: 'asdasd21321'
 
       UserCreate.save(data, (result)->
         console.log "success", result

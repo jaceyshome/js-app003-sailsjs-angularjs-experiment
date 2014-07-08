@@ -8,5 +8,5 @@ div.userState
     input.form-control(type="text", placeholder="password", name="encryptedPassword",
     data-ng-model="user.encryptedPassword")
     input.form-control(type="text", placeholder="password confirmation",
-    name="confirmation", data-ng-model="user.encryptedPassword")
-    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="createUser()", href="javascript:void(0)") Create Account
+    name="confirmation", data-ng-model="user.confirmation")
+    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="createUser(user)", href="javascript:void(0)") Create Account
