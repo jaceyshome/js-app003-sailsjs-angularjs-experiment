@@ -4,6 +4,7 @@ define [
   'templates'
 ], ->
   module = angular.module 'app.states.user', [
+    'app.states.user.service'
     'ui.router'
     'templates'
   ]
