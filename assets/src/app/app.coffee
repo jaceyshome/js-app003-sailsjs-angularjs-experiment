@@ -3,6 +3,7 @@ define [
   'angular_ui_router'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
+  'common/csrf/csrf'
 ], ->
   module = angular.module 'app', [
     'ui.router'
