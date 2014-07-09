@@ -7,11 +7,19 @@
  */
 
 module.exports = {
+  schema: true, //schema only save the attributes define below, will show others away
 
   attributes: {
     name:{type:'string', required:true},
     email:{type:'string', email:true},
     encryptedPassword:{type:'string', required:true}
-  }
+//    toJSON: function(){
+//      var obj = this.toObject();
+//      delete obj.encryptedPassword;
+//      delete obj.confirmation;
+//      delete obj._csrf;
+//      return obj;
+//    }
 
+  }
 };

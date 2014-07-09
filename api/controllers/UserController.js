@@ -16,19 +16,6 @@
  */
 
 module.exports = {
-  schema: true, //only save attributes' key value to next step(database),
-  // show away other parameters like _csrf
-  attributes: {
-    name:{type:"string", required: true},
-    title:{type:"string"},
-    email:{type:"string", email:true, required: true},
-    encryptedPassword:{type:"string"}
-  },
-
-
-  
-
-
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)

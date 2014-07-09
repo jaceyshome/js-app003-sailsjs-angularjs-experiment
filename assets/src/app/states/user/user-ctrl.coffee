@@ -14,6 +14,7 @@ define [
         name: user.name
         email: user.email
         encryptedPassword: user.encryptedPassword
+        confirmation: user.confirmation
 
       CSRF.get((result)->
         data._csrf = result._csrf
