@@ -8,6 +8,7 @@ define [
     'ui.router'
     'templates'
     'common.csrf.service'
+    'common.utility'
   ]
 
   module.config ($stateProvider)->

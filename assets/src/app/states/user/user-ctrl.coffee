@@ -3,7 +3,7 @@ define [
   'app/states/user/user-service'
 ], ->
   module = angular.module 'app.states.user'
-  module.controller 'UserCtrl', ($scope, UserCreate, CSRF) ->
+  module.controller 'UserCtrl', ($scope, UserCreate, CSRF, Utility) ->
     $scope.user = []
 
     init = ->
@@ -20,8 +20,11 @@ define [
         data._csrf = result._csrf
         UserCreate.save(data, (result)->
           console.log "success", result
+        , (err)->
+          Utility.handleServerError(err)
         )
       )
 
+    init()
 
 
