@@ -20,22 +20,18 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
+//  "*":true,
+
   create:function(req,res,next){
-    //User is from User model
-    User.create(req.params.all(),function userCreated(err, user){
+    User.create(req.params.all(), function(err, user){
       if(err){
-        console.log("err", err);
-        req.session.flash = {
-          err:err
-        };
         return next(err);
       }
       res.json(user);
-      req.session.flash = {};
     });
   },
 
+
   _config: {}
 
-  
 };

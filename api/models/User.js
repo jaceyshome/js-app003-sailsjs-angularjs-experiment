@@ -8,8 +8,6 @@
 
 module.exports = {
   schema: true, //schema only save the attributes define below, will show others away
-
-  //TODO validation user attributes
   //TODO encrypted password
   attributes: {
     name:{type:'string', required:true},
@@ -22,6 +20,5 @@ module.exports = {
 //      delete obj._csrf;
 //      return obj;
 //    }
-
   }
 };
