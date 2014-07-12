@@ -37,6 +37,7 @@ module.exports.routes = {
   },
   '/user':{view:'app'},
   '/home':{view:'app'},
+  '/signup':{view:'app'},
 //  '/rest-examples': {
 //    view: 'main/rest'
 //  },

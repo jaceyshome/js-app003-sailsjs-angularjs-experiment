@@ -30,8 +30,6 @@ module.exports = {
       res.json(user);
     });
   },
-
-
   _config: {}
 
 };

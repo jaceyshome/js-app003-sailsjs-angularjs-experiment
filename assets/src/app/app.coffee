@@ -4,18 +4,20 @@ define [
   'bootstrap'
   'jquery'
   'common/utility/utility'
+  'common/csrf/csrf'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
-  'common/csrf/csrf'
+  'app/states/signup/signup-ctrl'
 ], ->
   module = angular.module 'app', [
     'ui.router'
     'app.states.home'
     'app.states.user'
+    'app.states.signup'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/signup')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
     $scope.ready = true
