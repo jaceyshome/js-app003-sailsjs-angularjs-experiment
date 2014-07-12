@@ -137,8 +137,7 @@ module.exports = function (grunt) {
           { '.tmp/public/linker/src/lib/angular-animate.js': './bower_components/angular-animate/angular-animate.js' },
           { '.tmp/public/linker/src/lib/angular-resource.js': './bower_components/angular-resource/angular-resource.js' },
           { '.tmp/public/linker/src/lib/angular-sanitize.js': './bower_components/angular-sanitize/angular-sanitize.js' },
-          { '.tmp/public/linker/src/lib/angular-ui-router.js': './bower_components/angular-ui-router/release/angular-ui-router.js' },
-          { '.tmp/public/linker/src/lib/jq-bootstrap-validation.js': './bower_components/jqBootstrapValidation/src/jqBootstrapValidation.js' }
+          { '.tmp/public/linker/src/lib/angular-ui-router.js': './bower_components/angular-ui-router/release/angular-ui-router.js' }
         ]
       },
       prod : {
@@ -486,10 +485,10 @@ module.exports = function (grunt) {
   //----------------------------------------------------------------------------------------------------------base tasks
   grunt.registerTask('watchCoffee',['newer:coffee:dev', 'coffeelint']);
   grunt.registerTask('watchLess',['newer:less:dev', 'lesslint']);
-  grunt.registerTask('watchJade',['jade:dev','ngtemplates','clean:templates']);
+  grunt.registerTask('watchJade',['jade:dev','ngtemplates']);
   grunt.registerTask('buildCoffee',['coffee:dev', 'coffeelint']);
   grunt.registerTask('buildLess',['less:dev', 'lesslint']);
-  grunt.registerTask('buildJade',['jade:dev','ngtemplates', 'clean:templates']);
+  grunt.registerTask('buildJade',['clean:templates','jade:dev','ngtemplates', 'clean:templates']);
 
   //-----------------------------------------------------------------------------------------------When Sails is lifted:
   grunt.registerTask('default', [
