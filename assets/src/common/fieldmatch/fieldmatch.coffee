@@ -1,30 +1,22 @@
 define [
   'angular'
 ], ->
-  directiveId = 'fieldMatch'
   module = angular.module 'common.fieldmatch.directive', []
-  module.directive directiveId, ($parse) ->
-    directive = {
-      link: link
-      restrict: "A"
-      require: "?ngModel"
-    }
-    link = ($scope, element, attrs, ctrl) ->
-      password = null
+  module.directive 'fieldMatch', ($parse) ->
+    scope:{}
+    restrict: "A"
+    require: "?ngModel"
+    link: ($scope, element, attrs, ctrl) ->
       init = ->
-
+        console.log "init field match"
         if !ctrl then return #if ngModel is not defined, do nothing
-        password = $parse(attrs[directiveId])
         ctrl.$parsers.unshift(validator)
         ctrl.$formatters.push(validator)
-        attrs.$observe(directiveId, ()->
+        attrs.$observe('fieldMatch', ()->
           validator(ctrl.$viewValue)
         )
       validator = (val)->
-        console.log "here"
-        ctrl.$setValidity('match', (val is password($scope)))
+        ctrl.$setValidity('match', (val is attrs['fieldMatch']))
         val
 
       init()
-
-    directive

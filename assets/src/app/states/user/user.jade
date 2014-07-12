@@ -1,12 +1,28 @@
 h2 User Signup Form
 div.userState
-  form.form-signin
-    input.form-control(type="text", placeholder="your name", name="name",
-    data-ng-model="user.name")
-    input.form-control(type="text", placeholder="email address", name="email",
-    data-ng-model="user.email")
-    input.form-control(type="text", placeholder="password", name="encryptedPassword",
-    data-ng-model="user.encryptedPassword")
-    input.form-control(type="text", placeholder="password confirmation",
-    name="confirmation", data-ng-model="user.confirmation")
-    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="createUser(user)", href="javascript:void(0)") Create Account
+  form.form-signin(name="signInForm")
+    div.form-group(data-ng-class="{'has-error': signInForm.name.$invalid && !signInForm.name.$pristine}")
+      label Name
+      input.form-control(type="text", placeholder="your name", name="name", required,
+      data-ng-model="user.name", maxlength="50")
+      p.error(data-ng-show="signInForm.name.$invalid && !signInForm.name.$pristine") Required.
+
+    div.form-group(data-ng-class="{'has-error': signInForm.email.$invalid && !signInForm.email.$pristine}")
+      label Email
+      input.form-control(type="email", placeholder="email address", name="email",
+      data-ng-model="user.email", maxlength="50")
+      p.error(data-ng-show="signInForm.email.$invalid && !signInForm.email.$pristine") Enter a valid email.
+
+    div.form-group(data-ng-class="{'has-error': signInForm.password.$invalid && !signInForm.password.$pristine}")
+      label Password
+      input.form-control(type="password", placeholder="password", name="password", required
+      data-ng-model="user.password", maxlength="50")
+      p.error(data-ng-show="signInForm.password.$invalid && !signInForm.password.$pristine") Required.
+
+    div.form-group(data-ng-class="{'has-error': (signInForm.confirmPassword.$invalid || signInForm.confirmPassword.$error.match) && !signInForm.confirmPassword.$pristine}")
+      label Confirm password
+      input.form-control(type="password", placeholder="confirm password", name="confirmPassword", required
+      data-ng-model="user.confirmPassword", data-field-match="{{user.password}}", maxlength="50")
+      p.error(data-ng-show="signInForm.confirmPassword.$error.match && !signInForm.confirmPassword.$pristine") Password dosen't match
+
+    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="createUser(user)", href="javascript:void(0);") Create Account

@@ -2,6 +2,7 @@ define [
   'angular'
   'angular_ui_router'
   'templates'
+  'common/fieldmatch/fieldmatch'
 ], ->
   module = angular.module 'app.states.user', [
     'app.states.user.service'
@@ -9,6 +10,7 @@ define [
     'templates'
     'common.csrf.service'
     'common.utility'
+    'common.fieldmatch.directive'
   ]
 
   module.config ($stateProvider)->
