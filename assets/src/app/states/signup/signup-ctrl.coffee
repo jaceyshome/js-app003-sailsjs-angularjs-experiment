@@ -2,7 +2,7 @@ define [
   'app/states/signup/signup-module'
   'app/states/signup/signup-service'
 ], ->
-  module = angular.module 'app.states.signup', []
+  module = angular.module 'app.states.signup'
   module.controller 'SignupCtrl', ($scope, SignupService, CSRF, Utility) ->
     #-------------------------------------------------------------scope variables
     $scope.user = []
@@ -29,7 +29,7 @@ define [
         password: user.password
       CSRF.get((result)->
         data._csrf = result._csrf
-        Signup.save(data, (result)->
+        SignupService.save(data, (result)->
           console.log "success", result
         , (err)->
           Utility.handleServerError(err)

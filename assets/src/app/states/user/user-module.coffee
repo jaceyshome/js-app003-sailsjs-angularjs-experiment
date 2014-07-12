@@ -15,6 +15,6 @@ define [
 
   module.config ($stateProvider)->
     $stateProvider.state "user",
-      templateUrl: "app/states/user/user"
+      templateUrl: "app/states/user/userform"
       url: "/user"
       controller: "UserCtrl"

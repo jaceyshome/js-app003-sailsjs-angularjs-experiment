@@ -17,7 +17,7 @@ define [
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
-    $urlRouterProvider.otherwise('/signup')
+    $urlRouterProvider.otherwise('/')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
     $scope.ready = true
