@@ -14,7 +14,7 @@ module.exports = {
   attributes: {
     name:{type:'string', required:true},
     email:{type:'string', email:true},
-    encryptedPassword:{type:'string', required:true}
+    password:{type:'string', required:true}
 //    toJSON: function(){
 //      var obj = this.toObject();
 //      delete obj.encryptedPassword;

@@ -9,12 +9,21 @@ define [
     init = ->
       console.log "user controller"
 
+    validateUser = (user)->
+      msg = ''
+      msg += 'name is required' unless user.name
+      msg += 'password is required' unless user.password
+      if user.password? isnt user.confirmPassword?
+        msg += 'confirm password does not match password'
+      if msg then alert msg
+      return !msg
+
     $scope.createUser = (user)->
+      return unless validateUser(user)
       data =
         name: user.name
         email: user.email
-        encryptedPassword: user.encryptedPassword
-        confirmation: user.confirmation
+        password: user.password
 
       CSRF.get((result)->
         data._csrf = result._csrf
