@@ -3,13 +3,17 @@ define [
   'app/states/user/user-service'
 ], ->
   module = angular.module 'app.states.user'
-  module.controller 'UserListCtrl', ($scope, CSRF, Utility, UsersData) ->
+  module.controller 'UserListCtrl', ($scope, $state, CSRF, Utility, UsersData, UserService) ->
+    #------------------------------------------------------------public functions
     $scope.users = UsersData
 
+    #------------------------------------------------------------private functions
     init = ->
-      console.log "users", $scope.users
 
 
+    #-------------------------------------------------------------scope functions
+    $scope.showUser = (user)->
+      $state.go("user.details", {id: user.id} )
 
     #-------------------------------------------------------------------- init()
     init()

@@ -8,17 +8,13 @@ define [
   'common/csrf/csrf'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
-  'app/states/user/list/list-ctrl'
-  'app/states/user/detail/detail-ctrl'
   'app/states/signup/signup-ctrl'
 ], ->
   module = angular.module 'app', [
     'ui.router'
     'app.states.home'
-    'app.states.signup'
     'app.states.user'
-    'app.states.user.list'
-    'app.states.user.detail'
+    'app.states.signup'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)

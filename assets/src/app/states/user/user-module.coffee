@@ -11,6 +11,8 @@ define [
     'common.utility'
     'common.fieldmatch.directive'
     'app.states.user.service'
+    'app.states.user.list'
+    'app.states.user.details'
   ]
 
   module.config ($stateProvider)->

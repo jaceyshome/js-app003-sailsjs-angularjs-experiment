@@ -10,10 +10,10 @@ define [
   appModule.factory "UserService", ($http, $q, CSRF) ->
     #----------------------------------------------------------------------private variables
     users = null
-    user = null
 
     #----------------------------------------------------------------------public variables
     service = {}
+    service.currentUser = null
 
     #----------------------------------------------------------------------public functions
     service.listUsers = ()->
@@ -22,10 +22,8 @@ define [
       else
         $http.get("#{config.baseUrl}/user/all").then (result) -> users = result.data
 
-    service.getUser = (id)->
-      if user?.id is id
-        return user
-      else
-        $http.get("#{config.baseUrl}/user/detail/#{{id}}").then (result) -> user = result.data
+    service.getUserDetail = (id)->
+      $http.get("#{config.baseUrl}/user/specifics/#{id}").then (result) -> service.currentUser = result.data
+
     #-----------------------------------------------------------------------return object
     service

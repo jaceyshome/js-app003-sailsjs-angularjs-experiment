@@ -3,7 +3,7 @@ define [
   'angular_ui_router'
   'templates'
 ], ->
-  module = angular.module 'app.states.user.list', [
+  module = angular.module 'app.states.user.details', [
     'ui.router'
     'templates'
     'common.csrf'
@@ -12,17 +12,17 @@ define [
   ]
 
   module.config ($stateProvider)->
-    $stateProvider.state "user.list",
+    $stateProvider.state "user.details",
       parent: 'user'
-      url: "/list"
+      url: "/details/{id:[0-9]+}"
       views:
         'userChildView@user':
-          templateUrl: "app/states/user/list/list"
-          controller: "UserListCtrl"
+          templateUrl: "app/states/user/details/details"
+          controller: "UserDetailsCtrl"
       resolve:
-        UsersData: ($q, UserService) ->
+        UserData: ($q, $stateParams, UserService) ->
           deferred = $q.defer()
-          UserService.listUsers()
+          UserService.getUserDetail($stateParams.id)
           .then (result)->
             deferred.resolve result
           .catch ->

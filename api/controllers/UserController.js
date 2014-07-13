@@ -28,7 +28,7 @@ module.exports = {
       res.json(user);
     });
   },
-  detail:function(req,res,next){
+  specifics:function(req,res,next){
     User.findOne(req.param('id'), function foundUser(err, user){
       if(err || !user){return next(err);}
       res.json(user);
