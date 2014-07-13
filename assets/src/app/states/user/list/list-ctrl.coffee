@@ -1,10 +1,10 @@
 define [
   'angular'
-  'app/states/user/detail/detail-module'
-  'app/states/user/detail/detail-resource'
+  'app/states/user/list/list-module'
+  'app/states/user/list/list-resource'
 ], ->
-  module = angular.module 'app.states.user.detail'
-  module.controller 'UserDetailCtrl', ($scope, UserDetailResource) ->
+  module = angular.module 'app.states.user.list'
+  module.controller 'UserListCtrl', ($scope) ->
 
     #-------------------------------------------------------------private variables
 
@@ -13,8 +13,7 @@ define [
     #-------------------------------------------------------------private functions
 
     init = ()->
-      console.log "user detail page"
-
+      undefined
     #------------------------------------------------------------public functions
 
     #-----------------------------------------------------------------------init()

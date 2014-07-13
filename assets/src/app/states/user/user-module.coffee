@@ -10,7 +10,7 @@ define [
     'common.csrf'
     'common.utility'
     'common.fieldmatch.directive'
-    'app.states.user.service'
+    'app.states.user.list.resource'
   ]
 
   module.config ($stateProvider)->

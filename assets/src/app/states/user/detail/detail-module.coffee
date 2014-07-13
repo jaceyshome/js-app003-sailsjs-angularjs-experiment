@@ -8,7 +8,7 @@ define [
     'templates'
     'common.csrf'
     'common.utility'
-    'common.user.detail.service'
+    'app.states.user.detail.resource'
   ]
 
   module.config ($stateProvider)->

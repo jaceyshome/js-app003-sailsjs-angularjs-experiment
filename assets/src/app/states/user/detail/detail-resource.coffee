@@ -3,8 +3,8 @@ define [
   'angular_resource'
   'app/config'
 ], (angular, angular_resource, config) ->
-  appModule = angular.module 'app.states.user.service',['ngResource']
-  appModule.factory "UserService", ["$resource", ($resource) ->
+  appModule = angular.module 'app.states.user.detail.resource', ['ngResource']
+  appModule.factory "UserDetailResource", ["$resource", ($resource) ->
     $resource "#{config.baseUrl}/user/detail", {},
       get:
         method: "GET"
