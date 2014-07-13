@@ -1,5 +1,6 @@
 define [
   'angular'
+  'app/states/user/detail/detail-ctrl'
   'app/states/user/detail/detail-module'
   'app/states/user/detail/detail-resource'
 ], ->

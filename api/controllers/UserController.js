@@ -24,22 +24,21 @@ module.exports = {
 
   create:function(req,res,next){
     User.create(req.params.all(), function userCreated(err, user){
-      if(err){
-        return next(err);
-      }
+      if(err){return next(err);}
       res.json(user);
     });
   },
   detail:function(req,res,next){
     User.findOne(req.param('id'), function foundUser(err, user){
-      if(err){
-        return next(err);
-      }
-      if(!user){
-        return next();
-      }
+      if(err || !user){return next(err);}
       res.json(user);
     });
+  },
+  list:function(req,res,next){
+    User.find(function foundUsers(err, users){
+      if(err || !users){return next(err);}
+      res.json(users);
+    })
   },
   _config: {}
 

@@ -9,7 +9,6 @@ define [
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/user/detail/detail-ctrl'
-  'app/states/user/list/list-ctrl'
   'app/states/signup/signup-ctrl'
 ], ->
   module = angular.module 'app', [
@@ -18,11 +17,10 @@ define [
     'app.states.signup'
     'app.states.user'
     'app.states.user.detail'
-    'app.states.user.list'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
-    $urlRouterProvider.otherwise('/user/detail')
+    $urlRouterProvider.otherwise('/user')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
     $scope.ready = true
