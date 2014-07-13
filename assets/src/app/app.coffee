@@ -8,6 +8,7 @@ define [
   'common/csrf/csrf'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
+  'app/states/user/list/list-ctrl'
   'app/states/user/detail/detail-ctrl'
   'app/states/signup/signup-ctrl'
 ], ->
@@ -16,6 +17,7 @@ define [
     'app.states.home'
     'app.states.signup'
     'app.states.user'
+    'app.states.user.list'
     'app.states.user.detail'
   ]
   module.config ($locationProvider, $urlRouterProvider)->

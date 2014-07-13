@@ -15,15 +15,6 @@ define [
 
   module.config ($stateProvider)->
     $stateProvider.state "user",
-      templateUrl: "app/states/user/list/list"
+      templateUrl: "app/states/user/user"
       url: "/user"
       controller: "UserCtrl"
-      resolve:
-        UsersData: ($q, UserService) ->
-          deferred = $q.defer()
-          UserService.listUsers()
-          .then (result)->
-              deferred.resolve result
-          .catch ->
-              deferred.resolve undefined
-          deferred.promise

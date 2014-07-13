@@ -2,9 +2,12 @@ define [
   'angular'
   'angular_resource'
   'app/config'
-], (angular,angular_resource, config) ->
-  appModule = angular.module 'app.states.user.service', []
-  appModule.factory "UserService", ($http, $q) ->
+  'common/csrf/csrf'
+], (angular,angular_resource, config, csrf) ->
+  appModule = angular.module 'app.states.user.service', [
+    'common.csrf'
+  ]
+  appModule.factory "UserService", ($http, $q, CSRF) ->
     #----------------------------------------------------------------------private variables
     users = null
     user = null
@@ -17,7 +20,7 @@ define [
       if users
         return users
       else
-        $http.get("#{config.baseUrl}/user/list").then (result) -> users = result.data
+        $http.get("#{config.baseUrl}/user/all").then (result) -> users = result.data
 
     service.getUser = (id)->
       if user?.id is id

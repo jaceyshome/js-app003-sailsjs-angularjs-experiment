@@ -34,7 +34,7 @@ module.exports = {
       res.json(user);
     });
   },
-  list:function(req,res,next){
+  all:function(req,res,next){
     User.find(function foundUsers(err, users){
       if(err || !users){return next(err);}
       res.json(users);
