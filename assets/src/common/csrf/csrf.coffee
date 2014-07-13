@@ -3,7 +3,7 @@ define [
   'angular_resource'
   'app/config'
 ], (angular) ->
-  appModule = angular.module 'common.csrf.service', ['ngResource']
+  appModule = angular.module 'common.csrf', ['ngResource']
   appModule.factory "CSRF", ["$resource", ($resource) ->
     $resource "/csrfToken", {},
       get:

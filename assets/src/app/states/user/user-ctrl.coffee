@@ -3,7 +3,7 @@ define [
   'app/states/user/user-service'
 ], ->
   module = angular.module 'app.states.user'
-  module.controller 'UserCtrl', ($scope, UserCreate, CSRF, Utility) ->
+  module.controller 'UserCtrl', ($scope, CSRF, Utility) ->
 
     init = ->
       console.log "UserCtrl"

@@ -23,9 +23,20 @@ module.exports = {
 //  "*":true,
 
   create:function(req,res,next){
-    User.create(req.params.all(), function(err, user){
+    User.create(req.params.all(), function userCreated(err, user){
       if(err){
         return next(err);
+      }
+      res.json(user);
+    });
+  },
+  detail:function(req,res,next){
+    User.findOne(req.param('id'), function foundUser(err, user){
+      if(err){
+        return next(err);
+      }
+      if(!user){
+        return next();
       }
       res.json(user);
     });

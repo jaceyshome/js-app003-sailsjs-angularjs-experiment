@@ -5,16 +5,16 @@ define [
   'common/fieldmatch/fieldmatch'
 ], ->
   module = angular.module 'app.states.user', [
-    'app.states.user.service'
     'ui.router'
     'templates'
-    'common.csrf.service'
+    'common.csrf'
     'common.utility'
     'common.fieldmatch.directive'
+    'app.states.user.service'
   ]
 
   module.config ($stateProvider)->
     $stateProvider.state "user",
-      templateUrl: "app/states/user/userform"
+      templateUrl: "app/states/user/list/list"
       url: "/user"
       controller: "UserCtrl"
