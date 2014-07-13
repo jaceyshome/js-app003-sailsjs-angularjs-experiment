@@ -10,7 +10,7 @@ define [
     'common.csrf'
     'common.utility'
     'common.fieldmatch.directive'
-    'app.states.user.resource'
+    'app.states.user.service'
   ]
 
   module.config ($stateProvider)->
@@ -18,3 +18,12 @@ define [
       templateUrl: "app/states/user/list/list"
       url: "/user"
       controller: "UserCtrl"
+      resolve:
+        UsersData: ($q, UserService) ->
+          deferred = $q.defer()
+          UserService.listUsers()
+          .then (result)->
+              deferred.resolve result
+          .catch ->
+              deferred.resolve undefined
+          deferred.promise
