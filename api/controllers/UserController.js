@@ -41,6 +41,7 @@ module.exports = {
     })
   },
   update: function(req, res, next) {
+    //TODO update userObj
     var userObj = {
       name: req.param('name'),
       email: req.param('email')
