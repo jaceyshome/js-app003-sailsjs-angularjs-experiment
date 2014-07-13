@@ -38,6 +38,7 @@ module.exports.routes = {
   '/user':{view:'app'},
   '/user/list':{view:'app'},
   '/user/details/:id':{view:'app'},
+  '/user/edit/:id':{view:'app'},
   '/home':{view:'app'},
   '/signup':{view:'app'},
 //  '/rest-examples': {

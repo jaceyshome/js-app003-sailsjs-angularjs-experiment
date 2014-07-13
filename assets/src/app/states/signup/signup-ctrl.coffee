@@ -21,8 +21,8 @@ define [
       return !msg
 
     #------------------------------------------------------------public functions
-    $scope.createUser = (user)->
-      return unless validateUser(user)
+    $scope.handleSumbit = ()->
+      return unless validateUser($scope.user)
       data =
         name: user.name
         email: user.email

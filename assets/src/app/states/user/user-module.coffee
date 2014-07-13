@@ -13,6 +13,7 @@ define [
     'app.states.user.service'
     'app.states.user.list'
     'app.states.user.details'
+    'app.states.user.edit'
   ]
 
   module.config ($stateProvider)->

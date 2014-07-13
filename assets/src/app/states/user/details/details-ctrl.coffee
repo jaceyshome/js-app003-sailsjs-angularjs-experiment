@@ -13,9 +13,10 @@ define [
     init = ()->
       $state.go('user') unless UserData
       $scope.user = UserData
-      console.log "user detail page", UserData
 
     #------------------------------------------------------------public functions
+    $scope.edit = ->
+      $state.go("user.edit", {id: $scope.user.id} )
 
     #-----------------------------------------------------------------------init()
     init()

@@ -1,4 +1,4 @@
-h2 User Signup Form
+h2 {{formTitle}}
 div.userForm
   form.form-signin(name="signInForm")
     div.form-group(data-ng-class="{'has-error': signInForm.name.$invalid && !signInForm.name.$pristine}")
@@ -25,4 +25,4 @@ div.userForm
       data-ng-model="user.confirmPassword", data-field-match="{{user.password}}", maxlength="50")
       p.error(data-ng-show="signInForm.confirmPassword.$error.match && !signInForm.confirmPassword.$pristine") Password dosen't match
 
-    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="createUser(user)", href="javascript:void(0);") Create Account
+    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="handleSumbit()", href="javascript:void(0);") {{submitBtnText}}

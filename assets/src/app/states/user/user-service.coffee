@@ -20,10 +20,19 @@ define [
       if users
         return users
       else
-        $http.get("#{config.baseUrl}/user/all").then (result) -> users = result.data
+        $http.get("#{config.baseUrl}/user/all")
+        .then (result) -> users = result.data
 
     service.getUserDetail = (id)->
-      $http.get("#{config.baseUrl}/user/specifics/#{id}").then (result) -> service.currentUser = result.data
+      if service.currentUser?.id is id
+        return service.currentUser
+      else
+        $http.get("#{config.baseUrl}/user/specifics/#{id}")
+        .then (result) -> service.currentUser = result.data
 
+    service.udpateUser = (user)->
+      console.log "here"
+      $http.put("#{config.baseUrl}/user/update", {user: user})
+      .then (result) -> service.currentUser = result.data
     #-----------------------------------------------------------------------return object
     service

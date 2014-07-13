@@ -40,6 +40,19 @@ module.exports = {
       res.json(users);
     })
   },
+
+  update: function(req, res, next) {
+    var userObj = {
+      name: req.param('name'),
+      email: req.param('email')
+    };
+    User.update(req.param('id'), userObj, function userUpdated(err) {
+      if (err) {
+        return next(err);
+      }
+      res.json("1");
+    });
+  },
   _config: {}
 
 };
