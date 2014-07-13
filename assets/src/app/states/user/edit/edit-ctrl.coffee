@@ -12,9 +12,22 @@ define [
       $scope.formTitle = "Edit User"
       $scope.submitBtnText = "Save"
 
+    validateForm = (user)->
+      msg = ''
+      msg += 'name is required' unless user.name
+      msg += 'password is required' unless user.password
+      if user.password? isnt user.confirmPassword?
+        msg += 'confirm password does not match password'
+      if msg then alert msg
+      return !msg
     #-------------------------------------------------------------scope functions
     $scope.handleSumbit = ->
-      UserService.udpateUser($scope.user)
+      return unless validateForm($scope.user)
+      data =
+        name: user.name
+        email: user.email
+        password: user.password
+      UserService.udpateUser(data)
 
     #-------------------------------------------------------------------- init()
     init()

@@ -31,8 +31,9 @@ define [
         .then (result) -> service.currentUser = result.data
 
     service.udpateUser = (user)->
-      console.log "here"
-      $http.put("#{config.baseUrl}/user/update", {user: user})
-      .then (result) -> service.currentUser = result.data
+      CSRF.get().then (data)->
+        user._csrf = data._csrf
+        $http.put("#{config.baseUrl}/user/update", user)
+        .then (result) -> service.currentUser = result.data
     #-----------------------------------------------------------------------return object
     service

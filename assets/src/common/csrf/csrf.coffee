@@ -2,12 +2,18 @@ define [
   'angular'
   'angular_resource'
   'app/config'
-], (angular) ->
-  appModule = angular.module 'common.csrf', ['ngResource']
-  appModule.factory "CSRF", ["$resource", ($resource) ->
-    $resource "/csrfToken", {},
-      get:
-        method: "GET"
-        params: {}
-        isArray: false
-  ]
+], (angular,angular_resource,config) ->
+  appModule = angular.module 'common.csrf', []
+  appModule.factory "CSRF", ($http, $q) ->
+    service = {}
+
+    service.get = ()->
+      deferred = $q.defer()
+      $http.get("#{config.baseUrl}/csrfToken")
+      .then (result)->
+        deferred.resolve result.data
+      .catch ->
+        deferred.resolve undefined
+      deferred.promise
+
+    service

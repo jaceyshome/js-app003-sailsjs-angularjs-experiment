@@ -11,7 +11,7 @@ define [
     init = ->
       console.log "signupCtrl"
 
-    validateUser = (user)->
+    validateForm = (user)->
       msg = ''
       msg += 'name is required' unless user.name
       msg += 'password is required' unless user.password
@@ -19,10 +19,9 @@ define [
         msg += 'confirm password does not match password'
       if msg then alert msg
       return !msg
-
     #------------------------------------------------------------public functions
     $scope.handleSumbit = ()->
-      return unless validateUser($scope.user)
+      return unless validateForm($scope.user)
       data =
         name: user.name
         email: user.email

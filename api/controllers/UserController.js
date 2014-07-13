@@ -40,7 +40,6 @@ module.exports = {
       res.json(users);
     })
   },
-
   update: function(req, res, next) {
     var userObj = {
       name: req.param('name'),
