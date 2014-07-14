@@ -27,10 +27,10 @@ define [
       deferred = $q.defer()
       CSRF.get().then (data)->
         newUser =
-          name: user.name,
+          name: user.name
+          email:user.email
           password: user.password
           _csrf: data._csrf
-        if user.email then newUser.email = user.email
         $http.put("#{config.baseUrl}/user/create", newUser)
         .then (result) ->
           deferred.resolve result.data
@@ -54,10 +54,10 @@ define [
       CSRF.get().then (data)->
         editingUser =
           id: user.id
-          name: user.name,
+          name: user.name
+          email:user.email
           password: user.password
           _csrf: data._csrf
-        if user.email then editingUser.email = user.email
         $http.put("#{config.baseUrl}/user/update", editingUser)
         .then (result) ->
           service.currentUser = result.data

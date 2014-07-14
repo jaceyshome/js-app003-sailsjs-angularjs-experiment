@@ -11,7 +11,7 @@ module.exports = {
   //TODO encrypted password
   attributes: {
     name:{type:'string', required:true},
-    email:{type:'string', email:true},
+    email:{type:'string', email:true, required:true},
     password:{type:'string', required:true}
 //    toJSON: function(){
 //      var obj = this.toObject();

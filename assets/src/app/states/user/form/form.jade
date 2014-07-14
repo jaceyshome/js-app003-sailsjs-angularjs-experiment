@@ -9,7 +9,7 @@ div.userForm
 
     div.form-group(data-ng-class="{'has-error': signInForm.email.$invalid && !signInForm.email.$pristine}")
       label Email
-      input.form-control(type="email", placeholder="email address", name="email",
+      input.form-control(type="email", placeholder="email address", name="email", required,
       data-ng-model="user.email", maxlength="50")
       p.error(data-ng-show="signInForm.email.$invalid && !signInForm.email.$pristine") Enter a valid email.
 
