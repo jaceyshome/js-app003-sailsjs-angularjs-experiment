@@ -53,6 +53,16 @@ module.exports = {
       res.json("1");
     });
   },
+  destory: function(req,res,next){
+    User.findOne(req.param('id'), function userDestroyed(err,user){
+      if(err){ return next(err); }
+      if(!user){return next("User doesn\'t exist.");}
+      User.destroy(req.param('id'), function userDestroyed(err){
+        if(err){ return next(err); }
+      });
+      res.json('1');
+    });
+  },
   _config: {}
 
 };

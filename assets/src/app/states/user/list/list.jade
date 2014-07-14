@@ -3,9 +3,9 @@ div.container.userList
   div.container
     ul
       li(data-ng-repeat="user in users")
-        a(data-ng-click="showUser(user)", href="javascript:void(0);")
+        a(data-ng-click="show(user)", href="javascript:void(0);")
           span {{user.name}}
-        a(data-ng-click="editUser(user)", href="javascript:void(0);")
+        a(data-ng-click="edit(user)", href="javascript:void(0);")
           span edit
-        a(data-ng-click="de(user)", href="javascript:void(0);")
+        a(data-ng-click="destroy(user)", href="javascript:void(0);")
           span delete

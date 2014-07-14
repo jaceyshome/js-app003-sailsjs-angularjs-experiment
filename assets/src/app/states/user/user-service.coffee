@@ -35,5 +35,19 @@ define [
         user._csrf = data._csrf
         $http.put("#{config.baseUrl}/user/update", user)
         .then (result) -> service.currentUser = result.data
+
+    service.destroyUser = (user)->
+      deferred = $q.defer()
+      CSRF.get().then (data)->
+        deletingUser =
+          id: user.id
+          _csrf: data._csrf
+        $http.post("#{config.baseUrl}/user/destory", deletingUser)
+        .then (result) ->
+          return deferred.resolve result.data
+        .catch (result)->
+          return deferred.resolve null
+      deferred.promise
+
     #-----------------------------------------------------------------------return object
     service

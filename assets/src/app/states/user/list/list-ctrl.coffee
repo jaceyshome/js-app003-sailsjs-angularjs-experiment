@@ -3,7 +3,7 @@ define [
   'app/states/user/user-service'
 ], ->
   module = angular.module 'app.states.user'
-  module.controller 'UserListCtrl', ($scope, $state, UsersData) ->
+  module.controller 'UserListCtrl', ($scope, $state, UsersData, UserService) ->
     #------------------------------------------------------------public functions
     $scope.users = UsersData
 
@@ -12,9 +12,18 @@ define [
 
 
     #-------------------------------------------------------------scope functions
-    $scope.showUser = (user)->
+    $scope.show = (user)->
       $state.go("user.details", {id: user.id} )
 
+    $scope.destroy = (user)->
+      UserService.destroyUser(user).then (result)->
+        if result
+          $scope.users.splice $scope.users.indexOf(user), 1
+        else
+          console.log "servers error"
+
+    $scope.edit = (user)->
+      $state.go("user.edit", {id: user.id} )
     #-------------------------------------------------------------------- init()
     init()
 
