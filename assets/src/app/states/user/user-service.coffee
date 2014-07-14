@@ -27,7 +27,6 @@ define [
       deferred = $q.defer()
       CSRF.get().then (data)->
         newUser =
-          id: user.id,
           name: user.name,
           password: user.password
           _csrf: data._csrf
@@ -51,10 +50,21 @@ define [
       deferred.promise
 
     service.udpateUser = (user)->
+      deferred = $q.defer()
       CSRF.get().then (data)->
-        user._csrf = data._csrf
-        $http.put("#{config.baseUrl}/user/update", user)
-        .then (result) -> service.currentUser = result.data
+        editingUser =
+          id: user.id
+          name: user.name,
+          password: user.password
+          _csrf: data._csrf
+        if user.email then editingUser.email = user.email
+        $http.put("#{config.baseUrl}/user/update", editingUser)
+        .then (result) ->
+          service.currentUser = result.data
+          deferred.resolve result.data
+        .catch (err)->
+          deferred.resolve null
+        deferred.promise
 
     service.destroyUser = (user)->
       deferred = $q.defer()

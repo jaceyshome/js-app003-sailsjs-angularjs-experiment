@@ -23,12 +23,7 @@ define [
     #-------------------------------------------------------------scope functions
     $scope.handleSumbit = ->
       return unless validateForm($scope.user)
-      data =
-        id: $scope.user.id
-        name: $scope.user.name
-        email: $scope.user.email
-        password: $scope.user.password
-      UserService.udpateUser(data)
+      UserService.udpateUser($scope.user)
 
     #-------------------------------------------------------------------- init()
     init()
