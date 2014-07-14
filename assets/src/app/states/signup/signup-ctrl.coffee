@@ -9,7 +9,8 @@ define [
 
     #-------------------------------------------------------------private functions
     init = ->
-      console.log "signupCtrl"
+      $scope.formTitle = "Sign up"
+      $scope.submitBtnText = "Save"
 
     validateForm = (user)->
       msg = ''
