@@ -22,7 +22,10 @@ define [
       resolve:
         UserData: ($q, $stateParams, UserService) ->
           deferred = $q.defer()
-          UserService.getUserDetail($stateParams.id)
+          if UserService.currentUser?.id is $stateParams.id
+            deferred.resolve UserService.currentUser
+            return
+          UserService.getUserDetail({id:$stateParams.id})
           .then (result)->
             deferred.resolve result
           .catch ->

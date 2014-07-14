@@ -39,12 +39,16 @@ define [
           deferred.resolve null
       deferred.promise
 
-    service.getUserDetail = (id)->
-      if service.currentUser?.id is id
-        return service.currentUser
-      else
-        $http.get("#{config.baseUrl}/user/specifics/#{id}")
-        .then (result) -> service.currentUser = result.data
+    service.getUserDetail = (user)->
+      deferred = $q.defer()
+      deferred.resolve user if angular.equals user, service.currentUser
+      $http.get("#{config.baseUrl}/user/specifics/#{user.id}")
+      .then (result) ->
+        service.currentUser = result.data
+        deferred.resolve result.data
+      .catch (err)->
+        deferred.resolve null
+      deferred.promise
 
     service.udpateUser = (user)->
       CSRF.get().then (data)->
