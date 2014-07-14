@@ -18,7 +18,7 @@ define [
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
-    $urlRouterProvider.otherwise('/user')
+    $urlRouterProvider.otherwise('/user/list')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
     $scope.ready = true
