@@ -14,21 +14,15 @@
 
 module.exports.adapters = {
 
-  // If you leave the adapter config unspecified 
+  // If you leave the adapter config unspecified
   // in a model definition, 'default' will be used.
-  'default': 'localDB',
-
-  // Persistent adapter for DEVELOPMENT ONLY
-  // (data is preserved when the server shuts down)
-  disk: {
-    module: 'sails-disk'
-  },
+  'default': 'mysql',
 
   // MySQL is the world's most popular relational database.
   // Learn more: http://en.wikipedia.org/wiki/MySQL
-  localDB: {
-
+  mysql: {
     module: 'sails-mysql',
+    schema: true, //This will enable/disable a schema on all your models
     host: 'localhost',
     port: 3306,
     user: 'root',

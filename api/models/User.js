@@ -7,12 +7,12 @@
  */
 
 module.exports = {
-  schema: true, //schema only save the attributes define below, will show others away
-  //TODO encrypted password
+  tableName: 'bd_user', //point to tableName
+  migrate: 'safe',
   attributes: {
-    name:{type:'string', required:true},
-    email:{type:'string', email:true, required:true},
-    password:{type:'string', required:true}
+    name:{type:'string', required:true, maxLength: 100},
+    email:{type:'string', email:true, required:true, maxLength: 100},
+    password:{type:'string', required:true, maxLength: 256}
 //    toJSON: function(){
 //      var obj = this.toObject();
 //      delete obj.encryptedPassword;
