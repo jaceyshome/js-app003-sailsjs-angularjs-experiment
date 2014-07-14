@@ -3,7 +3,7 @@ define [
   'app/states/signup/signup-service'
 ], ->
   module = angular.module 'app.states.signup'
-  module.controller 'SignupCtrl', ($scope, SignupService, CSRF, Utility) ->
+  module.controller 'SignupCtrl', ($scope, $state ,UserService) ->
     #-------------------------------------------------------------scope variables
     $scope.user = []
 
@@ -23,19 +23,12 @@ define [
     #------------------------------------------------------------public functions
     $scope.handleSumbit = ()->
       return unless validateForm($scope.user)
-      data =
-        name: $scope.user.name
-        email: $scope.user.email
-        password: $scope.user.password
-      CSRF.get((result)->
-        data._csrf = result._csrf
-        SignupService.save(data, (result)->
-          console.log "success", result
-        , (err)->
-          Utility.handleServerError(err)
-        )
-      )
-
+      UserService.createUser($scope.user).then (result)->
+        if result
+          UserService.currentUser = result
+          $state.go 'user.details', {id:result.id}
+        else
+          console.log "server error"
 
     #-----------------------------------------------------------------------init()
     init()

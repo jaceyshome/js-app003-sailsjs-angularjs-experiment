@@ -23,6 +23,22 @@ define [
         $http.get("#{config.baseUrl}/user/all")
         .then (result) -> users = result.data
 
+    service.createUser = (user)->
+      deferred = $q.defer()
+      CSRF.get().then (data)->
+        newUser =
+          id: user.id,
+          name: user.name,
+          password: user.password
+          _csrf: data._csrf
+        if user.email then newUser.email = user.email
+        $http.put("#{config.baseUrl}/user/create", newUser)
+        .then (result) ->
+          deferred.resolve result.data
+        .catch (err)->
+          deferred.resolve null
+      deferred.promise
+
     service.getUserDetail = (id)->
       if service.currentUser?.id is id
         return service.currentUser
