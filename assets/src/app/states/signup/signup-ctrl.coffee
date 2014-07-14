@@ -23,9 +23,9 @@ define [
     $scope.handleSumbit = ()->
       return unless validateForm($scope.user)
       data =
-        name: user.name
-        email: user.email
-        password: user.password
+        name: $scope.user.name
+        email: $scope.user.email
+        password: $scope.user.password
       CSRF.get((result)->
         data._csrf = result._csrf
         SignupService.save(data, (result)->
