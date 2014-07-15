@@ -9,6 +9,7 @@ define [
   'common/fieldmatch/fieldmatch'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
+  'app/states/signin/signin-ctrl'
   'app/states/signup/signup-ctrl'
 ], ->
   module = angular.module 'app', [
@@ -16,6 +17,7 @@ define [
     'app.states.home'
     'app.states.user'
     'app.states.signup'
+    'app.states.signin'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
