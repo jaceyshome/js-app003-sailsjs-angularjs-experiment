@@ -20,5 +20,18 @@ module.exports = {
 //      delete obj._csrf;
 //      return obj;
 //    }
+  },
+  beforeCreate: function(values, next){
+    // This checks to make sure the password and password confirmation match before creating record
+    if (!values.password) {
+      return next({err: ["Password is required."]});
+    }
+
+    require('bcryptjs').hash(values.password, 10, function passwordEncrypted(err, encryptedPassword) {
+      if (err) return next(err);
+      values.password = encryptedPassword;
+      // values.online= true;
+      next();
+    });
   }
 };

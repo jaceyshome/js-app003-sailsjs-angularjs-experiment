@@ -14,33 +14,31 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+module.exports = (function(){
+  var ctrl = {};
 
-module.exports = {
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to UserController)
-   */
-//  "*":true,
-
-  create:function(req,res,next){
+  ctrl.create = function(req,res,next){
     User.create(req.params.all(), function userCreated(err, user){
       if(err){return next(err);}
       res.json(user);
     });
-  },
-  specifics:function(req,res,next){
+  };
+
+  ctrl.specifics = function(req,res,next){
     User.findOne(req.param('id'), function foundUser(err, user){
       if(err || !user){return next(err);}
       res.json(user);
     });
-  },
-  all:function(req,res,next){
+  };
+
+  ctrl.all = function(req,res,next){
     User.find(function foundUsers(err, users){
       if(err || !users){return next(err);}
       res.json(users);
     })
-  },
-  update: function(req, res, next) {
+  };
+
+  ctrl.update = function(req, res, next) {
     //TODO update userObj
     var userObj = {
       name: req.param('name'),
@@ -52,8 +50,9 @@ module.exports = {
       }
       res.json("1");
     });
-  },
-  destory: function(req,res,next){
+  };
+
+  ctrl.destory = function(req,res,next){
     User.findOne(req.param('id'), function userDestroyed(err,user){
       if(err){ return next(err); }
       if(!user){return next("User doesn\'t exist.");}
@@ -62,7 +61,9 @@ module.exports = {
       });
       res.json('1');
     });
-  },
-  _config: {}
+  };
 
-};
+  ctrl._config = {};
+
+  return ctrl;
+})();
