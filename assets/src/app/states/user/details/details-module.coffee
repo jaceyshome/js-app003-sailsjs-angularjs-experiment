@@ -6,7 +6,6 @@ define [
   module = angular.module 'app.states.user.details', [
     'ui.router'
     'templates'
-    'common.csrf'
     'common.utility'
     'app.states.user.service'
   ]

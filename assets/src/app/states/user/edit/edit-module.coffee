@@ -6,8 +6,8 @@ define [
   module = angular.module 'app.states.user.edit', [
     'ui.router'
     'templates'
-    'common.csrf'
     'common.utility'
+    'common.fieldmatch.directive'
     'app.states.user.service'
   ]
 
