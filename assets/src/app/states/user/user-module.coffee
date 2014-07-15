@@ -2,7 +2,6 @@ define [
   'angular'
   'angular_ui_router'
   'templates'
-  'common/fieldmatch/fieldmatch'
 ], ->
   module = angular.module 'app.states.user', [
     'ui.router'

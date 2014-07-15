@@ -1,6 +1,5 @@
 define [
   'app/states/signup/signup-module'
-  'app/states/signup/signup-service'
 ], ->
   module = angular.module 'app.states.signup'
   module.controller 'SignupCtrl', ($scope, $state ,UserService) ->

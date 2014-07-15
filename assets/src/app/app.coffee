@@ -4,8 +4,9 @@ define [
   'app/config'
   'bootstrap'
   'jquery'
-  'common/utility/utility'
   'common/csrf/csrf'
+  'common/utility/utility'
+  'common/fieldmatch/fieldmatch'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/signup/signup-ctrl'
@@ -18,7 +19,7 @@ define [
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
-    $urlRouterProvider.otherwise('/user/list')
+    $urlRouterProvider.otherwise('/signin')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
     $scope.ready = true

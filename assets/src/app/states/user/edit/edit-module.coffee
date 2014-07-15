@@ -27,7 +27,7 @@ define [
             return
           UserService.getUserDetail({id:$stateParams.id})
           .then (result)->
-              deferred.resolve result
+            deferred.resolve result
           .catch ->
-              deferred.resolve undefined
+            deferred.resolve undefined
           deferred.promise
