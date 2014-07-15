@@ -8,53 +8,53 @@
 var bcrypt = require('bcryptjs');
 
 module.exports = {
-	create: function(req, res, next) {
-		if (!req.param('name') || !req.param('password')) {
+  create: function(req, res, next) {
+    if (!req.param('name') || !req.param('password')) {
       return next(err);
-		}
-		User.findOneByName(req.param('name'), function foundUser(err, user) {
-			if (err || !user) {return next(err)};
-			bcrypt.compare(req.param('password'), user.password, function(err, valid) {
-				if (err || !valid){return next(err);}
-				req.session.authenticated = true;
-				req.session.User = user;
+    }
+    User.findOneByName(req.param('name'), function foundUser(err, user) {
+      if (err || !user) {return next(err)}
+      bcrypt.compare(req.param('password'), user.password, function(err, valid) {
+        if (err || !valid){return next(err);}
+        req.session.authenticated = true;
+        req.session.User = user;
         res.json({id:user.id});
-			});
-		});
-	},
+      });
+    });
+  },
 
-	destroy: function(req, res, next) {
+  destroy: function(req, res, next) {
 
-		User.findOne(req.session.User.id, function foundUser(err, user) {
-			var userId = req.session.User.id;
-			if (user) {
-				User.update(userId, {
-					online: false
-				}, function(err) {
-					if (err) return next(err);
+    User.findOne(req.session.User.id, function foundUser(err, user) {
+      var userId = req.session.User.id;
+      if (user) {
+        User.update(userId, {
+          online: false
+        }, function(err) {
+          if (err) return next(err);
 
-					// Inform other sockets (e.g. connected sockets that are subscribed) that the session for this user has ended.
-					User.publishUpdate(userId, {
-						loggedIn: false,
-						id: userId,
-						name: user.name,
-						action: ' has logged out.'
-					});
+          // Inform other sockets (e.g. connected sockets that are subscribed) that the session for this user has ended.
+          User.publishUpdate(userId, {
+            loggedIn: false,
+            id: userId,
+            name: user.name,
+            action: ' has logged out.'
+          });
 
-					// Wipe out the session (log out)
-					req.session.destroy();
+          // Wipe out the session (log out)
+          req.session.destroy();
 
-					// Redirect the browser to the sign-in screen
-					res.redirect('/session/new');
-				});
-			} else {
+          // Redirect the browser to the sign-in screen
+          res.redirect('/session/new');
+        });
+      } else {
 
-				// Wipe out the session (log out)
-				req.session.destroy();
+        // Wipe out the session (log out)
+        req.session.destroy();
 
-				// Redirect the browser to the sign-in screen
-				res.redirect('/session/new');
-			}
-		});
-	}
+        // Redirect the browser to the sign-in screen
+        res.redirect('/session/new');
+      }
+    });
+  }
 };
