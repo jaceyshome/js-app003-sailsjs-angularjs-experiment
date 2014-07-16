@@ -25,7 +25,7 @@ module.exports = {
     if (!values.password) {
       return next({err: ["Password is required."]});
     }
-    require('bcryptjs').hash(values.password, 10, function passwordEncrypted(err, encryptedPassword) {
+    require('bcryptjs').hash(values.password, 8, function passwordEncrypted(err, encryptedPassword) {
       if (err) return next(err);
       values.password = encryptedPassword;
       next();
