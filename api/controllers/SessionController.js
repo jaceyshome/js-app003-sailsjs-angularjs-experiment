@@ -31,10 +31,7 @@ module.exports = {
   },
 
   destroy: function(req, res, next) {
-    User.findOne(req.session.User.id, function foundUser(err, user) {
-        // Wipe out the session (log out)
-        req.session.destroy();
-        res.redirect('/signin');
-    });
+    req.session.destroy();
+    res.redirect('/signin');
   }
 };
