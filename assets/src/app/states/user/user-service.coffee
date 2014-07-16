@@ -71,7 +71,7 @@ define [
         deletingUser =
           id: user.id
           _csrf: data._csrf
-        $http.post("#{config.baseUrl}/user/destory", deletingUser)
+        $http.post("#{config.baseUrl}/user/destroy", deletingUser)
         .then (result) ->
           return deferred.resolve result.data
         .catch (result)->

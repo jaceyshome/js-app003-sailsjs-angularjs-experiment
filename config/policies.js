@@ -19,7 +19,10 @@ module.exports.policies = {
   '*': true,
 
   user:{
-    '*': 'isAuthenticated'
+    'specifics': 'isAuthenticated',
+    'all': 'isAuthenticated',
+    'update': 'isAuthenticated',
+    'destroy': 'isAuthenticated'
   },
 
   RestErrorController: {
