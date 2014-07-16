@@ -6,6 +6,7 @@ define [
   'jquery'
   'common/csrf/csrf'
   'common/utility/utility'
+  'common/message/message'
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
   'app/states/home/home-ctrl'
@@ -27,5 +28,18 @@ define [
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
     $scope.ready = true
+
+    init = ->
+      registerEventListeners()
+
+    registerEventListeners = ->
+      $scope.$on("ERR_MSG", (e, data)->
+        handleErrorMsg(data)
+      )
+
+    handleErrorMsg = (data)->
+      console.log "handle errMsg", data
+
+    init()
 
   module

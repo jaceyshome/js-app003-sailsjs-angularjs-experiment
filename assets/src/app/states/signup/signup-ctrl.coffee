@@ -22,12 +22,14 @@ define [
     #------------------------------------------------------------public functions
     $scope.handleSumbit = ()->
       return unless validateForm($scope.user)
-      UserService.createUser($scope.user).then (result)->
+      UserService.createUser($scope.user)
+      .then (result)->
         if result
           UserService.currentUser = result
           $state.go 'user.details', {id:result.id}
-        else
-          console.log "server error"
+
+      .catch (err)->
+        console.log "server error", err
 
     #-----------------------------------------------------------------------init()
     init()

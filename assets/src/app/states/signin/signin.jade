@@ -1,4 +1,4 @@
-h2 Signin
+h2 Log in
 div.signinContainer
   form.form-signin(name="signInForm")
     div.form-group(data-ng-class="{'has-error': signInForm.name.$invalid && !signInForm.name.$pristine}")
@@ -11,5 +11,5 @@ div.signinContainer
       input.form-control(type="password", placeholder="password", name="password", required
       data-ng-model="user.password", maxlength="100")
       p.error(data-ng-show="signInForm.password.$invalid && !signInForm.password.$pristine") Required.
-    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="handleSumbit()", href="javascript:void(0);") Sign-in
+    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="handleSumbit()", href="javascript:void(0);") Log in
 

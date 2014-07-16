@@ -5,8 +5,9 @@ define [
 ], (angular,angular_resource, config, csrf) ->
   appModule = angular.module 'app.states.user.service', [
     'common.csrf'
+    'common.message.service'
   ]
-  appModule.factory "UserService", ($http, $q, CSRF) ->
+  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, messageService) ->
     #----------------------------------------------------------------------private variables
     users = null
 
@@ -34,6 +35,7 @@ define [
         .then (result) ->
           deferred.resolve result.data
         .catch (err)->
+          handleCreateUserErrMsg(err)
           deferred.resolve null
       deferred.promise
 
@@ -78,5 +80,27 @@ define [
           return deferred.resolve null
       deferred.promise
 
-    #-----------------------------------------------------------------------return object
+  #-------------------------------------------------------------------handlers
+    handleCreateUserErrMsg = (err)->
+      console.log "err", err
+      msg = ""
+      if err.data?.errors?
+        for error in err.data.errors
+          if typeof error is 'string'
+            msg += messageService.handleDataErrorMsg(error)
+          if error.ValidationError?.email?
+            msg += messageService.handleValidationErrorMsg(error.ValidationError.email)
+          if error.ValidationError?.name?
+            msg += messageService.handleValidationErrorMsg(error.ValidationError.name)
+          if error.ValidationError?.password?
+            msg += messageService.handleValidationErrorMsg(error.ValidationError.password)
+          unless msg then msg = "Internal Server Error, please try again"
+      errData =
+        msg: msg
+        from:'Create user'
+      $rootScope.$broadcast("ERR_MSG", errData)
+      return
+
+
+  #-----------------------------------------------------------------------return object
     service
