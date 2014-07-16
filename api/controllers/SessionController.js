@@ -25,7 +25,6 @@ module.exports = {
         req.session.cookie.expires = new Date((new Date()).getTime() + 60000);
         req.session.authenticated = true;
         req.session.User = user;
-        console.log("session", req.session);
         res.json({id:user.id});
       });
     });
