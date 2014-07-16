@@ -1,0 +1,15 @@
+h2 Log in
+div.loginContainer
+  form.form-login(name="loginForm")
+    div.form-group(data-ng-class="{'has-error': loginForm.name.$invalid && !loginForm.name.$pristine}")
+      label Name
+      input.form-control(type="text", placeholder="your name", name="name", required,
+      data-ng-model="user.name", maxlength="100")
+      p.error(data-ng-show="loginForm.name.$invalid && !loginForm.name.$pristine") Required.
+    div.form-group(data-ng-class="{'has-error': loginForm.password.$invalid && !loginForm.password.$pristine}")
+      label Password
+      input.form-control(type="password", placeholder="password", name="password", required
+      data-ng-model="user.password", maxlength="100")
+      p.error(data-ng-show="loginForm.password.$invalid && !loginForm.password.$pristine") Required.
+    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="handleSumbit()", href="javascript:void(0);") Log in
+

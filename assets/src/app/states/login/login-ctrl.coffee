@@ -1,9 +1,9 @@
 define [
-  'app/states/signin/signin-module'
-  'app/states/signin/signin-service'
+  'app/states/login/login-module'
+  'app/states/login/login-service'
 ], ->
-  module = angular.module 'app.states.signin'
-  module.controller 'SigninCtrl', ($scope, $state ,SigninService) ->
+  module = angular.module 'app.states.login'
+  module.controller 'LoginCtrl', ($scope, $state ,LoginService) ->
     #-------------------------------------------------------------scope variables
     $scope.user = []
 
@@ -19,7 +19,7 @@ define [
     #------------------------------------------------------------public functions
     $scope.handleSumbit = ()->
       return unless validateForm($scope.user)
-      SigninService.signin($scope.user).then (result)->
+      LoginService.login($scope.user).then (result)->
         if result
           $state.go 'user.details', {id:result.id}
         else

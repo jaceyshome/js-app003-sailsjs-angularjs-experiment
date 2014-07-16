@@ -3,23 +3,23 @@ define [
   'angular_resource'
   'app/config'
 ], (angular,angular_resource,config, csrf) ->
-  appModule = angular.module 'app.states.signin.service', [
+  appModule = angular.module 'app.states.login.service', [
     'common.csrf'
   ]
-  appModule.factory "SigninService", ($http, $q, CSRF) ->
+  appModule.factory "LoginService", ($http, $q, CSRF) ->
     #----------------------------------------------------------------------private variables
 
     #----------------------------------------------------------------------public variables
     service = {}
     #----------------------------------------------------------------------public functions
-    service.signin = (user)->
+    service.login = (user)->
       deferred = $q.defer()
       CSRF.get().then (data)->
-        signinUser =
+        loginUser =
           name: user.name
           password: user.password
           _csrf: data._csrf
-        $http.post("#{config.baseUrl}/session/create", signinUser)
+        $http.post("#{config.baseUrl}/session/create", loginUser)
         .then (result) ->
           deferred.resolve result.data
         .catch (err)->

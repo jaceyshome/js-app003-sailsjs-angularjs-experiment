@@ -1,6 +1,6 @@
 h2 {{formTitle}}
 div.userForm
-  form.form-signin(name="userForm")
+  form(name="userForm")
     div.form-group(data-ng-class="{'has-error': userForm.name.$invalid && !userForm.name.$pristine}")
       label Name
       input.form-control(type="text", placeholder="your name", name="name", required,

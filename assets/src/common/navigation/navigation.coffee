@@ -15,7 +15,7 @@ define [
         CSRF.get().then (data)->
           $http.post("#{config.baseUrl}/session/destroy", {_csrf:data._csrf})
           .then (result) ->
-            $state.go("signin")
+            $state.go("login")
           .catch (err)->
             console.log "log out fail"
 

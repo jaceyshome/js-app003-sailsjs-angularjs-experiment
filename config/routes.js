@@ -35,7 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'app'
   },
-  '/signin':{view:'app'},
+  '/login':{view:'app'},
   '/signup':{view:'app'},
   '/user':{view:'app'},
   '/user/list':{view:'app'},
