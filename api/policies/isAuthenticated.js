@@ -17,7 +17,7 @@ module.exports = function(req, res, next) {
   }
   else{
     console.log("need to login");
-    res.redirect('/signin');
+    return next(err);
   }
   // User is not allowed
   // (default res.forbidden() behavior can be overridden in `config/403.js`)

@@ -32,6 +32,6 @@ module.exports = {
 
   destroy: function(req, res, next) {
     req.session.destroy();
-    res.redirect('/signin');
+    res.redirect('/login');
   }
 };

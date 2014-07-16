@@ -26,5 +26,5 @@ define [
           .then (result)->
             deferred.resolve result
           .catch ->
-            deferred.resolve undefined
+            deferred.resolve null
           deferred.promise
