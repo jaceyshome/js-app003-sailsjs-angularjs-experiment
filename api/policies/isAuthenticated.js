@@ -12,10 +12,13 @@ module.exports = function(req, res, next) {
   // User is allowed, proceed to the next policy, 
   // or if this is the last policy, the controller
   if (req.session.authenticated) {
+    console.log("authenticated is true");
     return next();
   }
-
+  else{
+    console.log("need to login");
+    res.redirect('/signin');
+  }
   // User is not allowed
   // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
 };

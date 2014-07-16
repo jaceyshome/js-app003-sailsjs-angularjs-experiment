@@ -18,6 +18,10 @@ module.exports.policies = {
   // (`true` allows public access) 
   '*': true,
 
+  user:{
+    '*': 'isAuthenticated'
+  },
+
   RestErrorController: {
     unauthorized: 'isAuthorized',
     forbidden:    false           // Acts oddly in socket mode?
