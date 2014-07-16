@@ -2,13 +2,8 @@ define [
   'angular'
   ], ->
   module = angular.module 'common.navigation', []
-  module.directive 'tntNavigation', ($rootScope, Screen)->
+  module.directive 'tntNavigation', ()->
     restrict:"A"
     scope:{}
-    templateUrl: "common/navigation/main"
+    templateUrl: "common/navigation/navigation"
     link:($scope, element, attrs) ->
-      $scope.Screen = Screen
-      $scope.$watch ->
-        Screen.screen
-      , (screen)->
-        $scope.screen = screen

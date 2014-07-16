@@ -7,6 +7,7 @@ define [
   'common/csrf/csrf'
   'common/utility/utility'
   'common/fieldmatch/fieldmatch'
+  'common/navigation/navigation'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/signin/signin-ctrl'
@@ -14,6 +15,7 @@ define [
 ], ->
   module = angular.module 'app', [
     'ui.router'
+    'common.navigation'
     'app.states.home'
     'app.states.user'
     'app.states.signup'

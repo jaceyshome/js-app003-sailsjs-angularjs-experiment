@@ -12,7 +12,7 @@ module.exports = {
   attributes: {
     name:{type:'string', required:true, maxLength: 100},
     email:{type:'string', email:true, required:true, maxLength: 100},
-    password:{type:'string', required:true, maxLength: 256}
+    password:{type:'string', required:true, maxLength: 100}
 //    toJSON: function(){
 //      var obj = this.toObject();
 //      delete obj.encryptedPassword;

@@ -4,12 +4,12 @@ div.signinContainer
     div.form-group(data-ng-class="{'has-error': signInForm.name.$invalid && !signInForm.name.$pristine}")
       label Name
       input.form-control(type="text", placeholder="your name", name="name", required,
-      data-ng-model="user.name", maxlength="50")
+      data-ng-model="user.name", maxlength="100")
       p.error(data-ng-show="signInForm.name.$invalid && !signInForm.name.$pristine") Required.
     div.form-group(data-ng-class="{'has-error': signInForm.password.$invalid && !signInForm.password.$pristine}")
       label Password
       input.form-control(type="password", placeholder="password", name="password", required
-      data-ng-model="user.password", maxlength="50")
+      data-ng-model="user.password", maxlength="100")
       p.error(data-ng-show="signInForm.password.$invalid && !signInForm.password.$pristine") Required.
     a.btn.btn-lg.btn-primary.btn-block(data-ng-click="handleSumbit()", href="javascript:void(0);") Sign-in
 
