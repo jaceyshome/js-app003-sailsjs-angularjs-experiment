@@ -5,9 +5,8 @@ define [
 ], (angular,angular_resource, config, csrf) ->
   appModule = angular.module 'app.states.user.service', [
     'common.csrf'
-    'common.message.service'
   ]
-  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, messageService) ->
+  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService) ->
     #----------------------------------------------------------------------private variables
     users = null
 
@@ -92,13 +91,13 @@ define [
       if err.data?.errors?
         for error in err.data.errors
           if typeof error is 'string'
-            msg += messageService.handleDataErrorMsg(error)
+            msg += MessageService.handleDataErrorMsg(error)
           if error.ValidationError?.email?
-            msg += messageService.handleValidationErrorMsg(error.ValidationError.email)
+            msg += MessageService.handleValidationErrorMsg(error.ValidationError.email)
           if error.ValidationError?.name?
-            msg += messageService.handleValidationErrorMsg(error.ValidationError.name)
+            msg += MessageService.handleValidationErrorMsg(error.ValidationError.name)
           if error.ValidationError?.password?
-            msg += messageService.handleValidationErrorMsg(error.ValidationError.password)
+            msg += MessageService.handleValidationErrorMsg(error.ValidationError.password)
           unless msg then msg = "Internal Server Error, please try again"
       errData =
         msg: msg

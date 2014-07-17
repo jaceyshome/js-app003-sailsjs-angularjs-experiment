@@ -3,7 +3,7 @@ define [
   'app/states/login/login-service'
 ], ->
   module = angular.module 'app.states.login'
-  module.controller 'LoginCtrl', ($scope, $state ,LoginService) ->
+  module.controller 'LoginCtrl', ($scope, $state ,LoginService, MessageService) ->
     #-------------------------------------------------------------scope variables
     $scope.user = []
 
@@ -23,6 +23,9 @@ define [
         if result
           $state.go 'user.details', {id:result.id}
         else
+          $scope.$emit("ERR_MSG", {
+            msg: "Login failed"
+          })
           console.log "server error"
 
     #-----------------------------------------------------------------------init()

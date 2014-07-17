@@ -4,7 +4,7 @@ define [
   'app/config'
 ], (angular) ->
   appModule = angular.module 'common.message.service', []
-  appModule.factory "messageService", () ->
+  appModule.factory "MessageService", () ->
     service = {}
 
     service.handleValidationErrorMsg = (errs)->

@@ -9,6 +9,7 @@ define [
   'common/message/message'
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
+  'common/noteboard/noteboard'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/login/login-ctrl'
@@ -21,14 +22,20 @@ define [
     'app.states.user'
     'app.states.signup'
     'app.states.login'
+    'common.fieldmatch.directive'
+    'common.message.service'
+    'common.noteboard'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/login')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
+    #-------------------------------------------------------- public variables
     $scope.ready = true
+    $scope.messages = []
 
+    #-------------------------------------------------------private functions
     init = ->
       registerEventListeners()
 
@@ -37,9 +44,18 @@ define [
         handleErrorMsg(data)
       )
 
-    handleErrorMsg = (data)->
-      console.log "handle errMsg", data
+    clearMessages = ->
+      if $scope.messages.length > 3
+        $scope.messages.splice $scope.messages.length - 1, 1
 
+    #-------------------------------------------------------- handlers
+    handleErrorMsg = (data)->
+      $scope.messages.push data
+      console.log "handle errMsg", $scope.messages
+      clearMessages()
+
+
+    #--------------------------------------------------------- init()
     init()
 
   module
