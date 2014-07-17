@@ -9,7 +9,7 @@ define [
   module.controller 'UserCtrl', ($scope, $state) ->
 
     init = ->
-
+      $state.go "user.details"
     #-------------------------------------------------------------------- init()
     init()
 

@@ -9,6 +9,7 @@ define [
 
     #------------------------------------------------------------private functions
     init = ->
+      $state.go "login" unless UserData
       $scope.formTitle = "Edit User"
       $scope.submitBtnText = "Save"
 

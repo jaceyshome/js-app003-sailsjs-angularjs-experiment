@@ -9,7 +9,7 @@ define [
 
     #------------------------------------------------------------private functions
     init = ->
-
+      $state.go "login" unless UsersData
 
     #-------------------------------------------------------------scope functions
     $scope.show = (user)->

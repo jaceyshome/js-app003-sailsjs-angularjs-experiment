@@ -11,7 +11,7 @@ define [
     #-------------------------------------------------------------private functions
 
     init = ()->
-      $state.go('user') unless UserData
+      $state.go "login" unless UserData
       $scope.user = UserData
 
     #------------------------------------------------------------public functions

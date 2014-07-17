@@ -21,7 +21,10 @@ define [
         return users
       else
         $http.get("#{config.baseUrl}/user/all")
-        .then (result) -> users = result.data
+        .then (result) ->
+          users = result.data
+        .catch (err)->
+          handleCreateUserErrMsg(err)
 
     service.createUser = (user)->
       deferred = $q.defer()
@@ -47,6 +50,7 @@ define [
         service.currentUser = result.data
         deferred.resolve result.data
       .catch (err)->
+        handleCreateUserErrMsg(err)
         deferred.resolve null
       deferred.promise
 
@@ -64,6 +68,7 @@ define [
           service.currentUser = result.data
           deferred.resolve result.data
         .catch (err)->
+          handleCreateUserErrMsg(err)
           deferred.resolve null
         deferred.promise
 
@@ -76,13 +81,13 @@ define [
         $http.post("#{config.baseUrl}/user/destroy", deletingUser)
         .then (result) ->
           return deferred.resolve result.data
-        .catch (result)->
+        .catch (err)->
+          handleCreateUserErrMsg(err)
           return deferred.resolve null
       deferred.promise
 
   #-------------------------------------------------------------------handlers
     handleCreateUserErrMsg = (err)->
-      console.log "err", err
       msg = ""
       if err.data?.errors?
         for error in err.data.errors
@@ -97,10 +102,9 @@ define [
           unless msg then msg = "Internal Server Error, please try again"
       errData =
         msg: msg
-        from:'Create user'
+      console.log "error msg", errData
       $rootScope.$broadcast("ERR_MSG", errData)
       return
-
 
   #-----------------------------------------------------------------------return object
     service
