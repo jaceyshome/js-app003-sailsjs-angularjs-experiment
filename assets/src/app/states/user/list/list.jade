@@ -3,6 +3,7 @@ div.container.userList
   div.container
     ul
       li(data-ng-repeat="user in users")
+        span(data-ng-show="user.online") [online]
         a(data-ng-click="show(user)", href="javascript:void(0);")
           span {{user.name}}
         a(data-ng-click="edit(user)", href="javascript:void(0);")

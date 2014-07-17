@@ -25,6 +25,7 @@ define [
         else
           $scope.$emit("ERR_MSG", {
             msg: "Login failed"
+            type: "error"
           })
           console.log "server error"
 

@@ -25,13 +25,32 @@ module.exports = {
         req.session.cookie.expires = new Date((new Date()).getTime() + 60000);
         req.session.authenticated = true;
         req.session.User = user;
+        user.online = true;
+        user.save(function(err,user){
+          if(err){
+            return next(err);
+          }
+          res.json(user);
+        });
         res.json({id:user.id});
       });
     });
   },
 
   destroy: function(req, res, next) {
-    req.session.destroy();
-    res.redirect('/login');
+    if(!req.session.User){
+      req.session.destroy();
+      res.json("1");
+      return;
+    }
+    User.update(req.session.User.id, {
+      online: false
+    },function userUpdated(err) {
+      if (err) {
+        return next(err);
+      }
+      req.session.destroy();
+      res.json("1");
+    });
   }
 };

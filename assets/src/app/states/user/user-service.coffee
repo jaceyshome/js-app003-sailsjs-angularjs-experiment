@@ -101,6 +101,7 @@ define [
           unless msg then msg = "Internal Server Error, please try again"
       errData =
         msg: msg
+        type: "error"
       console.log "error msg", errData
       $rootScope.$broadcast("ERR_MSG", errData)
       return

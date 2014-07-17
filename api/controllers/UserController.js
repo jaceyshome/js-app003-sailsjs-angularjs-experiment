@@ -25,7 +25,13 @@ module.exports = (function(){
       req.session.cookie.expires = new Date((new Date()).getTime() + 60000);
       req.session.authenticated = true;
       req.session.User = user;
-      res.json(user);
+      user.online = true;
+      user.save(function(err,user){
+        if(err){
+          return next(err);
+        }
+        res.json(user);
+      });
     });
   };
 
