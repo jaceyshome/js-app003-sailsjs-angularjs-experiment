@@ -1,13 +1,11 @@
 define [
   'angular'
-  'socket_io'
-  'angular_socket_io'
 ], ->
   module = angular.module 'common.socket', [
-    'sails.io'
+    'common.sailsio'
   ]
-  module.factory 'Socket', (sailsSocketFactory, $log)->
-    service = sailsSocketFactory({ reconnectionAttempts: 10 })
+  module.factory 'Socket', (SailsIo, $log)->
+    service = SailsIo({ reconnectionAttempts: 10 })
     $log.debug("Connecting to Sails.js...")
 
     service.connect()

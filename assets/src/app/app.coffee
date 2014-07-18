@@ -10,6 +10,7 @@ define [
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
   'common/noteboard/noteboard'
+  'common/sailsio/sailsio'
   'common/socket/socket'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
@@ -26,6 +27,7 @@ define [
     'common.fieldmatch.directive'
     'common.message.service'
     'common.noteboard'
+    'common.sailsio'
     'common.socket'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
