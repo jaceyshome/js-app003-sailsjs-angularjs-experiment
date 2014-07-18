@@ -8,15 +8,15 @@ define [
 
     #----------------------------------------------------------------private variables
     optionDefaults =
-      url: $location.path(),
-      defaultScope: $rootScope,
-      eventPrefix: 'sailsSocket:',
-      eventForwards: ['connect', 'message', 'disconnect', 'error'],
-      reconnectionAttempts: Infinity,
+      url: $location.path()
+      defaultScope: $rootScope
+      eventPrefix: 'sailsSocket:'
+      eventForwards: ['connect', 'message', 'disconnect', 'error']
+      reconnectionAttempts: Infinity
       reconnectionDelay: (attempt)->
         maxDelay = 10000
         bo = ((Math.pow(2, attempt) - 1) / 2)
-        delay = 1000 * bo; # 1 sec x backoff amount
+        delay = 1000 * bo # 1 sec x backoff amount
         Math.min(delay, maxDelay)
 
     ###
@@ -85,10 +85,10 @@ define [
         removeListener: removeSocketListener
         canReconnect: true
         disconnectRetryTimer: null
+        request: requestAction
       #
       # REST calls
       #
-        request: requestAction
         get: (url, data, cb) ->
           @request url, data, cb, "get"
 

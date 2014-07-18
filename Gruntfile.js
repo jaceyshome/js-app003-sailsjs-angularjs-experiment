@@ -132,7 +132,7 @@ module.exports = function (grunt) {
           { '.tmp/public/linker/src/lib/jquery.js': './bower_components/jquery/dist/jquery.js' },
           { '.tmp/public/linker/src/lib/angular.js': './bower_components/angular/angular.js' },
           { '.tmp/public/linker/src/lib/bootstrap.js': './bower_components/bootstrap/dist/js/bootstrap.js' },
-          { '.tmp/public/linker/src/lib/socket.io.js':         './bower_components/socket.io-client/socket.io.js' },
+          { '.tmp/public/linker/src/lib/socket.io.js':         './assets/src/lib/socket.io.js' },
           { '.tmp/public/linker/src/lib/angular-animate.js': './bower_components/angular-animate/angular-animate.js' },
           { '.tmp/public/linker/src/lib/angular-resource.js': './bower_components/angular-resource/angular-resource.js' },
           { '.tmp/public/linker/src/lib/angular-sanitize.js': './bower_components/angular-sanitize/angular-sanitize.js' },

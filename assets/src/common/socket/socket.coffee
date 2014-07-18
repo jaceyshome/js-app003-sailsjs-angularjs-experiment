@@ -10,4 +10,5 @@ define [
     })
     $log.debug("Connecting to Sails.js...")
 
+#    service
     service.connect()
