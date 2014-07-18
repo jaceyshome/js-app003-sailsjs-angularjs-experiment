@@ -5,7 +5,9 @@ define [
     'common.sailsio'
   ]
   module.factory 'Socket', (SailsIo, $log)->
-    service = SailsIo({ reconnectionAttempts: 10 })
+    service = SailsIo({
+      reconnectionAttempts: 10
+    })
     $log.debug("Connecting to Sails.js...")
 
     service.connect()

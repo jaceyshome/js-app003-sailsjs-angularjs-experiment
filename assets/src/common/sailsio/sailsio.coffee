@@ -1,22 +1,8 @@
-#
-# * Remixed from:
-# *
-# *   angular-socket-io v0.3.0
-# *   (c) 2014 Brian Ford http://briantford.com
-# *   License: MIT
-# *
-# * ...and...
-# *
-# *   sails.io.js v0.9.8
-# *   (c) 2012-2014 Mike McNeil http://sailsjs.org/
-# *   License: MIT
-#
-
 define [
   'angular'
   'angular_resource'
   'app/config'
-], ()->
+], (angular) ->
   appModule = angular.module 'common.sailsio', []
   appModule.factory "SailsIo", ($rootScope, $http, $timeout, $location, $log) ->
 
@@ -156,6 +142,8 @@ define [
           @canReconnect = true
           @addRetryListeners()
           this
+
+
       #
       # Custom retry logic
       #
@@ -189,6 +177,7 @@ define [
                 if attempts < sailsSocket.options.reconnectionAttempts
                   retry()
                 else
+
                   # send failure event
                   $log.error "SailsSocket::failure"
                   $rootScope.$broadcast sailsSocket.options.eventPrefix + "failure"
@@ -200,6 +189,7 @@ define [
 
           retry()  if attempts < sailsSocket.options.reconnectionAttempts
           return
+
 
       # *error* occurs when the initial connection fails.
         onError: ->
@@ -214,6 +204,7 @@ define [
           $log.debug "SailsSocket::connected"
           return
 
-      sailsSocket
+
+
 
     service
