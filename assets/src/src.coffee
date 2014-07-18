@@ -10,7 +10,7 @@ requirejs.config
     angular_ui_router: "lib/angular-ui-router"
     angular_sanitize: "lib/angular-sanitize"
     angular_animate: "lib/angular-animate"
-    angular_socket_io: "lib/angular-socket.io"
+    angular_socket_io: "lib/angular-sails.io"
   shim:
     angular:
       deps: ['jquery']

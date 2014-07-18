@@ -10,6 +10,7 @@ define [
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
   'common/noteboard/noteboard'
+  'common/socket/socket'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/login/login-ctrl'
@@ -25,12 +26,13 @@ define [
     'common.fieldmatch.directive'
     'common.message.service'
     'common.noteboard'
+    'common.socket'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/login')
 
-  module.controller 'MainCtrl', ($scope, $rootScope, $state) ->
+  module.controller 'MainCtrl', ($scope, $rootScope, $state, Socket) ->
     #-------------------------------------------------------- public variables
     $scope.ready = true
     $scope.messages = []
@@ -38,6 +40,7 @@ define [
     #-------------------------------------------------------private functions
     init = ->
       registerEventListeners()
+      console.log "Socket",Socket
 
     registerEventListeners = ->
       $scope.$on("ERR_MSG", (e, data)->
