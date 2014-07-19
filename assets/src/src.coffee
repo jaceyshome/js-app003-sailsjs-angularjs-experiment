@@ -9,9 +9,16 @@ requirejs.config
     angular_ui_router: "lib/angular-ui-router"
     angular_sanitize: "lib/angular-sanitize"
     angular_animate: "lib/angular-animate"
+    socket_io: "lib/socket.io"
+    angular_sails: "lib/angular-sails.io"
   shim:
+    socket_io:
+      exports: 'socket_io'
+    angular_sails:
+      deps: ['jquery', 'angular']
+      exports: 'angular_sails'
     angular:
-      deps: ['jquery']
+      deps: ['jquery', 'socket_io']
       exports: 'angular'
     bootstrap:
       deps: ['jquery']
@@ -30,10 +37,11 @@ requirejs.config
       exports: 'angular_animate'
 
 define [
+  'socket_io'
   'angular'
   'angular_resource'
   'angular_ui_router'
   'app/app'
-  ], (angular, jquery) ->
+  ], (socket_io,angular, jquery) ->
   return angular.element(document).ready ->
     angular.bootstrap document, ['app']

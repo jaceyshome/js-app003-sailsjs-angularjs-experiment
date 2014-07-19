@@ -10,8 +10,7 @@ define [
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
   'common/noteboard/noteboard'
-  'common/sailsio/sailsio'
-  'common/socket/socket'
+  'common/sailssocket/sailssocket'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/login/login-ctrl'
@@ -27,14 +26,13 @@ define [
     'common.fieldmatch.directive'
     'common.message.service'
     'common.noteboard'
-    'common.sailsio'
-    'common.socket'
+    'common.sailssocket'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/login')
 
-  module.controller 'MainCtrl', ($scope, $rootScope, $state, Socket) ->
+  module.controller 'MainCtrl', ($scope, $rootScope, $state, SailsSocket) ->
     #-------------------------------------------------------- public variables
     $scope.ready = true
     $scope.messages = []
@@ -42,11 +40,20 @@ define [
     #-------------------------------------------------------private functions
     init = ->
       registerEventListeners()
-      console.log "Socket",Socket
+      registerSocketEvents()
 
     registerEventListeners = ->
       $scope.$on("ERR_MSG", (e, data)->
         handleErrorMsg(data)
+      )
+
+    registerSocketEvents = ->
+      SailsSocket.get('connect', ()->
+        console.log "APP Socket Connect"
+        SailsSocket.get('/user/subscribe')
+      )
+      SailsSocket.get('/user', (req)->
+        console.log "socket get user", req
       )
 
     clearMessages = ->
