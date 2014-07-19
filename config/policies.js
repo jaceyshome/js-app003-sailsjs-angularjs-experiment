@@ -23,17 +23,17 @@ module.exports.policies = {
     'all': 'isAuthenticated',
     'update': 'isAuthenticated',
     'destroy': 'isAuthenticated'
-  },
-
-  RestErrorController: {
-    unauthorized: 'isAuthorized',
-    forbidden:    false           // Acts oddly in socket mode?
-  },
-
-  PassportAuthController: {
-    '*': true,
-    protected: 'isPassportAuthenticated'
   }
+
+//  RestErrorController: {
+//    unauthorized: 'isAuthorized',
+//    forbidden:    false           // Acts oddly in socket mode?
+//  },
+//
+//  PassportAuthController: {
+//    '*': true,
+//    protected: 'isPassportAuthenticated'
+//  }
 
   /*
 	// Here's an example of adding some policies to a controller

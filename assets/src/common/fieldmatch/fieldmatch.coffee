@@ -8,7 +8,6 @@ define [
     require: "?ngModel"
     link: ($scope, element, attrs, ctrl) ->
       init = ->
-        console.log "init field match"
         if !ctrl then return #if ngModel is not defined, do nothing
         ctrl.$parsers.unshift(validator)
         ctrl.$formatters.push(validator)

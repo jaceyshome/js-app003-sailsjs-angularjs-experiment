@@ -59,6 +59,13 @@ module.exports = (function(){
       name: req.param('name'),
       email: req.param('email')
     };
+    console.log("req.socket", req.socket);
+    User.subscribe( req.socket );
+    User.publishUpdate(req.param('id'), {
+      loggedIn: true,
+      id: req.param('id')
+    });
+    console.log("here", req.param('id'));
     User.update(req.param('id'), userObj, function userUpdated(err) {
       if (err) {
         return next(err);

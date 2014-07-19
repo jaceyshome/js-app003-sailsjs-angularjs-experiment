@@ -15,7 +15,7 @@ requirejs.config
     socket_io:
       exports: 'socket_io'
     angular_sails:
-      deps: ['jquery', 'angular']
+      deps: ['jquery', 'angular', 'socket_io']
       exports: 'angular_sails'
     angular:
       deps: ['jquery', 'socket_io']
@@ -41,6 +41,7 @@ define [
   'angular'
   'angular_resource'
   'angular_ui_router'
+  'angular_sails'
   'app/app'
   ], (socket_io,angular, jquery) ->
   return angular.element(document).ready ->

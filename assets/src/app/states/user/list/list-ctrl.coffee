@@ -3,7 +3,7 @@ define [
   'app/states/user/user-service'
 ], ->
   module = angular.module 'app.states.user'
-  module.controller 'UserListCtrl', ($scope, $state, UsersData, UserService) ->
+  module.controller 'UserListCtrl', ($scope, $state, UsersData, UserService, SailsSocket) ->
     #------------------------------------------------------------public functions
     $scope.users = UsersData
 

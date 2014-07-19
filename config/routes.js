@@ -41,7 +41,7 @@ module.exports.routes = {
   '/user/list':{view:'app'},
   '/user/details/:id':{view:'app'},
   '/user/edit/:id':{view:'app'},
-  '/home':{view:'app'},
+  '/home':{view:'app'}
 //  '/rest-examples': {
 //    view: 'main/rest'
 //  },
@@ -50,10 +50,10 @@ module.exports.routes = {
   //
   // Passport Auth Routes
   //
-  'get /login':  'PassportAuthController.login',
-  'post /login': 'PassportAuthController.loginProcess',
-  '/logout':     'PassportAuthController.logout',
-  '/protected':  'PassportAuthController.protected'
+//  'get /login':  'PassportAuthController.login',
+//  'post /login': 'PassportAuthController.loginProcess',
+//  '/logout':     'PassportAuthController.logout',
+//  '/protected':  'PassportAuthController.protected'
 
   /*
   // But what if you want your home page to display

@@ -30,7 +30,7 @@ define [
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
-    $urlRouterProvider.otherwise('/login')
+    $urlRouterProvider.otherwise('/')
 
   module.controller 'MainCtrl', ($scope, $rootScope, $state, SailsSocket) ->
     #-------------------------------------------------------- public variables
@@ -40,20 +40,11 @@ define [
     #-------------------------------------------------------private functions
     init = ->
       registerEventListeners()
-      registerSocketEvents()
+#      registerSocketEvents()
 
     registerEventListeners = ->
       $scope.$on("ERR_MSG", (e, data)->
         handleErrorMsg(data)
-      )
-
-    registerSocketEvents = ->
-      SailsSocket.get('connect', ()->
-        console.log "APP Socket Connect"
-        SailsSocket.get('/user/subscribe')
-      )
-      SailsSocket.get('/user', (req)->
-        console.log "socket get user", req
       )
 
     clearMessages = ->
@@ -65,7 +56,6 @@ define [
       $scope.messages.push data
       console.log "handle errMsg", $scope.messages
       clearMessages()
-
 
     #--------------------------------------------------------- init()
     init()

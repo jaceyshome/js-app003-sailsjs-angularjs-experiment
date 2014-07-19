@@ -22,7 +22,7 @@ module.exports = {
           console.log("Password is wrong.");
           return next(err);
         }
-        req.session.cookie.expires = new Date((new Date()).getTime() + 60000);
+        req.session.cookie.expires = new Date((new Date()).getTime() + 600000);
         req.session.authenticated = true;
         req.session.User = user;
         user.online = true;
