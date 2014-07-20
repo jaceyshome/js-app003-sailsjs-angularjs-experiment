@@ -30,10 +30,12 @@ module.exports = (function(){
         if(err){
           return next(err);
         }
-        User.publishUpdate(user.id,{
-          loggedIn: true,
-          id:user.id
-        });
+        User.publishCreate({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          online: true
+        }, req.socket);
         res.json(user);
       });
     });
@@ -59,13 +61,10 @@ module.exports = (function(){
       name: req.param('name'),
       email: req.param('email')
     };
-    console.log("req.socket", req.socket);
-    User.subscribe( req.socket );
     User.publishUpdate(req.param('id'), {
       loggedIn: true,
       id: req.param('id')
     });
-    console.log("here", req.param('id'));
     User.update(req.param('id'), userObj, function userUpdated(err) {
       if (err) {
         return next(err);
@@ -80,6 +79,7 @@ module.exports = (function(){
       if(!user){return next("User doesn\'t exist.");}
       User.destroy(req.param('id'), function userDestroyed(err){
         if(err){ return next(err); }
+        User.publishDestroy(req.param('id'), req.socket);
       });
       res.json('1');
     });
