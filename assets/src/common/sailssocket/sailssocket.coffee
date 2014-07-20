@@ -7,17 +7,21 @@ define [
   ]
   module.factory 'SailsSocket', (sailsSocketFactory, $q, $log )->
     firstRun = true
-
     service = {}
 
     service.init = ->
       deferred = $q.defer()
-      return unless firstRun
+      return deferred.resolve service.io unless firstRun
       service.io = sailsSocketFactory({
         reconnectionAttempts: 10
       })
       $log.debug("Connecting to Sails.js...")
+      firstRun = false
       service.io.connect()
+      .then (result)->
+        deferred.resolve result
+      .catch ->
+        deferred.resolve null
       deferred.promise
 
     service

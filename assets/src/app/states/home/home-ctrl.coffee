@@ -2,7 +2,7 @@ define [
   'app/states/home/home-module'
 ], ->
   module = angular.module 'app.states.home'
-  module.controller 'HomeCtrl', ($scope, UsersData, SailsSocket) ->
+  module.controller 'HomeCtrl', ($scope, UsersData, SailsSocketIO) ->
     # -------------------------------------------------------------------------------- $scope Variables
 
     # -------------------------------------------------------------------------------- Private Variables
@@ -15,16 +15,16 @@ define [
     # -------------------------------------------------------------------------------- $scope Functions
     $scope.edit = (user)->
       console.log "edit user", user
-      SailsSocket.put('/user/update' + user.id, user)
+      SailsSocketIO.put('/user/update' + user.id, user)
 
     $scope.$on 'sailsSocket:message', (ev, data)->
       console.log "data!!!!!!!!!!", data
 
-    SailsSocket.get('/user/subscribe')
+    SailsSocketIO.get('/user/subscribe')
 
-    SailsSocket.on('message', (msg)->
+    SailsSocketIO.on('message', (msg)->
       console.log "receive msg", msg
-    );
+    )
 
     # -------------------------------------------------------------------------------- Private Functions
 

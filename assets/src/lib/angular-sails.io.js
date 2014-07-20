@@ -15,7 +15,7 @@
  */
 
 angular.module('sails.io', [])
-  .factory('sailsSocketFactory', function($rootScope, $http, $timeout, $location, $log) {
+  .factory('sailsSocketFactory', function($rootScope, $http, $timeout, $location, $log, $q) {
 
     var optionDefaults = {
       url: $location.path(),
@@ -100,6 +100,7 @@ angular.module('sails.io', [])
     }
 
     return function sailsSocketFactory (options) {
+      var deferred = $q.defer();
       var sailsSocket = {
         options:        angular.extend({}, optionDefaults, options),
         ioSocket:       null,
@@ -162,12 +163,11 @@ angular.module('sails.io', [])
         connect: function(options) {
           if (this.ioSocket) this.disconnect();
           angular.extend(this.options, options);
-
           this.ioSocket = io.connect(this.options.url, { reconnect: false });
           this.forward(this.options.eventForwards);
           this.canReconnect = true;
           this.addRetryListeners();
-          return this;
+          return deferred.promise;
         },
 
         //
@@ -208,19 +208,20 @@ angular.module('sails.io', [])
                 });
             }, sailsSocket.options.reconnectionDelay(attempts++));
           };
-
           if (attempts < sailsSocket.options.reconnectionAttempts) retry();
         },
 
         // *error* occurs when the initial connection fails.
         onError: function() {
           $timeout(function() {
+            deferred.reject('SailsSocket connected failure');
             $log.error('SailsSocket::failure');
             $rootScope.$broadcast(sailsSocket.options.eventPrefix + 'failure');
           }, 0);
         },
 
         onConnect: function() {
+          deferred.resolve(sailsSocket);
           $log.debug('SailsSocket::connected');
         }
       };
