@@ -5,10 +5,19 @@ define [
   module = angular.module 'common.sailssocket', [
     'sails.io'
   ]
-  module.factory 'SailsSocket', (sailsSocketFactory, $log )->
-    service = sailsSocketFactory({
-      reconnectionAttempts: 10
-    })
-    $log.debug("Connecting to Sails.js...")
+  module.factory 'SailsSocket', (sailsSocketFactory, $q, $log )->
+    firstRun = true
 
-    service.connect()
+    service = {}
+
+    service.init = ->
+      deferred = $q.defer()
+      return unless firstRun
+      service.io = sailsSocketFactory({
+        reconnectionAttempts: 10
+      })
+      $log.debug("Connecting to Sails.js...")
+      service.io.connect()
+      deferred.promise
+
+    service
