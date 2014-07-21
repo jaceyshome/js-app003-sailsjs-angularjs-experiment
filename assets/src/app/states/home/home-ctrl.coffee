@@ -10,7 +10,6 @@ define [
 
     # -------------------------------------------------------------------------------- init
     init = () ->
-      registerSocketIOSubscribes()
       registerSocketEventListeners()
 
     # -------------------------------------------------------------------------------- $scope Functions
@@ -18,9 +17,6 @@ define [
       undefined
 
     # -------------------------------------------------------------------------------- Private Functions
-    registerSocketIOSubscribes = ->
-      SailsSocketIO.get('/user/subscribe')
-
     registerSocketEventListeners = ->
       #angular way
       #$scope.$on 'sailsSocket:message', (ev, data)->

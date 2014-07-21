@@ -90,8 +90,11 @@ module.exports = (function(){
     User.find(function foundUsers(err, users) {
       if (err) return next(err);
       // subscribe this socket to the User model classroom
+      //User.publishCreate
       User.subscribe(req.socket);
       // subscribe this socket to the user instance rooms
+      //User.publishDestroy
+      //User.publishUpdate
       User.subscribe(req.socket, users);
       // This will avoid a warning from the socket for trying to render
       // html over the socket.
