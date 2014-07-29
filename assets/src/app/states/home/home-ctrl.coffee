@@ -2,7 +2,7 @@ define [
   'app/states/home/home-module'
 ], ->
   module = angular.module 'app.states.home'
-  module.controller 'HomeCtrl', ($scope, UsersData, SailsSocketIO) ->
+  module.controller 'HomeCtrl', ($scope, UsersData, SailsSocketIO, UserService) ->
     # -------------------------------------------------------------------------------- $scope Variables
     $scope.users = UsersData
 
@@ -14,10 +14,13 @@ define [
 
     # -------------------------------------------------------------------------------- $scope Functions
     $scope.edit = (user)->
+      UserService.updateUser(user)
       undefined
 
     # -------------------------------------------------------------------------------- Private Functions
     registerSocketEventListeners = ->
+      #get the subscribed users message
+      SailsSocketIO.get('/user/subscribe')
       #angular way
       #$scope.$on 'sailsSocket:message', (ev, data)->
       SailsSocketIO.on('message', (msg)->
