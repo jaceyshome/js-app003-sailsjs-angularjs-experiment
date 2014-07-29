@@ -24,7 +24,7 @@ define [
     #-------------------------------------------------------------scope functions
     $scope.handleSumbit = ->
       return unless validateForm($scope.user)
-      UserService.udpateUser($scope.user)
+      UserService.updateUser($scope.user)
 
     #-------------------------------------------------------------------- init()
     init()

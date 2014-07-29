@@ -53,7 +53,7 @@ define [
         deferred.resolve null
       deferred.promise
 
-    service.udpateUser = (user)->
+    service.updateUser = (user)->
       deferred = $q.defer()
       CSRF.get().then (data)->
         editingUser =
