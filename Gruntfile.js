@@ -196,6 +196,17 @@ module.exports = function (grunt) {
           sourceMap:true,
           bare:true
         }
+      },
+      testSrc:{
+        expand: true,
+        cwd:"test_src",
+        src:["**/*.coffee"],
+        dest:"test/",
+        ext:".js",
+        options:{
+          sourceMap:true,
+          bare:true
+        }
       }
     },
     coffeelint: {
@@ -478,6 +489,10 @@ module.exports = function (grunt) {
         files: ['assets/src/**/*'],
         // When assets are changed:
         tasks: ['watchAssets', 'linkAssets']
+      },
+      test:{
+        files: ['test_src/*'],
+        tasks:['watchTest']
       }
     }
   });
@@ -507,6 +522,11 @@ module.exports = function (grunt) {
     'buildJade',
     'copy:dev'
   ]);
+
+  grunt.registerTask('buildTest',['coffee:testSrc','coffeelint']);
+
+  grunt.registerTask('watchTest',['newer:coffee:testSrc', 'coffeelint']);
+
   // Update link/script/template references in `assets` index.html
   grunt.registerTask('linkAssets', [
     'sails-linker:devJs',
@@ -522,8 +542,10 @@ module.exports = function (grunt) {
     'clean:build',
     'buildAssets',
     'linkAssets',
-    'copy:build'
+    'copy:build',
+    'buildTest'
   ]);
+
   // When sails is lifted in production
   grunt.registerTask('prod', [
     'buildAssets',
@@ -538,6 +560,8 @@ module.exports = function (grunt) {
     'sails-linker:prodStylesJADE',
     'sails-linker:devTplJADE'
   ]);
+
+
 
   // When API files are changed:
   // grunt.event.on('watch', function(action, filepath) {
