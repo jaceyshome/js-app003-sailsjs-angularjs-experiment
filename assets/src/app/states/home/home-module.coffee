@@ -22,11 +22,3 @@ define [
           .catch ->
             deferred.resolve null
           deferred.promise
-        SailsSocketIO: ($q, SailsSocket) ->
-          deferred = $q.defer()
-          SailsSocket.init()
-          .then (result)->
-            deferred.resolve result
-          .catch ->
-            deferred.resolve null
-          deferred.promise

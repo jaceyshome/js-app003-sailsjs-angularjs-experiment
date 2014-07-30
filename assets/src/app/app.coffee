@@ -39,8 +39,18 @@ define [
 
     #-------------------------------------------------------private functions
     init = ->
+      initSocketIO()
       registerEventListeners()
-#      registerSocketEvents()
+
+    initSocketIO = ->
+      SailsSocket.init()
+      .then (result)->
+          registerSocketEventListeners()
+      .catch ->
+          handleErrorMsg({msg:"fail to connected to socketIO"})
+
+    registerSocketEventListeners = ->
+      SailsSocket.io.get('/user/subscribe')
 
     registerEventListeners = ->
       $scope.$on("ERR_MSG", (e, data)->
