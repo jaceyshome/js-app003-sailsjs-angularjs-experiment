@@ -200,9 +200,9 @@ module.exports = function (grunt) {
       testSrc:{
         expand: true,
         cwd:"test_src",
-        src:["**/*.coffee"],
+        src:["**/*.spec.coffee"],
         dest:"test/",
-        ext:".js",
+        ext:".spec.js",
         options:{
           sourceMap:true,
           bare:true
@@ -494,10 +494,24 @@ module.exports = function (grunt) {
         files: ['test_src/*'],
         tasks:['watchTest']
       }
+    },
+
+    mocha_istanbul: {
+      coverage: {
+        src: 'test', // the folder, not the files
+        options: {
+          coverageFolder: 'coverage',
+          mask: '**/*.spec.js',
+          root: 'api/'
+        }
+      }
     }
+
+
   });
 
   //----------------------------------------------------------------------------------------------------------base tasks
+  grunt.loadNpmTasks('grunt-mocha-istanbul');
   grunt.registerTask('watchCoffee',['newer:coffee:dev', 'coffeelint']);
   grunt.registerTask('watchLess',['newer:less:dev', 'lesslint']);
   grunt.registerTask('watchJade',['jade:dev','ngtemplates']);
@@ -523,9 +537,17 @@ module.exports = function (grunt) {
     'copy:dev'
   ]);
 
-  grunt.registerTask('buildTest',['coffee:testSrc','coffeelint']);
+  grunt.registerTask('buildTest',[
+    'coffee:testSrc',
+    'coffeelint',
+    'mocha_istanbul:coverage'
+  ]);
 
-  grunt.registerTask('watchTest',['newer:coffee:testSrc', 'coffeelint']);
+  grunt.registerTask('watchTest',[
+    'newer:coffee:testSrc',
+    'coffeelint',
+    'mocha_istanbul:coverage'
+  ]);
 
   // Update link/script/template references in `assets` index.html
   grunt.registerTask('linkAssets', [

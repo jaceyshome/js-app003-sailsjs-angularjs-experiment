@@ -45,9 +45,9 @@ define [
     initSocketIO = ->
       SailsSocket.init()
       .then (result)->
-          registerSocketEventListeners()
+        registerSocketEventListeners()
       .catch ->
-          handleErrorMsg({msg:"fail to connected to socketIO"})
+        handleErrorMsg({msg:"fail to connected to socketIO"})
 
     registerSocketEventListeners = ->
       SailsSocket.io.get('/user/subscribe')
