@@ -197,7 +197,7 @@ module.exports = function (grunt) {
           bare:true
         }
       },
-      testSrc:{
+      test:{
         expand: true,
         cwd:"test_src",
         src:["**/*.spec.coffee"],
@@ -491,7 +491,7 @@ module.exports = function (grunt) {
         tasks: ['watchAssets', 'linkAssets']
       },
       test:{
-        files: ['test_src/*'],
+        files:['test_src/**/*'],
         tasks:['watchTest']
       }
     },
@@ -506,8 +506,6 @@ module.exports = function (grunt) {
         }
       }
     }
-
-
   });
 
   //----------------------------------------------------------------------------------------------------------base tasks
@@ -521,7 +519,6 @@ module.exports = function (grunt) {
 
   //-----------------------------------------------------------------------------------------------When Sails is lifted:
   grunt.registerTask('default', [
-    'watch'
   ]);
 
   grunt.registerTask('watchAssets', [
@@ -538,13 +535,13 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('buildTest',[
-    'coffee:testSrc',
+    'coffee:test',
     'coffeelint',
     'mocha_istanbul:coverage'
   ]);
 
   grunt.registerTask('watchTest',[
-    'newer:coffee:testSrc',
+    'coffee:test',
     'coffeelint',
     'mocha_istanbul:coverage'
   ]);
