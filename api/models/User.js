@@ -14,13 +14,6 @@ module.exports = {
     email:{type:'string', email:true, required:true, maxLength: 100},
     password:{type:'string', required:true, maxLength: 100},
     online:{type:'boolean', defaultsTo: false}
-//    toJSON: function(){
-//      var obj = this.toObject();
-//      delete obj.encryptedPassword;
-//      delete obj.confirmation;
-//      delete obj._csrf;
-//      return obj;
-//    }
   },
   beforeCreate: function(values, next){
     if (!values.password) {
