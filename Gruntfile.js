@@ -489,11 +489,11 @@ module.exports = function (grunt) {
         files: ['assets/src/**/*'],
         // When assets are changed:
         tasks: ['watchAssets', 'linkAssets']
-      },
-      test:{
-        files:['test_src/**/*'],
-        tasks:['watchTest']
       }
+//      test:{
+//        files:['test_src/**/*'],
+//        tasks:['watchTest']
+//      }
     },
 
     mocha_istanbul: {
@@ -509,7 +509,7 @@ module.exports = function (grunt) {
   });
 
   //----------------------------------------------------------------------------------------------------------base tasks
-  grunt.loadNpmTasks('grunt-mocha-istanbul');
+//  grunt.loadNpmTasks('grunt-mocha-istanbul');
   grunt.registerTask('watchCoffee',['newer:coffee:dev', 'coffeelint']);
   grunt.registerTask('watchLess',['newer:less:dev', 'lesslint']);
   grunt.registerTask('watchJade',['jade:dev','ngtemplates']);
@@ -534,17 +534,17 @@ module.exports = function (grunt) {
     'copy:dev'
   ]);
 
-  grunt.registerTask('buildTest',[
-    'coffee:test',
-    'coffeelint',
-    'mocha_istanbul:coverage'
-  ]);
+//  grunt.registerTask('buildTest',[
+//    'coffee:test',
+//    'coffeelint',
+//    'mocha_istanbul:coverage'
+//  ]);
 
-  grunt.registerTask('watchTest',[
-    'coffee:test',
-    'coffeelint',
-    'mocha_istanbul:coverage'
-  ]);
+//  grunt.registerTask('watchTest',[
+//    'coffee:test',
+//    'coffeelint',
+//    'mocha_istanbul:coverage'
+//  ]);
 
   // Update link/script/template references in `assets` index.html
   grunt.registerTask('linkAssets', [
@@ -561,8 +561,8 @@ module.exports = function (grunt) {
     'clean:build',
     'buildAssets',
     'linkAssets',
-    'copy:build',
-    'buildTest'
+    'copy:build'
+//    'buildTest'
   ]);
 
   // When sails is lifted in production
