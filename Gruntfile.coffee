@@ -86,7 +86,6 @@ module.exports = (grunt) ->
 
     jst:
       dev:
-
       # To use other sorts of templates (mustache), specify the regexp below:
       #        options: {
       #           templateSettings: {
@@ -106,7 +105,6 @@ module.exports = (grunt) ->
         options:
           sourceMap: true
           bare: true
-
       prod:
         expand: true
         cwd: "assets"
@@ -128,14 +126,12 @@ module.exports = (grunt) ->
       dev:
         files:
           ".tmp/public/linker/styles/style.css": "assets/src/src.less"
-
         options:
           sourceMap: true
 
       prod:
         files:
           ".tmp/public/linker/styles/style.css": "assets/src/src.less"
-
         options:
           sourceMap: false
           cleancss: true
@@ -160,7 +156,6 @@ module.exports = (grunt) ->
         ext: ".html"
         options:
           pretty: true
-
       prod:
         expand: true
         cwd: "assets/src"
@@ -172,7 +167,6 @@ module.exports = (grunt) ->
           data:
             deploy: true
 
-
   #----------------------------------------------------------------------------------------------
     ngtemplates:
       dev:
@@ -183,7 +177,6 @@ module.exports = (grunt) ->
           module: "app"
           bootstrap: (module, script) ->
             "define(['angular'], function() {angular.module('templates', []).run([ '$templateCache', function($templateCache) {" + script + "} ]);});"
-
           htmlmin:
             collapseBooleanAttributes: true
             collapseWhitespace: true
@@ -193,10 +186,8 @@ module.exports = (grunt) ->
             removeRedundantAttributes: true
             removeScriptTypeAttributes: true
             removeStyleLinkTypeAttributes: true
-
           url: (url) ->
             url.replace ".html", ""
-
 
   #    requirejs: {
   #      main: {
@@ -223,7 +214,6 @@ module.exports = (grunt) ->
       js:
         src: jsFilesToInject
         dest: ".tmp/public/concat/production.js"
-
       css:
         src: cssFilesToInject
         dest: ".tmp/public/concat/production.css"
@@ -232,7 +222,6 @@ module.exports = (grunt) ->
       dist:
         src: [ ".tmp/public/concat/production.js" ]
         dest: ".tmp/public/min/production-<%= pkg.version %>.js"
-
       options:
         mangle: false
 
@@ -250,7 +239,6 @@ module.exports = (grunt) ->
           endTag: "<!--SCRIPTS END-->"
           fileTmpl: "<script src=\"%s\"></script>"
           appRoot: ".tmp/public"
-
         files:
           ".tmp/public/**/*.html": jsFilesToInject
           "views/**/*.html": jsFilesToInject
@@ -262,7 +250,6 @@ module.exports = (grunt) ->
           endTag: "<!--SCRIPTS END-->"
           fileTmpl: "<script src=\"%s\"></script>"
           appRoot: ".tmp/public"
-
         files:
           ".tmp/public/**/*.html": [ ".tmp/public/min/production-<%= pkg.version %>.js" ]
           "views/**/*.html": [ ".tmp/public/min/production-<%= pkg.version %>.js" ]
@@ -274,9 +261,6 @@ module.exports = (grunt) ->
           endTag: "<!--STYLES END-->"
           fileTmpl: "<link rel=\"stylesheet\" href=\"%s\">"
           appRoot: ".tmp/public"
-
-
-      # cssFilesToInject defined up top
         files:
           ".tmp/public/**/*.html": cssFilesToInject
           "views/**/*.html": cssFilesToInject
@@ -288,12 +272,10 @@ module.exports = (grunt) ->
           endTag: "<!--STYLES END-->"
           fileTmpl: "<link rel=\"stylesheet\" href=\"%s\">"
           appRoot: ".tmp/public"
-
         files:
           ".tmp/public/index.html": [ ".tmp/public/min/production-<%= pkg.version %>.css" ]
           "views/**/*.html": [ ".tmp/public/min/production-<%= pkg.version %>.css" ]
           "views/**/*.ejs": [ ".tmp/public/min/production-<%= pkg.version %>.css" ]
-
 
     # Bring in JST template object
       devTpl:
@@ -302,12 +284,10 @@ module.exports = (grunt) ->
           endTag: "<!--TEMPLATES END-->"
           fileTmpl: "<script type=\"text/javascript\" src=\"%s\"></script>"
           appRoot: ".tmp/public"
-
         files:
           ".tmp/public/index.html": [ ".tmp/public/jst.js" ]
           "views/**/*.html": [ ".tmp/public/jst.js" ]
           "views/**/*.ejs": [ ".tmp/public/jst.js" ]
-
 
     #---------------------------------------------------------------------------js /css script embed into layout.jade
       devJsJADE:
@@ -316,7 +296,6 @@ module.exports = (grunt) ->
           endTag: "// SCRIPTS END"
           fileTmpl: "script(type=\"text/javascript\", src=\"%s\")"
           appRoot: ".tmp/public"
-
         files:
           "views/**/*.jade": jsFilesToInject
 
@@ -326,7 +305,6 @@ module.exports = (grunt) ->
           endTag: "// SCRIPTS END"
           fileTmpl: "script(type=\"text/javascript\", src=\"%s\")"
           appRoot: ".tmp/public"
-
         files:
           "views/**/*.jade": [ ".tmp/public/min/production-<%= pkg.version %>.js" ]
 
@@ -336,7 +314,6 @@ module.exports = (grunt) ->
           endTag: "// STYLES END"
           fileTmpl: "link(rel=\"stylesheet\", href=\"%s\")"
           appRoot: ".tmp/public"
-
         files:
           "views/**/*.jade": cssFilesToInject
 
@@ -346,38 +323,28 @@ module.exports = (grunt) ->
           endTag: "// STYLES END"
           fileTmpl: "link(rel=\"stylesheet\", href=\"%s\")"
           appRoot: ".tmp/public"
-
         files:
           "views/**/*.jade": [ ".tmp/public/min/production-<%= pkg.version %>.css" ]
 
-
-    # Bring in JST template object
       devTplJADE:
         options:
           startTag: "// TEMPLATES"
           endTag: "// TEMPLATES END"
           fileTmpl: "script(type=\"text/javascript\", src=\"%s\")"
           appRoot: ".tmp/public"
-
         files:
           "views/**/*.jade": [ ".tmp/public/jst.js" ]
-
 
   #-------------------------------------------------------------------------------------------------------watch tasks
     watch:
       api:
-
       # API files to watch:
         files: [ "api/**/*" ]
-
       assets:
-
       # Assets to watch:
         files: [ "assets/src/**/*" ]
-
       # When assets are changed:
         tasks: [ "watchAssets", "linkAssets" ]
-
 
   #----------------------------------------------------------------------------------------------------------base tasks
   grunt.registerTask "watchCoffee", [ "newer:coffee:dev", "coffeelint" ]
