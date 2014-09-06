@@ -340,7 +340,7 @@ module.exports = (grunt) ->
       options:
         keepAlive: true
         noColor: false
-        configFile: "node_modules/protractor/referenceConf.js"
+        configFile: "referenceConf.js"
       dev:
         options:
           args:
