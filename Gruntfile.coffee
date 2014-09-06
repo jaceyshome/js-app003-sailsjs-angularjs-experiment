@@ -1,4 +1,9 @@
 module.exports = (grunt) ->
+  #variables
+  #used by e2e to target a spec
+  spec = grunt.option('spec');
+  spec = "*" unless spec?
+
   cssFilesToInject = [ "linker/styles/style.css" ]
   jsFilesToInject = []
   templateFilesToInject = [ "linker/**/*.html" ]
@@ -12,7 +17,7 @@ module.exports = (grunt) ->
     "assets/" + path
   )
 
-  # --------------------------------------------------------------------Get path to core grunt dependencies from Sails
+  #--Get path to core grunt dependencies from Sails
   depsPath = grunt.option("gdsrc") or "node_modules/sails/node_modules"
   grunt.loadTasks depsPath + "/grunt-contrib-clean/tasks"
   grunt.loadTasks depsPath + "/grunt-contrib-copy/tasks"
@@ -23,17 +28,10 @@ module.exports = (grunt) ->
   grunt.loadTasks depsPath + "/grunt-contrib-uglify/tasks"
   grunt.loadTasks depsPath + "/grunt-contrib-cssmin/tasks"
 
-  #----------------------------------------------------------------------------------------------Packages for front end
-  grunt.loadNpmTasks "grunt-newer"
-  grunt.loadNpmTasks "grunt-contrib-less"
-  grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-jade"
-  grunt.loadNpmTasks "grunt-lesslint"
-  grunt.loadNpmTasks "grunt-coffeelint"
-  grunt.loadNpmTasks "grunt-requirejs-config"
-  grunt.loadNpmTasks "grunt-angular-templates"
+  #--Packages for front end
+  require('load-grunt-tasks')(grunt)
 
-  # ---------------------------------------------------------------------------------------------Project configuration.
+  #--Project configuration.
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
     copy:
@@ -44,7 +42,7 @@ module.exports = (grunt) ->
           src: [ "**/*" ]
           dest: ".tmp/public/linker/fonts"
         ,
-          #------------------------------------------------------------------------------------------libs configuration
+    #--libs configuration
           ".tmp/public/linker/src/lib/require.js": "./bower_components/requirejs/require.js"
         ,
           ".tmp/public/linker/src/lib/respond.min.js": "./bower_components/respond/dest/respond.min.js"
@@ -67,7 +65,6 @@ module.exports = (grunt) ->
         ,
           ".tmp/public/linker/src/lib/angular-ui-router.js": "./bower_components/angular-ui-router/release/angular-ui-router.js"
         ]
-
       prod:
         files: [
           expand: true
@@ -75,7 +72,6 @@ module.exports = (grunt) ->
           src: [ "**/*" ]
           dest: ".tmp/public/fonts"
         ]
-
       build:
         files: [
           expand: true
@@ -128,7 +124,6 @@ module.exports = (grunt) ->
           ".tmp/public/linker/styles/style.css": "assets/src/src.less"
         options:
           sourceMap: true
-
       prod:
         files:
           ".tmp/public/linker/styles/style.css": "assets/src/src.less"
@@ -167,7 +162,6 @@ module.exports = (grunt) ->
           data:
             deploy: true
 
-  #----------------------------------------------------------------------------------------------
     ngtemplates:
       dev:
         cwd: "templates"
@@ -203,13 +197,14 @@ module.exports = (grunt) ->
   #        }
   #      }
   #    },
-  #----------------------------------------------------------------------------------- clean config
+
+  #--clean config
     clean:
       templates: [ "templates" ]
       dev: [ ".tmp/public/**" ]
       build: [ "www" ]
 
-  #------------------------------------------------------------------------------------ optimization config
+  #--optimization config
     concat:
       js:
         src: jsFilesToInject
@@ -217,21 +212,18 @@ module.exports = (grunt) ->
       css:
         src: cssFilesToInject
         dest: ".tmp/public/concat/production.css"
-
     uglify:
       dist:
         src: [ ".tmp/public/concat/production.js" ]
         dest: ".tmp/public/min/production-<%= pkg.version %>.js"
       options:
         mangle: false
-
     cssmin:
       dist:
         src: [ ".tmp/public/concat/production.css" ]
         dest: ".tmp/public/min/production-<%= pkg.version %>.css"
 
-
-  #-----------------------------------------------------------------------------js /css script embed into layout.ejs
+  #--js /css script embed into layout.ejs
     "sails-linker":
       devJs:
         options:
@@ -243,7 +235,6 @@ module.exports = (grunt) ->
           ".tmp/public/**/*.html": jsFilesToInject
           "views/**/*.html": jsFilesToInject
           "views/**/*.ejs": jsFilesToInject
-
       prodJs:
         options:
           startTag: "<!--SCRIPTS-->"
@@ -254,7 +245,6 @@ module.exports = (grunt) ->
           ".tmp/public/**/*.html": [ ".tmp/public/min/production-<%= pkg.version %>.js" ]
           "views/**/*.html": [ ".tmp/public/min/production-<%= pkg.version %>.js" ]
           "views/**/*.ejs": [ ".tmp/public/min/production-<%= pkg.version %>.js" ]
-
       devStyles:
         options:
           startTag: "<!--STYLES-->"
@@ -265,7 +255,6 @@ module.exports = (grunt) ->
           ".tmp/public/**/*.html": cssFilesToInject
           "views/**/*.html": cssFilesToInject
           "views/**/*.ejs": cssFilesToInject
-
       prodStyles:
         options:
           startTag: "<!--STYLES-->"
@@ -289,7 +278,7 @@ module.exports = (grunt) ->
           "views/**/*.html": [ ".tmp/public/jst.js" ]
           "views/**/*.ejs": [ ".tmp/public/jst.js" ]
 
-    #---------------------------------------------------------------------------js /css script embed into layout.jade
+    #---js /css script embed into layout.jade
       devJsJADE:
         options:
           startTag: "// SCRIPTS"
@@ -335,7 +324,7 @@ module.exports = (grunt) ->
         files:
           "views/**/*.jade": [ ".tmp/public/jst.js" ]
 
-  #-------------------------------------------------------------------------------------------------------watch tasks
+  #--watch tasks
     watch:
       api:
       # API files to watch:
@@ -344,9 +333,40 @@ module.exports = (grunt) ->
       # Assets to watch:
         files: [ "assets/src/**/*" ]
       # When assets are changed:
-        tasks: [ "watchAssets", "linkAssets" ]
+        tasks: [ "concurrent:watch", "linkAssets" ]
 
-  #----------------------------------------------------------------------------------------------------------base tasks
+    #-protractor
+    protractor:
+      options:
+        keepAlive: true
+        noColor: false
+        configFile: "node_modules/protractor/referenceConf.js"
+      dev:
+        options:
+          args:
+            specs:
+              ["e2e/**/#{spec}-spec.coffee"]
+            params:
+              app:"http://localhost:1337/"
+              appRoot:"http://localhost:1337/"
+              mock:"http://localhost:1337/tasks/mock"
+              clean:"http://localhost:1337/tasks/clean"
+              logout:"http://localhost:1337/logout"
+
+    #--concurrent
+    concurrent:
+      watch:
+        tasks: ["watchAssets"]
+        options:
+          logConcurrentOutput: true
+          limit: 6
+      test:
+        tasks: ["watchAssets"]
+        options:
+          logConcurrentOutput: true
+          limit: 6
+
+  #--base tasks
   grunt.registerTask "watchCoffee", [ "newer:coffee:dev", "coffeelint" ]
   grunt.registerTask "watchLess", [ "newer:less:dev", "lesslint" ]
   grunt.registerTask "watchJade", [ "jade:dev", "ngtemplates" ]
@@ -354,15 +374,21 @@ module.exports = (grunt) ->
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
 
-  #-----------------------------------------------------------------------------------------------When Sails is lifted:
-  grunt.registerTask "default", [ "watch" ]
+  #--When Sails is lifted:
+  grunt.registerTask "default", [ "concurrent:watch" ]
   grunt.registerTask "watchAssets", [ "watchCoffee", "watchLess", "watchJade" ]
   grunt.registerTask "buildAssets", [ "clean:dev", "buildCoffee", "buildLess", "buildJade", "copy:dev" ]
   grunt.registerTask "linkAssets", [ "sails-linker:devJs", "sails-linker:devStyles", "sails-linker:devTpl", "sails-linker:devJsJADE", "sails-linker:devStylesJADE", "sails-linker:devTplJADE" ]
   grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build" ]
-
-  # When sails is lifted in production
-  grunt.registerTask "prod", [ "buildAssets", "copy:prod", "concat", "uglify", "cssmin", "sails-linker:prodJs", "sails-linker:prodStyles", "sails-linker:devTpl", "sails-linker:prodJsJADE", "sails-linker:prodStylesJADE", "sails-linker:devTplJADE" ]
+  grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat", "uglify", "cssmin" ]
+  grunt.registerTask 'e2e', ['build', 'protractor:dev']
+  grunt.registerTask 'e2e-all', [
+    'shell:protractor_webdriver_manager_update'
+    'buildOnce'
+    'protractor:dev'
+    'protractor:firefox'
+    'protractor:ie'
+  ]
 
 # When API files are changed:
 # grunt.event.on('watch', function(action, filepath) {

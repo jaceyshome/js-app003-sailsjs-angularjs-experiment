@@ -11,7 +11,7 @@
     "start": "node app.js",
     "debug": "node debug app.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "sails": "0.9.16",
     "sails-mysql": "0.9.10",
     "grunt": "0.4.2",
@@ -33,12 +33,12 @@
     "assert": "^1.1.1",
     "grunt-newer": "^0.7.0",
     "grunt-requirejs-config": "0.0.2",
+    "grunt-concurrent":"~1.0.0",
     "load-grunt-tasks": "~0.6.0",
     "load-grunt-config": "~0.12.0",
     "mocha": "^1.21.3",
     "should": "^4.0.4",
-    "sinon": "^1.10.3",
-    "protractor":"^1.1.1"
-    "grunt-mocha-protractor": "^0.5.2"
+    "protractor":"^1.1.1",
+    "grunt-protractor-runner":"~1.1.4"
   }
 }
