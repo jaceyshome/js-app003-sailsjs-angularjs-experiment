@@ -349,8 +349,8 @@ module.exports = (grunt) ->
             params:
               app:"http://localhost:1337/"
               appRoot:"http://localhost:1337/"
-              mock:"http://localhost:1337/tasks/mock"
-              clean:"http://localhost:1337/tasks/clean"
+#              mock:"http://localhost:1337/tasks/mock"
+#              clean:"http://localhost:1337/tasks/clean"
               logout:"http://localhost:1337/logout"
 
     #--concurrent
@@ -366,6 +366,10 @@ module.exports = (grunt) ->
           logConcurrentOutput: true
           limit: 6
 
+    shell:
+      startWebDriver:
+        command: "webdriver-manager start"
+
   #--base tasks
   grunt.registerTask "watchCoffee", [ "newer:coffee:dev", "coffeelint" ]
   grunt.registerTask "watchLess", [ "newer:less:dev", "lesslint" ]
@@ -375,13 +379,14 @@ module.exports = (grunt) ->
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
 
   #--When Sails is lifted:
-  grunt.registerTask "default", [ "concurrent:watch" ]
+  grunt.registerTask "default", ["concurrent:watch"]
   grunt.registerTask "watchAssets", [ "watchCoffee", "watchLess", "watchJade" ]
   grunt.registerTask "buildAssets", [ "clean:dev", "buildCoffee", "buildLess", "buildJade", "copy:dev" ]
   grunt.registerTask "linkAssets", [ "sails-linker:devJs", "sails-linker:devStyles", "sails-linker:devTpl", "sails-linker:devJsJADE", "sails-linker:devStylesJADE", "sails-linker:devTplJADE" ]
   grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build" ]
   grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat", "uglify", "cssmin" ]
-  grunt.registerTask 'e2e', ['build', 'protractor:dev']
+  grunt.registerTask 'e2e', ['protractor:dev']
+  grunt.registerTask 'wds', ["shell:startWebDriver"]
   grunt.registerTask 'e2e-all', [
     'shell:protractor_webdriver_manager_update'
     'buildOnce'

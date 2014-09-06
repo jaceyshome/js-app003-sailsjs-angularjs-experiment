@@ -39,6 +39,8 @@
     "mocha": "^1.21.3",
     "should": "^4.0.4",
     "protractor":"^1.1.1",
-    "grunt-protractor-runner":"~1.1.4"
+    "grunt-protractor-runner":"~1.1.4",
+    "chromedriver":"2.10.0-1",
+    "grunt-shell":"1.1.1"
   }
 }
