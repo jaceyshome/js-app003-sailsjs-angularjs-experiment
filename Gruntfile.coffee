@@ -340,15 +340,15 @@ module.exports = (grunt) ->
       options:
         keepAlive: true
         noColor: false
-        configFile: "referenceConf.js"
+        configFile: "protractorConf.js"
       dev:
         options:
           args:
             specs:
               ["e2e/**/#{spec}-spec.coffee"]
             params:
-              app:"http://localhost:1337/"
-              appRoot:"http://localhost:1337/"
+              app:"http://localhost:1337"
+              appRoot:"http://localhost:1337"
 #              mock:"http://localhost:1337/tasks/mock"
 #              clean:"http://localhost:1337/tasks/clean"
               logout:"http://localhost:1337/logout"

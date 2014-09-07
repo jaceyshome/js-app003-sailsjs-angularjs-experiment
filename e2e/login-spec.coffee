@@ -2,6 +2,7 @@ should = require "should"
 describe "login", ->
 
   ptor = null
+  path = "#{browser.params.app}/login"
   
   beforeEach ->
     ptor = protractor.getInstance()
@@ -11,7 +12,7 @@ describe "login", ->
 #    ptor.driver.get browser.params.clean
     
   it "should show a login error", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.model 'user.username').sendKeys 'fails'
     element(By.model 'user.password').sendKeys 'password'
     element(By.css '[data-ng-click="login()"]').click()
@@ -20,21 +21,21 @@ describe "login", ->
     alertDialog.accept()
 
   it "should login the app", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.model 'user.username').sendKeys 'username'
     element(By.model 'user.password').sendKeys 'password'
     element(By.css '[data-ng-click="login()"]').click()
     expect(element(By.css '.dashboard').getText()).toBeDefined()
 
   it "should login the app via email", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.model 'user.username').sendKeys 'test@test.com'
     element(By.model 'user.password').sendKeys 'password'
     element(By.css '[data-ng-click="login()"]').click()
     expect(element(By.css '.dashboard').getText()).toBeDefined()
 
   it "should already be logged in", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.model 'user.username').sendKeys 'username'
     element(By.model 'user.password').sendKeys 'password'
     element(By.css '[data-ng-click="login()"]').click()
@@ -43,12 +44,12 @@ describe "login", ->
     expect(element(By.css '.dashboard').getText()).toBeDefined()
 
   it "should got to the register screen", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.css '[data-ng-click="register()"]').click()
     expect(element(By.css '.title').getText()).toEqual "Register"
 
   it "should login the app via duplicate email", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.model 'user.username').sendKeys 'duplicate@test.com'
     element(By.model 'user.password').sendKeys 'password'
     element(By.css '[data-ng-click="login()"]').click()
@@ -59,7 +60,7 @@ describe "login", ->
       expect(element(By.css '.dashboard').getText()).toBeDefined()
 
   it "should cancel login the app via duplicate email", ->
-    browser.get "#{browser.params.app}"
+    browser.get path
     element(By.model 'user.username').sendKeys 'duplicate@test.com'
     element(By.model 'user.password').sendKeys 'password'
     element(By.css '[data-ng-click="login()"]').click()
