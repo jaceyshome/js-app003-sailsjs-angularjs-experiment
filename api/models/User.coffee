@@ -1,5 +1,5 @@
 module.exports =
-  tableName: "bd_user" #point to tableName
+  tableName: "Users" #point to tableName
   migrate: "safe"
   attributes:
     name:

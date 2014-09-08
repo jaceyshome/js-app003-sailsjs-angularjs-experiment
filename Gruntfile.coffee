@@ -42,12 +42,14 @@ module.exports = (grunt) ->
           src: [ "**/*" ]
           dest: ".tmp/public/linker/fonts"
         ,
-    #--libs configuration
+        #--libs configuration
           ".tmp/public/linker/src/lib/require.js": "./bower_components/requirejs/require.js"
         ,
           ".tmp/public/linker/src/lib/respond.min.js": "./bower_components/respond/dest/respond.min.js"
         ,
           ".tmp/public/linker/src/lib/jquery.js": "./bower_components/jquery/dist/jquery.js"
+        ,
+          ".tmp/public/linker/src/lib/angular-mocks.js": "./bower_components/angular-mocks/angular-mocks.js"
         ,
           ".tmp/public/linker/src/lib/angular.js": "./bower_components/angular/angular.js"
         ,

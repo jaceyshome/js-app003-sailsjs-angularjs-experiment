@@ -11,12 +11,16 @@ requirejs.config
     angular_animate: "lib/angular-animate"
     socket_io: "lib/socket.io"
     angular_sails: "lib/angular-sails.io"
+    angular_mocks: "lib/angular-mocks"
   shim:
     socket_io:
       exports: 'socket_io'
     angular_sails:
       deps: ['jquery', 'angular', 'socket_io']
       exports: 'angular_sails'
+    angular_mocks:
+      deps: ['jquery', 'angular']
+      exports: 'angular_mocks'
     angular:
       deps: ['jquery', 'socket_io']
       exports: 'angular'
@@ -39,6 +43,7 @@ requirejs.config
 define [
   'socket_io'
   'angular'
+  'angular_mocks'
   'angular_resource'
   'angular_ui_router'
   'angular_sails'

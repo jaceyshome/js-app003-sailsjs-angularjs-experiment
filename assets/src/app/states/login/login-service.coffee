@@ -2,7 +2,7 @@ define [
   'angular'
   'angular_resource'
   'app/config'
-], (angular,angular_resource,config, csrf) ->
+], (angular,angular_resource,config) ->
   appModule = angular.module 'app.states.login.service', [
     'common.csrf'
   ]
