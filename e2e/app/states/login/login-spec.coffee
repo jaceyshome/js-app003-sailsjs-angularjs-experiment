@@ -14,17 +14,23 @@ describe "login", ->
   afterEach ->
 
   it "should redirect to login page from other place, if not login", ->
+    browser.get path
 
   it "should show password error, if password is empty", ->
+    browser.get path
 
   it "should show username error, if username is empty", ->
+    browser.get path
 
   it "should login the app, if user name and password are correct", ->
     browser.get path
     page.setUserName 'username'
     page.setPassword '123'
     page.login()
+    #TODO error message panel
 
   it "should redirect to home page, if user already login", ->
+    browser.get path
+
 
 
