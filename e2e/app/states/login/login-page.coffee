@@ -6,10 +6,6 @@ class LoginPage
     @loginButton = element(By.css '[data-ng-click="handleSumbit()"]')
     @error = element `by`.model 'loginError'
 
-  get: ->
-    browser.get '/#/login'
-    browser.getCurrentUrl()
-
   setUserName: (text) ->
     @userName.clear()
     @userName.sendKeys text
