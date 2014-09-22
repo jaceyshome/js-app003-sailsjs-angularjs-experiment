@@ -41,6 +41,7 @@
     "protractor":"^1.1.1",
     "grunt-protractor-runner":"~1.1.4",
     "chromedriver":"2.10.0-1",
-    "grunt-shell":"1.1.1"
+    "grunt-shell":"1.1.1",
+    "yamljs":"0.2.0"
   }
 }
