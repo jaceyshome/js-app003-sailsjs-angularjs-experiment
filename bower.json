@@ -5,7 +5,7 @@
     "Jake Wang"
   ],
   "description": "A Sails.js / AngularJS / Twitter Bootstrap example application",
-  "main": "app.js",
+  "main": "app.coffee",
   "license": "MIT",
   "private": true,
   "ignore": [

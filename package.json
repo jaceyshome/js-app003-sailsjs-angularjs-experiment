@@ -8,8 +8,8 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "debug": "node debug app.js"
+    "start": "node app.coffee",
+    "debug": "node debug app.coffee"
   },
   "dependencies": {
     "sails": "0.9.16",
@@ -42,6 +42,7 @@
     "grunt-protractor-runner":"~1.1.4",
     "chromedriver":"2.10.0-1",
     "grunt-shell":"1.1.1",
-    "yamljs":"0.2.0"
+    "yamljs":"0.2.0",
+    "crypto":"0.0.3"
   }
 }
