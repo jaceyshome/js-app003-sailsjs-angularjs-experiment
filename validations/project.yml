@@ -11,6 +11,7 @@ project:
     type: "boolean"
     defaultsTo: false
   shortLink:
-      unique: true
-      maxLength: 8
-      required: true
+    type: "string"
+    unique: true
+    maxLength: 12
+    required: true

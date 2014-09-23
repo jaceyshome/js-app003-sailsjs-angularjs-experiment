@@ -27,6 +27,6 @@ user:
     type: "boolean"
     defaultsTo: false
   shortLink:
+    type: "string"
+    maxLength: 12
     unique: true
-    maxLength: 8
-    required: true

@@ -1,3 +1,4 @@
+CommonHelper = require('../helpers/Common')
 module.exports = (->
   ctrl = {}
   ctrl.create = (req, res, next) ->
@@ -5,10 +6,10 @@ module.exports = (->
       return next(err)  if err
       req.session.cookie.expires = new Date((new Date()).getTime() + 60000)
       req.session.authenticated = true
-      req.session.User = user
+      req.session.user = user
       user.online = true
       user.save (err, user) ->
-        return next(err)  if err
+        return next(err) if err
         User.publishCreate
           id: user.id
           name: user.name
@@ -32,11 +33,11 @@ module.exports = (->
     userObj =
       name: req.param("name")
       email: req.param("email")
-    User.publishUpdate req.param("id"),
-      loggedIn: true
-      id: req.param("id")
     User.update req.param("id"), userObj, userUpdated = (err) ->
       return next(err)  if err
+      User.publishUpdate req.param("id"),
+        loggedIn: true
+        id: req.param("id")
       res.json "1"
 
   ctrl.destroy = (req, res, next) ->
