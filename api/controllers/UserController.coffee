@@ -3,7 +3,7 @@ module.exports = (->
   ctrl = {}
   ctrl.create = (req, res, next) ->
     User.create req.params.all(), userCreated = (err, user) ->
-      return next(err)  if err
+      return next(err) if err
       req.session.cookie.expires = new Date((new Date()).getTime() + 60000)
       req.session.authenticated = true
       req.session.user = user
@@ -20,16 +20,15 @@ module.exports = (->
 
   ctrl.specifics = (req, res, next) ->
     User.findOne req.param("id"), foundUser = (err, user) ->
-      return next(err)  if err or not user
+      return next(err) if err or not user
       res.json user
 
   ctrl.all = (req, res, next) ->
     User.find foundUsers = (err, users) ->
-      return next(err)  if err or not users
+      return next(err) if err or not users
       res.json users
 
   ctrl.update = (req, res, next) ->
-    #TODO update userObj
     userObj =
       name: req.param("name")
       email: req.param("email")
@@ -42,7 +41,7 @@ module.exports = (->
 
   ctrl.destroy = (req, res, next) ->
     User.findOne req.param("id"), userDestroyed = (err, user) ->
-      return next(err)  if err
+      return next(err) if err
       return next("User doesn't exist.")  unless user
       User.destroy req.param("id"), userDestroyed = (err) ->
         return next(err)  if err
