@@ -7,16 +7,19 @@ module.exports = (->
       req.session.cookie.expires = new Date((new Date()).getTime() + 60000)
       req.session.authenticated = true
       req.session.user = user
-      user.online = true
       user.save (err, user) ->
         return next(err) if err
         User.publishCreate
-          id: user.id
+          shortLink: user.shortLink
           name: user.name
           email: user.email
-          online: true
+          online: user.online
         , req.socket
-        res.json user
+        userJson =
+          name:user.name
+          email:user.email
+          shortLink:user.shortLink
+        res.json userJson
 
   ctrl.specifics = (req, res, next) ->
     User.findOne req.param("id"), foundUser = (err, user) ->
@@ -32,11 +35,13 @@ module.exports = (->
     userObj =
       name: req.param("name")
       email: req.param("email")
-    User.update req.param("id"), userObj, userUpdated = (err) ->
+    User.update req.param("shortLink"), userObj, userUpdated = (err) ->
       return next(err)  if err
-      User.publishUpdate req.param("id"),
-        loggedIn: true
-        id: req.param("id")
+      User.publishUpdate
+        shortLink: req.param("shortLink")
+        name: req.param("name")
+        email: req.param("email")
+        online: true
       res.json "1"
 
   ctrl.destroy = (req, res, next) ->
