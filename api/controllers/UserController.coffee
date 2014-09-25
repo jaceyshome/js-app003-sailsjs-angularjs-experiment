@@ -10,6 +10,7 @@ module.exports = (->
       user.save (err, user) ->
         return next(err) if err
         User.publishCreate
+          id: user.id
           shortLink: user.shortLink
           name: user.name
           email: user.email
