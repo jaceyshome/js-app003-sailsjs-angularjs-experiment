@@ -12,7 +12,7 @@ requirejs.config
     socket_io: "lib/socket.io"
     angular_sails: "lib/angular-sails.io"
     angular_mocks: "lib/angular-mocks"
-    validations:'validations'
+    data_validations:'data-validations'
   shim:
     socket_io:
       exports: 'socket_io'
@@ -49,6 +49,6 @@ define [
   'angular_ui_router'
   'angular_sails'
   'app/app'
-  ], (socket_io,angular, jquery) ->
+  ], (socket_io,angular) ->
   return angular.element(document).ready ->
     angular.bootstrap document, ['app']

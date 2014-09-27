@@ -30,6 +30,7 @@ module.exports = (grunt) ->
 
   #--Packages for front end
   require('load-grunt-tasks')(grunt)
+  grunt.loadTasks( 'tasks' );
 
   #--Project configuration.
   grunt.initConfig
@@ -127,7 +128,7 @@ module.exports = (grunt) ->
         src:"**/*.yml"
         dest:".tmp/jsons/validations"
 
-    json:
+    json2js:
       validations:
         options:
           namespace:'DataValidations'
@@ -135,7 +136,7 @@ module.exports = (grunt) ->
           processName:(filename)->
             return filename.toLowerCase()
         src:['.tmp/jsons/validations/*.json']
-        dest:'.tmp/public/linker/src/validations.js'
+        dest:'.tmp/public/linker/src/data-validations.js'
 
     less:
       dev:
@@ -393,11 +394,11 @@ module.exports = (grunt) ->
   grunt.registerTask "watchCoffee", [ "newer:coffee:dev", "coffeelint" ]
   grunt.registerTask "watchLess", [ "newer:less:dev", "lesslint" ]
   grunt.registerTask "watchJade", [ "newer:jade:dev", "ngtemplates" ]
-  grunt.registerTask "watchYaml", ["newer:yaml", "json"]
+  grunt.registerTask "watchYaml", ["newer:yaml", "json2js"]
   grunt.registerTask "buildCoffee", [ "coffee:dev", "coffeelint" ]
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
-  grunt.registerTask "buildYaml", ["yaml", "json"]
+  grunt.registerTask "buildYaml", ["yaml", "json2js"]
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]

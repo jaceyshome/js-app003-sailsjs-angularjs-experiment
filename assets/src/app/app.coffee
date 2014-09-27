@@ -11,6 +11,7 @@ define [
   'common/navigation/navigation'
   'common/noteboard/noteboard'
   'common/sailssocket/sailssocket'
+  'common/validation/validation'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
   'app/states/login/login-ctrl'
@@ -27,12 +28,18 @@ define [
     'common.message.service'
     'common.noteboard'
     'common.sailssocket'
+    'common.validation'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/')
 
-  module.controller 'MainCtrl', ($scope, $rootScope, $state, SailsSocket) ->
+  module.controller 'MainCtrl', (
+    $scope,
+    $rootScope,
+    $state,
+    SailsSocket,
+    ValidationService) ->
     #-------------------------------------------------------- public variables
     $scope.ready = true
     $scope.messages = []
@@ -41,6 +48,7 @@ define [
     init = ->
       initSocketIO()
       registerEventListeners()
+      console.log "app validation service", ValidationService
 
     initSocketIO = ->
       SailsSocket.init()
