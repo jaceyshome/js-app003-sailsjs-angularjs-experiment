@@ -2,9 +2,18 @@ define [
   'app/states/signup/signup-module'
 ], ->
   module = angular.module 'app.states.signup'
-  module.controller 'SignupCtrl', ($scope, $state ,UserService) ->
+  module.controller 'SignupCtrl', (
+    $scope,
+    $state,
+    UserService,
+    ValidationService
+  ) ->
     #-------------------------------------------------------------scope variables
     $scope.user = []
+    $scope.attributes = ValidationService.getModelAttributes(
+      'user',
+      ['password', 'confirmPassword', 'email', 'name'])
+    console.log "$scope.attributes", $scope.attributes
 
     #-------------------------------------------------------------private functions
     init = ->
@@ -21,7 +30,15 @@ define [
       return !msg
     #------------------------------------------------------------public functions
     $scope.handleSumbit = ()->
-      return unless validateForm($scope.user)
+#      return unless validateForm($scope.user)
+      msg = ValidationService.validate(
+        values:$scope.user
+        attributes: $scope.attributes
+      )
+      if msg
+        alert msg
+        return
+      return
       UserService.createUser($scope.user)
       .then (result)->
         if result

@@ -4,25 +4,25 @@ div.userForm
     div.form-group(data-ng-class="{'has-error': userForm.name.$invalid && !userForm.name.$pristine}")
       label Name
       input.form-control(type="text", placeholder="your name", name="name", required,
-      data-ng-model="user.name", maxlength="100")
+      data-ng-model="user.name", maxlength="{{attributes.name.maxLength}}")
       p.error(data-ng-show="userForm.name.$invalid && !userForm.name.$pristine") Required.
 
     div.form-group(data-ng-class="{'has-error': userForm.email.$invalid && !userForm.email.$pristine}")
       label Email
       input.form-control(type="email", placeholder="email address", name="email", required,
-      data-ng-model="user.email", maxlength="100")
+      data-ng-model="user.email", maxlength="{{attributes.email.maxLength}}")
       p.error(data-ng-show="userForm.email.$invalid && !userForm.email.$pristine") Enter a valid email.
 
     div.form-group(data-ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine}")
       label Password
       input.form-control(type="password", placeholder="password", name="password", required
-      data-ng-model="user.password", maxlength="100")
+      data-ng-model="user.password", maxlength="{{attributes.password.maxLength}}")
       p.error(data-ng-show="userForm.password.$invalid && !userForm.password.$pristine") Required.
 
     div.form-group(data-ng-class="{'has-error': (userForm.confirmPassword.$invalid || userForm.confirmPassword.$error.match) && !userForm.confirmPassword.$pristine}")
       label Confirm password
       input.form-control(type="password", placeholder="confirm password", name="confirmPassword", required
-      data-ng-model="user.confirmPassword", data-field-match="{{user.password}}", maxlength="100")
+      data-ng-model="user.confirmPassword", data-field-match="{{user.password}}", maxlength="{{attributes.confirmPassword.maxLength}}")
       p.error(data-ng-show="userForm.confirmPassword.$error.match && !userForm.confirmPassword.$pristine") Password dosen't match
 
     a.btn.btn-lg.btn-primary.btn-block(data-ng-click="handleSumbit()", href="javascript:void(0);") {{submitBtnText}}

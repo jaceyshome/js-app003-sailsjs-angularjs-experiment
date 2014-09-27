@@ -6,6 +6,7 @@ module.exports = (()->
   userModel.tableName =  "Users" #point to tableName
   userModel.migrate = "safe"
   userModel.attributes = YAML.load('validations/user.yml')
+  delete userModel.attributes.confirmPassword
 
   userModel.beforeCreate = (values, next) ->
     return next(err: [ "Password is required." ]) unless values.password

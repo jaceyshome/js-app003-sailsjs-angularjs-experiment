@@ -12,7 +12,7 @@ requirejs.config
     socket_io: "lib/socket.io"
     angular_sails: "lib/angular-sails.io"
     angular_mocks: "lib/angular-mocks"
-    data_validations:'data-validations'
+    data_validations:'data_validations'
   shim:
     socket_io:
       exports: 'socket_io'

@@ -38,8 +38,7 @@ define [
     $scope,
     $rootScope,
     $state,
-    SailsSocket,
-    ValidationService) ->
+    SailsSocket) ->
     #-------------------------------------------------------- public variables
     $scope.ready = true
     $scope.messages = []
@@ -48,7 +47,6 @@ define [
     init = ->
       initSocketIO()
       registerEventListeners()
-      console.log "app validation service", ValidationService
 
     initSocketIO = ->
       SailsSocket.init()
