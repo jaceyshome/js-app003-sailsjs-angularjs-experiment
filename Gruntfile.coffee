@@ -350,7 +350,7 @@ module.exports = (grunt) ->
         files: [ "api/**/*" ]
       assets:
       # Assets to watch:
-        files: [ "assets/src/**/*" ]
+        files: [ "assets/src/**/*", "validations/**/*" ]
       # When assets are changed:
         tasks: [ "concurrent:watch", "linkAssets" ]
 
@@ -392,15 +392,17 @@ module.exports = (grunt) ->
   #--base tasks
   grunt.registerTask "watchCoffee", [ "newer:coffee:dev", "coffeelint" ]
   grunt.registerTask "watchLess", [ "newer:less:dev", "lesslint" ]
-  grunt.registerTask "watchJade", [ "jade:dev", "ngtemplates" ]
+  grunt.registerTask "watchJade", [ "newer:jade:dev", "ngtemplates" ]
+  grunt.registerTask "watchYaml", ["newer:yaml", "json"]
   grunt.registerTask "buildCoffee", [ "coffee:dev", "coffeelint" ]
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
+  grunt.registerTask "buildYaml", ["yaml", "json"]
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]
-  grunt.registerTask "watchAssets", [ "watchCoffee", "watchLess", "watchJade" ]
-  grunt.registerTask "buildAssets", [ "clean:dev", "buildCoffee", "buildLess", "buildJade", "copy:dev" ]
+  grunt.registerTask "watchAssets", [ "watchYaml","watchCoffee", "watchLess", "watchJade" ]
+  grunt.registerTask "buildAssets", [ "clean:dev", "buildYaml","buildCoffee", "buildLess", "buildJade", "copy:dev" ]
   grunt.registerTask "linkAssets", [ "sails-linker:devJs", "sails-linker:devStyles", "sails-linker:devTpl", "sails-linker:devJsJADE", "sails-linker:devStylesJADE", "sails-linker:devTplJADE" ]
   grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build" ]
   grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat", "uglify", "cssmin" ]
