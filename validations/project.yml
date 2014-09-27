@@ -2,7 +2,7 @@
 name:
   type: "string"
   required: true
-  maxLength: 100
+  maxLength: 45
   unique: true
 description:
   type: "string"
