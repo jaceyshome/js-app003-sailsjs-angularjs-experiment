@@ -1,17 +1,16 @@
 ---
-project:
-  name:
-    type: "string"
-    required: true
-    maxLength: 100
-    unique: true
-  description:
-    type: "string"
-  priority:
-    type: "boolean"
-    defaultsTo: false
-  shortLink:
-    type: "string"
-    unique: true
-    maxLength: 12
-    required: true
+name:
+  type: "string"
+  required: true
+  maxLength: 100
+  unique: true
+description:
+  type: "string"
+priority:
+  type: "boolean"
+  defaultsTo: false
+shortLink:
+  type: "string"
+  unique: true
+  maxLength: 12
+  required: true

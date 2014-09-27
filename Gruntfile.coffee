@@ -120,6 +120,23 @@ module.exports = (grunt) ->
         max_line_length:
           value: 120
 
+    yaml:
+      validations:
+        expand:true
+        cwd:"validations"
+        src:"**/*.yml"
+        dest:".tmp/jsons/validations"
+
+    json:
+      validations:
+        options:
+          namespace:'DataValidations'
+          includePath:false
+          processName:(filename)->
+            return filename.toLowerCase()
+        src:['.tmp/jsons/validations/*.json']
+        dest:'.tmp/public/linker/src/validations.js'
+
     less:
       dev:
         files:

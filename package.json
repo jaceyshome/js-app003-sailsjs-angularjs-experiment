@@ -44,6 +44,9 @@
     "sails-mysql": "0.9.10",
     "should": "^4.0.4",
     "then-jade": "1.1.0",
-    "yamljs": "0.2.0"
+    "yamljs": "0.2.0",
+    "webdriver-manager": "^0.0.8",
+    "grunt-yaml": "^0.4.1",
+    "grunt-json": "^0.1.3"
   }
 }
