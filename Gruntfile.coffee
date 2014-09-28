@@ -119,7 +119,7 @@ module.exports = (grunt) ->
       options:
         force: true
         max_line_length:
-          value: 120
+          value: 180
 
     yaml:
       validations:

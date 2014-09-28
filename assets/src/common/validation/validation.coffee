@@ -1,10 +1,10 @@
 define [
   'angular'
-  'data_validations'
-], (angular, data_validations) ->
+  'common/validation/validation-data'
+], (angular, validationData) ->
   appModule = angular.module 'common.validation', []
-  appModule.factory "ValidationService", ($q)->
-    data = data_validations
+  appModule.factory "ValidationService", ()->
+    data = validationData
 
     service = {}
     service.getModelAttributes = (modelName, keys)->
@@ -14,9 +14,10 @@ define [
 
     service.validate = (data)->
       msg = null
-      for key in data.attributes
+      for key of data.attributes.reverse()
         if data.attributes.hasOwnProperty(key)
-          if (msg = checkRequired(data,key)) then return msg
+          msg = checkRequired(data,key)
+          if (msg) then return msg
           if (msg = checkEmail(data,key)) then return msg
           if (msg = checkMaxLength(data,key)) then return msg
           if (msg = checkMinLength(data,key)) then return msg
