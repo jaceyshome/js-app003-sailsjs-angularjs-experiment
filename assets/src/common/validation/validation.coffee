@@ -14,7 +14,7 @@ define [
 
     service.validate = (data)->
       msg = null
-      for key of data.attributes.reverse()
+      for key of data.attributes
         if data.attributes.hasOwnProperty(key)
           msg = checkRequired(data,key)
           if (msg) then return msg
