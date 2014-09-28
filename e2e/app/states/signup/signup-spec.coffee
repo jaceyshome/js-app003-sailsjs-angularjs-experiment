@@ -21,4 +21,3 @@ describe "Signup", ->
     page.signup()
 
 
-

@@ -136,7 +136,7 @@ module.exports = (grunt) ->
           processName:(filename)->
             return filename.toLowerCase()
         src:['.tmp/jsons/validations/*.json']
-        dest:'.tmp/public/linker/src/data_validations.js'
+        dest:'.tmp/public/linker/src/common/validation/validation-data.js'
 
     less:
       dev:
