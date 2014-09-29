@@ -23,7 +23,7 @@ define [
         .then (result) ->
           users = result.data
         .catch (err)->
-          handleCreateUserErrMsg(err)
+          handleErrorMsg(err)
 
     service.createUser = (user)->
       deferred = $q.defer()
@@ -37,7 +37,7 @@ define [
         .then (result) ->
           deferred.resolve result.data
         .catch (err)->
-          handleCreateUserErrMsg(err)
+          handleErrorMsg(err)
           deferred.resolve null
       deferred.promise
 
@@ -49,7 +49,7 @@ define [
         service.currentUser = result.data
         deferred.resolve result.data
       .catch (err)->
-        handleCreateUserErrMsg(err)
+        handleErrorMsg(err)
         deferred.resolve null
       deferred.promise
 
@@ -67,7 +67,7 @@ define [
           service.currentUser = result.data
           deferred.resolve result.data
         .catch (err)->
-          handleCreateUserErrMsg(err)
+          handleErrorMsg(err)
           deferred.resolve null
         deferred.promise
 
@@ -81,12 +81,12 @@ define [
         .then (result) ->
           return deferred.resolve result.data
         .catch (err)->
-          handleCreateUserErrMsg(err)
+          handleErrorMsg(err)
           return deferred.resolve null
       deferred.promise
 
   #-------------------------------------------------------------------handlers
-    handleCreateUserErrMsg = (err)->
+    handleErrorMsg = (err)->
       msg = ""
       if err.data?.errors?
         for error in err.data.errors
