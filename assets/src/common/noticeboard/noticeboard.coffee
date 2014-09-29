@@ -1,13 +1,13 @@
 define [
   'angular'
 ], ->
-  module = angular.module 'common.noteboard', []
-  module.directive 'noteBoard', () ->
+  module = angular.module 'common.noticeboard', []
+  module.directive 'noticeBoard', () ->
     restrict: "A"
     scope: {
       messages:"="
     }
-    templateUrl: "common/noteboard/noteboard"
+    templateUrl: "common/noticeboard/noticeboard"
     replace: true
     link: ($scope, element, attrs) ->
       init = () ->

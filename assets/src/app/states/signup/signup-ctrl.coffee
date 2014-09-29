@@ -28,7 +28,6 @@ define [
       if msg
         alert msg
         return
-      return
       UserService.createUser($scope.user)
       .then (result)->
         if result

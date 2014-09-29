@@ -9,7 +9,7 @@ define [
   'common/message/message'
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
-  'common/noteboard/noteboard'
+  'common/noticeboard/noticeboard'
   'common/sailssocket/sailssocket'
   'common/validation/validation'
   'app/states/home/home-ctrl'
@@ -26,7 +26,7 @@ define [
     'app.states.login'
     'common.fieldmatch.directive'
     'common.message.service'
-    'common.noteboard'
+    'common.noticeboard'
     'common.sailssocket'
     'common.validation'
   ]
