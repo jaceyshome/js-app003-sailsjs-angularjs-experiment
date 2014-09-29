@@ -19,23 +19,24 @@ define [
         'user',
         ['name', 'email', 'password', 'confirmPassword'])
 
-    #------------------------------------------------------------public functions
-    $scope.handleSumbit = ()->
+    #-----------------------------------------------------public functions
+    $scope.sumbit = ()->
       msg = ValidationService.validate(
         values:$scope.user
         attributes: $scope.attributes
       )
-      if msg
-        alert msg
-        return
+      return if msg
       UserService.createUser($scope.user)
       .then (result)->
         if result
           UserService.currentUser = result
           $state.go 'user.details', {id:result.id}
-
       .catch (err)->
-        console.log "server error", err
+        handleError(err)
+
+    #------------------------------------------------------ event handlers
+    handleError = (err)->
+      $scope.$emit('$noticeboard.error', {msg:err})
 
     #-----------------------------------------------------------------------init()
     init()

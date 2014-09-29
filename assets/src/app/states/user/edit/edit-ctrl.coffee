@@ -22,7 +22,7 @@ define [
       if msg then alert msg
       return !msg
     #-------------------------------------------------------------scope functions
-    $scope.handleSumbit = ->
+    $scope.sumbit = ->
       return unless validateForm($scope.user)
       UserService.updateUser($scope.user)
 
