@@ -6,7 +6,7 @@ define [
   appModule = angular.module 'app.states.user.service', [
     'common.csrf'
   ]
-  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService) ->
+  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, ServerMessageService) ->
     #----------------------------------------------------------------------private variables
     users = null
 
@@ -87,24 +87,7 @@ define [
 
   #-------------------------------------------------------------------handlers
     handleErrorMsg = (err)->
-      msg = ""
-      if err.data?.errors?
-        for error in err.data.errors
-          if typeof error is 'string'
-            msg += MessageService.handleDataErrorMsg(error)
-          if error.ValidationError?.email?
-            msg += MessageService.handleValidationErrorMsg(error.ValidationError.email)
-          if error.ValidationError?.name?
-            msg += MessageService.handleValidationErrorMsg(error.ValidationError.name)
-          if error.ValidationError?.password?
-            msg += MessageService.handleValidationErrorMsg(error.ValidationError.password)
-          unless msg then msg = "Internal Server Error, please try again"
-      errData =
-        msg: msg
-        type: "error"
-      console.log "error msg", errData
-      $rootScope.$broadcast("ERR_MSG", errData)
-      return
+      ServerMessageService.handleServerError(err)
 
   #-----------------------------------------------------------------------return object
     service
