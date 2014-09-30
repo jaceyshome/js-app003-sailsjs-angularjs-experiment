@@ -12,6 +12,7 @@ requirejs.config
     socket_io: "lib/socket.io"
     angular_sails: "lib/angular-sails.io"
     angular_mocks: "lib/angular-mocks"
+    angular_toaster:"lib/angular-toaster"
   shim:
     socket_io:
       exports: 'socket_io'
@@ -39,14 +40,19 @@ requirejs.config
     angular_animate:
       deps: ['angular']
       exports: 'angular_animate'
+    angular_toaster:
+      deps:['angular']
+      exports: 'angular_toaster'
 
 define [
   'socket_io'
   'angular'
+  'angular_animate'
   'angular_mocks'
   'angular_resource'
   'angular_ui_router'
   'angular_sails'
+  'angular_toaster'
   'app/app'
   ], (socket_io,angular) ->
   return angular.element(document).ready ->

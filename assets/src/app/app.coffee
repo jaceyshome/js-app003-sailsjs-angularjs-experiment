@@ -9,7 +9,6 @@ define [
   'common/servermessage/servermessage'
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
-  'common/noticeboard/noticeboard'
   'common/sailssocket/sailssocket'
   'common/validation/validation'
   'app/states/home/home-ctrl'
@@ -19,6 +18,8 @@ define [
 ], ->
   module = angular.module 'app', [
     'ui.router'
+    'toaster'
+    'ngAnimate'
     'common.navigation'
     'app.states.home'
     'app.states.user'
@@ -26,7 +27,6 @@ define [
     'app.states.login'
     'common.fieldmatch.directive'
     'common.servermessage.service'
-    'common.noticeboard'
     'common.sailssocket'
     'common.validation'
   ]

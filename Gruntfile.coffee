@@ -4,7 +4,10 @@ module.exports = (grunt) ->
   spec = grunt.option('spec');
   spec = "*" unless spec?
 
-  cssFilesToInject = [ "linker/styles/style.css" ]
+  cssFilesToInject = [
+    "linker/styles/style.css",
+    "linker/styles/toaster.css"
+  ]
   jsFilesToInject = []
   templateFilesToInject = [ "linker/**/*.html" ]
   cssFilesToInject = cssFilesToInject.map((path) ->
@@ -67,6 +70,10 @@ module.exports = (grunt) ->
           ".tmp/public/linker/src/lib/angular-sanitize.js": "./bower_components/angular-sanitize/angular-sanitize.js"
         ,
           ".tmp/public/linker/src/lib/angular-ui-router.js": "./bower_components/angular-ui-router/release/angular-ui-router.js"
+        ,
+          ".tmp/public/linker/src/lib/angular-toaster.js": "./bower_components/AngularJS-Toaster/toaster.js"
+        ,
+          ".tmp/public/linker/styles/toaster.css":"./bower_components/AngularJS-Toaster/toaster.css"
         ]
       prod:
         files: [
@@ -226,12 +233,17 @@ module.exports = (grunt) ->
 
   #--optimization config
     concat:
-      js:
-        src: jsFilesToInject
-        dest: ".tmp/public/concat/production.js"
-      css:
-        src: cssFilesToInject
-        dest: ".tmp/public/concat/production.css"
+      dev:
+        css:
+          src: cssFilesToInject
+          dest: ".tmp/public/linker/styles/style.css"
+      prod:
+        js:
+          src: jsFilesToInject
+          dest: ".tmp/public/concat/production.js"
+        css:
+          src: cssFilesToInject
+          dest: ".tmp/public/concat/production.css"
     uglify:
       dist:
         src: [ ".tmp/public/concat/production.js" ]
@@ -402,11 +414,11 @@ module.exports = (grunt) ->
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]
-  grunt.registerTask "watchAssets", [ "watchYaml","watchCoffee", "watchLess", "watchJade" ]
-  grunt.registerTask "buildAssets", [ "clean:dev", "buildYaml","buildCoffee", "buildLess", "buildJade", "copy:dev" ]
+  grunt.registerTask "watchAssets", [ "watchYaml","watchCoffee", "watchLess", "watchJade","concat:dev" ]
+  grunt.registerTask "buildAssets", [ "clean:dev", "buildYaml","buildCoffee", "buildLess", "buildJade","concat:dev","copy:dev"]
   grunt.registerTask "linkAssets", [ "sails-linker:devJs", "sails-linker:devStyles", "sails-linker:devTpl", "sails-linker:devJsJADE", "sails-linker:devStylesJADE", "sails-linker:devTplJADE" ]
   grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build" ]
-  grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat", "uglify", "cssmin" ]
+  grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat:prod", "uglify", "cssmin" ]
   grunt.registerTask 'e2e', ['protractor:dev']
   grunt.registerTask 'wds', ["shell:startWebDriver"]
   grunt.registerTask 'e2e-all', [
