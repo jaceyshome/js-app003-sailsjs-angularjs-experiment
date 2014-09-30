@@ -4,4 +4,25 @@ html{
       display: none;
     }
   }
+
+  @toasterShowDuration:10ms;
+  @toasterHideDuration:200ms;
+
+  #toast-container > div.ng-enter
+  {
+    -webkit-transition: @toasterShowDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: @toasterShowDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: @toasterShowDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: @toasterShowDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: @toasterShowDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  }
+
+  #toast-container > div.ng-leave
+  {
+    -webkit-transition: @toasterHideDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: @toasterHideDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: @toasterHideDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: @toasterHideDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: @toasterHideDuration cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  }
 }

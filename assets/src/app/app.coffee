@@ -18,7 +18,6 @@ define [
 ], ->
   module = angular.module 'app', [
     'ui.router'
-    'toaster'
     'ngAnimate'
     'common.navigation'
     'app.states.home'
@@ -42,6 +41,18 @@ define [
     #-------------------------------------------------------- public variables
     $scope.ready = true
     $scope.messages = []
+    #toaster show duration and hide duration is set on global.less
+    $scope.toastOptions =
+      "close-button": true
+      "debug": false
+      "position-class": "toast-top-right"
+      "onclick": null
+      "time-out": 3000
+      "extendedTimeOut": 1000
+      "showEasing": "swing"
+      "hideEasing": "linear"
+      "showMethod": "fadeIn"
+      "hideMethod": "fadeOut"
 
     #-------------------------------------------------------private functions
     init = ->
@@ -59,19 +70,10 @@ define [
       SailsSocket.io.get('/user/subscribe')
 
     registerEventListeners = ->
-      $scope.$on("ERR_MSG", (e, data)->
-        handleErrorMsg(data)
-      )
-
-    clearMessages = ->
-      if $scope.messages.length > 3
-        $scope.messages.splice $scope.messages.length - 1, 1
+      undefined
 
     #-------------------------------------------------------- handlers
-    handleErrorMsg = (data)->
-      $scope.messages.push data
-      console.log "handle errMsg", $scope.messages
-      clearMessages()
+
 
     #--------------------------------------------------------- init()
     init()

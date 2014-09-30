@@ -2,8 +2,8 @@ h2 {{formTitle}}
 div.userForm
   form(name="userForm")
     div.form-group(data-ng-class="{'has-error': userForm.name.$invalid && !userForm.name.$pristine}")
-      label Name
-      input.form-control(type="text", placeholder="your name", name="name", required,
+      label User Name
+      input.form-control(type="text", placeholder="user name", name="name", required,
       data-ng-model="user.name", maxlength="{{attributes.name.maxLength}}")
       p.error(data-ng-show="userForm.name.$invalid && !userForm.name.$pristine") Required.
 

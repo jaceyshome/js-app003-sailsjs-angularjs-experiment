@@ -5,6 +5,7 @@ define [
   module.controller 'SignupCtrl', (
     $scope,
     $state,
+    toaster,
     UserService,
     ValidationService
   ) ->
@@ -21,11 +22,13 @@ define [
 
     #-----------------------------------------------------public functions
     $scope.sumbit = ()->
-      msg = ValidationService.validate(
+      message = ValidationService.validate(
         values:$scope.user
         attributes: $scope.attributes
       )
-      return if msg
+      if message
+        handleErrorMessage(message)
+        return
       UserService.createUser($scope.user)
       .then (result)->
         if result
@@ -35,8 +38,9 @@ define [
         handleError(err)
 
     #------------------------------------------------------ event handlers
-    handleError = (err)->
-      $scope.$emit('$noticeboard.error', {msg:err})
+    handleErrorMessage = (message)->
+      toaster.pop('error', "Error", message)
+
 
     #-----------------------------------------------------------------------init()
     init()

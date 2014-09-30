@@ -3,8 +3,10 @@ define [
   'angular_resource'
   'app/config'
 ], (angular) ->
-  appModule = angular.module 'common.servermessage.service', []
-  appModule.factory "ServerMessageService", () ->
+  appModule = angular.module 'common.servermessage.service', [
+    'toaster'
+  ]
+  appModule.factory "ServerMessageService", (toaster) ->
     service = {}
 
     service.handleServerError = (err)->
@@ -17,6 +19,8 @@ define [
             msg += handlerValidationError(error.ValidationError)
       else
         msg += handleServerDefaultError()
+      showError(msg)
+      return
 
     handlerValidationError = (error)->
       return handleServerDefaultError()
@@ -34,5 +38,8 @@ define [
 
     handleServerDefaultError = ()->
       return "Internal Server Error, please try again"
+
+    showError = (msg)->
+      toaster.pop('error', "server error", msg)
 
     service

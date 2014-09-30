@@ -168,6 +168,8 @@ module.exports = (grunt) ->
           "adjoining-classes": false
           "qualified-headings": false
           "unique-headings": false
+          "ids": false
+          "overqualified-elements": false
 
     jade:
       dev:
