@@ -4,14 +4,11 @@ define [
 ], ->
   module = angular.module 'app.states.user'
   module.controller 'UserListCtrl', ($scope, $state, UsersData, UserService, SailsSocket) ->
-    #------------------------------------------------------------public functions
     $scope.users = UsersData
 
-    #------------------------------------------------------------private functions
     init = ->
       $state.go "login" unless UsersData
 
-    #-------------------------------------------------------------scope functions
     $scope.show = (user)->
       $state.go("user.details", {id: user.id} )
 
@@ -24,7 +21,7 @@ define [
 
     $scope.edit = (user)->
       $state.go("user.edit", {id: user.id} )
-    #-------------------------------------------------------------------- init()
+
     init()
 
 

@@ -9,10 +9,8 @@ define [
     UserService,
     ValidationService
   ) ->
-    #-------------------------------------------------------------scope variables
     $scope.user = []
 
-    #-------------------------------------------------------------private functions
     init = ->
       $scope.formTitle = "Sign up"
       $scope.submitBtnText = "Save"
@@ -20,7 +18,6 @@ define [
         'user',
         ['name', 'email', 'password', 'confirmPassword'])
 
-    #-----------------------------------------------------public functions
     $scope.sumbit = ()->
       message = ValidationService.validate(
         values:$scope.user
@@ -37,10 +34,7 @@ define [
       .catch (err)->
         handleError(err)
 
-    #------------------------------------------------------ event handlers
     handleErrorMessage = (message)->
       toaster.pop('error', "Error", message)
 
-
-    #-----------------------------------------------------------------------init()
     init()

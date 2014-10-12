@@ -33,12 +33,7 @@ define [
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/')
 
-  module.controller 'MainCtrl', (
-    $scope,
-    $rootScope,
-    $state,
-    SailsSocket) ->
-    #-------------------------------------------------------- public variables
+  module.controller 'MainCtrl', ($scope, $rootScope, $state, SailsSocket) ->
     $scope.ready = true
     $scope.messages = []
     #toaster show duration and hide duration is set on global.less
@@ -54,7 +49,6 @@ define [
       "showMethod": "fadeIn"
       "hideMethod": "fadeOut"
 
-    #-------------------------------------------------------private functions
     init = ->
       initSocketIO()
       registerEventListeners()
@@ -72,10 +66,6 @@ define [
     registerEventListeners = ->
       undefined
 
-    #-------------------------------------------------------- handlers
-
-
-    #--------------------------------------------------------- init()
     init()
 
   module

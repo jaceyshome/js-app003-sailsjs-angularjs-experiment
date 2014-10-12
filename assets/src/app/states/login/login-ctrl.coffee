@@ -4,10 +4,8 @@ define [
 ], ->
   module = angular.module 'app.states.login'
   module.controller 'LoginCtrl', ($scope, $state ,LoginService, MessageService) ->
-    #-------------------------------------------------------------scope variables
     $scope.user = []
 
-    #-------------------------------------------------------------private functions
     init = ->
 
     validateForm = (user)->
@@ -16,7 +14,7 @@ define [
       msg += 'password is required' unless user.password
       if msg then alert msg
       return !msg
-    #------------------------------------------------------------public functions
+
     $scope.handleSumbit = ()->
       return unless validateForm($scope.user)
       LoginService.login($scope.user).then (result)->
@@ -29,5 +27,4 @@ define [
           })
           console.log "server error"
 
-    #-----------------------------------------------------------------------init()
     init()
