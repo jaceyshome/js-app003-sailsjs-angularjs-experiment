@@ -12,7 +12,7 @@ describe "Signup", ->
 
   afterEach ->
 
-  it "should signup the user, if the username is unique", ->
+  it "should signup the user", ->
     browser.get path
     page.setUserName 'username'
     page.setEmail 'username@gmail.com'
@@ -20,4 +20,13 @@ describe "Signup", ->
     page.setConfirmPassword '123'
     page.signup()
 
+#  it "name is required, it should show error message if the name is empty", ->
+#  it "email is required, it should show error message if the email is empty", ->
+#  it "password is required, it should show error message if the password is empty", ->
+#  it "confirm password is required, it should show error message if confirm password is empty", ->
+
+
+#  it "validate the email address, it should show error message if the email address is invaid", ->
+
+#  it "it should show error message if confirm password doesnt match password", ->
 

@@ -33,7 +33,7 @@ define [
       .then (result)->
         if result
           UserService.currentUser = result
-          $state.go 'user.details', {id:result.id}
+#          $state.go 'user.details', {id:result.id}
       .catch (err)->
         handleError(err)
 
