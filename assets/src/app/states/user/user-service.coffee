@@ -33,7 +33,7 @@ define [
           email:user.email
           password: user.password
           _csrf: data._csrf
-        $http.put("#{config.baseUrl}/user/create", newUser)
+        $http.post("#{config.baseUrl}/user/create", newUser)
         .then (result) ->
           deferred.resolve result.data
         .catch (err)->

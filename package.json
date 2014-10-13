@@ -47,6 +47,7 @@
     "yamljs": "0.2.0",
     "webdriver-manager": "^0.0.8",
     "grunt-yaml": "^0.4.1",
-    "grunt-contrib-cssmin": "^0.10.0"
+    "grunt-contrib-cssmin": "^0.10.0",
+    "protractor-html-screenshot-reporter": "0.0.17"
   }
 }

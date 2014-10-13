@@ -12,11 +12,11 @@ email:
 password:
   type: "string"
   required: true
-  maxLength: 50
+  maxLength: 45
 confirmPassword:
   type: "string"
   required: true
-  maxLength: 50
+  maxLength: 45
   match: "password"
 online:
   type: "boolean"

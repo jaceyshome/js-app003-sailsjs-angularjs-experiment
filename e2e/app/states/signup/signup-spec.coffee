@@ -12,12 +12,18 @@ describe "Signup", ->
 
   afterEach ->
 
-  it "should signup the user, if the username is unique", ->
-    browser.get path
-    page.setUserName 'username'
-    page.setEmail 'username@gmail.com'
-    page.setPassword '123'
-    page.setConfirmPassword '123'
-    page.signup()
+#  it "should redirect to ", ->
+#    browser.get path
+#    page.setUserName 'username'
+#    page.setEmail 'username@gmail.com'
+#    page.setPassword '123'
+#    page.setConfirmPassword '123'
+#    page.signup()
 
+#  it "should show error message if the name is empty", ->
+#  it "should show error message if the email is empty", ->
+#  it "should show error message if the password is empty", ->
+#  it "should show error message if confirm password is empty", ->
+#  it "should show error message if the email address is invaid", ->
+#  it "should show error message if confirm password doesnt match password", ->
 

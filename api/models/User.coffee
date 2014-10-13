@@ -7,6 +7,7 @@ module.exports = (()->
   userModel.migrate = "safe"
   userModel.attributes = YAML.load('validations/user.yml')
   delete userModel.attributes.confirmPassword
+  userModel.attributes.password.maxLength = 256
 
   userModel.beforeCreate = (values, next) ->
     return next(err: [ "Password is required." ]) unless values.password
