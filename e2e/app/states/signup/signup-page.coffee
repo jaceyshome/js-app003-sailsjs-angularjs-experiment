@@ -5,7 +5,7 @@ class SignupPage
     @email = element(By.model 'user.email')
     @password = element(By.model 'user.password')
     @confirmPassword = element(By.model 'user.confirmPassword')
-    @signupButton = element(By.css '[data-ng-click="handleSumbit()"]')
+    @signupButton = element(By.css '[data-ng-click="sumbit()"]')
     @messsage = element `by`.model 'messsage'
 
   setUserName: (text) ->

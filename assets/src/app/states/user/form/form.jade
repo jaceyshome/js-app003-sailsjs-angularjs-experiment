@@ -24,5 +24,4 @@ div.userForm
       input.form-control(type="password", placeholder="confirm password", name="confirmPassword", required
       data-ng-model="user.confirmPassword", data-field-match="{{user.password}}", maxlength="{{attributes.confirmPassword.maxLength}}")
       p.error(data-ng-show="userForm.confirmPassword.$error.match && !userForm.confirmPassword.$pristine") Password dosen't match
-
-    a.btn.btn-lg.btn-primary.btn-block(data-ng-click="sumbit()", href="javascript:void(0);") {{submitBtnText}}
+    button.btn.btn-lg.btn-primary.btn-block(type="submit", data-ng-click="sumbit()", href="javascript:void(0);") {{submitBtnText}}
