@@ -26,7 +26,6 @@ describe "Signup", ->
     page.setPassword '123'
     page.setConfirmPassword '123'
     page.signup()
-    d = protractor.promise.defer()
     text = element.all(By.repeater('toaster in toasters').column('{{toaster.body}}')).getText()
     console.log "text", text
   , 12000)
