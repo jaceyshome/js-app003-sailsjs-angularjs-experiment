@@ -30,9 +30,9 @@ define [
       .then (result)->
         if result
           UserService.currentUser = result
-#          $state.go 'user.details', {id:result.id}
+          $state.go 'home'
       .catch (err)->
-        handleError(err)
+        handleErrorMessage('Internal Server Error, please try again')
 
     handleErrorMessage = (message)->
       toaster.pop('error', "Error", message)
