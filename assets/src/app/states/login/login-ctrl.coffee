@@ -27,8 +27,8 @@ define [
           else
             MessageService.handleServerDefaultError()
 
-        $scope.goToSignup = ->
-          $state.go "signup"
+      $scope.goToSignup = ->
+        $state.go "signup"
 
       init()
   ]

@@ -11,6 +11,6 @@ div.loginContainer
       input.form-control(type="password", placeholder="password", name="password", required
       data-ng-model="user.password", maxlength="100")
       p.error(data-ng-show="loginForm.password.$invalid && !loginForm.password.$pristine") Required.
-    button.btn.btn-lg.btn-primary.btn-block(type="submit", data-ng-click="handleSumbit()") Log in
+    button.btn.btn-lg.btn-primary.btn-block(type="submit", data-ng-click="sumbit()") Log in
 
   a.btn.btn-lg.btn-primary.btn-block(data-ng-click="goToSignup()") Sign up
