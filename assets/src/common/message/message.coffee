@@ -42,6 +42,4 @@ define [
       key = strings[1].split('_')[0].replace('\'','')
       return key+":"+value+" already exists"
 
-
-
     service

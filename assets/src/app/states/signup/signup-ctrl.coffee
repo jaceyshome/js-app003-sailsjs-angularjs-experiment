@@ -11,8 +11,7 @@ define [
       init = ->
         $scope.formTitle = "Sign up"
         $scope.submitBtnText = "Save"
-        $scope.attributes = ValidationService.getModelAttributes(
-          'user',
+        $scope.attributes = ValidationService.getModelAttributes('user',
           ['name', 'email', 'password', 'confirmPassword'])
 
       $scope.sumbit = ()->
