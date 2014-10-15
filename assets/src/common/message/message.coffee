@@ -8,7 +8,6 @@ define [
   ]
   appModule.factory "MessageService", (toaster) ->
     service = {}
-
     service.handleServerError = (err)->
       msg = ''
       if err.data?.errors?
@@ -18,7 +17,7 @@ define [
           if error.ValidationError
             msg += handlerValidationError(error.ValidationError)
       else
-        msg += handleServerDefaultError()
+        msg += getServerDefaultError()
       service.showError(msg)
       return
 
@@ -26,10 +25,13 @@ define [
       toaster.pop('error', "server error", msg)
 
     service.handleServerDefaultError = ()->
+      toaster.pop('error', "server error", getServerDefaultError())
+
+    getServerDefaultError = ->
       return "Internal Server Error, please try again"
 
     handlerValidationError = (error)->
-      return service.handleServerDefaultError()
+      return getServerDefaultError()
 
     handleErrorMsg = (err)->
       msg = ""

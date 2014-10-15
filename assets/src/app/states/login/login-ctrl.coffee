@@ -4,7 +4,7 @@ define [
 ], ->
   module = angular.module 'app.states.login'
   module.controller 'LoginCtrl', [
-    '$scope','$state','UserService','UserService','ValidationService','MessageService',(
+    '$scope','$state','LoginService','UserService','ValidationService','MessageService','LoginService',(
       $scope, $state ,LoginService, UserService, ValidationService, MessageService
     ) ->
       $scope.user = []
@@ -25,7 +25,7 @@ define [
           if result
             $state.go 'home'
           else
-            MessageService.handleServerDefaultError()
+            MessageService.showError('Login fail')
 
       $scope.goToSignup = ->
         $state.go "signup"
