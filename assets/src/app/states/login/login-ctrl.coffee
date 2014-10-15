@@ -3,28 +3,32 @@ define [
   'app/states/login/login-service'
 ], ->
   module = angular.module 'app.states.login'
-  module.controller 'LoginCtrl', ($scope, $state ,LoginService, MessageService) ->
-    $scope.user = []
+  module.controller 'LoginCtrl', [
+    '$scope','$state','UserService','UserService','ValidationService','MessageService',(
+      $scope, $state ,LoginService, UserService, ValidationService, MessageService
+    ) ->
+      $scope.user = []
 
-    init = ->
+      init = ->
+        $scope.attributes = ValidationService.getModelAttributes(
+          'user', ['name', 'password'])
 
-    validateForm = (user)->
-      msg = ''
-      msg += 'name is required' unless user.name
-      msg += 'password is required' unless user.password
-      if msg then alert msg
-      return !msg
+      $scope.sumbit = ()->
+        message = ValidationService.validate(
+          values:$scope.user
+          attributes: $scope.attributes
+        )
+        if message
+          MessageService.showError(message)
+          return
+        LoginService.login($scope.user).then (result)->
+          if result
+            $state.go 'home'
+          else
+            MessageService.handleServerDefaultError()
 
-    $scope.handleSumbit = ()->
-      return unless validateForm($scope.user)
-      LoginService.login($scope.user).then (result)->
-        if result
-          $state.go 'user.details', {id:result.id}
-        else
-          $scope.$emit("ERR_MSG", {
-            msg: "Login failed"
-            type: "error"
-          })
-          console.log "server error"
+        $scope.goToSignup = ->
+          $state.go "signup"
 
-    init()
+      init()
+  ]

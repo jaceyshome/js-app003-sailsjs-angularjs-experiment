@@ -3,10 +3,10 @@ define [
   'angular_resource'
   'app/config'
 ], (angular) ->
-  appModule = angular.module 'common.servermessage.service', [
+  appModule = angular.module 'common.message.service', [
     'toaster'
   ]
-  appModule.factory "ServerMessageService", (toaster) ->
+  appModule.factory "MessageService", (toaster) ->
     service = {}
 
     service.handleServerError = (err)->
@@ -19,11 +19,17 @@ define [
             msg += handlerValidationError(error.ValidationError)
       else
         msg += handleServerDefaultError()
-      showError(msg)
+      service.showError(msg)
       return
 
+    service.showError = (msg)->
+      toaster.pop('error', "server error", msg)
+
+    service.handleServerDefaultError = ()->
+      return "Internal Server Error, please try again"
+
     handlerValidationError = (error)->
-      return handleServerDefaultError()
+      return service.handleServerDefaultError()
 
     handleErrorMsg = (err)->
       msg = ""
@@ -36,10 +42,6 @@ define [
       key = strings[1].split('_')[0].replace('\'','')
       return key+":"+value+" already exists"
 
-    handleServerDefaultError = ()->
-      return "Internal Server Error, please try again"
 
-    showError = (msg)->
-      toaster.pop('error', "server error", msg)
 
     service

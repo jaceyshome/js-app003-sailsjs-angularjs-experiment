@@ -6,7 +6,7 @@ define [
   appModule = angular.module 'app.states.user.service', [
     'common.csrf'
   ]
-  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, ServerMessageService) ->
+  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService) ->
     #----------------------------------------------------------------------private variables
     users = null
 
@@ -87,7 +87,7 @@ define [
 
   #-------------------------------------------------------------------handlers
     handleErrorMsg = (err)->
-      ServerMessageService.handleServerError(err)
+      MessageService.handleServerError(err)
 
   #-----------------------------------------------------------------------return object
     service

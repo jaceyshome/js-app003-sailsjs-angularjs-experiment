@@ -6,7 +6,7 @@ define [
   'jquery'
   'common/csrf/csrf'
   'common/utility/utility'
-  'common/servermessage/servermessage'
+  'common/message/message'
   'common/fieldmatch/fieldmatch'
   'common/navigation/navigation'
   'common/sailssocket/sailssocket'
@@ -25,7 +25,7 @@ define [
     'app.states.signup'
     'app.states.login'
     'common.fieldmatch.directive'
-    'common.servermessage.service'
+    'common.message.service'
     'common.sailssocket'
     'common.validation'
   ]
@@ -33,7 +33,7 @@ define [
     $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise('/')
 
-  module.controller 'MainCtrl', ($scope, $rootScope, $state, SailsSocket) ->
+  module.controller 'MainCtrl', ($scope, $rootScope, $state, SailsSocket, MessageService) ->
     $scope.ready = true
     $scope.messages = []
     #toaster show duration and hide duration is set on global.less
@@ -58,7 +58,7 @@ define [
       .then (result)->
         registerSocketEventListeners()
       .catch ->
-        handleErrorMsg({msg:"fail to connected to socketIO"})
+        MessageService.showError("fail to connected to socketIO")
 
     registerSocketEventListeners = ->
       SailsSocket.io.get('/user/subscribe')
