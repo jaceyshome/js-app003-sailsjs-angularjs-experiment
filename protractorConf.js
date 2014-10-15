@@ -9,7 +9,7 @@ exports.config = {
     jasmine.getEnv().addReporter(new HtmlReporter({
       baseDirectory: '.tmp/screenshots'
     }));
-  },
+  }
 //  framework: 'jasmine',
 //
 //  // ----- Options to be passed to minijasminenode -----
