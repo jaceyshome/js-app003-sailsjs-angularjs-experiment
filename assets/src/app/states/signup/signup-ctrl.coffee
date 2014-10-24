@@ -15,12 +15,12 @@ define [
           ['name', 'email', 'password', 'confirmPassword'])
 
       $scope.sumbit = ()->
-        message = ValidationService.validate(
+        result = ValidationService.validate(
           values:$scope.user
           attributes: $scope.attributes
         )
-        if message
-          MessageService.showError(message)
+        if result
+          MessageService.showError(result.message)
           return
         UserService.createUser($scope.user)
         .then (result)->

@@ -13,15 +13,15 @@ define [
       return angular.copy data[modelName]
 
     service.validate = (data)->
-      msg = null
+      result = null
       for key of data.attributes
         if data.attributes.hasOwnProperty(key)
-          msg = checkRequired(data,key)
-          if (msg) then return msg
-          if (msg = checkEmail(data,key)) then return msg
-          if (msg = checkMaxLength(data,key)) then return msg
-          if (msg = checkMinLength(data,key)) then return msg
-      return msg
+          result = checkRequired(data,key)
+          if (result) then return result
+          if (result = checkEmail(data,key)) then return result
+          if (result = checkMaxLength(data,key)) then return result
+          if (result = checkMinLength(data,key)) then return result
+      return result
 
     generateAttributes = (modelName, keys)->
       model = data[modelName]
@@ -34,7 +34,7 @@ define [
       return null unless data.attributes[key].maxLength
       msg = key+" max length is "+data.attributes[key].maxLength
       if data.values[key].length > data.attributes[key].maxLength
-        return msg
+        return {message:msg,key:key}
       else
         return null
 
@@ -42,13 +42,13 @@ define [
       return null unless data.attributes[key].email
       re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       msg = "Invalid email"
-      if re.test(data.values[key]) then return null else return msg
+      if re.test(data.values[key]) then return null else return {message:msg,key:key}
 
     checkMinLength = (data, key)->
       return null unless data.attributes[key].minLength
       msg = data.key+" miniumn length is "+data.attributes[key].minLength
       if data.values[key].length < data.attributes[key].minLength
-        return msg
+        return {message:msg,key:key}
       else
         return null
 
@@ -56,7 +56,7 @@ define [
       return null unless data.attributes[key].required
       msg = key+" is required"
       unless data.values[key]
-        return msg
+        return {message:msg,key:key}
       else
         return null
 
