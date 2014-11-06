@@ -12,7 +12,7 @@ define [
         ['name', 'email', 'password', 'confirmPassword'])
 
     $scope.sumbit = ()->
-      result = ValidationService.validate(
+      result = Validation.validate(
         values:$scope.user
         attributes: $scope.attributes
       )

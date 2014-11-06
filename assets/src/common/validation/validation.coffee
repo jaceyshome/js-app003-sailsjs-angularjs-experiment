@@ -12,7 +12,7 @@ define [
       return generateAttributes(modelName, keys) if keys and attributeModels[modelName]
       return angular.copy data[modelName]
 
-    service.validateAttributes = (data)->
+    service.validate = (data)->
       result = null
       for key of data.attributes
         if data.attributes.hasOwnProperty(key)
