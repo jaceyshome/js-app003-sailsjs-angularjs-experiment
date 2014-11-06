@@ -22,8 +22,7 @@ define [
       UserService.createUser($scope.user)
       .then (result)->
         if result
-          console.log "result", result
-          UserService.currentUser = result
+          UserService.setUser result
           $state.go 'home'
       .catch (err)->
         MessageService.handleServerDefaultError()
