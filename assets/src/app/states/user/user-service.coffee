@@ -9,12 +9,18 @@ define [
   appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService) ->
     #----------------------------------------------------------------------private variables
     users = null
+    _user = null
 
     #----------------------------------------------------------------------public variables
     service = {}
-    service.currentUser = null
 
     #----------------------------------------------------------------------public functions
+    service.getUser = ()->
+      _user
+
+    service.setUser = (user)->
+      _user = user
+
     service.listUsers = ()->
       if users
         return users
@@ -43,10 +49,9 @@ define [
 
     service.getUserDetail = (user)->
       deferred = $q.defer()
-      deferred.resolve user if angular.equals user, service.currentUser
+      deferred.resolve user if angular.equals user, _user
       $http.get("#{config.baseUrl}/user/specifics/#{user.id}")
       .then (result) ->
-        service.currentUser = result.data
         deferred.resolve result.data
       .catch (err)->
         handleErrorMsg(err)
@@ -64,7 +69,6 @@ define [
           _csrf: data._csrf
         $http.put("#{config.baseUrl}/user/update", editingUser)
         .then (result) ->
-          service.currentUser = result.data
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
