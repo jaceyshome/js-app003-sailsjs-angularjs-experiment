@@ -92,12 +92,6 @@ module.exports = (grunt) ->
 
     jst:
       dev:
-      # To use other sorts of templates (mustache), specify the regexp below:
-      #        options: {
-      #           templateSettings: {
-      #             interpolate: /\{\{(.+?)\}\}/g
-      #           }
-      #        },
         files:
           ".tmp/public/jst.js": templateFilesToInject
 
@@ -143,7 +137,7 @@ module.exports = (grunt) ->
           processName:(filename)->
             return filename.toLowerCase()
         src:['.tmp/jsons/validations/*.json']
-        dest:'.tmp/public/linker/src/common/validation/validation-data.js'
+        dest:'.tmp/public/linker/src/common/validation/attribute-models.js'
 
     less:
       dev:
@@ -410,6 +404,7 @@ module.exports = (grunt) ->
   grunt.registerTask "watchJade", [ "newer:jade:dev", "ngtemplates" ]
   grunt.registerTask "watchYaml", ["newer:yaml", "json2js"]
   grunt.registerTask "buildCoffee", [ "coffee:dev", "coffeelint" ]
+  grunt.registerTask "buildLibs", [ "json2js" ]
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
   grunt.registerTask "buildYaml", ["yaml", "json2js"]
@@ -417,7 +412,7 @@ module.exports = (grunt) ->
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]
   grunt.registerTask "watchAssets", [ "watchYaml","watchCoffee", "watchLess", "watchJade","concat:dev" ]
-  grunt.registerTask "buildAssets", [ "clean:dev", "buildYaml","buildCoffee", "buildLess", "buildJade","concat:dev","copy:dev"]
+  grunt.registerTask "buildAssets", [ "clean:dev", "buildYaml","buildCoffee", "buildLibs" ,"buildLess", "buildJade","concat:dev","copy:dev"]
   grunt.registerTask "linkAssets", [ "sails-linker:devJs", "sails-linker:devStyles", "sails-linker:devTpl", "sails-linker:devJsJADE", "sails-linker:devStylesJADE", "sails-linker:devTplJADE" ]
   grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build" ]
   grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat:prod", "uglify", "cssmin" ]

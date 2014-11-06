@@ -1,18 +1,15 @@
 define [
   'angular'
-  'common/validation/user'
-], (angular)->
+  'common/validation/attribute-models'
+], (angular, attributeModels)->
   module = angular.module 'common.validation', []
-  module.factory 'Validation', (UserAttributes)->
-    _attributeModels = {
-      user: UserAttributes
-    }
-
+  module.factory 'Validation', ()->
+    console.log "validation data", attributeModels
     service = {}
 
     service.getModelAttributes = (modelName, keys)->
-      return null unless modelName or _attributeModels[modelName]
-      return generateAttributes(modelName, keys) if keys and _attributeModels[modelName]
+      return null unless modelName or attributeModels[modelName]
+      return generateAttributes(modelName, keys) if keys and attributeModels[modelName]
       return angular.copy data[modelName]
 
     service.validateAttributes = (data)->
@@ -76,7 +73,7 @@ define [
       unless date.match(pattern) then return true else return false
 
     generateAttributes = (modelName, keys)->
-      model = _attributeModels[modelName]
+      model = attributeModels[modelName]
       attributes = {}
       for key in keys
         attributes[key] = model[key]

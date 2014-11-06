@@ -2,33 +2,29 @@ define [
   'app/states/signup/signup-module'
 ], ->
   module = angular.module 'app.states.signup'
-  module.controller 'SignupCtrl', [
-    '$scope','$state','UserService','ValidationService','MessageService', (
-      $scope, $state, UserService, ValidationService, MessageService
-    ) ->
-      $scope.user = []
+  module.controller 'SignupCtrl', ($scope, $state, UserService, Validation, MessageService) ->
+    $scope.user = []
 
-      init = ->
-        $scope.formTitle = "Sign up"
-        $scope.submitBtnText = "Save"
-        $scope.attributes = ValidationService.getModelAttributes('user',
-          ['name', 'email', 'password', 'confirmPassword'])
+    init = ->
+      $scope.formTitle = "Sign up"
+      $scope.submitBtnText = "Save"
+      $scope.attributes = Validation.getModelAttributes('user',
+        ['name', 'email', 'password', 'confirmPassword'])
 
-      $scope.sumbit = ()->
-        result = ValidationService.validate(
-          values:$scope.user
-          attributes: $scope.attributes
-        )
+    $scope.sumbit = ()->
+      result = ValidationService.validate(
+        values:$scope.user
+        attributes: $scope.attributes
+      )
+      if result
+        MessageService.showError(result.message)
+        return
+      UserService.createUser($scope.user)
+      .then (result)->
         if result
-          MessageService.showError(result.message)
-          return
-        UserService.createUser($scope.user)
-        .then (result)->
-          if result
-            UserService.currentUser = result
-            $state.go 'home'
-        .catch (err)->
-          MessageService.handleServerDefaultError()
+          UserService.currentUser = result
+          $state.go 'home'
+      .catch (err)->
+        MessageService.handleServerDefaultError()
 
-      init()
-  ]
+    init()
