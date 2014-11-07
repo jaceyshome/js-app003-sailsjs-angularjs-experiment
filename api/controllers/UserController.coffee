@@ -54,10 +54,10 @@ module.exports = (->
         User.publishDestroy req.param("id"), req.socket
       res.json "1"
 
-  ctrl.subscribe = (req, res) ->
+  ctrl.subscribe = (req, res, next) ->
     # Find all current users in the user model
     User.find foundUsers = (err, users) ->
-      return next(err)  if err
+      return next(err) if err
       # subscribe this socket to the User model classroom
       #User.publishCreate
       User.subscribe req.socket
