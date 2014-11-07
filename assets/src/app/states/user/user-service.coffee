@@ -8,7 +8,7 @@ define [
   ]
   appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService) ->
     #----------------------------------------------------------------------private variables
-    users = null
+    _users = null
     _user = null
 
     #----------------------------------------------------------------------public variables
@@ -22,14 +22,18 @@ define [
       _user = user
 
     service.listUsers = ()->
-      if users
-        return users
+      deferred = $q.defer()
+      if _users
+        deferred.resolve _users
       else
         $http.get("#{config.baseUrl}/user/all")
         .then (result) ->
-          users = result.data
+          _users = result.data
+          deferred.resolve result.data
         .catch (err)->
+          deferred.resolve null
           handleErrorMsg(err)
+      deferred.promise
 
     service.createUser = (user)->
       deferred = $q.defer()
