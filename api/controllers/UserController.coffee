@@ -4,9 +4,6 @@ module.exports = (->
   ctrl.create = (req, res, next) ->
     User.create req.params.all(), userCreated = (err, user) ->
       return next(err) if err
-      req.session.cookie.expires = new Date((new Date()).getTime() + 60000)
-      req.session.authenticated = true
-      req.session.user = user
       user.save (err, user) ->
         return next(err) if err
         User.publishCreate
