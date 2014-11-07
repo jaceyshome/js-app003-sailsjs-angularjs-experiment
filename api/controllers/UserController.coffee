@@ -25,7 +25,11 @@ module.exports = (->
   ctrl.specifics = (req, res, next) ->
     User.findOne req.param("id"), foundUser = (err, user) ->
       return next(err) if err or not user
-      res.json user
+      userJson =
+        name:user.name
+        email:user.email
+        shortLink:user.shortLink
+      res.json userJson
 
   ctrl.all = (req, res, next) ->
     User.find foundUsers = (err, users) ->
