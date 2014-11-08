@@ -19,13 +19,12 @@ module.exports = (->
         res.json userJson
 
   ctrl.specifics = (req, res, next) ->
-    User.find().where({shortLink:'WGxYXFbTacU2'}).exec((err, user)->
-      console.log "user", user
+    User.find().where({shortLink:req.param('shortLink')}).limit(1).exec((err, user)->
       return next(err) if err or not user
       userJson =
-        name:user.name
-        email:user.email
-        shortLink:user.shortLink
+        name:user[0].name
+        email:user[0].email
+        shortLink:user[0].shortLink
       res.json userJson
     )
 
@@ -33,9 +32,6 @@ module.exports = (->
     User.query "select name, email, shortLink from users", (err,users)->
       return next(err) if err or not users
       res.json users
-#    User.find (err, users) ->
-#      return next(err) if err or not users
-#      res.json users
 
   ctrl.update = (req, res, next) ->
     userObj =

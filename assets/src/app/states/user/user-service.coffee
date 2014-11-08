@@ -57,7 +57,7 @@ define [
     service.getUserDetail = (user)->
       deferred = $q.defer()
       deferred.resolve user if angular.equals user, _user
-      $http.get("#{config.baseUrl}/user/specifics/shortLink:#{user.shortLink}")
+      $http.get("#{config.baseUrl}/user/specifics/#{user.shortLink}")
       .then (result) ->
         deferred.resolve result.data
       .catch (err)->

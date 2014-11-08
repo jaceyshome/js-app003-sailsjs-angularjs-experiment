@@ -35,13 +35,19 @@ module.exports.routes = {
   '/': {
     view: 'app'
   },
+  //----------------- VIEWS ----------------------------
   '/login':{view:'app'},
   '/signup':{view:'app'},
   '/user':{view:'app'},
   '/user/list':{view:'app'},
   '/user/details/:shortLink':{view:'app'},
   '/user/edit/:shortLink':{view:'app'},
-  '/home':{view:'app'}
+  '/home':{view:'app'},
+
+  //------------------- CRUD ----------------------------
+  '/user/specifics/:shortLink': 'UserController.specifics'
+
+
 //  '/rest-examples': {
 //    view: 'main/rest'
 //  },
