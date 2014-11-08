@@ -5,11 +5,8 @@ define [
   module = angular.module 'app.states.user.details'
   module.controller 'UserDetailsCtrl', ($scope, $state, UserData) ->
 
-    init = ()->
-      $state.go "login" unless UserData
-      $scope.user = UserData
+    $scope.user = UserData
 
     $scope.edit = ->
-      $state.go("user.edit", {id: $scope.user.id} )
+      $state.go "user.edit", {id: UserData.id}
 
-    init()

@@ -7,7 +7,6 @@ module.exports = (->
       user.save (err, user) ->
         return next(err) if err
         User.publishCreate
-          id: user.id
           shortLink: user.shortLink
           name: user.name
           email: user.email
@@ -20,18 +19,23 @@ module.exports = (->
         res.json userJson
 
   ctrl.specifics = (req, res, next) ->
-    User.findOne req.param("id"), foundUser = (err, user) ->
+    User.find().where({shortLink:'WGxYXFbTacU2'}).exec((err, user)->
+      console.log "user", user
       return next(err) if err or not user
       userJson =
         name:user.name
         email:user.email
         shortLink:user.shortLink
       res.json userJson
+    )
 
   ctrl.all = (req, res, next) ->
-    User.find foundUsers = (err, users) ->
+    User.query "select name, email, shortLink from users", (err,users)->
       return next(err) if err or not users
       res.json users
+#    User.find (err, users) ->
+#      return next(err) if err or not users
+#      res.json users
 
   ctrl.update = (req, res, next) ->
     userObj =
@@ -47,12 +51,12 @@ module.exports = (->
       res.json "1"
 
   ctrl.destroy = (req, res, next) ->
-    User.findOne req.param("id"), userDestroyed = (err, user) ->
+    User.findOne req.param("shortLink"), userDestroyed = (err, user) ->
       return next(err) if err
       return next("User doesn't exist.")  unless user
-      User.destroy req.param("id"), userDestroyed = (err) ->
+      User.destroy req.param("shortLink"), userDestroyed = (err) ->
         return next(err)  if err
-        User.publishDestroy req.param("id"), req.socket
+        User.publishDestroy req.param("shortLink"), req.socket
       res.json "1"
 
   ctrl.subscribe = (req, res, next) ->

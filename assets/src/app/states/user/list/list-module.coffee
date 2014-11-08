@@ -26,5 +26,6 @@ define [
           .then (result)->
             deferred.resolve result
           .catch ->
+            UserService.goToDefault()
             deferred.resolve null
           deferred.promise

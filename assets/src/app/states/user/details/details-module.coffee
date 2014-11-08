@@ -13,7 +13,7 @@ define [
   module.config ($stateProvider)->
     $stateProvider.state "user.details",
       parent: 'user'
-      url: "/details/{id:[0-9]+}"
+      url: "/details/:shortLink"
       views:
         'userChildView@user':
           templateUrl: "app/states/user/details/details"
@@ -21,10 +21,10 @@ define [
       resolve:
         UserData: ($q, $stateParams, UserService) ->
           deferred = $q.defer()
-          if UserService.currentUser?.id is $stateParams.id
-            deferred.resolve UserService.currentUser
-            return
-          UserService.getUserDetail({id:$stateParams.id})
+          unless $stateParams.shortLink
+            UserService.goToDefault()
+            deferred.resolve undefined
+          UserService.getUserDetail({shortLink:$stateParams.shortLink})
           .then (result)->
             deferred.resolve result
           .catch ->
