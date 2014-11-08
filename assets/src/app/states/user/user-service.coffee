@@ -6,7 +6,7 @@ define [
   appModule = angular.module 'app.states.user.service', [
     'common.csrf'
   ]
-  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService) ->
+  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService, $state) ->
     #----------------------------------------------------------------------private variables
     _users = null
     _user = null
@@ -15,6 +15,9 @@ define [
     service = {}
 
     #----------------------------------------------------------------------public functions
+    service.goToDefault = ()->
+      $state.go '/'
+
     service.getUser = ()->
       _user
 
@@ -54,7 +57,7 @@ define [
     service.getUserDetail = (user)->
       deferred = $q.defer()
       deferred.resolve user if angular.equals user, _user
-      $http.get("#{config.baseUrl}/user/specifics/#{user.id}")
+      $http.get("#{config.baseUrl}/user/specifics/shortLink:#{user.shortLink}")
       .then (result) ->
         deferred.resolve result.data
       .catch (err)->

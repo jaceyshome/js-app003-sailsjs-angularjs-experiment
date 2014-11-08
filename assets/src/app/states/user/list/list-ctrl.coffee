@@ -3,14 +3,11 @@ define [
   'app/states/user/user-service'
 ], ->
   module = angular.module 'app.states.user'
-  module.controller 'UserListCtrl', ($scope, $state, UsersData, UserService, SailsSocket) ->
+  module.controller 'UserListCtrl', ($scope, $state, UsersData, UserService) ->
     $scope.users = UsersData
-
-    init = ->
-      $state.go "login" unless UsersData
-
+    console.log "ererer", UsersData
     $scope.show = (user)->
-      $state.go("user.details", {id: user.id} )
+      $state.go "user.details", {shortLink: user.shortLink}
 
     $scope.destroy = (user)->
       UserService.destroyUser(user).then (result)->
@@ -20,9 +17,7 @@ define [
           console.log "servers error"
 
     $scope.edit = (user)->
-      $state.go("user.edit", {id: user.id} )
-
-    init()
+      $state.go "user.edit", {shortLink: user.shortLink}
 
 
 
