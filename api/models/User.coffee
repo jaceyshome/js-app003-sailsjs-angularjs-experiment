@@ -1,5 +1,4 @@
 YAML = require('yamljs')
-
 CommonHelper = require('../helpers/Common')
 
 module.exports = (()->

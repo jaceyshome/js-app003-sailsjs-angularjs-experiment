@@ -42,19 +42,21 @@ module.exports = (->
       name: req.param("name")
       email: req.param("email")
       password: req.param("password")
-    query = " UPDATE users
-            SET password = #{userObj.password}
-            WHERE id = #{req.param('id')}
-            AND shortLink = '#{req.param('shortLink')}'"
-    return res.json query
-    User.query query, (err, result) ->
-      return next(err) if err
-      User.publishUpdate
-        id: req.param("id")
-        shortLink: req.param("shortLink")
-        name: req.param("name")
-        email: req.param("email")
-      res.json "1"
+    CommonHelper.generateUserPassword(userObj.password).then (encryptedPassword)->
+      userObj.password = encryptedPassword
+      query = " UPDATE users
+              SET password = '#{userObj.password}'
+              WHERE id = #{req.param('id')}
+              AND shortLink = '#{req.param('shortLink')}'"
+      User.query query, (err, result) ->
+        return next(err) if err
+        User.publishUpdate(req.param("id"),{
+          id: req.param("id")
+          shortLink: req.param("shortLink")
+          name: req.param("name")
+          email: req.param("email")
+        }, req.socket)
+        res.json "1"
 
   ctrl.destroy = (req, res, next) ->
     User.findOne req.param("shortLink"), userDestroyed = (err, user) ->
