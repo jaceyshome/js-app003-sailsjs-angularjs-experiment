@@ -6,7 +6,7 @@ define [
   appModule = angular.module 'app.states.user.service', [
     'common.csrf'
   ]
-  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService, $state) ->
+  appModule.factory "UserService", ($http, $q, CSRF, $rootScope, MessageService, $state, SailsSocket) ->
     #----------------------------------------------------------------------private variables
     _users = null
     _user = null
@@ -48,6 +48,7 @@ define [
           _csrf: data._csrf
         $http.post("#{config.baseUrl}/user/create", newUser)
         .then (result) ->
+          SailsSocket.io.put('/user/create' + result.data.id, result.data)
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -77,6 +78,7 @@ define [
           _csrf: data._csrf
         $http.put("#{config.baseUrl}/user/update", editingUser)
         .then (result) ->
+          SailsSocket.io.put('/user/update' + result.data.id, result.data)
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -92,6 +94,7 @@ define [
           _csrf: data._csrf
         $http.post("#{config.baseUrl}/user/destroy", deletingUser)
         .then (result) ->
+          SailsSocket.io.put('/user/destroy' + user.id, user)
           return deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)

@@ -8,13 +8,12 @@ define [
   module.factory 'SailsSocket', (sailsSocketFactory, $q, $log )->
     firstRun = true
     service = {}
-
     service.init = ->
       deferred = $q.defer()
       return deferred.resolve service.io unless firstRun
       service.io = sailsSocketFactory({
         reconnectionAttempts: 10
-        url:'/' #Jake: hack to solve the failing connection if url is not /
+        url:'/'
       })
       $log.debug("Connecting to Sails.js...")
       firstRun = false

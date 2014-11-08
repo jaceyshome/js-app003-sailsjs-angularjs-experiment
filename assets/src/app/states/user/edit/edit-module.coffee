@@ -27,7 +27,6 @@ define [
             deferred.resolve undefined
           UserService.getUserDetail({shortLink:$stateParams.shortLink})
           .then (result)->
-            console.log "result", result
             deferred.resolve result
           .catch ->
             deferred.resolve undefined
