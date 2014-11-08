@@ -45,7 +45,8 @@ module.exports.routes = {
   '/home':{view:'app'},
 
   //------------------- CRUD ----------------------------
-  '/user/specifics/:shortLink': 'UserController.specifics'
+  '/user/specifics/:shortLink': 'UserController.specifics',
+  '/user/update/': 'UserController.update'
 
 
 //  '/rest-examples': {
