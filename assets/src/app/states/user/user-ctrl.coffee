@@ -8,10 +8,5 @@ define [
   module = angular.module 'app.states.user'
   module.controller 'UserCtrl', ($scope, $state) ->
 
-    init = ->
-      $state.go "user.details"
-
-    init()
-
 
 
