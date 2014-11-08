@@ -5,15 +5,9 @@ define [
   module = angular.module 'app.states.user.edit'
   module.controller 'UserEditCtrl', ($scope, $state, UserData, UserService) ->
     $scope.user = angular.copy UserData
-
-    init = ->
-      $scope.formTitle = "Edit User"
-      $scope.submitBtnText = "Save"
+    $scope.formTitle = "Edit User"
+    $scope.submitBtnText = "Save"
 
     $scope.sumbit = ->
       UserService.updateUser($scope.user)
-
-    init()
-
-
 

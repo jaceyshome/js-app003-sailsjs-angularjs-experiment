@@ -69,7 +69,7 @@ define [
       deferred = $q.defer()
       CSRF.get().then (data)->
         editingUser =
-          id: user.id
+          shortLink: user.shortLink
           name: user.name
           email:user.email
           password: user.password
