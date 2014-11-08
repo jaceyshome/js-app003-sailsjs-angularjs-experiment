@@ -7,6 +7,7 @@ module.exports = (->
       user.save (err, user) ->
         return next(err) if err
         User.publishCreate
+          id: user.id
           shortLink: user.shortLink
           name: user.name
           email: user.email
@@ -22,6 +23,7 @@ module.exports = (->
     User.find().where({shortLink:req.param('shortLink')}).limit(1).exec((err, user)->
       return next(err) if err or not user
       userJson =
+        id: user[0].id
         name:user[0].name
         email:user[0].email
         shortLink:user[0].shortLink
@@ -37,13 +39,14 @@ module.exports = (->
     userObj =
       name: req.param("name")
       email: req.param("email")
-    User.update req.param("shortLink"), userObj, userUpdated = (err) ->
+      password: req.param("password")
+    User.update req.param("shortLink"), userObj, (err) ->
       return next(err)  if err
       User.publishUpdate
+        id: req.param("id")
         shortLink: req.param("shortLink")
         name: req.param("name")
         email: req.param("email")
-        online: true
       res.json "1"
 
   ctrl.destroy = (req, res, next) ->
@@ -57,7 +60,7 @@ module.exports = (->
 
   ctrl.subscribe = (req, res, next) ->
     # Find all current users in the user model
-    User.find foundUsers = (err, users) ->
+    User.find (err, users) ->
       return next(err) if err
       # subscribe this socket to the User model classroom
       #User.publishCreate

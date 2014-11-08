@@ -12,7 +12,14 @@ module.exports = (()->
   userModel.beforeCreate = (values, next) ->
     return next(err: [ "Password is required." ]) unless values.password
     values.shortLink = CommonHelper.generateShortLink userModel.attributes.shortLink.maxLength
-    require("bcryptjs").hash values.password, 8, passwordEncrypted = (err, encryptedPassword) ->
+    require("bcryptjs").hash values.password, 8, (err, encryptedPassword) ->
+      return next(err) if err
+      values.password = encryptedPassword
+      next()
+
+  userModel.beforeUpdate = (values, next)->
+    return next(err: [ "Password is required." ]) unless values.password
+    require("bcryptjs").hash values.password, 8, (err, encryptedPassword) ->
       return next(err) if err
       values.password = encryptedPassword
       next()

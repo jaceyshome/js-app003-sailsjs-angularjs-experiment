@@ -69,6 +69,7 @@ define [
       deferred = $q.defer()
       CSRF.get().then (data)->
         editingUser =
+          id: user.id
           shortLink: user.shortLink
           name: user.name
           email:user.email
@@ -87,6 +88,7 @@ define [
       CSRF.get().then (data)->
         deletingUser =
           id: user.id
+          shortLink: user.shortLink
           _csrf: data._csrf
         $http.post("#{config.baseUrl}/user/destroy", deletingUser)
         .then (result) ->
