@@ -14,13 +14,15 @@ module.exports = (->
           online: user.online
         , req.socket
         userJson =
+          id: user.id
           name:user.name
           email:user.email
           shortLink:user.shortLink
+          online: user.online
         res.json userJson
 
   ctrl.specifics = (req, res, next) ->
-    User.find().where({shortLink:req.param('shortLink')}).limit(1).exec((err, user)->
+    User.findByShortLink(req.param('shortLink')).exec((err, user)->
       return next(err) if err or not user
       userJson =
         id: user[0].id
@@ -31,7 +33,7 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    User.query "select name, email, shortLink from users", (err,users)->
+    User.query "SELECT name, email, shortLink FROM users", (err,users)->
       return next(err) if err or not users
       res.json users
 
@@ -40,8 +42,13 @@ module.exports = (->
       name: req.param("name")
       email: req.param("email")
       password: req.param("password")
-    User.update req.param("shortLink"), userObj, (err) ->
-      return next(err)  if err
+    query = " UPDATE users
+            SET password = #{userObj.password}
+            WHERE id = #{req.param('id')}
+            AND shortLink = '#{req.param('shortLink')}'"
+    return res.json query
+    User.query query, (err, result) ->
+      return next(err) if err
       User.publishUpdate
         id: req.param("id")
         shortLink: req.param("shortLink")
