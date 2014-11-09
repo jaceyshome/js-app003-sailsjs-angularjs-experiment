@@ -5,7 +5,7 @@ define [
   module = angular.module 'common.sailssocket', [
     'sails.io'
   ]
-  module.factory 'SailsSocket', (sailsSocketFactory, $q, $log )->
+  module.factory 'SailsSocket', (sailsSocketFactory, $q, $log, $rootScope )->
     firstRun = true
     service = {}
     service.init = ->
@@ -19,6 +19,9 @@ define [
       firstRun = false
       service.io.connect()
       .then (result)->
+        service.io.on('message', (msg)->
+          console.log "receive", msg
+        )
         deferred.resolve result
       .catch ->
         deferred.resolve null
