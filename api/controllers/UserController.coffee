@@ -26,6 +26,7 @@ module.exports = (->
       userJson =
         id: user[0].id
         name:user[0].name
+        email:user[0].email
         shortLink:user[0].shortLink
       res.json userJson
     )
