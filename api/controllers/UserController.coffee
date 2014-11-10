@@ -1,4 +1,5 @@
 CommonHelper = require('../helpers/Common')
+Promise = require("bluebird")
 module.exports = (->
   ctrl = {}
   ctrl.create = (req, res, next) ->
@@ -8,9 +9,7 @@ module.exports = (->
         return next(err) if err
         User.publishCreate
           id: user.id
-          shortLink: user.shortLink
           name: user.name
-          email: user.email
           online: user.online
         , req.socket
         userJson =
@@ -27,45 +26,33 @@ module.exports = (->
       userJson =
         id: user[0].id
         name:user[0].name
-        email:user[0].email
         shortLink:user[0].shortLink
       res.json userJson
     )
 
   ctrl.all = (req, res, next) ->
-    User.query "SELECT name, email, shortLink FROM users", (err,users)->
+    User.query "SELECT id, name, email, shortLink FROM users", (err,users)->
       return next(err) if err or not users
       res.json users
 
   ctrl.update = (req, res, next) ->
     userObj =
-      name: req.param("name")
       email: req.param("email")
       password: req.param("password")
-    CommonHelper.generateUserPassword(userObj.password).then (encryptedPassword)->
-      userObj.password = encryptedPassword
-      query = " UPDATE users
-              SET password = '#{userObj.password}'
-              WHERE id = #{req.param('id')}
-              AND shortLink = '#{req.param('shortLink')}'"
-      User.query query, (err, result) ->
-        return next(err) if err
-        User.publishUpdate(req.param("id"),{
-          id: req.param("id")
-          shortLink: req.param("shortLink")
-          name: req.param("name")
-          email: req.param("email")
+    User.update req.param("id"), userObj, (err) ->
+      return next(err)  if err
+      User.publishUpdate(req.param("id"),{
+        id: req.param("id")
+        name: req.param("name")
+        email: req.param("email")
         }, req.socket)
-        res.json "1"
+      res.json "1"
 
   ctrl.destroy = (req, res, next) ->
-    User.findOne req.param("shortLink"), userDestroyed = (err, user) ->
+    User.destroy req.param("id"), (err) ->
       return next(err) if err
-      return next("User doesn't exist.")  unless user
-      User.destroy req.param("shortLink"), userDestroyed = (err) ->
-        return next(err)  if err
-        User.publishDestroy req.param("shortLink"), req.socket
-      res.json "1"
+      User.publishDestroy req.param("id"), req.socket
+    res.json "1"
 
   ctrl.subscribe = (req, res, next) ->
     # Find all current users in the user model
@@ -83,5 +70,21 @@ module.exports = (->
       res.send 200
 
   ctrl._config = {}
+
+  checkUserExist = (user)->
+    new Promise (resolve, reject)->
+      return reject(null) unless user.id
+      return reject(null) unless user.shortLink
+      query = "SELECT id, shortLink
+        FROM users
+        WHERE id = #{user.id}
+        AND shortLink = '#{user.shortLink}'"
+      User.query query, (err, result) ->
+        console.log "result", result
+        if result[0].id is user.id and result[0].shortLink is user.shortLink
+          return resolve(true)
+        else
+          return resolve(false)
+
   ctrl
 )()

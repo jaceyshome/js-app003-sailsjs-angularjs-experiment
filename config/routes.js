@@ -46,7 +46,8 @@ module.exports.routes = {
 
   //------------------- CRUD ----------------------------
   '/user/specifics/:shortLink': 'UserController.specifics',
-  '/user/update/': 'UserController.update'
+  '/user/update/': 'UserController.update',
+  '/user/destroy': 'UserController.destroy'
 
 
 //  '/rest-examples': {
