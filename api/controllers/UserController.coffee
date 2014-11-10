@@ -49,6 +49,7 @@ module.exports = (->
       res.json "1"
 
   ctrl.destroy = (req, res, next) ->
+    console.log "erere!!!"
     User.destroy req.param("id"), (err) ->
       return next(err) if err
       User.publishDestroy req.param("id"), req.socket
