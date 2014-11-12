@@ -7,11 +7,11 @@ CREATE SCHEMA IF NOT EXISTS `palette_dev` DEFAULT CHARACTER SET latin1 COLLATE l
 USE `palette_dev` ;
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`Departments`
+-- Table `palette_dev`.`departments`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`Departments` ;
+DROP TABLE IF EXISTS `palette_dev`.`departments` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`Departments` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`departments` (
   `id` INT(4) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `createdAt` DATETIME NULL ,
@@ -23,11 +23,11 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Departments` (
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`Users`
+-- Table `palette_dev`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`Users` ;
+DROP TABLE IF EXISTS `palette_dev`.`users` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`Users` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NOT NULL ,
@@ -46,18 +46,18 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Users` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Users_Departments1`
   FOREIGN KEY (`departmentId` )
-  REFERENCES `palette_dev`.`Departments` (`id` )
+  REFERENCES `palette_dev`.`departments` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`States`
+-- Table `palette_dev`.`states`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`States` ;
+DROP TABLE IF EXISTS `palette_dev`.`states` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`States` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`states` (
   `id` INT(2) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `createdAt` DATETIME NULL ,
@@ -68,11 +68,11 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`States` (
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`Stages`
+-- Table `palette_dev`.`stages`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`Stages` ;
+DROP TABLE IF EXISTS `palette_dev`.`stages` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`Stages` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`stages` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `projectId` INT(11) NOT NULL ,
   `stateId` INT(2) NOT NULL ,
@@ -88,7 +88,7 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Stages` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Stages_Projects`
   FOREIGN KEY (`projectId` )
-  REFERENCES `palette_dev`.`Projects` (`id` )
+  REFERENCES `palette_dev`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Stages_States1`
@@ -100,11 +100,11 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Stages` (
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`Projects`
+-- Table `palette_dev`.`projects`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`Projects` ;
+DROP TABLE IF EXISTS `palette_dev`.`projects` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`Projects` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`projects` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
   `stateId` INT(2) NOT NULL ,
@@ -123,23 +123,23 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Projects` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Projects_Stages1`
   FOREIGN KEY (`currentStageId` )
-  REFERENCES `palette_dev`.`Stages` (`id` )
+  REFERENCES `palette_dev`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Projects_States1`
   FOREIGN KEY (`stateId` )
-  REFERENCES `palette_dev`.`States` (`id` )
+  REFERENCES `palette_dev`.`states` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`Types`
+-- Table `palette_dev`.`types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`Types` ;
+DROP TABLE IF EXISTS `palette_dev`.`types` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`Types` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`types` (
   `id` INT(4) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL COMMENT 'TEXT, DESIGN, FUNCTIONALITY, QA, ASSETS UPDATE' ,
   `createdAt` DATETIME NOT NULL ,
@@ -150,11 +150,11 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Types` (
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`Tasks`
+-- Table `palette_dev`.`tasks`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`Tasks` ;
+DROP TABLE IF EXISTS `palette_dev`.`tasks` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`Tasks` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`tasks` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `stageId` INT(11) NOT NULL ,
   `stateId` INT(2) NOT NULL ,
@@ -172,28 +172,28 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`Tasks` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_Tasks_Stages1`
   FOREIGN KEY (`stageId` )
-  REFERENCES `palette_dev`.`Stages` (`id` )
+  REFERENCES `palette_dev`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Tasks_type1`
   FOREIGN KEY (`typeId` )
-  REFERENCES `palette_dev`.`Types` (`id` )
+  REFERENCES `palette_dev`.`types` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Tasks_States1`
   FOREIGN KEY (`stateId` )
-  REFERENCES `palette_dev`.`States` (`id` )
+  REFERENCES `palette_dev`.`states` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`TaskLogs`
+-- Table `palette_dev`.`taskLogs`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`TaskLogs` ;
+DROP TABLE IF EXISTS `palette_dev`.`taskLogs` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`TaskLogs` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`taskLogs` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `taskId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
@@ -208,23 +208,23 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`TaskLogs` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_TaskUserRescords_Tasks1`
   FOREIGN KEY (`taskId` )
-  REFERENCES `palette_dev`.`Tasks` (`id` )
+  REFERENCES `palette_dev`.`tasks` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TaskUserRescords_Users1`
   FOREIGN KEY (`userId` )
-  REFERENCES `palette_dev`.`Users` (`id` )
+  REFERENCES `palette_dev`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`ProjectUsers`
+-- Table `palette_dev`.`projectUsers`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`ProjectUsers` ;
+DROP TABLE IF EXISTS `palette_dev`.`projectUsers` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`ProjectUsers` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`projectUsers` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `projectId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
@@ -237,23 +237,23 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`ProjectUsers` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_ProjectUsers_Projects1`
   FOREIGN KEY (`projectId` )
-  REFERENCES `palette_dev`.`Projects` (`id` )
+  REFERENCES `palette_dev`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ProjectUsers_Users1`
   FOREIGN KEY (`userId` )
-  REFERENCES `palette_dev`.`Users` (`id` )
+  REFERENCES `palette_dev`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `palette_dev`.`StageLogs`
+-- Table `palette_dev`.`stageLogs`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `palette_dev`.`StageLogs` ;
+DROP TABLE IF EXISTS `palette_dev`.`stageLogs` ;
 
-CREATE  TABLE IF NOT EXISTS `palette_dev`.`StageLogs` (
+CREATE  TABLE IF NOT EXISTS `palette_dev`.`stageLogs` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `stageId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
@@ -267,12 +267,12 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`StageLogs` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_StageLogs_Stages1`
   FOREIGN KEY (`stageId` )
-  REFERENCES `palette_dev`.`Stages` (`id` )
+  REFERENCES `palette_dev`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_StageLogs_Users1`
   FOREIGN KEY (`userId` )
-  REFERENCES `palette_dev`.`Users` (`id` )
+  REFERENCES `palette_dev`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
