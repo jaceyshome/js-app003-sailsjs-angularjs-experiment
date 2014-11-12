@@ -185,6 +185,14 @@ module.exports = (grunt) ->
           data:
             deploy: true
 
+    mocha_istanbul:
+      coverage:
+        src: 'test'
+        options:
+          coverageFolder: 'coverage'
+          mask: '**/*.spec.js'
+          root: 'api/'
+
     ngtemplates:
       dev:
         cwd: "templates"
@@ -408,6 +416,7 @@ module.exports = (grunt) ->
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
   grunt.registerTask "buildYaml", ["yaml", "json2js"]
+  grunt.registerTask "test", ['mocha_istanbul:coverage']
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]
