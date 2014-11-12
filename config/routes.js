@@ -38,16 +38,26 @@ module.exports.routes = {
   //----------------- VIEWS ----------------------------
   '/login':{view:'app'},
   '/signup':{view:'app'},
+  '/home':{view:'app'},
+
+  //----------------- user -----------------------------
+  //------------ user view -----------------------------
   '/user':{view:'app'},
   '/user/list':{view:'app'},
   '/user/details/:shortLink':{view:'app'},
   '/user/edit/:shortLink':{view:'app'},
-  '/home':{view:'app'},
-
-  //------------------- CRUD ----------------------------
+  //-------------user crud ----------------------------
   '/user/specifics/:shortLink': 'UserController.specifics',
   '/user/update/': 'UserController.update',
-  '/user/destroy': 'UserController.destroy'
+  '/user/destroy': 'UserController.destroy',
+
+  //------------------ project -------------------------
+  //------------------ project view --------------------
+  '/project':{view:'app'},
+  '/project/list':{view:'app'},
+  '/project/details/:shortLink':{view:'app'},
+  '/project/edit/:shortLink':{view:'app'}
+
 
 
 //  '/rest-examples': {
