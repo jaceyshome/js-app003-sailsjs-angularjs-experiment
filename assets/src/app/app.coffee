@@ -13,21 +13,25 @@ define [
   'common/validation/validation'
   'app/states/home/home-ctrl'
   'app/states/user/user-ctrl'
+  'app/states/project/project-ctrl'
   'app/states/login/login-ctrl'
   'app/states/signup/signup-ctrl'
 ], ->
   module = angular.module 'app', [
     'ui.router'
     'ngAnimate'
+    'common.csrf'
+    'common.utility'
     'common.navigation'
-    'app.states.home'
-    'app.states.user'
-    'app.states.signup'
-    'app.states.login'
     'common.fieldmatch.directive'
     'common.message.service'
     'common.sailssocket'
     'common.validation'
+    'app.states.home'
+    'app.states.user'
+    'app.states.signup'
+    'app.states.login'
+    'app.states.project'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)
