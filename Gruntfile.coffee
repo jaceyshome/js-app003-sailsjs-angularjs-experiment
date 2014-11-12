@@ -114,6 +114,15 @@ module.exports = (grunt) ->
         options:
           sourceMap: true
           bare: true
+      test:
+        expand: true
+        cwd:"test_src"
+        src:["**/*.spec.coffee"]
+        dest:"test/"
+        ext:".spec.js"
+        options:
+          sourceMap:true
+          bare:true
 
     coffeelint:
       app: "assets/**/*.coffee"
@@ -370,6 +379,9 @@ module.exports = (grunt) ->
         files: [ "assets/src/**/*", "validations/**/*" ]
       # When assets are changed:
         tasks: [ "concurrent:watch", "linkAssets" ]
+      test:
+        files:['test_src/**/*']
+        tasks:['watchTest']
 
     #-protractor
     protractor:
@@ -416,14 +428,15 @@ module.exports = (grunt) ->
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
   grunt.registerTask "buildYaml", ["yaml", "json2js"]
-  grunt.registerTask "test", ['mocha_istanbul:coverage']
+  grunt.registerTask('buildTest',['coffee:test','coffeelint','mocha_istanbul:coverage'])
+  grunt.registerTask('watchTest',['coffee:test','coffeelint','mocha_istanbul:coverage'])
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]
   grunt.registerTask "watchAssets", [ "watchYaml","watchCoffee", "watchLess", "watchJade","concat:dev" ]
   grunt.registerTask "buildAssets", [ "clean:dev", "buildYaml","buildCoffee", "buildLibs" ,"buildLess", "buildJade","concat:dev","copy:dev"]
   grunt.registerTask "linkAssets", [ "sails-linker:devJs", "sails-linker:devStyles", "sails-linker:devTpl", "sails-linker:devJsJADE", "sails-linker:devStylesJADE", "sails-linker:devTplJADE" ]
-  grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build" ]
+  grunt.registerTask "build", [ "clean:build", "buildAssets", "linkAssets", "copy:build"]
   grunt.registerTask "prod", [ "buildAssets", "linkAssets", "copy:prod", "concat:prod", "uglify", "cssmin" ]
   grunt.registerTask 'e2e', ['protractor:dev']
   grunt.registerTask 'wds', ["shell:startWebDriver"]
