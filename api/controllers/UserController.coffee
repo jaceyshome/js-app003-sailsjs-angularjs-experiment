@@ -32,6 +32,7 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
+    #TODO check admin user
     User.query "SELECT id, name, email, shortLink FROM users", (err,users)->
       return next(err) if err or not users
       res.json users
@@ -47,46 +48,26 @@ module.exports = (->
         name: req.param("name")
         email: req.param("email")
         }, req.socket)
-      res.json "1"
+      res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    console.log "erere!!!"
-    User.destroy req.param("id"), (err) ->
+    query = "DELETE FROM users
+      WHERE id = #{req.param('id')}
+      AND shortLink = '"+"#{req.param('shortLink')}"+"'"
+    User.query query, (err) ->
       return next(err) if err
       User.publishDestroy req.param("id"), req.socket
-    res.json "1"
+    res.send 200
 
   ctrl.subscribe = (req, res, next) ->
-    # Find all current users in the user model
     User.find (err, users) ->
       return next(err) if err
-      # subscribe this socket to the User model classroom
-      #User.publishCreate
       User.subscribe req.socket
-      # subscribe this socket to the user instance rooms
-      #User.publishDestroy
-      #User.publishUpdate
       User.subscribe req.socket, users
-      # This will avoid a warning from the socket for trying to render
-      # html over the socket.
       res.send 200
 
   ctrl._config = {}
 
-  checkUserExist = (user)->
-    new Promise (resolve, reject)->
-      return reject(null) unless user.id
-      return reject(null) unless user.shortLink
-      query = "SELECT id, shortLink
-        FROM users
-        WHERE id = #{user.id}
-        AND shortLink = '#{user.shortLink}'"
-      User.query query, (err, result) ->
-        console.log "result", result
-        if result[0].id is user.id and result[0].shortLink is user.shortLink
-          return resolve(true)
-        else
-          return resolve(false)
 
   ctrl
 )()
