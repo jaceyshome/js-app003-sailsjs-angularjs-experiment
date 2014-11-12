@@ -3,7 +3,7 @@ CommonHelper = require('../helpers/Common')
 
 module.exports = (()->
   userModel = {}
-  userModel.tableName =  "Users" #point to tableName
+  userModel.tableName =  "users" #point to tableName
   userModel.migrate = "safe"
   userModel.attributes = YAML.load('validations/user.yml')
   delete userModel.attributes.confirmPassword
