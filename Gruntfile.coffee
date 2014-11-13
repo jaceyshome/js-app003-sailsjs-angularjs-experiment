@@ -123,6 +123,16 @@ module.exports = (grunt) ->
         options:
           sourceMap:true
           bare:true
+      apiTmp:
+        expand: true
+        cwd: "api"
+        src:["**/*.coffee"]
+        dest:"api"
+        ext:".js"
+        options:
+          sourceMap:false
+          bare:true
+
 
     coffeelint:
       app: "assets/**/*.coffee"
@@ -243,6 +253,7 @@ module.exports = (grunt) ->
       templates: [ "templates" ]
       dev: [ ".tmp/public/**" ]
       build: [ "www" ]
+      apiTmp:["api/**/*.js"]
 
   #--optimization config
     concat:
@@ -428,7 +439,7 @@ module.exports = (grunt) ->
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
   grunt.registerTask "buildYaml", ["yaml", "json2js"]
-  grunt.registerTask('buildTest',['coffee:test','coffeelint','mocha_istanbul:coverage'])
+  grunt.registerTask('buildTest',['coffee:test', 'coffee:apiTmp' ,'coffeelint','mocha_istanbul:coverage', "clean:apiTmp"])
   grunt.registerTask('watchTest',['coffee:test','coffeelint','mocha_istanbul:coverage'])
 
   #--When Sails is lifted:
