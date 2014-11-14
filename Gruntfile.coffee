@@ -123,9 +123,18 @@ module.exports = (grunt) ->
         options:
           sourceMap:true
           bare:true
-      apiTmp:
+      testHelpers:
         expand: true
-        cwd: "api"
+        cwd:"test_src/helpers"
+        src:["**/*.coffee"]
+        dest:"test/helpers"
+        ext:".js"
+        options:
+          sourceMap:true
+          bare:true
+      api:
+        expand: true
+        cwd: "api_src"
         src:["**/*.coffee"]
         dest:"api"
         ext:".js"
@@ -420,7 +429,7 @@ module.exports = (grunt) ->
           logConcurrentOutput: true
           limit: 6
       test:
-        tasks: ["watchAssets"]
+        tasks: ["watchTest"]
         options:
           logConcurrentOutput: true
           limit: 6
@@ -434,13 +443,13 @@ module.exports = (grunt) ->
   grunt.registerTask "watchLess", [ "newer:less:dev", "lesslint" ]
   grunt.registerTask "watchJade", [ "newer:jade:dev", "ngtemplates" ]
   grunt.registerTask "watchYaml", ["newer:yaml", "json2js"]
-  grunt.registerTask "buildCoffee", [ "coffee:dev", "coffeelint" ]
+  grunt.registerTask "buildCoffee", [ "coffee:dev", "coffee:api", "coffeelint" ]
   grunt.registerTask "buildLibs", [ "json2js" ]
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
   grunt.registerTask "buildYaml", ["yaml", "json2js"]
-  grunt.registerTask('buildTest',['coffee:test', 'coffee:apiTmp' ,'coffeelint','mocha_istanbul:coverage', "clean:apiTmp"])
-  grunt.registerTask('watchTest',['coffee:test','coffeelint','mocha_istanbul:coverage'])
+  grunt.registerTask('buildTest',['coffee:testHelpers','coffee:test','coffeelint','mocha_istanbul:coverage'])
+  grunt.registerTask('watchTest',['coffee:testHelpers','coffee:test','coffeelint','mocha_istanbul:coverage'])
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]
