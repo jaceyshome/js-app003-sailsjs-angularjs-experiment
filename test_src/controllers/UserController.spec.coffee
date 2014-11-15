@@ -72,9 +72,12 @@ describe "Create User", (done) ->
 
   return
 
-describe "Update user", (done)->
+describe.only "Update user", (done)->
   it "should update user with required field", (done)->
-    done()
+    @timeout 5000
+    request(reqApp)
+    .request(reqApp)
+    .put("/user/update")
 
 ###
 After ALL the tests, lower sails
