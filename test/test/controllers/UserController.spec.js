@@ -1,14 +1,16 @@
-var DBHelper, Sails, app, assert, request;
+var DBHelper, Sails, app, assert, reqApp, request;
 
 Sails = require("sails");
 
 assert = require("assert");
 
-request = require('supertest');
+request = require("supertest");
 
 DBHelper = require('../helpers/db');
 
 app = void 0;
+
+reqApp = void 0;
 
 before(function(done) {
   this.timeout(5000);
@@ -27,6 +29,7 @@ before(function(done) {
     }
   }, function(err, sails) {
     app = sails;
+    reqApp = app.express.app;
     done(err, sails);
   });
 });
@@ -37,13 +40,46 @@ beforeEach(function(done) {
   });
 });
 
-describe("User", function(done) {
-  it("should be able to create a user", function(done) {
-    request(app.express.app).post('/user/create').send({
+describe("Create User", function(done) {
+  it("should be able to create a user with correct info", function(done) {
+    request(reqApp).post('/user/create').send({
       name: 'test',
       email: 'test@test.com',
       password: 'password'
-    }).expect(200, done);
+    }).expect(200).expect(function(res) {
+      if (!('id' in res.body)) {
+        return "response missing id";
+      }
+      if (!('name' in res.body)) {
+        return "response missing name";
+      }
+      if (!('email' in res.body)) {
+        return "response missing email";
+      }
+      if (!('shortLink' in res.body)) {
+        return "response missing shortLink";
+      }
+      if (!('online' in res.body)) {
+        return "response missing online";
+      }
+      if ('password' in res.body) {
+        return "response should not have password";
+      }
+    }).end(done);
+  });
+  it("should not be able to create the same user", function(done) {
+    this.timeout(5000);
+    request(reqApp).post('/user/create').send({
+      name: 'test',
+      email: 'test@test.com',
+      password: 'password'
+    }).expect(200).end(function() {
+      return request(reqApp).post('/user/create').send({
+        name: 'test',
+        email: 'test@test.com',
+        password: 'password'
+      }).expect(500).end(done);
+    });
   });
 });
 

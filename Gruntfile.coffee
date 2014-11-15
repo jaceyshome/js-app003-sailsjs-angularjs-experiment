@@ -217,9 +217,7 @@ module.exports = (grunt) ->
       test:
         src: 'test/test/**/*.spec.js'
         options:
-          reporter: 'spec'
-          quiet: false
-          clearRequireCache: false
+          reporter: 'mocha-unfunk-reporter'
 
     ngtemplates:
       dev:
