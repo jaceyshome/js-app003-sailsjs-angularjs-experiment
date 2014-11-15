@@ -118,7 +118,7 @@ module.exports = (grunt) ->
         expand: true
         cwd:"test_src"
         src:["**/*.spec.coffee"]
-        dest:"test/"
+        dest:"test/test/"
         ext:".spec.js"
         options:
           sourceMap:true
@@ -127,7 +127,7 @@ module.exports = (grunt) ->
         expand: true
         cwd:"test_src/helpers"
         src:["**/*.coffee"]
-        dest:"test/helpers"
+        dest:"test/test/helpers"
         ext:".js"
         options:
           sourceMap:true
@@ -213,13 +213,13 @@ module.exports = (grunt) ->
           data:
             deploy: true
 
-    mocha_istanbul:
-      coverage:
-        src: 'test'
+    mochaTest:
+      test:
+        src: 'test/test/**/*.spec.js'
         options:
-          coverageFolder: 'coverage'
-          mask: '**/*.spec.js'
-          root: 'api/'
+          reporter: 'spec'
+          quiet: false
+          clearRequireCache: false
 
     ngtemplates:
       dev:
@@ -262,7 +262,7 @@ module.exports = (grunt) ->
       templates: [ "templates" ]
       dev: [ ".tmp/public/**" ]
       build: [ "www" ]
-      apiTmp:["api/**/*.js"]
+      test: ["test/test/**"]
 
   #--optimization config
     concat:
@@ -448,8 +448,8 @@ module.exports = (grunt) ->
   grunt.registerTask "buildLess", [ "less:dev", "lesslint" ]
   grunt.registerTask "buildJade", [ "clean:templates", "jade:dev", "ngtemplates", "clean:templates" ]
   grunt.registerTask "buildYaml", ["yaml", "json2js"]
-  grunt.registerTask('buildTest',['coffee:testHelpers','coffee:test','coffeelint','mocha_istanbul:coverage'])
-  grunt.registerTask('watchTest',['coffee:testHelpers','coffee:test','coffeelint','mocha_istanbul:coverage'])
+  grunt.registerTask('buildTest',['clean:test','coffee:testHelpers','coffee:test','coffeelint','mochaTest'])
+  grunt.registerTask('watchTest',['newer:coffee:testHelpers','newer:coffee:test','coffeelint','mochaTest'])
 
   #--When Sails is lifted:
   grunt.registerTask "default", ["concurrent:watch"]

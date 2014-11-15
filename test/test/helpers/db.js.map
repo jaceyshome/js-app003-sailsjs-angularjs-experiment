@@ -1,7 +1,7 @@
 {
   "version": 3,
   "file": "db.js",
-  "sourceRoot": "../../test_src/helpers/",
+  "sourceRoot": "../../../test_src/helpers/",
   "sources": [
     "db.coffee"
   ],

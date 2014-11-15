@@ -1,0 +1,13 @@
+
+[0m[0m
+
+[0m  The Hello Controller[0m
+[0m    when we invoke the index action[0m
+[2K[0G    [32m  ✓[0m[90m should return hello world message [0m
+
+[0m  User[0m
+[2K[0G  [32m  ✓[0m[90m should be able to create a user [0m[31m(1302ms)[0m
+
+
+[92m [0m[32m 2 passing[0m[90m (3s)[0m
+

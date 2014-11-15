@@ -12,7 +12,7 @@ module.exports = (function() {
   helper.generateShortLink = function(length) {
     return new Promise(function(resolve, reject) {
       var result;
-      length = length || 12;
+      length = length || 24;
       result = helper.randomValueBase64(length);
       return resolve(result);
     });

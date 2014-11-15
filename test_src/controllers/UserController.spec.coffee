@@ -34,10 +34,8 @@ describe "User", (done) ->
       password: 'password'
     })
     .expect(200, done)
-
+    return
   return
-  done()
-return
 
 ###
 After ALL the tests, lower sails

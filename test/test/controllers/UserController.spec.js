@@ -39,17 +39,13 @@ beforeEach(function(done) {
 
 describe("User", function(done) {
   it("should be able to create a user", function(done) {
-    return request(app.express.app).post('/user/create').send({
+    request(app.express.app).post('/user/create').send({
       name: 'test',
       email: 'test@test.com',
       password: 'password'
     }).expect(200, done);
   });
-  return;
-  return done();
 });
-
-return;
 
 
 /*
