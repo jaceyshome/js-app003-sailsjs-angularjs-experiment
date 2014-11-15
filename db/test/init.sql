@@ -1,9 +1,9 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `palette_test` ;
-CREATE SCHEMA IF NOT EXISTS `palette_test` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+CREATE SCHEMA IF NOT EXISTS `palette_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 USE `palette_test` ;
 
 -- -----------------------------------------------------
@@ -12,13 +12,12 @@ USE `palette_test` ;
 DROP TABLE IF EXISTS `palette_test`.`departments` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`departments` (
-  `id` INT(4) NOT NULL AUTO_INCREMENT ,
+  `id` INT(4) NOT NULL ,
   `name` VARCHAR(45) NULL ,
   `createdAt` DATETIME NULL ,
-  `updatedAt` TIMESTAMP NULL DEFAULT now() ,
+  `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
   ENGINE = InnoDB;
 
 
@@ -28,23 +27,21 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`departments` (
 DROP TABLE IF EXISTS `palette_test`.`users` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
+  `id` INT(11) NOT NULL ,
+  `loginName` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NOT NULL ,
   `password` VARCHAR(256) NOT NULL ,
-  `departmentId` INT(4) NULL ,
-  `isSuperAdmin` INT(1) NOT NULL COMMENT 'for super admin only' ,
+  `isSuperAdmin` INT(1) NOT NULL DEFAULT 0 COMMENT 'for super admin only' ,
   `avator` VARCHAR(1000) NULL ,
-  `shortLink` VARCHAR(12) NOT NULL ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
-  `online` INT(1) NOT NULL DEFAULT 0 ,
+  `nickName` VARCHAR(45) NOT NULL ,
+  `departmentId` INT(4) NULL ,
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `userName_UNIQUE` (`name` ASC) ,
-  INDEX `fk_Users_Departments1_idx` (`departmentId` ASC) ,
-  UNIQUE INDEX `shortLink_UNIQUE` (`shortLink` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Users_Departments1`
+  UNIQUE INDEX `userName_UNIQUE` (`loginName` ASC) ,
+  UNIQUE INDEX `nickName_UNIQUE` (`nickName` ASC) ,
+  INDEX `fk_users_departments1` (`departmentId` ASC) ,
+  CONSTRAINT `fk_users_departments1`
   FOREIGN KEY (`departmentId` )
   REFERENCES `palette_test`.`departments` (`id` )
     ON DELETE NO ACTION
@@ -58,12 +55,9 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
 DROP TABLE IF EXISTS `palette_test`.`states` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`states` (
-  `id` INT(2) NOT NULL AUTO_INCREMENT ,
+  `id` INT(2) NOT NULL ,
   `name` VARCHAR(45) NULL ,
-  `createdAt` DATETIME NULL ,
-  `updatedAt` TIMESTAMP NULL DEFAULT now() ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  PRIMARY KEY (`id`) )
   ENGINE = InnoDB;
 
 
@@ -73,27 +67,19 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`states` (
 DROP TABLE IF EXISTS `palette_test`.`stages` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`stages` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `projectId` INT(11) NOT NULL ,
-  `stateId` INT(2) NOT NULL ,
+  `id` INT(11) NOT NULL ,
   `name` VARCHAR(100) NULL ,
-  `description` TEXT NULL ,
+  `description` VARCHAR(1000) NULL ,
   `startDate` DATETIME NULL ,
   `endDate` DATETIME NULL ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
+  `stateId` INT(2) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_Stages_Projects_idx` (`projectId` ASC) ,
-  INDEX `fk_Stages_States1_idx` (`stateId` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Stages_Projects`
-  FOREIGN KEY (`projectId` )
-  REFERENCES `palette_test`.`projects` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Stages_States1`
+  INDEX `fk_stages_states1` (`stateId` ASC) ,
+  CONSTRAINT `fk_stages_states1`
   FOREIGN KEY (`stateId` )
-  REFERENCES `palette_test`.`States` (`id` )
+  REFERENCES `palette_test`.`states` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -105,30 +91,27 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`stages` (
 DROP TABLE IF EXISTS `palette_test`.`projects` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`projects` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `id` INT(11) NOT NULL ,
   `name` VARCHAR(100) NOT NULL ,
-  `stateId` INT(2) NOT NULL ,
   `startDate` DATETIME NULL ,
   `endDate` DATETIME NULL ,
   `priority` INT(1) NOT NULL DEFAULT 0 ,
+  `stateId` INT(2) NOT NULL ,
   `currentStageId` INT(11) NULL ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
-  `description` TEXT NULL ,
-  `shortLink` VARCHAR(12) NULL ,
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  INDEX `fk_Projects_Stages1_idx` (`currentStageId` ASC) ,
-  INDEX `fk_Projects_States1_idx` (`stateId` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Projects_Stages1`
-  FOREIGN KEY (`currentStageId` )
-  REFERENCES `palette_test`.`stages` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Projects_States1`
+  INDEX `fk_projects_states1` (`stateId` ASC) ,
+  INDEX `fk_projects_stages1` (`currentStageId` ASC) ,
+  CONSTRAINT `fk_projects_states1`
   FOREIGN KEY (`stateId` )
   REFERENCES `palette_test`.`states` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_projects_stages1`
+  FOREIGN KEY (`currentStageId` )
+  REFERENCES `palette_test`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -140,12 +123,11 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`projects` (
 DROP TABLE IF EXISTS `palette_test`.`types` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`types` (
-  `id` INT(4) NOT NULL AUTO_INCREMENT ,
+  `id` INT(4) NOT NULL ,
   `name` VARCHAR(45) NULL COMMENT 'TEXT, DESIGN, FUNCTIONALITY, QA, ASSETS UPDATE' ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
+  PRIMARY KEY (`id`) )
   ENGINE = InnoDB;
 
 
@@ -155,34 +137,33 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`types` (
 DROP TABLE IF EXISTS `palette_test`.`tasks` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`tasks` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `stageId` INT(11) NOT NULL ,
-  `stateId` INT(2) NOT NULL ,
-  `typeId` INT(4) NULL ,
+  `id` INT(11) NOT NULL ,
   `name` VARCHAR(200) NULL ,
   `description` TEXT NULL ,
   `startDate` DATETIME NULL ,
   `endDate` DATETIME NULL ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
+  `stageId` INT(11) NOT NULL ,
+  `stateId` INT(2) NOT NULL ,
+  `typeId` INT(4) NOT NULL ,
+  `updatedAt` DATETIME NULL ,
+  `createdAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_Tasks_Stages1_idx` (`stageId` ASC) ,
-  INDEX `fk_Tasks_type1_idx` (`typeId` ASC) ,
-  INDEX `fk_Tasks_States1_idx` (`stateId` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_Tasks_Stages1`
+  INDEX `fk_tasks_stages1` (`stageId` ASC) ,
+  INDEX `fk_tasks_states1` (`stateId` ASC) ,
+  INDEX `fk_tasks_types1` (`typeId` ASC) ,
+  CONSTRAINT `fk_tasks_stages1`
   FOREIGN KEY (`stageId` )
   REFERENCES `palette_test`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Tasks_type1`
-  FOREIGN KEY (`typeId` )
-  REFERENCES `palette_test`.`types` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Tasks_States1`
+  CONSTRAINT `fk_tasks_states1`
   FOREIGN KEY (`stateId` )
   REFERENCES `palette_test`.`states` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tasks_types1`
+  FOREIGN KEY (`typeId` )
+  REFERENCES `palette_test`.`types` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -194,24 +175,23 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`tasks` (
 DROP TABLE IF EXISTS `palette_test`.`taskLogs` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`taskLogs` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `id` INT(11) NOT NULL ,
+  `comment` VARCHAR(300) NULL ,
+  `estimatedHours` DATETIME NOT NULL DEFAULT 0 ,
+  `spentHours` DATETIME NOT NULL DEFAULT 0 ,
   `taskId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
-  `comment` TEXT NULL ,
-  `estimatedHours` FLOAT NOT NULL DEFAULT 0 ,
-  `spentHours` FLOAT NOT NULL DEFAULT 0 ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_TaskUserRescords_Tasks1_idx` (`taskId` ASC) ,
-  INDEX `fk_TaskUserRescords_Users1_idx` (`userId` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_TaskUserRescords_Tasks1`
+  INDEX `fk_taskLogs_tasks1` (`taskId` ASC) ,
+  INDEX `fk_taskLogs_users1` (`userId` ASC) ,
+  CONSTRAINT `fk_taskLogs_tasks1`
   FOREIGN KEY (`taskId` )
   REFERENCES `palette_test`.`tasks` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_TaskUserRescords_Users1`
+  CONSTRAINT `fk_taskLogs_users1`
   FOREIGN KEY (`userId` )
   REFERENCES `palette_test`.`users` (`id` )
     ON DELETE NO ACTION
@@ -225,22 +205,21 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`taskLogs` (
 DROP TABLE IF EXISTS `palette_test`.`projectUsers` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`projectUsers` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `id` INT(11) NOT NULL ,
+  `autherization` INT(2) NOT NULL DEFAULT 0 ,
   `projectId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
-  `autherization` INT(2) NOT NULL DEFAULT 0 ,
-  `createdAt` DATETIME NOT NULL ,
-  `updatedAt` TIMESTAMP NOT NULL DEFAULT now() ,
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_ProjectUsers_Projects1_idx` (`projectId` ASC) ,
-  INDEX `fk_ProjectUsers_Users1_idx` (`userId` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_ProjectUsers_Projects1`
+  INDEX `fk_projectUsers_projects1` (`projectId` ASC) ,
+  INDEX `fk_projectUsers_users1` (`userId` ASC) ,
+  CONSTRAINT `fk_projectUsers_projects1`
   FOREIGN KEY (`projectId` )
   REFERENCES `palette_test`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ProjectUsers_Users1`
+  CONSTRAINT `fk_projectUsers_users1`
   FOREIGN KEY (`userId` )
   REFERENCES `palette_test`.`users` (`id` )
     ON DELETE NO ACTION
@@ -254,25 +233,24 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`projectUsers` (
 DROP TABLE IF EXISTS `palette_test`.`stageLogs` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`stageLogs` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `stageId` INT(11) NOT NULL ,
-  `userId` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL ,
   `comment` VARCHAR(300) NULL ,
   `budgetedHours` FLOAT NOT NULL DEFAULT 0 ,
   `createdAt` DATETIME NULL ,
-  `updatedAt` TIMESTAMP NULL DEFAULT now() ,
+  `updatedAt` DATETIME NULL ,
+  `userId` INT(11) NOT NULL ,
+  `stageId` INT(11) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_StageLogs_Stages1_idx` (`stageId` ASC) ,
-  INDEX `fk_StageLogs_Users1_idx` (`userId` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  CONSTRAINT `fk_StageLogs_Stages1`
-  FOREIGN KEY (`stageId` )
-  REFERENCES `palette_test`.`stages` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_StageLogs_Users1`
+  INDEX `fk_stageLogs_users1` (`userId` ASC) ,
+  INDEX `fk_stageLogs_stages1` (`stageId` ASC) ,
+  CONSTRAINT `fk_stageLogs_users1`
   FOREIGN KEY (`userId` )
   REFERENCES `palette_test`.`users` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_stageLogs_stages1`
+  FOREIGN KEY (`stageId` )
+  REFERENCES `palette_test`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
