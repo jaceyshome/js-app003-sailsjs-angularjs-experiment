@@ -1,7 +1,10 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+DROP SCHEMA IF EXISTS `palette_dev` ;
+CREATE SCHEMA IF NOT EXISTS `palette_dev` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+USE `palette_dev` ;
 
 -- -----------------------------------------------------
 -- Table `palette_dev`.`departments`
@@ -15,7 +18,7 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`departments` (
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -40,11 +43,11 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`users` (
   UNIQUE INDEX `nickName_UNIQUE` (`shortLink` ASC) ,
   INDEX `fk_users_departments1` (`departmentId` ASC) ,
   CONSTRAINT `fk_users_departments1`
-  FOREIGN KEY (`departmentId` )
-  REFERENCES `palette_dev`.`departments` (`id` )
+    FOREIGN KEY (`departmentId` )
+    REFERENCES `palette_dev`.`departments` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -58,7 +61,7 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`states` (
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) )
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -78,11 +81,11 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`stages` (
   PRIMARY KEY (`id`) ,
   INDEX `fk_stages_states1` (`stateId` ASC) ,
   CONSTRAINT `fk_stages_states1`
-  FOREIGN KEY (`stateId` )
-  REFERENCES `palette_dev`.`states` (`id` )
+    FOREIGN KEY (`stateId` )
+    REFERENCES `palette_dev`.`states` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -105,16 +108,16 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`projects` (
   INDEX `fk_projects_states1` (`stateId` ASC) ,
   INDEX `fk_projects_stages1` (`currentStageId` ASC) ,
   CONSTRAINT `fk_projects_states1`
-  FOREIGN KEY (`stateId` )
-  REFERENCES `palette_dev`.`states` (`id` )
+    FOREIGN KEY (`stateId` )
+    REFERENCES `palette_dev`.`states` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_projects_stages1`
-  FOREIGN KEY (`currentStageId` )
-  REFERENCES `palette_dev`.`stages` (`id` )
+    FOREIGN KEY (`currentStageId` )
+    REFERENCES `palette_dev`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -128,7 +131,7 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`types` (
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) )
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -152,21 +155,21 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`tasks` (
   INDEX `fk_tasks_states1` (`stateId` ASC) ,
   INDEX `fk_tasks_types1` (`typeId` ASC) ,
   CONSTRAINT `fk_tasks_stages1`
-  FOREIGN KEY (`stageId` )
-  REFERENCES `palette_dev`.`stages` (`id` )
+    FOREIGN KEY (`stageId` )
+    REFERENCES `palette_dev`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tasks_states1`
-  FOREIGN KEY (`stateId` )
-  REFERENCES `palette_dev`.`states` (`id` )
+    FOREIGN KEY (`stateId` )
+    REFERENCES `palette_dev`.`states` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tasks_types1`
-  FOREIGN KEY (`typeId` )
-  REFERENCES `palette_dev`.`types` (`id` )
+    FOREIGN KEY (`typeId` )
+    REFERENCES `palette_dev`.`types` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -187,16 +190,16 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`taskLogs` (
   INDEX `fk_taskLogs_tasks1` (`taskId` ASC) ,
   INDEX `fk_taskLogs_users1` (`userId` ASC) ,
   CONSTRAINT `fk_taskLogs_tasks1`
-  FOREIGN KEY (`taskId` )
-  REFERENCES `palette_dev`.`tasks` (`id` )
+    FOREIGN KEY (`taskId` )
+    REFERENCES `palette_dev`.`tasks` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_taskLogs_users1`
-  FOREIGN KEY (`userId` )
-  REFERENCES `palette_dev`.`users` (`id` )
+    FOREIGN KEY (`userId` )
+    REFERENCES `palette_dev`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -215,16 +218,16 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`projectUsers` (
   INDEX `fk_projectUsers_projects1` (`projectId` ASC) ,
   INDEX `fk_projectUsers_users1` (`userId` ASC) ,
   CONSTRAINT `fk_projectUsers_projects1`
-  FOREIGN KEY (`projectId` )
-  REFERENCES `palette_dev`.`projects` (`id` )
+    FOREIGN KEY (`projectId` )
+    REFERENCES `palette_dev`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_projectUsers_users1`
-  FOREIGN KEY (`userId` )
-  REFERENCES `palette_dev`.`users` (`id` )
+    FOREIGN KEY (`userId` )
+    REFERENCES `palette_dev`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -244,16 +247,16 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`stageLogs` (
   INDEX `fk_stageLogs_users1` (`userId` ASC) ,
   INDEX `fk_stageLogs_stages1` (`stageId` ASC) ,
   CONSTRAINT `fk_stageLogs_users1`
-  FOREIGN KEY (`userId` )
-  REFERENCES `palette_dev`.`users` (`id` )
+    FOREIGN KEY (`userId` )
+    REFERENCES `palette_dev`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_stageLogs_stages1`
-  FOREIGN KEY (`stageId` )
-  REFERENCES `palette_dev`.`stages` (`id` )
+    FOREIGN KEY (`stageId` )
+    REFERENCES `palette_dev`.`stages` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 
