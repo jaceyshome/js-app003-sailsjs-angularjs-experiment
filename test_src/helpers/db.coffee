@@ -1,20 +1,35 @@
 mysql = require('mysql')
-blueBird = require('bluebird')
-module.exports =
-  cleanDB : (callback)->
-    db = new mysql.createConnection({
-      host     : 'localhost'
-      database : 'palette_test'
-      user     : 'root'
-      password : ''
-    })
+db = require('mysql-promise')()
+module.exports =(()->
 
-    db.query "SET FOREIGN_KEY_CHECKS = 0;", (err, result)->
-      db.query "SHOW TABLES", (err, tables)->
-        tables.forEach (table)->
-          db.query "TRUNCATE #{table.Tables_in_palette_test}", (err, result)->
-            console.log "table.Tables_in_palette_test", table.Tables_in_palette_test
-#        db.end()
+  db.configure({
+    host     : 'localhost'
+    database : 'palette_test'
+    user     : 'root'
+    password : ''
+  });
 
-    return
+  disableFKConstraint = ->
+    db.query("SET FOREIGN_KEY_CHECKS = 0;")
 
+  eableFKConstraint = ->
+    db.query("SET FOREIGN_KEY_CHECKS = 1;")
+
+  cleanUpDBTables = (tables)->
+    db.query("SHOW TABLES").spread((tables)->
+      tables.forEach (table)->
+        db.query("TRUNCATE #{table.Tables_in_palette_test}")
+        .then (result)->
+          console.log "table: ", table.Tables_in_palette_test
+    )
+
+  service = {}
+
+  service.cleanDB = ()->
+    disableFKConstraint()
+    .then(cleanUpDBTables)
+    .then(eableFKConstraint)
+
+  service
+
+)()
