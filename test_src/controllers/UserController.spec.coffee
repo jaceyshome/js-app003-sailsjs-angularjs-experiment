@@ -72,6 +72,9 @@ describe "Create User", (done) ->
 
   return
 
+describe "Update user", (done)->
+  it "should update user with required field", (done)->
+    done()
 
 ###
 After ALL the tests, lower sails
