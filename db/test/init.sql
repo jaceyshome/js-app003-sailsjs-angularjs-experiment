@@ -55,8 +55,10 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
 DROP TABLE IF EXISTS `palette_test`.`states` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`states` (
-  `id` INT(2) NOT NULL ,
+  `id` INT(4) NOT NULL ,
   `name` VARCHAR(45) NULL ,
+  `createdAt` DATETIME NULL ,
+  `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) )
   ENGINE = InnoDB;
 
@@ -177,8 +179,8 @@ DROP TABLE IF EXISTS `palette_test`.`taskLogs` ;
 CREATE  TABLE IF NOT EXISTS `palette_test`.`taskLogs` (
   `id` INT(11) NOT NULL ,
   `comment` VARCHAR(300) NULL ,
-  `estimatedHours` DATETIME NOT NULL DEFAULT 0 ,
-  `spentHours` DATETIME NOT NULL DEFAULT 0 ,
+  `estimatedHours` FLOAT NOT NULL DEFAULT 0 ,
+  `spentHours` FLOAT NOT NULL DEFAULT 0 ,
   `taskId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
   `createdAt` DATETIME NULL ,
@@ -260,3 +262,15 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`stageLogs` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `palette_test`.`states`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `palette_test`;
+INSERT INTO `palette_test`.`states` (`id`, `name`, `createdAt`, `updatedAt`) VALUES (1, 'new ', NULL, NULL);
+INSERT INTO `palette_test`.`states` (`id`, `name`, `createdAt`, `updatedAt`) VALUES (2, 'open', NULL, NULL);
+INSERT INTO `palette_test`.`states` (`id`, `name`, `createdAt`, `updatedAt`) VALUES (3, 'resolved', NULL, NULL);
+INSERT INTO `palette_test`.`states` (`id`, `name`, `createdAt`, `updatedAt`) VALUES (4, 'closed', NULL, NULL);
+
+COMMIT;
