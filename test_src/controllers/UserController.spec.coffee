@@ -4,7 +4,6 @@ request = require('supertest')
 DBHelper = require('../helpers/db')
 app = undefined
 before (done) ->
-  DBHelper.cleanDB()
   @timeout 5000
   Sails.lift
     log:
@@ -22,8 +21,10 @@ before (done) ->
     return
   return
 
+beforeEach (done)->
+  DBHelper.resetDB().then(()->done())
+
 describe "User", (done) ->
-  DBHelper.cleanDB()
   it "should be able to create a user", (done) ->
     done()
   return
@@ -33,8 +34,7 @@ return
 After ALL the tests, lower sails
 ###
 after (done) ->
-  DBHelper.cleanDB()
-  # Database.clean...
+  DBHelper.resetDB()
   app.lower done
   return
 

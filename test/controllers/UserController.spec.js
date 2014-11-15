@@ -11,7 +11,6 @@ DBHelper = require('../helpers/db');
 app = void 0;
 
 before(function(done) {
-  DBHelper.cleanDB();
   this.timeout(5000);
   Sails.lift({
     log: {
@@ -32,8 +31,13 @@ before(function(done) {
   });
 });
 
+beforeEach(function(done) {
+  return DBHelper.resetDB().then(function() {
+    return done();
+  });
+});
+
 describe("User", function(done) {
-  DBHelper.cleanDB();
   it("should be able to create a user", function(done) {
     return done();
   });
@@ -47,7 +51,7 @@ After ALL the tests, lower sails
  */
 
 after(function(done) {
-  DBHelper.cleanDB();
+  DBHelper.resetDB();
   app.lower(done);
 });
 

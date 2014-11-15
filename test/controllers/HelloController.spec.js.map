@@ -1,7 +1,7 @@
 {
   "version": 3,
   "file": "HelloController.spec.js",
-  "sourceRoot": "..\\..\\test_src\\controllers\\",
+  "sourceRoot": "../../test_src/controllers/",
   "sources": [
     "HelloController.spec.coffee"
   ],
