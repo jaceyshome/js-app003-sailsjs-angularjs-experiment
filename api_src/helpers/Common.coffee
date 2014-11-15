@@ -6,11 +6,11 @@ module.exports = (()->
 
   helper.generateShortLink = (length)->
     new Promise (resolve, reject)->
-      length = length || 12
+      length = length || 24
       result = helper.randomValueBase64(length)
       resolve(result)
 
-  helper.randomValueBase64 = (length)->
+  helper.randomValueBase64 = (le  ngth)->
     Crypto.randomBytes(Math.ceil(length * 3 / 4))
       .toString('base64')   # convert to base64 format
       .slice(0, length)     # return required number of characters
