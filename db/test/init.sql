@@ -2,9 +2,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-DROP SCHEMA IF EXISTS `palette_test` ;
-CREATE SCHEMA IF NOT EXISTS `palette_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-USE `palette_test` ;
 
 -- -----------------------------------------------------
 -- Table `palette_test`.`departments`
@@ -28,7 +25,7 @@ DROP TABLE IF EXISTS `palette_test`.`users` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
   `id` INT(11) NOT NULL ,
-  `loginName` VARCHAR(45) NOT NULL ,
+  `name` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NOT NULL ,
   `password` VARCHAR(256) NOT NULL ,
   `isSuperAdmin` INT(1) NOT NULL DEFAULT 0 COMMENT 'for super admin only' ,
@@ -38,7 +35,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `userName_UNIQUE` (`loginName` ASC) ,
+  UNIQUE INDEX `userName_UNIQUE` (`name` ASC) ,
   UNIQUE INDEX `nickName_UNIQUE` (`nickName` ASC) ,
   INDEX `fk_users_departments1` (`departmentId` ASC) ,
   CONSTRAINT `fk_users_departments1`

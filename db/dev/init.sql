@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS `palette_dev`.`users` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_dev`.`users` (
   `id` INT(11) NOT NULL ,
-  `loginName` VARCHAR(45) NOT NULL ,
+  `name` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NOT NULL ,
   `password` VARCHAR(256) NOT NULL ,
   `isSuperAdmin` INT(1) NOT NULL DEFAULT 0 COMMENT 'for super admin only' ,
@@ -38,7 +38,7 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`users` (
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `userName_UNIQUE` (`loginName` ASC) ,
+  UNIQUE INDEX `userName_UNIQUE` (`name` ASC) ,
   UNIQUE INDEX `nickName_UNIQUE` (`nickName` ASC) ,
   INDEX `fk_users_departments1` (`departmentId` ASC) ,
   CONSTRAINT `fk_users_departments1`
