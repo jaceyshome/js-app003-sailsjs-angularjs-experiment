@@ -26,15 +26,25 @@ beforeEach (done)->
 
 describe "User", (done) ->
   it "should be able to create a user", (done) ->
-    done()
+    request(app.express.app)
+    .post('/user/create')
+    .send({
+      name: 'test'
+      email: 'test@test.com'
+      password: 'password'
+    })
+    .expect(200, done)
+
   return
+  done()
 return
 
 ###
 After ALL the tests, lower sails
 ###
 after (done) ->
-  DBHelper.resetDB()
-  app.lower done
+  DBHelper.resetDB().then(()->
+    app.lower done
+  )
   return
 

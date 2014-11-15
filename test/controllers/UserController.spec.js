@@ -39,8 +39,14 @@ beforeEach(function(done) {
 
 describe("User", function(done) {
   it("should be able to create a user", function(done) {
-    return done();
+    return request(app.express.app).post('/user/create').send({
+      name: 'test',
+      email: 'test@test.com',
+      password: 'password'
+    }).expect(200, done);
   });
+  return;
+  return done();
 });
 
 return;
@@ -51,8 +57,9 @@ After ALL the tests, lower sails
  */
 
 after(function(done) {
-  DBHelper.resetDB();
-  app.lower(done);
+  DBHelper.resetDB().then(function() {
+    return app.lower(done);
+  });
 });
 
 //# sourceMappingURL=UserController.spec.js.map
