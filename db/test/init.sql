@@ -2,6 +2,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+DROP SCHEMA IF EXISTS `palette_test` ;
+CREATE SCHEMA IF NOT EXISTS `palette_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+USE `palette_test` ;
 
 -- -----------------------------------------------------
 -- Table `palette_test`.`departments`
@@ -9,7 +12,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 DROP TABLE IF EXISTS `palette_test`.`departments` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`departments` (
-  `id` INT(4) NOT NULL ,
+  `id` INT(4) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
@@ -24,19 +27,20 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`departments` (
 DROP TABLE IF EXISTS `palette_test`.`users` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NOT NULL ,
   `password` VARCHAR(256) NOT NULL ,
-  `isSuperAdmin` INT(1) NOT NULL DEFAULT 0 COMMENT 'for super admin only' ,
+  `isAdmin` INT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'for super admin only' ,
   `avator` VARCHAR(1000) NULL ,
-  `nickName` VARCHAR(45) NOT NULL ,
+  `online` INT(1) NOT NULL DEFAULT 0 ,
+  `shortLink` VARCHAR(24) NOT NULL ,
   `departmentId` INT(4) NULL ,
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `userName_UNIQUE` (`name` ASC) ,
-  UNIQUE INDEX `nickName_UNIQUE` (`nickName` ASC) ,
+  UNIQUE INDEX `nickName_UNIQUE` (`shortLink` ASC) ,
   INDEX `fk_users_departments1` (`departmentId` ASC) ,
   CONSTRAINT `fk_users_departments1`
   FOREIGN KEY (`departmentId` )
@@ -52,7 +56,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`users` (
 DROP TABLE IF EXISTS `palette_test`.`states` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`states` (
-  `id` INT(4) NOT NULL ,
+  `id` INT(4) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
@@ -66,7 +70,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`states` (
 DROP TABLE IF EXISTS `palette_test`.`stages` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`stages` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NULL ,
   `description` VARCHAR(1000) NULL ,
   `startDate` DATETIME NULL ,
@@ -90,7 +94,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`stages` (
 DROP TABLE IF EXISTS `palette_test`.`projects` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`projects` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
   `startDate` DATETIME NULL ,
   `endDate` DATETIME NULL ,
@@ -122,7 +126,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`projects` (
 DROP TABLE IF EXISTS `palette_test`.`types` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`types` (
-  `id` INT(4) NOT NULL ,
+  `id` INT(4) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL COMMENT 'TEXT, DESIGN, FUNCTIONALITY, QA, ASSETS UPDATE' ,
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
@@ -136,7 +140,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`types` (
 DROP TABLE IF EXISTS `palette_test`.`tasks` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`tasks` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(200) NULL ,
   `description` TEXT NULL ,
   `startDate` DATETIME NULL ,
@@ -174,7 +178,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`tasks` (
 DROP TABLE IF EXISTS `palette_test`.`taskLogs` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`taskLogs` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `comment` VARCHAR(300) NULL ,
   `estimatedHours` FLOAT NOT NULL DEFAULT 0 ,
   `spentHours` FLOAT NOT NULL DEFAULT 0 ,
@@ -204,7 +208,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`taskLogs` (
 DROP TABLE IF EXISTS `palette_test`.`projectUsers` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`projectUsers` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `autherization` INT(2) NOT NULL DEFAULT 0 ,
   `projectId` INT(11) NOT NULL ,
   `userId` INT(11) NOT NULL ,
@@ -232,7 +236,7 @@ CREATE  TABLE IF NOT EXISTS `palette_test`.`projectUsers` (
 DROP TABLE IF EXISTS `palette_test`.`stageLogs` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_test`.`stageLogs` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `comment` VARCHAR(300) NULL ,
   `budgetedHours` FLOAT NOT NULL DEFAULT 0 ,
   `createdAt` DATETIME NULL ,
