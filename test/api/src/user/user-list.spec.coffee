@@ -33,8 +33,7 @@ describe "User List (TODO)", (done) ->
       )
     return
 
-  it.skip "should list users", (done)->
-
+  it.skip "should only admin can list all users", (done)->
 
   return
 
