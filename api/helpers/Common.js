@@ -2,7 +2,7 @@ var Bcrypt, Crypto, Promise;
 
 Crypto = require('crypto');
 
-Bcrypt = require("bcryptjs");
+Bcrypt = require("bcrypt-nodejs");
 
 Promise = require("bluebird");
 
@@ -22,11 +22,42 @@ module.exports = (function() {
   };
   helper.generateUserPassword = function(password) {
     return new Promise(function(resolve, reject) {
-      return Bcrypt.hash(password, 8, function(err, encryptedPassword) {
+      return Bcrypt.hash(password, null, null, function(err, hash) {
         if (err) {
           return reject();
         }
-        return resolve(encryptedPassword);
+        return resolve(hash);
+      });
+    });
+  };
+  helper.checkUserPassword = function(password, hash) {
+    return new Promise(function(resolve, reject) {
+      return Bcrypt.compare(password, hash, function(err, res) {
+        if (err) {
+          resolve(false);
+        }
+        return resolve(res);
+      });
+    });
+  };
+  helper.checkUserExists = function(user) {
+    return new Promise(function(resolve, reject) {
+      var query;
+      if (!user.id) {
+        return reject(null);
+      }
+      if (!user.shortLink) {
+        return reject(null);
+      }
+      query = "SELECT id, shortLink, name, password FROM users WHERE id = " + user.id + " AND shortLink = '" + user.shortLink + "'";
+      return User.query(query, function(err, result) {
+        if (result.length !== 1) {
+          return resolve(false);
+        }
+        if (result[0].id === user.id && result[0].shortLink === user.shortLink) {
+          return resolve(result[0]);
+        }
+        return resolve(false);
       });
     });
   };

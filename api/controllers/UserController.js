@@ -58,40 +58,84 @@ module.exports = (function() {
     });
   };
   ctrl.update = function(req, res, next) {
-    var userObj;
-    userObj = {
-      email: req.param("email"),
-      password: req.param("password")
-    };
-    return User.update(req.param("id"), userObj, function(err) {
-      if (err) {
-        return next(err);
-      }
-      User.publishUpdate(req.param("id"), {
-        id: req.param("id"),
-        name: req.param("name"),
-        email: req.param("email")
-      }, req.socket);
-      return res.send(200);
+    if (!req.param("id")) {
+      return next({
+        err: ["forbidden"]
+      });
+    }
+    if (!req.param("shortLink")) {
+      return next({
+        err: ["forbidden"]
+      });
+    }
+    if (!req.param("password")) {
+      return next({
+        err: ["forbidden"]
+      });
+    }
+    return CommonHelper.checkUserExists({
+      id: req.param("id"),
+      shortLink: req.param("shortLink")
+    }).then(function(result) {
+      return CommonHelper.checkUserPassword(req.param("password"), result.password).then(function(result) {
+        var userObj;
+        if (result !== true) {
+          return next({
+            err: ["unauthourized"]
+          });
+        }
+        userObj = {
+          email: req.param("email")
+        };
+        return User.update(req.param("id"), userObj, function(err) {
+          if (err) {
+            return next(err);
+          }
+          User.publishUpdate(req.param("id"), {
+            id: req.param("id"),
+            name: req.param("name"),
+            email: req.param("email")
+          }, req.socket);
+          return res.send(200);
+        });
+      });
     });
   };
   ctrl.destroy = function(req, res, next) {
-    var query;
-    query = ("DELETE FROM users WHERE id = " + (req.param('id')) + " AND shortLink = '") + ("" + (req.param('shortLink'))) + "'";
-    User.query(query, function(err) {
-      if (err) {
-        return next(err);
+    if (!req.param("id")) {
+      return next({
+        err: ["unauthourized"]
+      });
+    }
+    if (!req.param("shortLink")) {
+      return next({
+        err: ["unauthourized"]
+      });
+    }
+    return CommonHelper.checkUserExists({
+      id: req.param("id"),
+      shortLink: req.param("shortLink")
+    }).then(function(result) {
+      if (!result) {
+        return next({
+          err: ["unauthourized"]
+        });
       }
-      return User.publishDestroy(req.param("id"), req.socket);
+      return User.destroy(req.param("id"), function(err) {
+        if (err) {
+          return next(err);
+        }
+        User.publishDestroy(req.param("id"), req.socket);
+        return res.send(200);
+      });
     });
-    return res.send(200);
   };
   ctrl.subscribe = function(req, res, next) {
     return User.find(function(err, users) {
       if (err) {
         return next(err);
       }
-      User.subscribe(req.socket);
+      User.subscribe(req.socket, users);
       User.subscribe(req.socket, users);
       return res.send(200);
     });

@@ -23,14 +23,17 @@
     "angular-ui-router": "0.2.8-bowratic-tedium",
     "angular-animate": "1.2.18",
     "angular-bootstrap": "~0.9.0",
-    "AngularJS-Toaster": "https://github.com/jirikavi/AngularJS-Toaster.git#~0.4.8",
+    "AngularJS-Toaster": "0.4.8",
     "jquery": "~1.11.0",
     "moment": "~2.0.0",
     "respond": "~1.4.2",
     "bootstrap": "~3.1.0",
     "font-awesome": "~4.0.3",
     "socket.io-client": "~0.9.16",
+    "sails.io.js": "~0.10.3",
+    "angularSails": "https://github.com/balderdashy/angularSails.git",
     "requirejs": "~2.1.14",
-    "protractor-mock": "https://github.com/unDemian/protractor-mock.git"
+    "protractor-mock": "https://github.com/unDemian/protractor-mock.git",
+    "almond":"0.2.9"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "config.js",
+  "sourceRoot": "..\\..\\src\\helpers\\",
+  "sources": [
+    "config.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,MAAM,CAAC,OAAP,GACE;AAAA,EAAA,OAAA,EAAU,uBAAV;AAAA,EACA,IAAA,EACE;AAAA,IAAA,IAAA,EAAM,MAAN;AAAA,IACA,KAAA,EAAO,eADP;AAAA,IAEA,QAAA,EAAU,UAFV;GAFF;CADF,CAAA"
+}
