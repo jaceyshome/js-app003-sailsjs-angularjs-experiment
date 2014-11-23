@@ -4,10 +4,20 @@ define [
   'app/config'
 ], (angular,angular_resource, config, csrf) ->
   appModule = angular.module 'app.states.project.service', []
-  appModule.factory "ProjectService", ($http, $q, CSRF, $rootScope, MessageService, $state) ->
+  appModule.factory "ProjectService", ($http, $q, CSRF, $rootScope, MessageService, $state,$sailsSocket) ->
     #----------------------------------------------------------------------private variables
     _projects = null
     _project = null
+
+    #--------------------------------------------------------------------- socket services
+    $sailsSocket.subscribe('user',(data)->
+      console.log "project msg", data
+    )
+
+    $sailsSocket.get('/project/subscribe').success(()->
+      console.log "get project subscribe"
+    )
+
 
     #----------------------------------------------------------------------public variables
     service = {}

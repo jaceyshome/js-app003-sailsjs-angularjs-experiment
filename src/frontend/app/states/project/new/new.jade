@@ -1,15 +1,11 @@
-div.container.projectEdit
-  h3 project edit
+div.container.projectNew
+  h3 project new
   div.projectForm
     form(name="projectForm")
       div.form-group(data-ng-class="{'has-error': projectForm.name.$invalid && !projectForm.name.$pristine}")
         label Project Name
-        input.form-control(type="text", placeholder="user name", name="name", required,
+        input.form-control(type="text", placeholder="project name", name="name", required,
         data-ng-model="project.name", maxlength="{{attributes.name.maxLength}}")
         p.error(data-ng-show="projectForm.name.$invalid && !projectForm.name.$pristine") Required.
-
-
-      button.btn.btn-lg.btn-primary.btn-block(type="submit", data-ng-click="sumbit()", href="javascript:void(0);") {{submitBtnText}}
-
 
   a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit

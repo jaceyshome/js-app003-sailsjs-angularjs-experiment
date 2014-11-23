@@ -13,9 +13,9 @@ define [
       parent: 'project'
       url: "/details/:shortLink"
       views:
-        'projectChildView@user':
+        'projectChildView@project':
           templateUrl: "app/states/project/details/details"
-          controller: "projectDetailsCtrl"
+          controller: "ProjectDetailsCtrl"
       resolve:
         ProjectData: ($q, $stateParams, ProjectService) ->
           deferred = $q.defer()

@@ -7,6 +7,10 @@ define [
     'ui.router'
     'templates'
     'app.states.project.service'
+    'app.states.project.new'
+    'app.states.project.list'
+    'app.states.project.edit'
+    'app.states.project.details'
   ]
 
   module.config ($stateProvider)->

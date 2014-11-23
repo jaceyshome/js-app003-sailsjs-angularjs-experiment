@@ -13,11 +13,11 @@ define [
       parent: 'project'
       url: "/list"
       views:
-        'projectChildView@user':
+        'projectChildView@project':
           templateUrl: "app/states/project/list/list"
           controller: "ProjectListCtrl"
       resolve:
-        ProjectsData: ($q, ProjectService) ->
+        Projects: ($q, ProjectService) ->
           deferred = $q.defer()
           ProjectService.listProjects()
           .then (result)->

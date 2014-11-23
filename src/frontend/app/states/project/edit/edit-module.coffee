@@ -13,16 +13,16 @@ define [
       parent: 'project'
       url: "/edit/:shortLink"
       views:
-        'userChildView@user':
+        'projectChildView@project':
           templateUrl: "app/states/project/edit/edit"
           controller: "ProjectEditCtrl"
       resolve:
-        UserData: ($q, $stateParams, ProjectService) ->
+        ProjectData: ($q, $stateParams, ProjectService) ->
           deferred = $q.defer()
           unless $stateParams.shortLink
             ProjectService.goToDefault()
             deferred.resolve undefined
-          ProjectService.getUserDetail({shortLink:$stateParams.shortLink})
+          ProjectService.getProjectDetail({shortLink:$stateParams.shortLink})
           .then (result)->
             deferred.resolve result
           .catch ->

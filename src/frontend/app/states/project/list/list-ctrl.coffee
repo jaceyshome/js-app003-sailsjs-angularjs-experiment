@@ -3,7 +3,7 @@ define [
   'app/states/project/project-service'
 ], ->
   module = angular.module 'app.states.project.list'
-  module.controller 'ProjectListCtrl', ($scope, $state, ProjectsData, ProjectService) ->
+  module.controller 'ProjectListCtrl', ($scope, $state, Projects, ProjectService) ->
     $scope.projects = Projects
 
     $scope.show = (project)->

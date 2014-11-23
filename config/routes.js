@@ -49,11 +49,13 @@ module.exports.routes = {
   //-------------user crud ----------------------------
   '/user/specifics/:shortLink': 'UserController.specifics',
   '/user/update/': 'UserController.update',
+  '/user/create/': 'UserController.create',
   '/user/destroy': 'UserController.destroy',
 
   //------------------ project -------------------------
   //------------------ project view --------------------
   '/project':{view:'app'},
+  '/project/new':{view:'app'},
   '/project/list':{view:'app'},
   '/project/details/:shortLink':{view:'app'},
   '/project/edit/:shortLink':{view:'app'}
