@@ -3,7 +3,7 @@ define [
 ], ->
   module = angular.module 'app.states.project.new'
   module.controller 'ProjectNewCtrl', ($scope, $state, ProjectService) ->
-    console.log "project new ctrl"
-    $scope.sumbit = ->
+    $scope.submit = ->
+      console.log "project new ctrl", $scope.project
       ProjectService.createProject($scope.project)
 

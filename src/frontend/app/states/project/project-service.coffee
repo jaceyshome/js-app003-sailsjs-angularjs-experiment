@@ -36,19 +36,29 @@ define [
       deferred = $q.defer()
       deferred.promise
 
-    service.createProject = (user)->
+    service.createProject = (project)->
+      deferred = $q.defer()
+      CSRF.get().then (data)->
+        newProject =
+          name: project.name
+          _csrf: data._csrf
+        $http.post("#{config.baseUrl}/project/create", newProject)
+        .then (result) ->
+          deferred.resolve result.data
+        .catch (err)->
+          handleErrorMsg(err)
+          deferred.resolve null
+      deferred.promise
+
+    service.getProjectDetail = (project)->
       deferred = $q.defer()
       deferred.promise
 
-    service.getProjectDetail = (user)->
+    service.updateProject = (project)->
       deferred = $q.defer()
       deferred.promise
 
-    service.updateProject = (user)->
-      deferred = $q.defer()
-      deferred.promise
-
-    service.destroyProject = (user)->
+    service.destroyProject = (project)->
       deferred = $q.defer()
       deferred.promise
 

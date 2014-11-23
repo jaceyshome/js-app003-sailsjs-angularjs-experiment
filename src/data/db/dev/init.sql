@@ -95,7 +95,9 @@ DROP TABLE IF EXISTS `palette_dev`.`projects` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_dev`.`projects` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(100) NOT NULL ,
+  `name` VARCHAR(200) NOT NULL ,
+  `shortLink` VARCHAR(24) NOT NULL ,
+  `description` TEXT NULL ,
   `startDate` DATETIME NULL ,
   `endDate` DATETIME NULL ,
   `priority` INT(1) NOT NULL DEFAULT 0 ,
@@ -104,9 +106,9 @@ CREATE  TABLE IF NOT EXISTS `palette_dev`.`projects` (
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
   INDEX `fk_projects_states1` (`stateId` ASC) ,
   INDEX `fk_projects_stages1` (`currentStageId` ASC) ,
+  UNIQUE INDEX `shortLink_UNIQUE` (`shortLink` ASC) ,
   CONSTRAINT `fk_projects_states1`
     FOREIGN KEY (`stateId` )
     REFERENCES `palette_dev`.`states` (`id` )
