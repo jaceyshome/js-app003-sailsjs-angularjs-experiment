@@ -62,14 +62,45 @@ define [
 
     service.getProjectDetail = (project)->
       deferred = $q.defer()
+      deferred.resolve project if angular.equals project, _project
+      $http.get("#{config.baseUrl}/project/specifics/#{project.shortLink}")
+      .then (result) ->
+        deferred.resolve result.data
+      .catch (err)->
+        handleErrorMsg(err)
+        deferred.resolve null
       deferred.promise
 
     service.updateProject = (project)->
       deferred = $q.defer()
-      deferred.promise
+      CSRF.get().then (data)->
+        editingProject =
+          id: project.id
+          shortLink: project.shortLink
+          name: project.name
+          description: project.description
+          _csrf: data._csrf
+        $http.put("#{config.baseUrl}/project/update", editingProject)
+        .then (result) ->
+          deferred.resolve result.data
+        .catch (err)->
+          handleErrorMsg(err)
+          deferred.resolve null
+        deferred.promise
 
     service.destroyProject = (project)->
       deferred = $q.defer()
+      CSRF.get().then (data)->
+        deletingProject =
+          id: project.id
+          shortLink: project.shortLink
+          _csrf: data._csrf
+        $http.post("#{config.baseUrl}/project/destroy", deletingProject)
+        .then (result) ->
+          return deferred.resolve result.data
+        .catch (err)->
+          handleErrorMsg(err)
+          return deferred.resolve null
       deferred.promise
 
   #-------------------------------------------------------------------handlers

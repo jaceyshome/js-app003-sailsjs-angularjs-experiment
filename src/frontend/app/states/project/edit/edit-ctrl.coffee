@@ -4,6 +4,6 @@ define [
   module = angular.module 'app.states.project.edit'
   module.controller 'ProjectEditCtrl', ($scope, $state, ProjectData, ProjectService) ->
     $scope.project = angular.copy ProjectData
-    $scope.sumbit = ->
+    $scope.submit = ->
       ProjectService.updateProject($scope.project)
 

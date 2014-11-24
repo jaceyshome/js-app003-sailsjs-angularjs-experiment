@@ -38,23 +38,21 @@ module.exports = (->
   ctrl.update = (req, res, next) ->
     return next(err: ["forbidden"]) unless req.param("id")
     return next(err: ["forbidden"]) unless req.param("shortLink")
-    CommonHelper.checkUserExists({
+    CommonHelper.checkProjectExists({
       id:req.param("id"),
       shortLink:req.param("shortLink")
     }).then (result)->
-      CommonHelper.checkUserPassword(req.param("password"), result.password)
-      .then (result)->
-        return next(err: ["unauthourized"]) unless result is true
-        projectObj =
+      return next(err: ["unauthourized"]) unless result
+      projectObj =
+        name: req.param("name")
+        description: req.param("description")
+      Project.update req.param("id"), projectObj, (err) ->
+        return next(err)  if err
+        Project.publishUpdate(req.param("id"),{
+          id: req.param("id")
           name: req.param("name")
-          description: req.param("description")
-        Project.update req.param("id"), projectObj, (err) ->
-          return next(err)  if err
-          Project.publishUpdate(req.param("id"),{
-            id: req.param("id")
-            name: req.param("name")
-          }, req.socket)
-          res.send 200
+        }, req.socket)
+        res.send 200
 
   ctrl.destroy = (req, res, next) ->
     return next(err: ["unauthourized"]) unless req.param("id")

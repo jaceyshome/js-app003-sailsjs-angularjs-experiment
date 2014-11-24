@@ -48,9 +48,6 @@ module.exports.routes = {
   '/user/edit/:shortLink':{view:'app'},
   //-------------user crud ----------------------------
   '/user/specifics/:shortLink': 'UserController.specifics',
-  '/user/update/': 'UserController.update',
-  '/user/create/': 'UserController.create',
-  '/user/destroy': 'UserController.destroy',
 
   //------------------ project -------------------------
   //------------------ project view --------------------
@@ -58,7 +55,9 @@ module.exports.routes = {
   '/project/new':{view:'app'},
   '/project/list':{view:'app'},
   '/project/details/:shortLink':{view:'app'},
-  '/project/edit/:shortLink':{view:'app'}
+  '/project/edit/:shortLink':{view:'app'},
+  //-------------project crud ----------------------------
+  '/project/specifics/:shortLink': 'ProjectController.specifics'
 
   /***************************************************************************
   *                                                                          *

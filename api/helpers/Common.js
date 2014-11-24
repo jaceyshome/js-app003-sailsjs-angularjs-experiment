@@ -71,7 +71,7 @@ module.exports = (function() {
         return reject(null);
       }
       query = "SELECT id, shortLink, name FROM projects WHERE id = " + project.id + " AND shortLink = '" + project.shortLink + "'";
-      return Propject.query(query, function(err, result) {
+      return Project.query(query, function(err, result) {
         if (result.length !== 1) {
           return resolve(false);
         }
