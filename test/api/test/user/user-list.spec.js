@@ -41,7 +41,7 @@ describe("User List (TODO)", function(done) {
       return done();
     });
   });
-  it.skip("should list users", function(done) {});
+  it.skip("should only admin can list all users", function(done) {});
 });
 
 //# sourceMappingURL=user-list.spec.js.map

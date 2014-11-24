@@ -19,12 +19,199 @@
     <div id="mocha">
 
 
-<ul id="stats"><li class="progress"><canvas width="40" height="40"></canvas></li><li class="passes">passes: <em>21</em></li><li class="failures">failures: <em>0</em></li><li class="duration">duration: <em>17.477</em>s</li></ul>
+<ul id="stats"><li class="progress"><canvas width="40" height="40"></canvas></li><li class="passes">passes: <em>37</em></li><li class="failures">failures: <em>0</em></li><li class="duration">duration: <em>22.098</em>s</li></ul>
 <ul id="report">    <li class="suite">
+      <h1>Project Create</h1>
+      <ul>
+        <li class="test pass">
+          <h2>should be able to create a project with correct info<span class="duration">132ms</span></h2>
+          <pre style="display: none;"><code>request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(200).end(function(err, res) {
+  if (err) {
+    throw err;
+  }
+  res.body.should.have.property('id');
+  res.body.name.should.be.eql(project.name);
+  res.body.description.should.be.eql(project.description);
+  res.body.should.have.property('shortLink');
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to create the project without csrf<span class="duration">76ms</span></h2>
+          <pre style="display: none;"><code>var _project;
+_project = JSON.parse(JSON.stringify(project));
+delete _project._csrf;
+request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(_project).expect(403, done);</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to create the project without name<span class="duration">91ms</span></h2>
+          <pre style="display: none;"><code>var _project;
+_project = JSON.parse(JSON.stringify(project));
+delete _project.name;
+request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(_project).expect(400, done);</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li class="suite">
+      <h1>Project Destroy</h1>
+      <ul>
+        <li class="test pass">
+          <h2>should be able to delete a project<span class="duration">86ms</span></h2>
+          <pre style="display: none;"><code>project._csrf = csrfRes.body._csrf;
+request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(project).end(function(err, res) {
+  should(res.statusCode).be.eql(200);
+  should(err).be.empty;
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not delete a project without csrf<span class="duration">81ms</span></h2>
+          <pre style="display: none;"><code>request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(project).end(function(err, res) {
+  should(res.statusCode).be.eql(403);
+  should(err).be.empty;
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not delete a project with wrong shortLink<span class="duration">75ms</span></h2>
+          <pre style="display: none;"><code>project._csrf = csrfRes.body._csrf;
+project.shortLink = &quot;12sdfs/12321&quot;;
+request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(project).end(function(err, res) {
+  should(res.statusCode).be.eql(500);
+  should(err).be.empty;
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not delete a project without shortLink<span class="duration">86ms</span></h2>
+          <pre style="display: none;"><code>project._csrf = csrfRes.body._csrf;
+delete project.shortLink;
+request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(project).end(function(err, res) {
+  should(res.statusCode).be.eql(500);
+  should(err).be.empty;
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not delete a project without id<span class="duration">80ms</span></h2>
+          <pre style="display: none;"><code>project._csrf = csrfRes.body._csrf;
+delete project.id;
+request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(project).end(function(err, res) {
+  should(res.statusCode).be.eql(500);
+  should(err).be.empty;
+  return done();
+});</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li class="suite">
+      <h1>Project Details</h1>
+      <ul>
+        <li class="test pass">
+          <h2>should show project details<span class="duration">21ms</span></h2>
+          <pre style="display: none;"><code>request(Config.appPath).get(url + project.shortLink).expect(200).end(function(err, res) {
+  res.body.should.have.property('id');
+  res.body.name.should.be.eql(project.name);
+  res.body.description.should.be.eql(project.description);
+  res.body.should.have.property('shortLink');
+  project = res.body;
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not show project details without shortLink<span class="duration">17ms</span></h2>
+          <pre style="display: none;"><code>request(Config.appPath).get(url).expect(400).end(function(err, res) {
+  return done();
+});</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li class="suite">
+      <h1>Project List (TODO)</h1>
+      <ul>
+      </ul>
+    </li>
+    <li class="suite">
+      <h1>Project Update</h1>
+      <ul>
+        <li class="test pass">
+          <h2>should be able to update a project with correct info<span class="duration">105ms</span></h2>
+          <pre style="display: none;"><code>project.description = 'test description 1';
+project._csrf = csrfRes.body._csrf;
+request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(200).end(function(err, res) {
+  res.body.should.be.empty;
+  if (err) {
+    throw err;
+  }
+  return request(Config.appPath).get('/project/specifics/' + project.shortLink).expect(200).end(function(err, res) {
+    res.body.description.should.be.eql(project.description);
+    return done();
+  });
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to update the project without csrf<span class="duration">82ms</span></h2>
+          <pre style="display: none;"><code>project.description = 'test description 1';
+request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(403).end(function(err, res) {
+  if (err) {
+    throw err;
+  }
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to update the project shortLink<span class="duration">70ms</span></h2>
+          <pre style="display: none;"><code>project.shortlink = 'xvcxxcv';
+request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(403).end(function(err, res) {
+  if (err) {
+    throw err;
+  }
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to update the project with wrong shortLink<span class="duration">69ms</span></h2>
+          <pre style="display: none;"><code>project.description = 'test description 1';
+project._csrf = csrfRes.body._csrf;
+project.shortLink = 'sadfasdfsafa';
+request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(500).end(function(err, res) {
+  if (err) {
+    throw err;
+  }
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to update the project without shortLink<span class="duration">74ms</span></h2>
+          <pre style="display: none;"><code>project.description = 'test description 1';
+project._csrf = csrfRes.body._csrf;
+delete project.shortLink;
+request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(500).end(function(err, res) {
+  if (err) {
+    throw err;
+  }
+  return done();
+});</code></pre>
+        </li>
+        <li class="test pass">
+          <h2>should not be able to update the project without id<span class="duration">71ms</span></h2>
+          <pre style="display: none;"><code>project.description = 'test description 1';
+project._csrf = csrfRes.body._csrf;
+delete project.id;
+request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(project).expect(500).end(function(err, res) {
+  if (err) {
+    throw err;
+  }
+  return done();
+});</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li class="suite">
       <h1>User Create</h1>
       <ul>
         <li class="test pass">
-          <h2>should be able to create a user with correct info<span class="duration">590ms</span></h2>
+          <h2>should be able to create a user with correct info<span class="duration">525ms</span></h2>
           <pre style="display: none;"><code>request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(200).end(function(err, res) {
   if (err) {
     throw err;
@@ -39,7 +226,7 @@
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not create the user with the same name<span class="duration">1285ms</span></h2>
+          <h2>should not create the user with the same name<span class="duration">1422ms</span></h2>
           <pre style="display: none;"><code>request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(200).end(function() {
   return request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(400).end(function(err, res) {
     if (err) {
@@ -57,21 +244,21 @@ delete _user._csrf;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(_user).expect(403, done);</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to create the user without email<span class="duration">85ms</span></h2>
+          <h2>should not be able to create the user without email<span class="duration">81ms</span></h2>
           <pre style="display: none;"><code>var _user;
 _user = JSON.parse(JSON.stringify(user));
 delete _user.email;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(_user).expect(400, done);</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to create the user without name<span class="duration">79ms</span></h2>
+          <h2>should not be able to create the user without name<span class="duration">82ms</span></h2>
           <pre style="display: none;"><code>var _user;
 _user = JSON.parse(JSON.stringify(user));
 delete _user.name;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(_user).expect(400, done);</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to create the user without password<span class="duration">71ms</span></h2>
+          <h2>should not be able to create the user without password<span class="duration">73ms</span></h2>
           <pre style="display: none;"><code>var _user;
 _user = JSON.parse(JSON.stringify(user));
 delete _user.password;
@@ -83,7 +270,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
       <h1>User Destroy</h1>
       <ul>
         <li class="test pass">
-          <h2>should be able to delete a user<span class="duration">77ms</span></h2>
+          <h2>should be able to delete a user<span class="duration">87ms</span></h2>
           <pre style="display: none;"><code>user._csrf = csrfRes.body._csrf;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).end(function(err, res) {
   should(res.statusCode).be.eql(200);
@@ -92,7 +279,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not delete a user without csrf<span class="duration">94ms</span></h2>
+          <h2>should not delete a user without csrf<span class="duration">80ms</span></h2>
           <pre style="display: none;"><code>request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).end(function(err, res) {
   should(res.statusCode).be.eql(403);
   should(err).be.empty;
@@ -100,7 +287,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not delete a user with wrong shortLink<span class="duration">73ms</span></h2>
+          <h2>should not delete a user with wrong shortLink<span class="duration">80ms</span></h2>
           <pre style="display: none;"><code>user._csrf = csrfRes.body._csrf;
 user.shortLink = &quot;12sdfs/12321&quot;;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).end(function(err, res) {
@@ -110,7 +297,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not delete a user without shortLink<span class="duration">74ms</span></h2>
+          <h2>should not delete a user without shortLink<span class="duration">71ms</span></h2>
           <pre style="display: none;"><code>user._csrf = csrfRes.body._csrf;
 delete user.shortLink;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).end(function(err, res) {
@@ -120,7 +307,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not delete a user without id<span class="duration">74ms</span></h2>
+          <h2>should not delete a user without id<span class="duration">69ms</span></h2>
           <pre style="display: none;"><code>user._csrf = csrfRes.body._csrf;
 delete user.id;
 request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).send(user).end(function(err, res) {
@@ -135,7 +322,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
       <h1>User Details</h1>
       <ul>
         <li class="test pass">
-          <h2>should show user details<span class="duration">15ms</span></h2>
+          <h2>should show user details<span class="duration">20ms</span></h2>
           <pre style="display: none;"><code>request(Config.appPath).get(url + user.shortLink).expect(200).end(function(err, res) {
   res.body.should.have.property('id');
   res.body.should.have.property('name');
@@ -149,7 +336,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not show user details without shortLink<span class="duration">14ms</span></h2>
+          <h2>should not show user details without shortLink<span class="duration">26ms</span></h2>
           <pre style="display: none;"><code>request(Config.appPath).get(url).expect(400).end(function(err, res) {
   return done();
 });</code></pre>
@@ -165,7 +352,7 @@ request(Config.appPath).post(url).set('cookie', csrfRes.headers['set-cookie']).s
       <h1>User Update</h1>
       <ul>
         <li class="test pass">
-          <h2>should be able to update a user with correct info<span class="duration">659ms</span></h2>
+          <h2>should be able to update a user with correct info<span class="duration">744ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user._csrf = csrfRes.body._csrf;
 user.password = Config.user.password;
@@ -181,7 +368,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user without csrf<span class="duration">65ms</span></h2>
+          <h2>should not be able to update the user without csrf<span class="duration">83ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user.password = Config.user.password;
 request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(403).end(function(err, res) {
@@ -192,7 +379,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user name<span class="duration">714ms</span></h2>
+          <h2>should not be able to update the user name<span class="duration">799ms</span></h2>
           <pre style="display: none;"><code>var originName;
 originName = user.name;
 user.email = 'test1@gmail.com';
@@ -211,7 +398,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user with wrong shortLink<span class="duration">76ms</span></h2>
+          <h2>should not be able to update the user with wrong shortLink<span class="duration">81ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user._csrf = csrfRes.body._csrf;
 user.password = Config.user.password;
@@ -224,7 +411,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user without shortLink<span class="duration">71ms</span></h2>
+          <h2>should not be able to update the user without shortLink<span class="duration">74ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user._csrf = csrfRes.body._csrf;
 user.password = Config.user.password;
@@ -237,7 +424,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user without id<span class="duration">77ms</span></h2>
+          <h2>should not be able to update the user without id<span class="duration">69ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user._csrf = csrfRes.body._csrf;
 user.password = Config.user.password;
@@ -250,7 +437,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user without password<span class="duration">66ms</span></h2>
+          <h2>should not be able to update the user without password<span class="duration">69ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user._csrf = csrfRes.body._csrf;
 request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(500).end(function(err, res) {
@@ -261,7 +448,7 @@ request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).se
 });</code></pre>
         </li>
         <li class="test pass">
-          <h2>should not be able to update the user with wrong password<span class="duration">645ms</span></h2>
+          <h2>should not be able to update the user with wrong password<span class="duration">688ms</span></h2>
           <pre style="display: none;"><code>user.email = 'test1@gmail.com';
 user._csrf = csrfRes.body._csrf;
 user.password = &quot;xcvasasd&quot;;

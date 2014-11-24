@@ -4,6 +4,10 @@ module.exports = {
     name: 'test',
     email: 'test@test.com',
     password: 'password'
+  },
+  project: {
+    name: 'test project',
+    description: 'test project description'
   }
 };
 
