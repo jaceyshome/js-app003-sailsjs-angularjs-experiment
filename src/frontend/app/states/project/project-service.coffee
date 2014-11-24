@@ -39,11 +39,11 @@ define [
       else
         $http.get("#{config.baseUrl}/project/all")
         .then (result) ->
-            _projects = result.data
-            deferred.resolve result.data
+          _projects = result.data
+          deferred.resolve result.data
         .catch (err)->
-            deferred.resolve null
-            handleErrorMsg(err)
+          deferred.resolve null
+          handleErrorMsg(err)
       deferred.promise
 
     service.createProject = (project)->

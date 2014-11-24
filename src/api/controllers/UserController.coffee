@@ -75,8 +75,13 @@ module.exports = (->
   ctrl.subscribe = (req, res, next) ->
     User.find (err, users) ->
       return next(err) if err
+      # subscribe this socket to the User model classroom
+      #User.publishDestroy
+      #User.publishUpdate
+      User.watch req.socket
       User.subscribe req.socket, users
-      User.subscribe req.socket, users
+      # This will avoid a warning from the socket for trying to render
+      # html over the socket.
       res.send 200
 
   ctrl._config = {}

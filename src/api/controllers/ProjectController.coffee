@@ -72,7 +72,7 @@ module.exports = (->
   ctrl.subscribe = (req, res, next) ->
     Project.find (err, projects) ->
       return next(err) if err
-      Project.subscribe req.socket, projects
+      Project.watch req.socket
       Project.subscribe req.socket, projects
       res.send 200
 

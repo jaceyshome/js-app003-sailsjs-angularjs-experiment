@@ -135,8 +135,7 @@ module.exports = (function() {
       if (err) {
         return next(err);
       }
-      User.subscribe(req.socket, users);
-      User.subscribe(req.socket, users);
+      User.watch(req.socket, User.subscribe(req.socket, users));
       return res.send(200);
     });
   };
