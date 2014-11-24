@@ -1,10 +1,10 @@
 div.container.userList
-  h3 User List
+  h3 Project List
   div.container
     ul
       li(data-ng-repeat="project in projects")
         a(data-ng-click="show(project)", href="javascript:void(0);")
-          span {{user.name}}
+          span {{project.name}}
         a(data-ng-click="edit(project)", href="javascript:void(0);")
           span edit
         a(data-ng-click="destroy(project)", href="javascript:void(0);")

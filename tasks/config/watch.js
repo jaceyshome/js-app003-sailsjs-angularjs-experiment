@@ -14,12 +14,8 @@
  */
 module.exports = function(grunt) {
   grunt.config.set("watch", {
-    api: {
-      files: ["src/api/**/*"],
-      tasks: ["watchAssets"]
-    },
     assets: {
-      files: ["src/frontend/**/*", "assets/validations/**/*"],
+      files: ["src/frontend/**/*", "assets/validations/**/*", "src/api/**/*"],
       tasks: ["linkAssets","watchAssets"]
     },
     apiTest:{

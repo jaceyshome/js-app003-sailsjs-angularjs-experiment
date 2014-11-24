@@ -2,8 +2,7 @@
 name:
   type: "string"
   required: true
-  maxLength: 45
-  unique: true
+  maxLength: 200
 description:
   type: "string"
 priority:
@@ -12,5 +11,4 @@ priority:
 shortLink:
   type: "string"
   unique: true
-  maxLength: 12
-  required: true
+  maxLength: 24

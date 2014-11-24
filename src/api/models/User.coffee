@@ -20,7 +20,7 @@ module.exports = (()->
         values.password = encryptedPassword
         next()
       ).catch(()->
-        next(err)
+        next(err: [ "Internal Server Error." ])
       )
 
   userModel.beforeDestroy = (values, next) ->

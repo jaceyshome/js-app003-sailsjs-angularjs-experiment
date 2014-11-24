@@ -61,5 +61,26 @@ module.exports = (function() {
       });
     });
   };
+  helper.checkProjectExists = function(project) {
+    return new Promise(function(resolve, reject) {
+      var query;
+      if (!project.id) {
+        return reject(null);
+      }
+      if (!project.shortLink) {
+        return reject(null);
+      }
+      query = "SELECT id, shortLink, name FROM projects WHERE id = " + project.id + " AND shortLink = '" + project.shortLink + "'";
+      return Propject.query(query, function(err, result) {
+        if (result.length !== 1) {
+          return resolve(false);
+        }
+        if (result[0].id === project.id && result[0].shortLink === project.shortLink) {
+          return resolve(result[0]);
+        }
+        return resolve(false);
+      });
+    });
+  };
   return helper;
 })();

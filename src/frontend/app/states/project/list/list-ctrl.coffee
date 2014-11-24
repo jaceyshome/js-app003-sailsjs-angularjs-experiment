@@ -17,4 +17,5 @@ define [
           console.log "servers error"
 
     $scope.edit = (project)->
+      console.log "edit project", project
       $state.go "project.edit", {shortLink: project.shortLink}

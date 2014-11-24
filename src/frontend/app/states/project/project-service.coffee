@@ -10,7 +10,7 @@ define [
     _project = null
 
     #--------------------------------------------------------------------- socket services
-    $sailsSocket.subscribe('user',(data)->
+    $sailsSocket.subscribe('project',(data)->
       console.log "project msg", data
     )
 
@@ -34,6 +34,16 @@ define [
 
     service.listProjects = ()->
       deferred = $q.defer()
+      if _projects
+        deferred.resolve _projects
+      else
+        $http.get("#{config.baseUrl}/project/all")
+        .then (result) ->
+            _projects = result.data
+            deferred.resolve result.data
+        .catch (err)->
+            deferred.resolve null
+            handleErrorMsg(err)
       deferred.promise
 
     service.createProject = (project)->

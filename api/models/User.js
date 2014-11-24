@@ -26,7 +26,9 @@ module.exports = (function() {
         values.password = encryptedPassword;
         return next();
       })["catch"](function() {
-        return next(err);
+        return next({
+          err: ["Internal Server Error."]
+        });
       });
     });
   };

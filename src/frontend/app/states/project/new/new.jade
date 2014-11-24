@@ -1,5 +1,5 @@
 div.container.projectNew
-  h3 project new
+  h3 New Project
   div.projectForm
     form(name="projectForm")
       div.form-group(data-ng-class="{'has-error': projectForm.name.$invalid && !projectForm.name.$pristine}")
@@ -7,5 +7,9 @@ div.container.projectNew
         input.form-control(type="text", placeholder="project name", name="name", required,
         data-ng-model="project.name", maxlength="{{attributes.name.maxLength}}")
         p.error(data-ng-show="projectForm.name.$invalid && !projectForm.name.$pristine") Required.
+
+      div.form-group(data-ng-class="{'has-error': projectForm.description.$invalid && !projectForm.description.$pristine}")
+        label Project Description
+        textarea.form-control(placeholder="project description", name="description", data-ng-model="project.description", rows="5")
 
   a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit

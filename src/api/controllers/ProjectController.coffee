@@ -3,44 +3,41 @@ Promise = require("bluebird")
 module.exports = (->
   ctrl = {}
   ctrl.create = (req, res, next) ->
-    User.create req.params.all(), userCreated = (err, user) ->
+    Project.create req.params.all(), (err, project) ->
       return next(err) if err
-      user.save (err, user) ->
+      project.save (err, project) ->
         return next(err) if err
-        User.publishCreate
-          id: user.id
-          name: user.name
-          online: user.online
+        Project.publishCreate
+          id: project.id
+          name: project.name
         , req.socket
-        userJson =
-          id: user.id
-          name:user.name
-          email:user.email
-          shortLink:user.shortLink
-          online: user.online
-        res.json userJson
+        projectJson =
+          id: project.id
+          name:project.name
+          description:project.description
+          shortLink: project.shortLink
+        res.json projectJson
 
   ctrl.specifics = (req, res, next) ->
-    User.findByShortLink(req.param('shortLink')).exec((err, user)->
-      return next(err) if err or not user
-      userJson =
-        id: user[0].id
-        name:user[0].name
-        email:user[0].email
-        shortLink:user[0].shortLink
-      res.json userJson
+    Project.findByShortLink(req.param('shortLink')).exec((err, project)->
+      return next(err) if err or not project
+      projectJson =
+        id: project[0].id
+        name:project[0].name
+        description:project[0].description
+        shortLink:project[0].shortLink
+      res.json projectJson
     )
 
   ctrl.all = (req, res, next) ->
     #TODO check admin user
-    User.query "SELECT id, name, email, shortLink FROM users", (err,users)->
-      return next(err) if err or not users
-      res.json users
+    Project.query "SELECT id, name, description, shortLink FROM projects", (err,projects)->
+      return next(err) if err or not projects
+      res.json projects
 
   ctrl.update = (req, res, next) ->
     return next(err: ["forbidden"]) unless req.param("id")
     return next(err: ["forbidden"]) unless req.param("shortLink")
-    return next(err: ["forbidden"]) unless req.param("password")
     CommonHelper.checkUserExists({
       id:req.param("id"),
       shortLink:req.param("shortLink")
@@ -48,35 +45,35 @@ module.exports = (->
       CommonHelper.checkUserPassword(req.param("password"), result.password)
       .then (result)->
         return next(err: ["unauthourized"]) unless result is true
-        userObj =
-          email: req.param("email")
-        User.update req.param("id"), userObj, (err) ->
+        projectObj =
+          name: req.param("name")
+          description: req.param("description")
+        Project.update req.param("id"), projectObj, (err) ->
           return next(err)  if err
-          User.publishUpdate(req.param("id"),{
+          Project.publishUpdate(req.param("id"),{
             id: req.param("id")
             name: req.param("name")
-            email: req.param("email")
           }, req.socket)
           res.send 200
 
   ctrl.destroy = (req, res, next) ->
     return next(err: ["unauthourized"]) unless req.param("id")
     return next(err: ["unauthourized"]) unless req.param("shortLink")
-    CommonHelper.checkUserExists({
+    CommonHelper.checkProjectExists({
       id:req.param("id"),
       shortLink:req.param("shortLink")
     }).then (result)->
       return next(err: ["unauthourized"]) unless result
-      User.destroy req.param("id"), (err) ->
+      Project.destroy req.param("id"), (err) ->
         return next(err) if err
-        User.publishDestroy req.param("id"), req.socket
+        Project.publishDestroy req.param("id"), req.socket
         res.send 200
 
   ctrl.subscribe = (req, res, next) ->
-    User.find (err, users) ->
+    Project.find (err, projects) ->
       return next(err) if err
-      User.subscribe req.socket, users
-      User.subscribe req.socket, users
+      Project.subscribe req.socket, projects
+      Project.subscribe req.socket, projects
       res.send 200
 
   ctrl._config = {}
