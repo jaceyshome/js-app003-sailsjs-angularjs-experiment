@@ -34,6 +34,7 @@ module.exports = (->
         res.json userJson
 
   ctrl.specifics = (req, res, next) ->
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
     User.findByShortLink(req.param('shortLink')).exec((err, user)->
       return next(err) if err or not user
       userJson =

@@ -34,6 +34,7 @@ module.exports = (->
         res.json projectJson
 
   ctrl.specifics = (req, res, next) ->
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
     Project.findByShortLink(req.param('shortLink')).exec((err, project)->
       return next(err) if err or not project
       projectJson =

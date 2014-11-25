@@ -55,8 +55,8 @@ describe "User Details", (done) ->
     .get(url)
     .expect(400)
     .end((err, res)->
-        done()
-      )
+      done()
+    )
     return
 
   return

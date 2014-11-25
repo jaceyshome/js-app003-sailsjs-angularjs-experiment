@@ -58,7 +58,7 @@ module.exports.policies = {
     //-------------------- crud -------------------------
     'create': true,
     'all': true, //ToDO is admin
-    'specifics': true, //TODO is  current user
+    'specifics':true, //TODO is  current user
     'update': ['isUserExists'],
     'destroy': ['isUserExists']
   },
@@ -73,7 +73,7 @@ module.exports.policies = {
     //--------------- crud -------------
     'create': true,
     'all': true,
-    'specifics': true,
+    'specifics': true, //TODO check project
     'update': ['isProjectExists'],
     'destroy': ['isProjectExists']
   }

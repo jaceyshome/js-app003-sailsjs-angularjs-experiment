@@ -44,6 +44,11 @@ module.exports = (function() {
     });
   };
   ctrl.specifics = function(req, res, next) {
+    if (!req.param("shortLink")) {
+      return res.send(400, {
+        message: 'Bad Request.'
+      });
+    }
     return Project.findByShortLink(req.param('shortLink')).exec(function(err, project) {
       var projectJson;
       if (err || !project) {
