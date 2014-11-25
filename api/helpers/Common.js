@@ -30,13 +30,24 @@ module.exports = (function() {
       });
     });
   };
-  helper.checkUserPassword = function(password, hash) {
+  helper.checkUserPassword = function(user) {
     return new Promise(function(resolve, reject) {
-      return Bcrypt.compare(password, hash, function(err, res) {
-        if (err) {
-          resolve(false);
+      var query;
+      query = "SELECT id, shortLink, name, password FROM users WHERE id = " + user.id + " AND shortLink = '" + user.shortLink + "'";
+      return User.query(query, function(err, result) {
+        if (result.length !== 1) {
+          return resolve(false);
         }
-        return resolve(res);
+        if (result[0].id === user.id && result[0].shortLink === user.shortLink) {
+          return resolve(result[0]);
+        }
+        return resolve(false);
+        return Bcrypt.compare(user.password, result[0].password, function(err, res) {
+          if (err) {
+            resolve(false);
+          }
+          return resolve(res);
+        });
       });
     });
   };
@@ -51,7 +62,7 @@ module.exports = (function() {
       }
       query = "SELECT id, shortLink, name, password FROM users WHERE id = " + user.id + " AND shortLink = '" + user.shortLink + "'";
       return User.query(query, function(err, result) {
-        if (result.length !== 1) {
+        if ((result != null ? result.length : void 0) !== 1) {
           return resolve(false);
         }
         if (result[0].id === user.id && result[0].shortLink === user.shortLink) {

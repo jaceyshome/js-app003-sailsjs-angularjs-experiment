@@ -58,46 +58,48 @@ module.exports = (function() {
     });
   };
   ctrl.update = function(req, res, next) {
+    var data;
     if (!req.param("id")) {
-      return next({
-        err: ["forbidden"]
+      return res.send(400, {
+        message: 'Bad Request.a'
       });
     }
     if (!req.param("shortLink")) {
-      return next({
-        err: ["forbidden"]
+      return res.send(400, {
+        message: 'Bad Request.b'
       });
     }
     if (!req.param("password")) {
-      return next({
-        err: ["forbidden"]
+      return res.send(400, {
+        message: 'Bad Request.c'
       });
     }
-    return CommonHelper.checkUserExists({
+    data = {
       id: req.param("id"),
-      shortLink: req.param("shortLink")
-    }).then(function(result) {
-      return CommonHelper.checkUserPassword(req.param("password"), result.password).then(function(result) {
-        var userObj;
-        if (result !== true) {
-          return next({
-            err: ["unauthourized"]
-          });
-        }
-        userObj = {
-          email: req.param("email")
-        };
-        return User.update(req.param("id"), userObj, function(err) {
-          if (err) {
-            return next(err);
-          }
-          User.publishUpdate(req.param("id"), {
-            id: req.param("id"),
-            name: req.param("name"),
-            email: req.param("email")
-          }, req.socket);
-          return res.send(200);
+      shortLink: req.param("shortLink"),
+      password: req.param("password")
+    };
+    return CommonHelper.checkUserPassword(data).then(function(result) {
+      var userObj;
+      console.log("result!!!!!!!!!", result);
+      if (result !== true) {
+        return next({
+          err: ["unauthourized"]
         });
+      }
+      userObj = {
+        email: req.param("email")
+      };
+      return User.update(req.param("id"), userObj, function(err) {
+        if (err) {
+          return next(err);
+        }
+        User.publishUpdate(req.param("id"), {
+          id: req.param("id"),
+          name: req.param("name"),
+          email: req.param("email")
+        }, req.socket);
+        return res.send(200);
       });
     });
   };
@@ -135,7 +137,8 @@ module.exports = (function() {
       if (err) {
         return next(err);
       }
-      User.watch(req.socket, User.subscribe(req.socket, users));
+      User.watch(req.socket);
+      User.subscribe(req.socket, users);
       return res.send(200);
     });
   };

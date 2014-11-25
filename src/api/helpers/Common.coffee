@@ -23,11 +23,20 @@ module.exports = (()->
         return reject() if err
         return resolve(hash)
 
-  helper.checkUserPassword = (password, hash)->
+  helper.checkUserPassword = (user)->
     new Promise (resolve, reject)->
-      Bcrypt.compare password,hash,(err, res)->
-        if err then resolve(false)
-        resolve(res)
+      query = "
+          SELECT id, shortLink, name, password
+          FROM users
+          WHERE id = #{user.id}
+          AND shortLink = '#{user.shortLink}'"
+      User.query query, (err, result) ->
+        return resolve(false) unless result.length is 1
+        return resolve(result[0]) if result[0].id is user.id and result[0].shortLink is user.shortLink
+        return resolve(false)
+        Bcrypt.compare user.password,result[0].password,(err, res)->
+          if err then resolve(false)
+          resolve(res)
 
   helper.checkUserExists = (user)->
     new Promise (resolve, reject)->
@@ -39,7 +48,7 @@ module.exports = (()->
         WHERE id = #{user.id}
         AND shortLink = '#{user.shortLink}'"
       User.query query, (err, result) ->
-        return resolve(false) unless result.length is 1
+        return resolve(false) unless result?.length is 1
         return resolve(result[0]) if result[0].id is user.id and result[0].shortLink is user.shortLink
         return resolve(false)
 

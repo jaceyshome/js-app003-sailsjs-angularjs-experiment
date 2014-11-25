@@ -38,26 +38,27 @@ module.exports = (->
       res.json users
 
   ctrl.update = (req, res, next) ->
-    return next(err: ["forbidden"]) unless req.param("id")
-    return next(err: ["forbidden"]) unless req.param("shortLink")
-    return next(err: ["forbidden"]) unless req.param("password")
-    CommonHelper.checkUserExists({
-      id:req.param("id"),
-      shortLink:req.param("shortLink")
-    }).then (result)->
-      CommonHelper.checkUserPassword(req.param("password"), result.password)
-      .then (result)->
-        return next(err: ["unauthourized"]) unless result is true
-        userObj =
+    return res.send(400, { message: 'Bad Request.a'}) unless req.param("id")
+    return res.send(400, { message: 'Bad Request.b'}) unless req.param("shortLink")
+    return res.send(400, { message: 'Bad Request.c'}) unless req.param("password")
+    data =
+      id: req.param("id")
+      shortLink: req.param("shortLink")
+      password: req.param("password")
+    CommonHelper.checkUserPassword(data)
+    .then (result)->
+      console.log "result!!!!!!!!!", result
+      return next(err: ["unauthourized"]) unless result is true
+      userObj =
+        email: req.param("email")
+      User.update req.param("id"), userObj, (err) ->
+        return next(err)  if err
+        User.publishUpdate(req.param("id"),{
+          id: req.param("id")
+          name: req.param("name")
           email: req.param("email")
-        User.update req.param("id"), userObj, (err) ->
-          return next(err)  if err
-          User.publishUpdate(req.param("id"),{
-            id: req.param("id")
-            name: req.param("name")
-            email: req.param("email")
-          }, req.socket)
-          res.send 200
+        }, req.socket)
+        res.send 200
 
   ctrl.destroy = (req, res, next) ->
     return next(err: ["unauthourized"]) unless req.param("id")
