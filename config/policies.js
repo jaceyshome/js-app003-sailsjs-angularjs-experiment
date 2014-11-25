@@ -51,9 +51,12 @@ module.exports.policies = {
 
   UserController : {
     '*': false,
+    'list': true, //TODO is admin
+    'details': true, //TODO is current user
+    'subscribe':true, //TODO subscribe to all users related to this company
     'create': true,
-    'specifics': true,
-    'all': true,
+    'all': true, //ToDO is admin
+    'specifics': true, //TODO is  current user
     'update': ['isUserExists'],
     'destroy': ['isUserExists']
   }

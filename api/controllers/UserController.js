@@ -7,9 +7,17 @@ Promise = require("bluebird");
 module.exports = (function() {
   var ctrl;
   ctrl = {};
+  ctrl.list = function(req, res, next) {
+    return res.view('app');
+  };
+  ctrl.details = function(req, res, next) {
+    return res.view('app');
+  };
+  ctrl.edit = function(req, res, next) {
+    return res.view('app');
+  };
   ctrl.create = function(req, res, next) {
-    var userCreated;
-    return User.create(req.params.all(), userCreated = function(err, user) {
+    return User.create(req.params.all(), function(err, user) {
       if (err) {
         return next(err);
       }
@@ -59,77 +67,28 @@ module.exports = (function() {
   };
   ctrl.update = function(req, res, next) {
     var data;
-    if (!req.param("id")) {
-      return res.send(400, {
-        message: 'Bad Request.a'
-      });
-    }
-    if (!req.param("shortLink")) {
-      return res.send(400, {
-        message: 'Bad Request.b'
-      });
-    }
-    if (!req.param("password")) {
-      return res.send(400, {
-        message: 'Bad Request.c'
-      });
-    }
     data = {
-      id: req.param("id"),
-      shortLink: req.param("shortLink"),
-      password: req.param("password")
+      email: req.param("email")
     };
-    return CommonHelper.checkUserPassword(data).then(function(result) {
-      var userObj;
-      console.log("result!!!!!!!!!", result);
-      if (result !== true) {
-        return next({
-          err: ["unauthourized"]
-        });
+    return User.update(req.param("id"), data, function(err) {
+      if (err) {
+        return next(err);
       }
-      userObj = {
+      User.publishUpdate(req.param("id"), {
+        id: req.param("id"),
+        name: req.param("name"),
         email: req.param("email")
-      };
-      return User.update(req.param("id"), userObj, function(err) {
-        if (err) {
-          return next(err);
-        }
-        User.publishUpdate(req.param("id"), {
-          id: req.param("id"),
-          name: req.param("name"),
-          email: req.param("email")
-        }, req.socket);
-        return res.send(200);
-      });
+      }, req.socket);
+      return res.send(200);
     });
   };
   ctrl.destroy = function(req, res, next) {
-    if (!req.param("id")) {
-      return next({
-        err: ["unauthourized"]
-      });
-    }
-    if (!req.param("shortLink")) {
-      return next({
-        err: ["unauthourized"]
-      });
-    }
-    return CommonHelper.checkUserExists({
-      id: req.param("id"),
-      shortLink: req.param("shortLink")
-    }).then(function(result) {
-      if (!result) {
-        return next({
-          err: ["unauthourized"]
-        });
+    return User.destroy(req.param("id"), function(err) {
+      if (err) {
+        return next(err);
       }
-      return User.destroy(req.param("id"), function(err) {
-        if (err) {
-          return next(err);
-        }
-        User.publishDestroy(req.param("id"), req.socket);
-        return res.send(200);
-      });
+      User.publishDestroy(req.param("id"), req.socket);
+      return res.send(200);
     });
   };
   ctrl.subscribe = function(req, res, next) {

@@ -89,7 +89,7 @@ describe("User Update", function(done) {
     user._csrf = csrfRes.body._csrf;
     user.password = Config.user.password;
     user.shortLink = 'sadfasdfsafa';
-    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(500).end(function(err, res) {
+    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(400).end(function(err, res) {
       if (err) {
         throw err;
       }
@@ -101,7 +101,7 @@ describe("User Update", function(done) {
     user._csrf = csrfRes.body._csrf;
     user.password = Config.user.password;
     delete user.shortLink;
-    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(500).end(function(err, res) {
+    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(400).end(function(err, res) {
       if (err) {
         throw err;
       }
@@ -113,28 +113,7 @@ describe("User Update", function(done) {
     user._csrf = csrfRes.body._csrf;
     user.password = Config.user.password;
     delete user.id;
-    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(500).end(function(err, res) {
-      if (err) {
-        throw err;
-      }
-      return done();
-    });
-  });
-  it("should not be able to update the user without password", function(done) {
-    user.email = 'test1@gmail.com';
-    user._csrf = csrfRes.body._csrf;
-    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(500).end(function(err, res) {
-      if (err) {
-        throw err;
-      }
-      return done();
-    });
-  });
-  it("should not be able to update the user with wrong password", function(done) {
-    user.email = 'test1@gmail.com';
-    user._csrf = csrfRes.body._csrf;
-    user.password = "xcvasasd";
-    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(500).end(function(err, res) {
+    request(Config.appPath).put(url).set('cookie', csrfRes.headers['set-cookie']).send(user).expect(400).end(function(err, res) {
       if (err) {
         throw err;
       }

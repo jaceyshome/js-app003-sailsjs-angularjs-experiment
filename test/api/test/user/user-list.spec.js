@@ -18,7 +18,7 @@ CSRF = require('../helpers/csrf');
 
 Config = require('../helpers/config');
 
-describe("User List (TODO)", function(done) {
+describe("(TODO) User List", function(done) {
   var csrfRes, url, user;
   csrfRes = null;
   url = '/user/update';

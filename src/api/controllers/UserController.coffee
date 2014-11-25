@@ -2,8 +2,21 @@ CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 module.exports = (->
   ctrl = {}
+
+  #------------------------- views ----------------------
+  ctrl.list = (req, res, next)->
+    res.view('app')
+
+  ctrl.details = (req, res, next)->
+    res.view('app')
+
+  ctrl.edit= (req, res, next)->
+    res.view('app')
+
+  #------------------------- crud ------------------------
+
   ctrl.create = (req, res, next) ->
-    User.create req.params.all(), userCreated = (err, user) ->
+    User.create req.params.all(), (err, user) ->
       return next(err) if err
       user.save (err, user) ->
         return next(err) if err
@@ -32,61 +45,36 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    #TODO check admin user
     User.query "SELECT id, name, email, shortLink FROM users", (err,users)->
       return next(err) if err or not users
       res.json users
 
   ctrl.update = (req, res, next) ->
-    return res.send(400, { message: 'Bad Request.a'}) unless req.param("id")
-    return res.send(400, { message: 'Bad Request.b'}) unless req.param("shortLink")
-    return res.send(400, { message: 'Bad Request.c'}) unless req.param("password")
     data =
-      id: req.param("id")
-      shortLink: req.param("shortLink")
-      password: req.param("password")
-    CommonHelper.checkUserPassword(data)
-    .then (result)->
-      console.log "result!!!!!!!!!", result
-      return next(err: ["unauthourized"]) unless result is true
-      userObj =
+      email: req.param("email")
+    User.update req.param("id"), data, (err) ->
+      return next(err)  if err
+      User.publishUpdate(req.param("id"),{
+        id: req.param("id")
+        name: req.param("name")
         email: req.param("email")
-      User.update req.param("id"), userObj, (err) ->
-        return next(err)  if err
-        User.publishUpdate(req.param("id"),{
-          id: req.param("id")
-          name: req.param("name")
-          email: req.param("email")
-        }, req.socket)
-        res.send 200
+      }, req.socket)
+      res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    return next(err: ["unauthourized"]) unless req.param("id")
-    return next(err: ["unauthourized"]) unless req.param("shortLink")
-    CommonHelper.checkUserExists({
-      id:req.param("id"),
-      shortLink:req.param("shortLink")
-    }).then (result)->
-      return next(err: ["unauthourized"]) unless result
-      User.destroy req.param("id"), (err) ->
-        return next(err) if err
-        User.publishDestroy req.param("id"), req.socket
-        res.send 200
+    User.destroy req.param("id"), (err) ->
+      return next(err) if err
+      User.publishDestroy req.param("id"), req.socket
+      res.send 200
 
   ctrl.subscribe = (req, res, next) ->
     User.find (err, users) ->
       return next(err) if err
-      # subscribe this socket to the User model classroom
-      #User.publishDestroy
-      #User.publishUpdate
       User.watch req.socket
       User.subscribe req.socket, users
-      # This will avoid a warning from the socket for trying to render
-      # html over the socket.
       res.send 200
 
   ctrl._config = {}
-
 
   ctrl
 )()

@@ -97,7 +97,7 @@ describe "User Update", (done) ->
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
-    .expect(500)
+    .expect(400)
     .end (err, res)->
         if (err) then throw err
         done()
@@ -112,7 +112,7 @@ describe "User Update", (done) ->
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
-    .expect(500)
+    .expect(400)
     .end (err, res)->
       if (err) then throw err
       done()
@@ -127,37 +127,10 @@ describe "User Update", (done) ->
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
-    .expect(500)
+    .expect(400)
     .end (err, res)->
       if (err) then throw err
       done()
-    return
-
-  it "should not be able to update the user without password", (done)->
-    user.email = 'test1@gmail.com'
-    user._csrf = csrfRes.body._csrf
-    request(Config.appPath)
-    .put(url)
-    .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
-    .expect(500)
-    .end (err, res)->
-        if (err) then throw err
-        done()
-    return
-
-  it "should not be able to update the user with wrong password", (done)->
-    user.email = 'test1@gmail.com'
-    user._csrf = csrfRes.body._csrf
-    user.password = "xcvasasd"
-    request(Config.appPath)
-    .put(url)
-    .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
-    .expect(500)
-    .end (err, res)->
-        if (err) then throw err
-        done()
     return
 
   return
