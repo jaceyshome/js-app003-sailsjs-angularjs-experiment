@@ -7,6 +7,18 @@ Promise = require("bluebird");
 module.exports = (function() {
   var ctrl;
   ctrl = {};
+  ctrl["new"] = function(req, res, next) {
+    return res.view('app');
+  };
+  ctrl.list = function(req, res, next) {
+    return res.view('app');
+  };
+  ctrl.details = function(req, res, next) {
+    return res.view('app');
+  };
+  ctrl.edit = function(req, res, next) {
+    return res.view('app');
+  };
   ctrl.create = function(req, res, next) {
     return Project.create(req.params.all(), function(err, project) {
       if (err) {
@@ -55,69 +67,29 @@ module.exports = (function() {
     });
   };
   ctrl.update = function(req, res, next) {
-    if (!req.param("id")) {
-      return next({
-        err: ["forbidden"]
-      });
-    }
-    if (!req.param("shortLink")) {
-      return next({
-        err: ["forbidden"]
-      });
-    }
-    return CommonHelper.checkProjectExists({
-      id: req.param("id"),
-      shortLink: req.param("shortLink")
-    }).then(function(result) {
-      var projectObj;
-      if (!result) {
-        return next({
-          err: ["unauthourized"]
-        });
+    var data;
+    data = {
+      name: req.param("name"),
+      description: req.param("description")
+    };
+    return Project.update(req.param("id"), data, function(err) {
+      if (err) {
+        return next(err);
       }
-      projectObj = {
-        name: req.param("name"),
-        description: req.param("description")
-      };
-      return Project.update(req.param("id"), projectObj, function(err) {
-        if (err) {
-          return next(err);
-        }
-        Project.publishUpdate(req.param("id"), {
-          id: req.param("id"),
-          name: req.param("name")
-        }, req.socket);
-        return res.send(200);
-      });
+      Project.publishUpdate(req.param("id"), {
+        id: req.param("id"),
+        name: req.param("name")
+      }, req.socket);
+      return res.send(200);
     });
   };
   ctrl.destroy = function(req, res, next) {
-    if (!req.param("id")) {
-      return next({
-        err: ["unauthourized"]
-      });
-    }
-    if (!req.param("shortLink")) {
-      return next({
-        err: ["unauthourized"]
-      });
-    }
-    return CommonHelper.checkProjectExists({
-      id: req.param("id"),
-      shortLink: req.param("shortLink")
-    }).then(function(result) {
-      if (!result) {
-        return next({
-          err: ["unauthourized"]
-        });
+    return Project.destroy(req.param("id"), function(err) {
+      if (err) {
+        return next(err);
       }
-      return Project.destroy(req.param("id"), function(err) {
-        if (err) {
-          return next(err);
-        }
-        Project.publishDestroy(req.param("id"), req.socket);
-        return res.send(200);
-      });
+      Project.publishDestroy(req.param("id"), req.socket);
+      return res.send(200);
     });
   };
   ctrl.subscribe = function(req, res, next) {

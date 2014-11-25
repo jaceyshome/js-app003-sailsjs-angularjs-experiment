@@ -41,7 +41,6 @@ module.exports.routes = {
   '/home':{view:'app'},
 
   //----------------- user -----------------------------
-  //------------ user view -----------------------------
   '/user':{view:'app'},
   '/user/details/:shortLink': 'UserController.details',
   '/user/edit/:shortLink':'UserController.edit',
@@ -49,10 +48,10 @@ module.exports.routes = {
 
   //------------------ project -------------------------
   '/project':{view:'app'},
-  '/project/new':{view:'app'},
-  '/project/list':{view:'app'},
-  '/project/details/:shortLink':{view:'app'},
-  '/project/edit/:shortLink':{view:'app'},
+  '/project/new': 'ProjectController.new',
+  '/project/list': 'ProjectController.list',
+  '/project/details/:shortLink': 'ProjectController.details',
+  '/project/edit/:shortLink':'ProjectController.edit',
   '/project/specifics/:shortLink': 'ProjectController.specifics'
 
   /***************************************************************************

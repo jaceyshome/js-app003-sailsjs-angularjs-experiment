@@ -16,7 +16,7 @@ module.exports = (->
   #------------------------- crud ------------------------
 
   ctrl.create = (req, res, next) ->
-    User.create req.params.all(), (err, user) ->
+    User.create req.params.all(), userCreated = (err, user) ->
       return next(err) if err
       user.save (err, user) ->
         return next(err) if err
@@ -72,9 +72,12 @@ module.exports = (->
       return next(err) if err
       User.watch req.socket
       User.subscribe req.socket, users
+      # This will avoid a warning from the socket for trying to render
+      # html over the socket.
       res.send 200
 
   ctrl._config = {}
+
 
   ctrl
 )()

@@ -84,7 +84,7 @@ describe "Project Update", (done) ->
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
-    .expect(500)
+    .expect(400)
     .end (err, res)->
         if (err) then throw err
         done()
@@ -98,7 +98,7 @@ describe "Project Update", (done) ->
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
-    .expect(500)
+    .expect(400)
     .end (err, res)->
       if (err) then throw err
       done()
@@ -112,7 +112,7 @@ describe "Project Update", (done) ->
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
-    .expect(500)
+    .expect(400)
     .end (err, res)->
       if (err) then throw err
       done()

@@ -17,7 +17,8 @@ module.exports = (function() {
     return res.view('app');
   };
   ctrl.create = function(req, res, next) {
-    return User.create(req.params.all(), function(err, user) {
+    var userCreated;
+    return User.create(req.params.all(), userCreated = function(err, user) {
       if (err) {
         return next(err);
       }

@@ -2,6 +2,21 @@ CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 module.exports = (->
   ctrl = {}
+
+  #------------------------- views ----------------------
+  ctrl.new = (req, res, next)->
+    res.view('app')
+
+  ctrl.list = (req, res, next)->
+    res.view('app')
+
+  ctrl.details = (req, res, next)->
+    res.view('app')
+
+  ctrl.edit= (req, res, next)->
+    res.view('app')
+
+  #------------------------- crud ------------------------
   ctrl.create = (req, res, next) ->
     Project.create req.params.all(), (err, project) ->
       return next(err) if err
@@ -30,42 +45,27 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    #TODO check admin user
     Project.query "SELECT id, name, description, shortLink FROM projects", (err,projects)->
       return next(err) if err or not projects
       res.json projects
 
   ctrl.update = (req, res, next) ->
-    return next(err: ["forbidden"]) unless req.param("id")
-    return next(err: ["forbidden"]) unless req.param("shortLink")
-    CommonHelper.checkProjectExists({
-      id:req.param("id"),
-      shortLink:req.param("shortLink")
-    }).then (result)->
-      return next(err: ["unauthourized"]) unless result
-      projectObj =
+    data =
+      name: req.param("name")
+      description: req.param("description")
+    Project.update req.param("id"), data, (err) ->
+      return next(err)  if err
+      Project.publishUpdate(req.param("id"),{
+        id: req.param("id")
         name: req.param("name")
-        description: req.param("description")
-      Project.update req.param("id"), projectObj, (err) ->
-        return next(err)  if err
-        Project.publishUpdate(req.param("id"),{
-          id: req.param("id")
-          name: req.param("name")
-        }, req.socket)
-        res.send 200
+      }, req.socket)
+      res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    return next(err: ["unauthourized"]) unless req.param("id")
-    return next(err: ["unauthourized"]) unless req.param("shortLink")
-    CommonHelper.checkProjectExists({
-      id:req.param("id"),
-      shortLink:req.param("shortLink")
-    }).then (result)->
-      return next(err: ["unauthourized"]) unless result
-      Project.destroy req.param("id"), (err) ->
-        return next(err) if err
-        Project.publishDestroy req.param("id"), req.socket
-        res.send 200
+    Project.destroy req.param("id"), (err) ->
+      return next(err) if err
+      Project.publishDestroy req.param("id"), req.socket
+      res.send 200
 
   ctrl.subscribe = (req, res, next) ->
     Project.find (err, projects) ->

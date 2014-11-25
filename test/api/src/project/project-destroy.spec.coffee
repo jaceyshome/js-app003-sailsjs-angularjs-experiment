@@ -66,7 +66,7 @@ describe "Project Destroy", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
     .end((err, res)->
-        should(res.statusCode).be.eql 500
+        should(res.statusCode).be.eql 400
         should(err).be.empty
         done()
       )
@@ -80,7 +80,7 @@ describe "Project Destroy", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
     .end((err, res)->
-        should(res.statusCode).be.eql 500
+        should(res.statusCode).be.eql 400
         should(err).be.empty
         done()
       )
@@ -94,7 +94,7 @@ describe "Project Destroy", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
     .end((err, res)->
-        should(res.statusCode).be.eql 500
+        should(res.statusCode).be.eql 400
         should(err).be.empty
         done()
       )

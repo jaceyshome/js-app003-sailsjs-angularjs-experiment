@@ -38,33 +38,5 @@ module.exports = (()->
           if err then resolve(false)
           resolve(res)
 
-  helper.checkUserExists = (user)->
-    new Promise (resolve, reject)->
-      return reject(null) unless user.id
-      return reject(null) unless user.shortLink
-      query = "
-        SELECT id, shortLink, name, password
-        FROM users
-        WHERE id = #{user.id}
-        AND shortLink = '#{user.shortLink}'"
-      User.query query, (err, result) ->
-        return resolve(false) unless result?.length is 1
-        return resolve(result[0]) if result[0].id is user.id and result[0].shortLink is user.shortLink
-        return resolve(false)
-
-  helper.checkProjectExists = (project)->
-    new Promise (resolve, reject)->
-      return reject(null) unless project.id
-      return reject(null) unless project.shortLink
-      query = "
-          SELECT id, shortLink, name
-          FROM projects
-          WHERE id = #{project.id}
-          AND shortLink = '#{project.shortLink}'"
-      Project.query query, (err, result) ->
-        return resolve(false) unless result.length is 1
-        return resolve(result[0]) if result[0].id is project.id and result[0].shortLink is project.shortLink
-        return resolve(false)
-
   helper
 )()
