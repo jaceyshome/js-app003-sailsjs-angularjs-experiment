@@ -15,8 +15,8 @@ div.container.projectNew
   .row
     .col-md-6
       div(ui-tree='ui-tree')
-        ol(ui-tree-nodes='', ng-model='stages')
-          li(ng-repeat='node in stages', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")
+        ol(ui-tree-nodes='', ng-model='project.stages')
+          li(ng-repeat='node in project.stages', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")
 
   a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit
 
