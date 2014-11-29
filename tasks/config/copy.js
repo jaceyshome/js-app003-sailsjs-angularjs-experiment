@@ -38,9 +38,7 @@ module.exports = function(grunt) {
         }, {
           ".tmp/public/linker/src/lib/ngsails.io.js": "./bower_components/angularSails/dist/ngsails.io.js"
         },{
-          ".tmp/public/linker/src/lib/sails.io.js": "./bower_components/sails.io.js/dist/sails.io.js"
-        },{
-          ".tmp/public/linker/src/lib/socket.io.js": "./src/frontend/lib/socket.io.js"
+          ".tmp/public/linker/src/lib/sails.io.js": "./src/frontend/lib/sails.io.js"
         }, {
           ".tmp/public/linker/src/lib/angular-animate.js": "./bower_components/angular-animate/angular-animate.js"
         }, {
@@ -49,6 +47,10 @@ module.exports = function(grunt) {
           ".tmp/public/linker/src/lib/angular-sanitize.js": "./bower_components/angular-sanitize/angular-sanitize.js"
         }, {
           ".tmp/public/linker/src/lib/angular-ui-router.js": "./bower_components/angular-ui-router/release/angular-ui-router.js"
+        }, {
+          ".tmp/public/linker/src/lib/angular-material.js": "./bower_components/angular-material/angular-material.min.js"
+        }, {
+          ".tmp/public/linker/src/lib/angular-ui-tree.min.js": "./bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"
         }, {
           ".tmp/public/linker/src/lib/angular-toaster.js": "./bower_components/AngularJS-Toaster/toaster.js"
         }, {

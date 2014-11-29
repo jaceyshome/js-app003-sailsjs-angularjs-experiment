@@ -11,14 +11,11 @@ requirejs.config
     angular_animate: "lib/angular-animate"
     angular_sails: "lib/ngsails.io"
     sails_io: "lib/sails.io"
-    socket_io: "lib/socket.io"
     angular_mocks: "lib/angular-mocks"
     angular_toaster:"lib/angular-toaster"
   shim:
-    socket_io:
-      exports: 'socket_io'
     sails_io:
-      deps:['socket_io','angular']
+      deps:['angular']
       exports: 'sails_io'
     angular_sails:
       deps:['sails_io']
@@ -27,7 +24,7 @@ requirejs.config
       deps: ['jquery', 'angular']
       exports: 'angular_mocks'
     angular:
-      deps: ['jquery', 'socket_io']
+      deps: ['jquery']
       exports: 'angular'
     bootstrap:
       deps: ['jquery']
@@ -49,7 +46,6 @@ requirejs.config
       exports: 'angular_toaster'
 
 define [
-  'socket_io'
   'angular'
   'angular_animate'
   'angular_mocks'
@@ -57,6 +53,6 @@ define [
   'angular_ui_router'
   'angular_toaster'
   'app/app'
-  ], (socket_io,angular) ->
+  ], (angular) ->
   return angular.element(document).ready ->
     angular.bootstrap document, ['app']
