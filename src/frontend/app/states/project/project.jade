@@ -1,3 +1,12 @@
 h2 Project
 div.container
   div(data-ui-view="projectChildView")
+  div(ui-tree='ui-tree')
+    ol(ui-tree-nodes='', ng-model='list')
+      li(ng-repeat='item in list', ui-tree-node='ui-tree-node')
+        div(ui-tree-handle='ui-tree-handle')
+          | {{item.title}}
+        ol(ui-tree-nodes='', ng-model='item.items')
+          li(ng-repeat='subItem in item.items', ui-tree-node='ui-tree-node')
+            div(ui-tree-handle='ui-tree-handle')
+              | {{subItem.title}}

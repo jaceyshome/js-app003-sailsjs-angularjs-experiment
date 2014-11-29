@@ -57,6 +57,8 @@ module.exports = function(grunt) {
           ".tmp/public/linker/src/lib/almond.js": "./bower_components/almond/almond.js"
         }, {
           ".tmp/public/linker/styles/toaster.css": "./bower_components/AngularJS-Toaster/toaster.css"
+        }, {
+          ".tmp/public/linker/styles/ui-tree.css": "./bower_components/angular-ui-tree/source/angular-ui-tree.css"
         }
       ]
     },

@@ -2,6 +2,8 @@ define [
   'angular'
   'angular_sails'
   'angular_ui_router'
+  'angular_ui_tree'
+  'angular_material'
   'app/config'
   'bootstrap'
   'jquery'
@@ -19,6 +21,7 @@ define [
 ], ->
   module = angular.module 'app', [
     'ui.router'
+    'ui.tree'
     'sails.io'
     'ngAnimate'
     'common.csrf'
@@ -53,9 +56,7 @@ define [
       "showMethod": "fadeIn"
       "hideMethod": "fadeOut"
 
-
     init = ->
-
 
     init()
 

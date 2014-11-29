@@ -10,8 +10,8 @@ requirejs.config
     angular_sanitize: "lib/angular-sanitize"
     angular_animate: "lib/angular-animate"
     angular_sails: "lib/ngsails.io"
-    anguarl_ui_tree: "lib/angular-ui-tree.min"
-    anguarl_material: "lib/angular-material.min"
+    angular_ui_tree: "lib/angular-ui-tree.min"
+    angular_material: "lib/angular-material.min"
     sails_io: "lib/sails.io"
     angular_mocks: "lib/angular-mocks"
     angular_toaster:"lib/angular-toaster"
@@ -28,12 +28,12 @@ requirejs.config
     angular:
       deps: ['jquery']
       exports: 'angular'
-    anguarl_ui_tree:
+    angular_ui_tree:
       deps: ['jquery', 'angular']
-      exports: 'anguarl_ui_tree'
-    anguarl_material:
+      exports: 'angular_ui_tree'
+    angular_material:
       deps: ['jquery', 'angular']
-      exports: 'anguarl_material'
+      exports: 'angular_material'
     bootstrap:
       deps: ['jquery']
       exports: 'bootstrap'
@@ -60,8 +60,8 @@ define [
   'angular_resource'
   'angular_ui_router'
   'angular_toaster'
-  'anguarl_ui_tree'
-  'anguarl_material'
+  'angular_ui_tree'
+  'angular_material'
   'app/app'
   ], (angular) ->
   return angular.element(document).ready ->

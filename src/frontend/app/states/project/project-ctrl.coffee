@@ -8,6 +8,11 @@ define [
 ], ->
   module = angular.module 'app.states.project'
   module.controller 'ProjectCtrl', ($scope, $state) ->
-
-
+    $scope.list = [
+      {
+        "id": 1,
+        "title": "1. dragon-breath"
+        "items": []
+      }
+    ]
 
