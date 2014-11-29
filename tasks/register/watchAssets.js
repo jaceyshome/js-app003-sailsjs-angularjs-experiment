@@ -7,8 +7,7 @@ module.exports = function(grunt) {
     "newer:coffee:dev",
     "newer:coffee:api",
     "coffeelint",
-    "newer:less:dev",
-    "lesslint",
+    'buildLess',
     "concat:dev"
   ]);
 };
