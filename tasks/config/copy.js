@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         }, {
           ".tmp/public/linker/src/lib/angular-ui-router.js": "./bower_components/angular-ui-router/release/angular-ui-router.js"
         }, {
-          ".tmp/public/linker/src/lib/angular-material.js": "./bower_components/angular-material/angular-material.min.js"
+          ".tmp/public/linker/src/lib/angular-material.min.js": "./bower_components/angular-material/angular-material.min.js"
         }, {
           ".tmp/public/linker/src/lib/angular-ui-tree.min.js": "./bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"
         }, {
