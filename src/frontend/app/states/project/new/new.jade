@@ -12,4 +12,15 @@ div.container.projectNew
         label Project Description
         textarea.form-control(placeholder="project description", name="description", data-ng-model="project.description", rows="5")
 
+  .row
+    .col-md-6
+      div(ui-tree='ui-tree')
+        ol(ui-tree-nodes='', ng-model='stages')
+          li(ng-repeat='node in stages', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")
+
   a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit
+
+  h3 Data binding
+  .row
+  .col-sm-6
+    pre.code {{project | json}}
