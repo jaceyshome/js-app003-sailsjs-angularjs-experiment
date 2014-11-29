@@ -9,7 +9,8 @@ module.exports = function(grunt) {
         "qualified-headings": false,
         "unique-headings": false,
         "ids": false,
-        "overqualified-elements": false
+        "overqualified-elements": false,
+        "box-sizing": false
       }
     }
   });

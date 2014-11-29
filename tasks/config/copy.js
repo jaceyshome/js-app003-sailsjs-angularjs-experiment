@@ -23,6 +23,11 @@ module.exports = function(grunt) {
           cwd: "./bower_components/font-awesome/fonts/",
           src: ["**/*"],
           dest: ".tmp/public/linker/fonts"
+        },{
+          expand: true,
+          cwd: "./bower_components/bootstrap/fonts/",
+          src: ["**/*"],
+          dest: ".tmp/public/linker/fonts"
         }, {
           ".tmp/public/linker/src/lib/require.js": "./bower_components/requirejs/require.js"
         }, {

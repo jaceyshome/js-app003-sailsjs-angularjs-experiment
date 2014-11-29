@@ -1,12 +1,13 @@
 h2 Project
-div.container
+div.container.project
   div(data-ui-view="projectChildView")
-  div(ui-tree='ui-tree')
-    ol(ui-tree-nodes='', ng-model='list')
-      li(ng-repeat='item in list', ui-tree-node='ui-tree-node')
-        div(ui-tree-handle='ui-tree-handle')
-          | {{item.title}}
-        ol(ui-tree-nodes='', ng-model='item.items')
-          li(ng-repeat='subItem in item.items', ui-tree-node='ui-tree-node')
-            div(ui-tree-handle='ui-tree-handle')
-              | {{subItem.title}}
+  .row
+    .col-md-6
+      div(ui-tree='ui-tree')
+        ol(ui-tree-nodes='', ng-model='tree2')
+          li(ng-repeat='node in tree2', ui-tree-node='ui-tree-node', ng-include="'common/uitree/template1'")
+
+  h3 Data binding
+  .row
+  .col-sm-6
+    pre.code {{tree2 | json}}
