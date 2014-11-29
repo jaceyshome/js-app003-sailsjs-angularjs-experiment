@@ -11,7 +11,7 @@ define [
     $scope.list = [
       {
         "id": 1,
-        "title": "1. dragon-breath"
+        "title": "1. dragon-breath",
         "items": []
       }
     ]
