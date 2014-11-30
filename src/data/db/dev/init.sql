@@ -68,18 +68,25 @@ DROP TABLE IF EXISTS `palette_dev`.`stages` ;
 
 CREATE  TABLE IF NOT EXISTS `palette_dev`.`stages` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `projectId` INT(11) NOT NULL ,
+  `stateId` INT(2) NOT NULL ,
   `name` VARCHAR(100) NULL ,
   `description` VARCHAR(1000) NULL ,
   `startDate` DATETIME NULL ,
   `endDate` DATETIME NULL ,
   `createdAt` DATETIME NULL ,
   `updatedAt` DATETIME NULL ,
-  `stateId` INT(2) NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_stages_states1` (`stateId` ASC) ,
+  INDEX `fk_stages_projects1_idx` (`projectId` ASC) ,
   CONSTRAINT `fk_stages_states1`
   FOREIGN KEY (`stateId` )
   REFERENCES `palette_dev`.`states` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_stages_projects1`
+  FOREIGN KEY (`projectId` )
+  REFERENCES `palette_dev`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;

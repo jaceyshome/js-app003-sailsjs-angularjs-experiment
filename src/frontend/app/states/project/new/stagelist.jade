@@ -4,16 +4,16 @@
   .tree-node-content
     a.btn.btn-success.btn-xs(nodrag='nodrag', ng-click='toggle(this)')
       span.glyphicon(ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}")
-    | {{node.title}}
+    | {{task.title}}
     a.pull-right.btn.btn-danger.btn-xs(nodrag='nodrag', ng-click='remove(this)')
       span.glyphicon.glyphicon-remove
       span.sr-only Remove
     a.pull-right.btn.btn-primary.btn-xs(nodrag='nodrag', ng-click='edit(this)')
       span.glyphicon.glyphicon-pencil
       span.sr-only Edit
-    a.pull-right.btn.btn-primary.btn-xs(nodrag='nodrag', ng-click='newNode(this)', style='margin-right: 8px;')
+    a.pull-right.btn.btn-primary.btn-xs(nodrag='nodrag', ng-click='newTask(this)', style='margin-right: 8px;')
       span.glyphicon.glyphicon-plus
       span.sr-only Add
 
-  ol(ui-tree-nodes='', ng-model='node.nodes', ng-class='{hidden: collapsed}')
-    li(ng-repeat='node in node.nodes', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")
+  ol(ui-tree-nodes='', ng-model='task.tasks', ng-class='{hidden: collapsed}')
+    li(ng-repeat='task in task.tasks', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")

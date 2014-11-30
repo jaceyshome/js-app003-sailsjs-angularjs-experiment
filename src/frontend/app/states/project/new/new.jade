@@ -12,11 +12,13 @@ div.container.projectNew
         label Project Description
         textarea.form-control(placeholder="project description", name="description", data-ng-model="project.description", rows="5")
 
-  .row
+  a.btn.btn-medium.btn-primary(data-ng-click="addStage()", href="javascript:void(0)") Add Stage
+
+  .row(data-ng-if="project.stages.length>0")
     .col-md-6
       div(ui-tree='ui-tree')
         ol(ui-tree-nodes='', ng-model='project.stages')
-          li(ng-repeat='node in project.stages', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")
+          li(ng-repeat='task in project.stages', ui-tree-node='ui-tree-node', ng-include="'app/states/project/new/stagelist'")
 
   a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit
 

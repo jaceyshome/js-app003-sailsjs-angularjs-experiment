@@ -6,11 +6,15 @@ define [
     $scope.project =
       name: ""
       description: ""
-      stages : [{
-        "id": 1,
-        "title": "stage item 1",
-        "nodes": []
-      }]
+      stages : []
+
+    $scope.addStage = ()->
+      id = $scope.project.stages.length+1
+      $scope.project.stages.push({
+        "id": id
+        "title": "new stage"
+        "tasks": []
+      })
 
     $scope.remove = (scope)->
       scope.remove()
@@ -18,12 +22,12 @@ define [
     $scope.toggle = (scope)->
       scope.toggle()
 
-    $scope.newNode = (scope)->
+    $scope.newTask = (scope)->
       nodeData = scope.$modelValue
-      nodeData.nodes.push({
-        id: nodeData.id * 10 + nodeData.nodes.length,
-        title: nodeData.title + '.' + (nodeData.nodes.length + 1),
-        nodes: []
+      nodeData.tasks.push({
+        id: nodeData.id * 10 + nodeData.tasks.length,
+        title: nodeData.title + '.' + (nodeData.tasks.length + 1),
+        tasks: []
       })
 
     $scope.submit = ->
