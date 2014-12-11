@@ -4,9 +4,58 @@ define [
   module = angular.module 'app.states.project.new'
   module.controller 'ProjectNewCtrl', ($scope, $state, ProjectService) ->
     $scope.project =
-      name: ""
-      description: ""
-      stages : []
+      name: "test project"
+      description: "test project description"
+      "stages": [
+        {
+          "id": 1,
+          "title": "stage 1",
+          "tasks": [
+            {
+              "id": 10,
+              "title": "task 1.1",
+              "tasks": []
+            },
+            {
+              "id": 100,
+              "title": "task 1.2",
+              "tasks": []
+            }
+          ]
+        },
+        {
+          "id": 1000,
+          "title": "stage 2",
+          "tasks": [
+            {
+              "id": 10000,
+              "title": "task 2.1",
+              "tasks": []
+            },
+            {
+              "id": 10001,
+              "title": "task 2.2",
+              "tasks": []
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "stage 3",
+          "tasks": [
+            {
+              "id": 30,
+              "title": "task 3.1",
+              "tasks": []
+            },
+            {
+              "id": 31,
+              "title": "task 3.2",
+              "tasks": []
+            }
+          ]
+        }
+      ]
 
     $scope.addStage = ()->
       id = $scope.project.stages.length+1

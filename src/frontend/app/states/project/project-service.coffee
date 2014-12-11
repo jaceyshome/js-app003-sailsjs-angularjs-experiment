@@ -49,10 +49,11 @@ define [
     service.createProject = (project)->
       deferred = $q.defer()
       CSRF.get().then (data)->
-        newProject =
-          name: project.name
-          _csrf: data._csrf
-        $http.post("#{config.baseUrl}/project/create", newProject)
+        project._csrf = data._csrf
+#        newProject =
+#          name: project.name
+#          _csrf: data._csrf
+        $http.post("#{config.baseUrl}/project/create", project)
         .then (result) ->
           deferred.resolve result.data
         .catch (err)->
