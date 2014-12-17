@@ -6,8 +6,7 @@ module.exports = function(grunt) {
         captureFile:"apiTestResult.html",
         reporter: 'mocha-html-reporter',
         timeout: 10000,
-        quiet: true,
-        bail: false
+        quiet: true
       }
     }
   });
