@@ -25,7 +25,7 @@ describe "User Details", (done) ->
     .post('/user/create')
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
-    .expect(201)
+    .expect(200)
     .end((err, res)->
         if (err) then throw err
         user = res.body
