@@ -1,4 +1,3 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
@@ -14,13 +13,13 @@ describe "User Create", (done) ->
   user = Config.user
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       user._csrf = csrfRes.body._csrf
       done()
 
   it "should be able to create a user with correct info", (done) ->
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -38,13 +37,13 @@ describe "User Create", (done) ->
     return
 
   it "should not create the user with the same name", (done)->
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
     .expect(200)
     .end ()->
-      request(Config.appPath)
+      request(sails.hooks.http.app)
       .post(url)
       .set('cookie', csrfRes.headers['set-cookie'])
       .send(user)
@@ -58,7 +57,7 @@ describe "User Create", (done) ->
   it "should not be able to create the user without csrf", (done)->
     _user = JSON.parse(JSON.stringify(user))
     delete _user._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
@@ -68,7 +67,7 @@ describe "User Create", (done) ->
   it "should not be able to create the user without email", (done)->
     _user = JSON.parse(JSON.stringify(user))
     delete _user.email
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
@@ -78,7 +77,7 @@ describe "User Create", (done) ->
   it "should not be able to create the user without name", (done)->
     _user = JSON.parse(JSON.stringify(user))
     delete _user.name
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
@@ -88,7 +87,7 @@ describe "User Create", (done) ->
   it "should not be able to create the user without password", (done)->
     _user = JSON.parse(JSON.stringify(user))
     delete _user.password
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)

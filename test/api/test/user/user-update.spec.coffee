@@ -1,4 +1,3 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
@@ -21,7 +20,7 @@ describe "User Update", (done) ->
   beforeEach (done)->
     _user = JSON.parse(JSON.stringify(Config.user))
     _user._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post('/user/create')
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
@@ -37,7 +36,7 @@ describe "User Update", (done) ->
     user.email = 'test1@gmail.com'
     user._csrf = csrfRes.body._csrf
     user.password = Config.user.password
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -45,7 +44,7 @@ describe "User Update", (done) ->
     .end (err, res)->
       res.body.should.be.empty
       if (err) then throw err
-      request(Config.appPath)
+      request(sails.hooks.http.app)
       .get('/user/specifics/'+user.shortLink)
       .expect(200)
       .end (err,res)->
@@ -56,7 +55,7 @@ describe "User Update", (done) ->
   it "should not be able to update the user without csrf", (done)->
     user.email = 'test1@gmail.com'
     user.password = Config.user.password
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -72,7 +71,7 @@ describe "User Update", (done) ->
     user.name = 'test1'
     user._csrf = csrfRes.body._csrf
     user.password = Config.user.password
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -80,7 +79,7 @@ describe "User Update", (done) ->
     .end (err, res)->
       res.body.should.be.empty
       if (err) then throw err
-      request(Config.appPath)
+      request(sails.hooks.http.app)
       .get('/user/specifics/'+user.shortLink)
       .expect(200)
       .end (err,res)->
@@ -93,7 +92,7 @@ describe "User Update", (done) ->
     user._csrf = csrfRes.body._csrf
     user.password = Config.user.password
     user.shortLink = 'sadfasdfsafa'
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -108,7 +107,7 @@ describe "User Update", (done) ->
     user._csrf = csrfRes.body._csrf
     user.password = Config.user.password
     delete user.shortLink
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -123,7 +122,7 @@ describe "User Update", (done) ->
     user._csrf = csrfRes.body._csrf
     user.password = Config.user.password
     delete user.id
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)

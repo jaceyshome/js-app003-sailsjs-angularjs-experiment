@@ -1,4 +1,3 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
@@ -14,14 +13,14 @@ describe "User Destroy", (done) ->
   user = Config.user
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       done()
 
   beforeEach (done)->
     _user = JSON.parse(JSON.stringify(Config.user))
     _user._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post('/user/create')
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
@@ -35,7 +34,7 @@ describe "User Destroy", (done) ->
 
   it "should be able to delete a user", (done) ->
     user._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -47,7 +46,7 @@ describe "User Destroy", (done) ->
     return
 
   it "should not delete a user without csrf", (done)->
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -61,7 +60,7 @@ describe "User Destroy", (done) ->
   it "should not delete a user with wrong shortLink", (done)->
     user._csrf = csrfRes.body._csrf
     user.shortLink = "12sdfs/12321"
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -75,7 +74,7 @@ describe "User Destroy", (done) ->
   it "should not delete a user without shortLink", (done)->
     user._csrf = csrfRes.body._csrf
     delete user.shortLink
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)
@@ -89,7 +88,7 @@ describe "User Destroy", (done) ->
   it "should not delete a user without id", (done)->
     user._csrf = csrfRes.body._csrf
     delete user.id
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(user)

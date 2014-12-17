@@ -1,4 +1,3 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
@@ -14,14 +13,14 @@ describe "(TODO) User List", (done) ->
   user = null
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       done()
 
   beforeEach (done)->
     _user = JSON.parse(JSON.stringify(Config.user))
     _user._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post('/user/create')
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)

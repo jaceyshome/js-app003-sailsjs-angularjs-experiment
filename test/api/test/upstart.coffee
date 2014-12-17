@@ -1,14 +1,16 @@
 Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
-DBHelper = require('./db')
-CSRF = require('./csrf')
-Config = require('./config')
+DBHelper = require('./helpers/db')
+CSRF = require('./helpers/csrf')
+Config = require('./helpers/config')
 
 app = undefined
 
 before (done) ->
-  Sails.lift
+  SailsApp = require('sails').Sails
+  sails = new SailsApp()
+  sails.lift
     log:
       level: "error"
     adapters:
