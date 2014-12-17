@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.config.set("mochaTest", {
     apiTest: {
-      src: 'test/api/test/**/*.spec.js',
+      src: 'test/api/test/**/*.spec.coffee',
       options: {
         captureFile:"apiTestResult.html",
         reporter: 'mocha-html-reporter',
