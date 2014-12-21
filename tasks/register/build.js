@@ -1,11 +1,8 @@
-module.exports = function(grunt) {
-  grunt.registerTask("build", [
-    "clean:build",
-    "buildAssets",
-    "buildLibs",
-    "linkAssets",
-    "copy:build"
-  ]);
+module.exports = function (grunt) {
+	grunt.registerTask('build', [
+		'compileAssets',
+		'linkAssetsBuild',
+		'clean:build',
+		'copy:build'
+	]);
 };
-
-//# sourceMappingURL=build.js.map

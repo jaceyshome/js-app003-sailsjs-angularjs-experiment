@@ -1,9 +1,9 @@
 module.exports = function(grunt) {
   grunt.config.set("ngtemplates", {
     dev: {
-      cwd: "templates",
+      cwd: ".tmp/templates",
       src: "**/*.html",
-      dest: ".tmp/public/linker/src/templates.js",
+      dest: ".tmp/public/js/templates.js",
       options: {
         module: "app",
         bootstrap: function(module, script) {

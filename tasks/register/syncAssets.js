@@ -1,5 +1,8 @@
-module.exports = function(grunt) {
-  grunt.registerTask("syncAssets", ["jade:dev", "less:dev", "coffee:dev", "coffee:api", "coffee:apiTest", "coffee:apiTestHelper", "yaml"]);
+module.exports = function (grunt) {
+	grunt.registerTask('syncAssets', [
+		'jst:dev',
+		'less:dev',
+		'sync:dev',
+		'coffee:dev'
+	]);
 };
-
-//# sourceMappingURL=syncAssets.js.map

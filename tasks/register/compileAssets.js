@@ -1,5 +1,11 @@
-module.exports = function(grunt) {
-  grunt.registerTask("compileAssets", ["clean:dev", "jst:dev", "less:dev", "copy:dev", "coffee:dev"]);
+module.exports = function (grunt) {
+	grunt.registerTask('compileAssets', [
+		'clean:dev',
+		'less:dev',
+    'jade:dev',
+    'ngtemplates',
+    'coffee:dev',
+    'copylibs',
+    'copy:dev'
+	]);
 };
-
-//# sourceMappingURL=compileAssets.js.map

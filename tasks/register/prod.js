@@ -1,5 +1,14 @@
-module.exports = function(grunt) {
-  grunt.registerTask("prod", ["buildAssets", "linkAssets", "copy:prod", "concat:prod", "uglify", "cssmin"]);
+module.exports = function (grunt) {
+	grunt.registerTask('prod', [
+		'compileAssets',
+		'concat',
+		'uglify',
+		'cssmin',
+		'sails-linker:prodJs',
+		'sails-linker:prodStyles',
+		'sails-linker:devTpl',
+		'sails-linker:prodJsJade',
+		'sails-linker:prodStylesJade',
+		'sails-linker:devTplJade'
+	]);
 };
-
-//# sourceMappingURL=prod.js.map

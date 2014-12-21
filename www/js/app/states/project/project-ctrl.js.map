@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "project-ctrl.js",
+  "sourceRoot": "./",
+  "sources": [
+    "project-ctrl.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,MAAA,CAAO,CACL,mCADK,EAEL,oCAFK,EAGL,mCAHK,EAIL,mCAJK,EAKL,iCALK,EAML,yCANK,CAAP,EAOG,SAAA,GAAA;AACD,MAAA,MAAA;AAAA,EAAA,MAAA,GAAS,OAAO,CAAC,MAAR,CAAe,oBAAf,CAAT,CAAA;SACA,MAAM,CAAC,UAAP,CAAkB,aAAlB,EAAiC,SAAC,MAAD,EAAS,MAAT,GAAA,CAAjC,EAFC;AAAA,CAPH,CAAA,CAAA"
+}

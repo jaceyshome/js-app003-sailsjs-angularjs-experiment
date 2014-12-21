@@ -1,3 +1,3 @@
-# js-app-003-update
+# js-restructure
 
 a [Sails](http://sailsjs.org) application

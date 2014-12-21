@@ -2,9 +2,9 @@ module.exports = function(grunt) {
   grunt.config.set("jade", {
     dev: {
       expand: true,
-      cwd: "src/frontend",
+      cwd: "assets/js",
       src: ["**/*.jade"],
-      dest: "templates/",
+      dest: ".tmp/templates/",
       ext: ".html",
       options: {
         pretty: true
@@ -12,9 +12,9 @@ module.exports = function(grunt) {
     },
     prod: {
       expand: true,
-      cwd: "src/frontend",
+      cwd: "assets/js",
       src: ["**/*.jade"],
-      dest: "templates/",
+      dest: ".tmp/templates/",
       ext: ".html",
       options: {
         pretty: false,

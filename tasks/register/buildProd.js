@@ -1,5 +1,11 @@
-module.exports = function(grunt) {
-  grunt.registerTask("buildProd", ["compileAssets", "concat", "uglify", "cssmin", "linkAssetsBuildProd", "clean:build", "copy:build"]);
+module.exports = function (grunt) {
+	grunt.registerTask('buildProd', [
+		'compileAssets',
+		'concat',
+		'uglify',
+		'cssmin',
+		'linkAssetsBuildProd',
+		'clean:build',
+		'copy:build'
+	]);
 };
-
-//# sourceMappingURL=buildProd.js.map

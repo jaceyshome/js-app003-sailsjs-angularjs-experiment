@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "angular": "1.2.18",
-    "angular-mocks": "1.2.18",
     "angular-resource": "1.2.18",
     "angular-sanitize": "1.2.18",
     "angular-ui-router": "0.2.8-bowratic-tedium",
@@ -35,7 +34,10 @@
     "sails.io.js": "~0.10.3",
     "angularSails": "https://github.com/balderdashy/angularSails.git",
     "requirejs": "~2.1.14",
-    "protractor-mock": "https://github.com/unDemian/protractor-mock.git",
     "almond": "0.2.9"
+  },
+  "devDependencies":{
+    "protractor-mock": "https://github.com/unDemian/protractor-mock.git",
+    "angular-mocks": "1.2.18"
   }
 }
