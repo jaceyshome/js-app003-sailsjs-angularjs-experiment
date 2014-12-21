@@ -5,7 +5,6 @@ Promise = require("bluebird")
 module.exports = (()->
   userModel = {}
   userModel.tableName =  "users" #point to tableName
-  userModel.migrate = "safe"
   userModel.attributes = YAML.load('assets/data/validations/user.yml')
   delete userModel.attributes.confirmPassword
   userModel.attributes.password.maxLength = 256
