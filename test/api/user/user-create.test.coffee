@@ -3,14 +3,15 @@ Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
 describe "User Create", (done) ->
   csrfRes = null
   url = '/user/create'
-  user = Config.user
+  user =
+    name: 'test'
+    email: 'test@test.com'
+    password: 'password'
 
   before (done)->
     CSRF.get(request, sails.hooks.http.app).then (res)->

@@ -1,12 +1,9 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
 describe "Project Update", (done) ->
   csrfRes = null
@@ -14,14 +11,14 @@ describe "Project Update", (done) ->
   project = null
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       done()
 
   beforeEach (done)->
     _project = JSON.parse(JSON.stringify(Config.project))
     _project._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post('/project/create')
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)
@@ -36,7 +33,7 @@ describe "Project Update", (done) ->
   it "should be able to update a project with correct info", (done) ->
     project.description = 'test description 1'
     project._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
@@ -44,7 +41,7 @@ describe "Project Update", (done) ->
     .end (err, res)->
       res.body.should.be.empty
       if (err) then throw err
-      request(Config.appPath)
+      request(sails.hooks.http.app)
       .get('/project/specifics/'+project.shortLink)
       .expect(200)
       .end (err,res)->
@@ -54,7 +51,7 @@ describe "Project Update", (done) ->
 
   it "should not be able to update the project without csrf", (done)->
     project.description = 'test description 1'
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
@@ -66,7 +63,7 @@ describe "Project Update", (done) ->
 
   it "should not be able to update the project shortLink", (done)->
     project.shortlink = 'xvcxxcv'
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
@@ -80,7 +77,7 @@ describe "Project Update", (done) ->
     project.description = 'test description 1'
     project._csrf = csrfRes.body._csrf
     project.shortLink = 'sadfasdfsafa'
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
@@ -94,7 +91,7 @@ describe "Project Update", (done) ->
     project.description = 'test description 1'
     project._csrf = csrfRes.body._csrf
     delete project.shortLink
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
@@ -108,7 +105,7 @@ describe "Project Update", (done) ->
     project.description = 'test description 1'
     project._csrf = csrfRes.body._csrf
     delete project.id
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)

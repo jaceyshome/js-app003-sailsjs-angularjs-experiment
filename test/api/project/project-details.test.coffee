@@ -1,12 +1,9 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
 describe "Project Details", (done) ->
   csrfRes = null
@@ -14,14 +11,14 @@ describe "Project Details", (done) ->
   project = null
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       done()
 
   beforeEach (done)->
     _project = JSON.parse(JSON.stringify(Config.project))
     _project._csrf = csrfRes.body._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post('/project/create')
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)
@@ -34,7 +31,7 @@ describe "Project Details", (done) ->
     return
 
   it "should show project details", (done)->
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .get(url+project.shortLink)
     .expect(200)
     .end((err, res)->
@@ -48,7 +45,7 @@ describe "Project Details", (done) ->
     return
 
   it "should not show project details without shortLink", (done)->
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .get(url)
     .expect(400)
     .end((err, res)->

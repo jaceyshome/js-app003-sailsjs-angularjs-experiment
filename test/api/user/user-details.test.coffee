@@ -3,9 +3,7 @@ Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
 describe "User Details", (done) ->
   csrfRes = null
@@ -42,8 +40,8 @@ describe "User Details", (done) ->
         res.body.should.have.property 'email'
         res.body.should.have.property 'shortLink'
         res.body.should.not.have.property 'password'
-        res.body.name.should.be.eql Config.user.name
-        res.body.email.should.be.eql Config.user.email
+        res.body.name.should.be.eql user.name
+        res.body.email.should.be.eql user.email
         user = res.body
         done()
       )

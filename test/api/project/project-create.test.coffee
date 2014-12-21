@@ -1,26 +1,25 @@
-require('../helpers/upstart')
 should = require("should")
 Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
 describe "Project Create", (done) ->
   csrfRes = null
   url = '/project/create'
-  project = Config.project
+  project =
+    name: 'test project'
+    description: 'test project description'
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       project._csrf = csrfRes.body._csrf
       done()
 
   it "should be able to create a project with correct info", (done) ->
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
@@ -38,7 +37,7 @@ describe "Project Create", (done) ->
   it "should not be able to create the project without csrf", (done)->
     _project = JSON.parse(JSON.stringify(project))
     delete _project._csrf
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)
@@ -48,7 +47,7 @@ describe "Project Create", (done) ->
   it "should not be able to create the project without name", (done)->
     _project = JSON.parse(JSON.stringify(project))
     delete _project.name
-    request(Config.appPath)
+    request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)

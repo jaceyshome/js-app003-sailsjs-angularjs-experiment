@@ -3,22 +3,23 @@ Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
 describe "User Update", (done) ->
   csrfRes = null
   url = '/user/update'
-  user = null
+  user =
+    name: 'test'
+    email: 'test@test.com'
+    password: 'password'
 
   before (done)->
-    CSRF.get(request, Config.appPath).then (res)->
+    CSRF.get(request, sails.hooks.http.app).then (res)->
       csrfRes = res
       done()
 
   beforeEach (done)->
-    _user = JSON.parse(JSON.stringify(Config.user))
+    _user = JSON.parse(JSON.stringify(user))
     _user._csrf = csrfRes.body._csrf
     request(sails.hooks.http.app)
     .post('/user/create')
@@ -120,7 +121,6 @@ describe "User Update", (done) ->
   it "should not be able to update the user without id", (done)->
     user.email = 'test1@gmail.com'
     user._csrf = csrfRes.body._csrf
-    user.password = Config.user.password
     delete user.id
     request(sails.hooks.http.app)
     .put(url)

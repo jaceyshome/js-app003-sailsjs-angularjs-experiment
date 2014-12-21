@@ -3,14 +3,14 @@ Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
-DBHelper = require('../helpers/db')
 CSRF = require('../helpers/csrf')
-Config = require('../helpers/config')
 
-describe "User Destroy", (done) ->
+describe "Project Destroy", (done) ->
   csrfRes = null
-  url = '/user/destroy'
-  user = Config.user
+  url = '/project/destroy'
+  project =
+    name: 'test project'
+    description: 'test project description'
 
   before (done)->
     CSRF.get(request, sails.hooks.http.app).then (res)->
@@ -18,26 +18,26 @@ describe "User Destroy", (done) ->
       done()
 
   beforeEach (done)->
-    _user = JSON.parse(JSON.stringify(Config.user))
-    _user._csrf = csrfRes.body._csrf
+    _project = JSON.parse(JSON.stringify(Config.project))
+    _project._csrf = csrfRes.body._csrf
     request(sails.hooks.http.app)
-    .post('/user/create')
+    .post('/project/create')
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(_user)
+    .send(_project)
     .expect(200)
     .end((err, res)->
         if (err) then throw err
-        user = res.body
+        project = res.body
         done()
       )
     return
 
-  it "should be able to delete a user", (done) ->
-    user._csrf = csrfRes.body._csrf
+  it "should be able to delete a project", (done) ->
+    project._csrf = csrfRes.body._csrf
     request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
+    .send(project)
     .end((err, res)->
       should(res.statusCode).be.eql 200
       should(err).be.empty
@@ -45,11 +45,11 @@ describe "User Destroy", (done) ->
     )
     return
 
-  it "should not delete a user without csrf", (done)->
+  it "should not delete a project without csrf", (done)->
     request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
+    .send(project)
     .end((err, res)->
         should(res.statusCode).be.eql 403
         should(err).be.empty
@@ -57,13 +57,13 @@ describe "User Destroy", (done) ->
       )
     return
 
-  it "should not delete a user with wrong shortLink", (done)->
-    user._csrf = csrfRes.body._csrf
-    user.shortLink = "12sdfs/12321"
+  it "should not delete a project with wrong shortLink", (done)->
+    project._csrf = csrfRes.body._csrf
+    project.shortLink = "12sdfs/12321"
     request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
+    .send(project)
     .end((err, res)->
         should(res.statusCode).be.eql 400
         should(err).be.empty
@@ -71,13 +71,13 @@ describe "User Destroy", (done) ->
       )
     return
 
-  it "should not delete a user without shortLink", (done)->
-    user._csrf = csrfRes.body._csrf
-    delete user.shortLink
+  it "should not delete a project without shortLink", (done)->
+    project._csrf = csrfRes.body._csrf
+    delete project.shortLink
     request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
+    .send(project)
     .end((err, res)->
         should(res.statusCode).be.eql 400
         should(err).be.empty
@@ -85,13 +85,13 @@ describe "User Destroy", (done) ->
       )
     return
 
-  it "should not delete a user without id", (done)->
-    user._csrf = csrfRes.body._csrf
-    delete user.id
+  it "should not delete a project without id", (done)->
+    project._csrf = csrfRes.body._csrf
+    delete project.id
     request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(user)
+    .send(project)
     .end((err, res)->
         should(res.statusCode).be.eql 400
         should(err).be.empty
