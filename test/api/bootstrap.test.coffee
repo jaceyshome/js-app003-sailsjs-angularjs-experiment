@@ -9,7 +9,16 @@ before (done) ->
   sails.lift
     log:
       level: "error"
+    adapters:
+      'default': 'testMemoryDb',
+      testMemoryDb:
+        module   : 'sails-memory'
+      testDiskDb:
+        module   : 'sails-disk',
+        filePath : '.tmp/sails.test.dat'
+
   , (err, sails) ->
+
     done err, sails
     return
   return

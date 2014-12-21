@@ -5,21 +5,20 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "User Create", (done) ->
-  csrfRes = null
+describe "User Create", ->
   url = '/user/create'
+  _csrf = null
   user =
     name: 'test'
     email: 'test@test.com'
     password: 'password'
 
   before (done)->
-    CSRF.get(request, sails.hooks.http.app).then (res)->
-      csrfRes = res
-      user._csrf = csrfRes.body._csrf
+    CSRF.get().then (csrf)->
+      _csrf = csrf
       done()
 
-  it "should be able to create a user with correct info", (done) ->
+  it.only "should be able to create a user with correct info", (done) ->
     request(sails.hooks.http.app)
     .post(url)
     .set('cookie', csrfRes.headers['set-cookie'])

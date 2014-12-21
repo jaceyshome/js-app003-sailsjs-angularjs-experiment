@@ -52,8 +52,8 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    user: 'username',
-    password: 'password',
+    user: 'root',
+    password: '',
     database: 'palette_dev'
   },
 

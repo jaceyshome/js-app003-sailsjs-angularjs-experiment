@@ -2,3 +2,4 @@
 --require coffee-script/register
 --compilers coffee:coffee-script/register
 --recursive test/api
+--timeout 15000
