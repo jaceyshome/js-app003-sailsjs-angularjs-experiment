@@ -42,8 +42,9 @@
   "author": "anonymous node/sails user",
   "license": "",
   "devDependencies": {
-    "supertest": "0.15.0",
+    "mocha": "^2.0.1",
     "should": "^4.4.1",
-    "sinon": "^1.12.2"
+    "sinon": "^1.12.2",
+    "supertest": "0.15.0"
   }
 }
