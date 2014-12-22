@@ -6,9 +6,7 @@ adapterHelper = require('./helpers/adapter')
 fs = require('fs')
 
 before (done) ->
-  SailsApp = require('sails').Sails
-  sails = new SailsApp()
-  sails.lift
+  config =
     log:
       level: "error"
     adapters:
@@ -16,7 +14,9 @@ before (done) ->
       testDiskDb: adapterHelper.set('testDiskDb')
     hooks:
       grunt: false
-  , (err, sails) ->
+  SailsApp = require('sails').Sails
+  sails = new SailsApp()
+  sails.lift config, (err, sails) ->
     done err, sails
 
 afterEach (done)->
