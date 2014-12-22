@@ -2,6 +2,7 @@ Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 CSRF = require('./helpers/csrf')
+adapterHelper = require('./helpers/adapter')
 fs = require('fs')
 
 before (done) ->
@@ -11,40 +12,18 @@ before (done) ->
     log:
       level: "error"
     adapters:
-      'default': 'testDiskDb',
-      testMemoryDb:
-        module   : 'sails-memory'
-      testDiskDb:
-        module   : 'sails-disk',
-        filePath : '.tmp/testdb'
-        inMemory: false
+      'default': 'testDiskDb'
+      testDiskDb: adapterHelper.set('testDiskDb')
     hooks:
       grunt: false
   , (err, sails) ->
     done err, sails
-    return
-  return
-
-beforeEach (done)->
-  if (fs.existsSync('./.tmp/localDiskDb.db'))
-    fs.unlinkSync('./.tmp/localDiskDb.db')
-  if (fs.existsSync('./.tmp/testdbtestDiskDb.db'))
-    fs.unlinkSync('./.tmp/testdbtestDiskDb.db')
-  done()
 
 afterEach (done)->
-  if (fs.existsSync('./.tmp/localDiskDb.db'))
-    fs.unlinkSync('./.tmp/localDiskDb.db')
-  if (fs.existsSync('./.tmp/testdbtestDiskDb.db'))
-    fs.unlinkSync('./.tmp/testdbtestDiskDb.db')
+  adapterHelper.reset()
   done()
 
-
 after (done) ->
-  if (fs.existsSync('./.tmp/localDiskDb.db'))
-    fs.unlinkSync('./.tmp/localDiskDb.db')
-  if (fs.existsSync('./.tmp/testdbtestDiskDb.db'))
-    fs.unlinkSync('./.tmp/testdbtestDiskDb.db')
+  adapterHelper.reset()
   sails.lower(done)
-  return
 
