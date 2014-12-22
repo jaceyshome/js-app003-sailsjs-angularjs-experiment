@@ -13,7 +13,7 @@ describe "Project Destroy", (done) ->
     description: 'test project description'
 
   before (done)->
-    CSRF.get(request, sails.hooks.http.app).then (res)->
+    CSRF.get().then (res)->
       csrfRes = res
       done()
 

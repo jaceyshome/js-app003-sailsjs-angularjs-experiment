@@ -8,15 +8,17 @@ CSRF = require('../helpers/csrf')
 describe "Project Details", (done) ->
   csrfRes = null
   url = '/project/specifics/'
-  project = null
+  project =
+    name: 'test project'
+    description: 'test project description'
 
   before (done)->
-    CSRF.get(request, sails.hooks.http.app).then (res)->
+    CSRF.get().then (res)->
       csrfRes = res
       done()
 
   beforeEach (done)->
-    _project = JSON.parse(JSON.stringify(Config.project))
+    _project = JSON.parse(JSON.stringify(project))
     _project._csrf = csrfRes.body._csrf
     request(sails.hooks.http.app)
     .post('/project/create')

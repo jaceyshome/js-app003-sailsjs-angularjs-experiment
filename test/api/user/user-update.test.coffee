@@ -14,8 +14,9 @@ describe "User Update", (done) ->
     password: 'password'
 
   before (done)->
-    CSRF.get(request, sails.hooks.http.app).then (res)->
-      csrfRes = res
+    CSRF.get().then (_csrfRes)->
+      csrfRes = _csrfRes
+      user._csrf = csrfRes.body._csrf
       done()
 
   beforeEach (done)->
@@ -36,7 +37,7 @@ describe "User Update", (done) ->
   it "should be able to update a user with correct info", (done) ->
     user.email = 'test1@gmail.com'
     user._csrf = csrfRes.body._csrf
-    user.password = Config.user.password
+    user.password = user.password
     request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
@@ -55,7 +56,7 @@ describe "User Update", (done) ->
 
   it "should not be able to update the user without csrf", (done)->
     user.email = 'test1@gmail.com'
-    user.password = Config.user.password
+    user.password = user.password
     request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
@@ -71,7 +72,7 @@ describe "User Update", (done) ->
     user.email = 'test1@gmail.com'
     user.name = 'test1'
     user._csrf = csrfRes.body._csrf
-    user.password = Config.user.password
+    user.password = user.password
     request(sails.hooks.http.app)
     .put(url)
     .set('cookie', csrfRes.headers['set-cookie'])
@@ -91,7 +92,7 @@ describe "User Update", (done) ->
   it "should not be able to update the user with wrong shortLink", (done)->
     user.email = 'test1@gmail.com'
     user._csrf = csrfRes.body._csrf
-    user.password = Config.user.password
+    user.password = user.password
     user.shortLink = 'sadfasdfsafa'
     request(sails.hooks.http.app)
     .put(url)
@@ -106,7 +107,7 @@ describe "User Update", (done) ->
   it "should not be able to update the user without shortLink", (done)->
     user.email = 'test1@gmail.com'
     user._csrf = csrfRes.body._csrf
-    user.password = Config.user.password
+    user.password = user.password
     delete user.shortLink
     request(sails.hooks.http.app)
     .put(url)

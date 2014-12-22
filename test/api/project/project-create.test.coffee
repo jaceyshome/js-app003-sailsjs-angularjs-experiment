@@ -13,7 +13,7 @@ describe "Project Create", (done) ->
     description: 'test project description'
 
   before (done)->
-    CSRF.get(request, sails.hooks.http.app).then (res)->
+    CSRF.get().then (res)->
       csrfRes = res
       project._csrf = csrfRes.body._csrf
       done()

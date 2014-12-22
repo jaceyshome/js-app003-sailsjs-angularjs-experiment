@@ -3,17 +3,17 @@ request = require("supertest")
 config = require('./config')
 module.exports = (->
   service = {}
-  _csrf = null
+  _csrfRes = null
 
   service.get = ()->
     new Promise (resolve, reject)->
-      unless _csrf
+      unless _csrfRes
         request(config.appPath).get('/csrfToken').expect(200).end (err, res)->
           if err then reject()
-          _csrf = res.body._csrf
-          resolve _csrf
+          _csrfRes = res
+          resolve _csrfRes
       else
-        resolve _csrf
+        resolve _csrfRes
   service
 )()
 

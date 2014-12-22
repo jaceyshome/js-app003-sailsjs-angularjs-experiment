@@ -14,12 +14,13 @@ describe "User Destroy", (done) ->
     password: 'password'
 
   before (done)->
-    CSRF.get(request, sails.hooks.http.app).then (res)->
-      csrfRes = res
+    CSRF.get().then (_csrfRes)->
+      csrfRes = _csrfRes
+      user._csrf = csrfRes.body._csrf
       done()
 
   beforeEach (done)->
-    _user = JSON.parse(JSON.stringify(Config.user))
+    _user = JSON.parse(JSON.stringify(user))
     _user._csrf = csrfRes.body._csrf
     request(sails.hooks.http.app)
     .post('/user/create')
