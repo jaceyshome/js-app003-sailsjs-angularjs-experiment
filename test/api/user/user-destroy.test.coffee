@@ -5,7 +5,7 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "User Destroy", (done) ->
+describe.only "User Destroy", (done) ->
   csrfRes = null
   url = '/user/destroy'
   user =
@@ -18,6 +18,7 @@ describe "User Destroy", (done) ->
       csrfRes = _csrfRes
       user._csrf = csrfRes.body._csrf
       done()
+
 
   beforeEach (done)->
     _user = JSON.parse(JSON.stringify(user))

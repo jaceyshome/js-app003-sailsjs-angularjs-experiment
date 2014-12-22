@@ -46,7 +46,7 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    User.query "SELECT id, name, email, shortLink FROM users", (err,users)->
+    User.find (err,users)->
       return next(err) if err or not users
       res.json users
 

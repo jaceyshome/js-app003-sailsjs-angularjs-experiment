@@ -46,7 +46,7 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    Project.query "SELECT id, name, description, shortLink FROM projects", (err,projects)->
+    Project.find (err,projects)->
       return next(err) if err or not projects
       res.json projects
 
