@@ -8,7 +8,7 @@ module.exports =(->
       config:
         module   : 'sails-disk'
         filePath : '.tmp/testdb'
-        inMemory: false
+        inMemory : false
       reset: (cb)->
         if (fs.existsSync('./.tmp/localDiskDb.db'))
           fs.unlinkSync('./.tmp/localDiskDb.db')
@@ -32,7 +32,10 @@ module.exports =(->
 
   service.set = (type)->
     currentType = types[type]
-    currentType.config
+    settings = {}
+    settings['default'] = type
+    settings[type] = currentType.config
+    settings
 
   service.reset = (cb)->
     if typeof currentType.reset is 'function'
