@@ -6,24 +6,24 @@ adapterHelper = require('./helpers/adapter')
 fs = require('fs')
 
 before (done) ->
-  config =
+  SailsApp = require('sails').Sails
+  sails = new SailsApp()
+  sails.lift
     log:
       level: "error"
     adapters:
-      'default': 'testDiskDb'
-      testDiskDb: adapterHelper.set('testDiskDb')
+      'default': 'testMongoDb'
+      testMongoDb: adapterHelper.set('testMongoDb')
     hooks:
       grunt: false
-  SailsApp = require('sails').Sails
-  sails = new SailsApp()
-  sails.lift config, (err, sails) ->
+  , (err, sails) ->
     done err, sails
 
 afterEach (done)->
-  adapterHelper.reset()
-  done()
+  adapterHelper.reset(done)
 
 after (done) ->
-  adapterHelper.reset()
-  sails.lower(done)
+  adapterHelper.reset(()->
+    sails.lower(done)
+  )
 

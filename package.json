@@ -44,9 +44,11 @@
   "license": "",
   "devDependencies": {
     "mocha": "^2.0.1",
+    "mongo-clean": "^0.1.0",
+    "mongodb": "^1.4.26",
+    "sails-memory": "^0.10.3",
     "should": "^4.4.1",
     "sinon": "^1.12.2",
-    "supertest": "0.15.0",
-    "sails-memory": "^0.10.3"
+    "supertest": "0.15.0"
   }
 }
