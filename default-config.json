@@ -1,0 +1,8 @@
+//it is used for migration-config
+{
+  "mongoAppDb" : {
+    "host" : "localhost",
+    "db"   : "palette_dev",
+    "port": 27017
+  }
+}
