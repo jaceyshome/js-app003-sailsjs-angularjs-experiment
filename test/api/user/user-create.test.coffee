@@ -4,7 +4,7 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe.only "User Create", ->
+describe "User Create", ->
   csrfRes = null
   url = '/user/create'
   user =
@@ -87,7 +87,5 @@ describe.only "User Create", ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
     .expect(400, done)
-
-  return
 
 
