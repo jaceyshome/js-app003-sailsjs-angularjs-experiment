@@ -34,32 +34,32 @@ module.exports.policies = {
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
-//  UserController : {
-//    '*': false,
-//    'subscribe':true, //TODO subscribe to all users related to this company
-//    //-------------------- views ------------------------
-//    'list': true, //TODO is admin
-//    'details': true, //TODO is current user
-//    //-------------------- crud -------------------------
-//    'create': true,
-//    'all': true, //ToDO is admin
-//    'specifics':true, //TODO is  current user
-//    'update': ['isUserExists'],
-//    'destroy': ['isUserExists']
-//  },
-//
-//  ProjectController : {
-//    '*': false,
-//    'subscribe':true,
-//    //--------------- views -------------
-//    'new': true,
-//    'list': true,
-//    'details': true,
-//    //--------------- crud -------------
-//    'create': true,
-//    'all': true,
-//    'specifics': true, //TODO check project
-//    'update': ['isProjectExists'],
-//    'destroy': ['isProjectExists']
-//  }
+  UserController : {
+    '*': false,
+    'subscribe':true, //TODO subscribe to all users related to this company
+    //-------------------- views ------------------------
+    'list': true, //TODO is admin
+    'details': true, //TODO is current user
+    //-------------------- crud -------------------------
+    'create': true,
+    'all': true, //ToDO is admin
+    'specifics':true, //TODO is  current user
+    'update': ['isUserExists'],
+    'destroy': ['isUserExists']
+  },
+
+  ProjectController : {
+    '*': false,
+    'subscribe':true,
+    //--------------- views -------------
+    'new': true,
+    'list': true,
+    'details': true,
+    //--------------- crud -------------
+    'create': true,
+    'all': true,
+    'specifics': true, //TODO check project
+    'update': ['isProjectExists'],
+    'destroy': ['isProjectExists']
+  }
 };
