@@ -1,11 +1,10 @@
-should = require("should")
 Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "User Create", ->
+describe.only "User Create", ->
   csrfRes = null
   url = '/user/create'
   user =
@@ -35,7 +34,6 @@ describe "User Create", ->
       res.body.should.not.have.property 'password'
       done()
     )
-    return
 
   it "should not create the user with the same name", (done)->
     request(sails.hooks.http.app)
@@ -48,12 +46,11 @@ describe "User Create", ->
       .post(url)
       .set('cookie', csrfRes.headers['set-cookie'])
       .send(user)
-      .expect(400)
       .end((err, res)->
         if (err) then throw err
+        res.should.not.be.equal 200
         done()
       )
-    return
 
   it "should not be able to create the user without csrf", (done)->
     _user = JSON.parse(JSON.stringify(user))
@@ -63,7 +60,6 @@ describe "User Create", ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
     .expect(403, done)
-    return
 
   it "should not be able to create the user without email", (done)->
     _user = JSON.parse(JSON.stringify(user))
@@ -73,7 +69,6 @@ describe "User Create", ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
     .expect(400, done)
-    return
 
   it "should not be able to create the user without name", (done)->
     _user = JSON.parse(JSON.stringify(user))
@@ -83,7 +78,6 @@ describe "User Create", ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
     .expect(400, done)
-    return
 
   it "should not be able to create the user without password", (done)->
     _user = JSON.parse(JSON.stringify(user))
@@ -93,7 +87,6 @@ describe "User Create", ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_user)
     .expect(400, done)
-    return
 
   return
 
