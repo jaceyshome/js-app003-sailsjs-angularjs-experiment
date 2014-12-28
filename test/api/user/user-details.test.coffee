@@ -12,7 +12,7 @@ describe "User Details", (done) ->
   beforeEach (done)->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
-      CommonHelper.createTestUser (result)->
+      CommonHelper.createUser (result)->
         user = result
         done()
 

@@ -12,7 +12,7 @@ describe "User Update", (done) ->
   beforeEach (done)->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
-      CommonHelper.createTestUser (result)->
+      CommonHelper.createUser (result)->
         user = result
         done()
 
@@ -23,7 +23,7 @@ describe "User Update", (done) ->
     _user =
       email: 'test1@gmail.com'
       _csrf: csrfRes.body._csrf
-      password: CommonHelper.getTestUser().password
+      password: CommonHelper.getUserInstance().password
       shortLink: user.shortLink
       id: user.id
     request(sails.hooks.http.app)
@@ -45,7 +45,7 @@ describe "User Update", (done) ->
   it "should not be able to update the user without csrf", (done)->
     _user =
       email: 'test1@gmail.com'
-      password: CommonHelper.getTestUser().password
+      password: CommonHelper.getUserInstance().password
       shortLink: user.shortLink
       id: user.id
     request(sails.hooks.http.app)
@@ -62,7 +62,7 @@ describe "User Update", (done) ->
     _user =
       name: 'new test name'
       email: 'test1@gmail.com'
-      password: CommonHelper.getTestUser().password
+      password: CommonHelper.getUserInstance().password
       shortLink: user.shortLink
       _csrf: csrfRes.body._csrf
       id: user.id
@@ -84,7 +84,7 @@ describe "User Update", (done) ->
   it "should not be able to update the user with wrong shortLink", (done)->
     _user =
       email: 'test1@gmail.com'
-      password: CommonHelper.getTestUser().password
+      password: CommonHelper.getUserInstance().password
       shortLink: 'asfd9123123-lamnasdma,.sc'
       _csrf: csrfRes.body._csrf
       id: user.id
@@ -100,7 +100,7 @@ describe "User Update", (done) ->
   it "should not be able to update the user without shortLink", (done)->
     _user =
       email: 'test1@gmail.com'
-      password: CommonHelper.getTestUser().password
+      password: CommonHelper.getUserInstance().password
       _csrf: csrfRes.body._csrf
       id: user.id
     request(sails.hooks.http.app)
@@ -116,7 +116,7 @@ describe "User Update", (done) ->
     _user =
       name: 'new test name'
       email: 'test1@gmail.com'
-      password: CommonHelper.getTestUser().password
+      password: CommonHelper.getUserInstance().password
       shortLink: user.shortLink
       _csrf: csrfRes.body._csrf
     request(sails.hooks.http.app)

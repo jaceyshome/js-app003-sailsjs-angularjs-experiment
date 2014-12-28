@@ -5,16 +5,16 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe.skip "Project Create", (done) ->
+describe "Project Create", (done) ->
   csrfRes = null
   url = '/project/create'
   project =
     name: 'test project'
     description: 'test project description'
 
-  before (done)->
-    CSRF.get().then (res)->
-      csrfRes = res
+  beforeEach (done)->
+    CSRF.get().then (_csrfRes)->
+      csrfRes = _csrfRes
       project._csrf = csrfRes.body._csrf
       done()
 
@@ -24,15 +24,13 @@ describe.skip "Project Create", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(project)
     .expect(200)
-    .end((err, res)->
+    .end (err, res)->
       if (err) then throw err
       res.body.should.have.property 'id'
       res.body.name.should.be.eql project.name
       res.body.description.should.be.eql project.description
       res.body.should.have.property 'shortLink'
       done()
-    )
-    return
 
   it "should not be able to create the project without csrf", (done)->
     _project = JSON.parse(JSON.stringify(project))
@@ -42,7 +40,6 @@ describe.skip "Project Create", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)
     .expect(403, done)
-    return
 
   it "should not be able to create the project without name", (done)->
     _project = JSON.parse(JSON.stringify(project))
@@ -52,8 +49,5 @@ describe.skip "Project Create", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)
     .expect(400, done)
-    return
-
-  return
 
 
