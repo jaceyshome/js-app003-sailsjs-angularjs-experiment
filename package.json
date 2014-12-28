@@ -51,6 +51,7 @@
     "sails-memory": "^0.10.3",
     "should": "^4.4.1",
     "sinon": "^1.12.2",
-    "supertest": "0.15.0"
+    "supertest": "0.15.0",
+    "grunt-newer": "~0.7.0"
   }
 }
