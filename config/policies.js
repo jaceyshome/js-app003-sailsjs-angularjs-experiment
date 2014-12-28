@@ -37,10 +37,9 @@ module.exports.policies = {
   UserController : {
     '*': false,
     'subscribe':true, //TODO subscribe to all users related to this company
-    //-------------------- views ------------------------
     'list': true, //TODO is admin
     'details': true, //TODO is current user
-    //-------------------- crud -------------------------
+    'edit': true, //TODO is current user
     'create': true,
     'all': true, //ToDO is admin
     'specifics':true, //TODO is  current user
@@ -51,11 +50,9 @@ module.exports.policies = {
   ProjectController : {
     '*': false,
     'subscribe':true,
-    //--------------- views -------------
     'new': true,
     'list': true,
     'details': true,
-    //--------------- crud -------------
     'create': true,
     'all': true,
     'specifics': true, //TODO check project

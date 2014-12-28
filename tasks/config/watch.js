@@ -16,7 +16,6 @@ module.exports = function(grunt) {
 
 	grunt.config.set('watch', {
 		api: {
-
 			// API files to watch:
 			files: ['api/**/*']
 		},
@@ -26,7 +25,7 @@ module.exports = function(grunt) {
 			files: ['assets/**/*', 'tasks/pipeline.js'],
 
 			// When assets are changed:
-			tasks: ['syncAssets' , 'linkAssets']
+			tasks: ['build']
 		}
 	});
 

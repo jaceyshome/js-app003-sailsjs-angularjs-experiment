@@ -32,10 +32,12 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+
+
   '/': {
     view: 'app'
   },
-  //----------------- VIEWS ----------------------------
+  //----------------- main ----------------------------
   '/login':{view:'app'},
   '/signup':{view:'app'},
   '/home':{view:'app'},
@@ -48,20 +50,10 @@ module.exports.routes = {
 
   //------------------ project -------------------------
   '/project':{view:'app'},
-  '/project/new': 'ProjectController.new',
-  '/project/list': 'ProjectController.list',
   '/project/details/:shortLink': 'ProjectController.details',
   '/project/edit/:shortLink':'ProjectController.edit',
   '/project/specifics/:shortLink': 'ProjectController.specifics'
 
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  *  If a request to a URL doesn't match any of the custom routes above, it  *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+
 
 };
