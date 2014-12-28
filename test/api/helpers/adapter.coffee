@@ -6,6 +6,13 @@ module.exports =(->
   currentType = 'testDiskDb'
   types =
 
+    'testMemoryDb':
+      config:
+        module: 'sails-memory'
+        inMemory: true
+      reset: (cb)->
+        cb() if typeof cb is 'function'
+
     'testDiskDb':
       config:
         module   : 'sails-disk'

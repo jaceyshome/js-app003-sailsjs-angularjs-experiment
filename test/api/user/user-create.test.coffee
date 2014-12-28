@@ -12,7 +12,7 @@ describe "User Create", ->
     email: 'test@test.com'
     password: 'password'
 
-  before (done)->
+  beforeEach (done)->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
       user._csrf = csrfRes.body._csrf

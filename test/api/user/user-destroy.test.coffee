@@ -4,11 +4,10 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "User Destroy", (done) ->
+describe.only "User Destroy", (done) ->
   csrfRes = null
   url = '/user/destroy'
   createTestUser = (cb)->
-
     user =
       name: 'test'
       email: 'test@test.com'
@@ -24,7 +23,7 @@ describe "User Destroy", (done) ->
       if (err) then throw err
       if cb then cb(res.body)
 
-  before (done)->
+  beforeEach (done)->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
       done()
@@ -90,4 +89,3 @@ describe "User Destroy", (done) ->
       .end (err, res)->
         (err is null).should.be.empty
         done()
-

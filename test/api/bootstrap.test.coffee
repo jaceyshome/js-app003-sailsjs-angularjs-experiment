@@ -5,23 +5,19 @@ CSRF = require('./helpers/csrf')
 adapterHelper = require('./helpers/adapter')
 fs = require('fs')
 
-before (done) ->
+beforeEach (done) ->
   SailsApp = require('sails').Sails
   sails = new SailsApp()
   sails.lift
     log:
       level: "error"
-    adapters: adapterHelper.set('testMongoDb')
+    adapters: adapterHelper.set('testMemoryDb')
     hooks:
       grunt: false
+    migrate: 'drop'
   , (err, sails) ->
     done err, sails
 
 afterEach (done)->
-  adapterHelper.reset(done)
-
-after (done) ->
-  adapterHelper.reset(()->
-    sails.lower(done)
-  )
-
+  sails.lower ()->
+    adapterHelper.reset(done)
