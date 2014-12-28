@@ -1,20 +1,24 @@
-fs = require('fs')
+Promise = require('bluebird')
+fs = Promise.promisifyAll(require("fs"))
 
 module.exports =(->
   service = {}
   currentType = 'testDiskDb'
   types =
+
     'testDiskDb':
       config:
         module   : 'sails-disk'
         filePath : '.tmp/testdb'
         inMemory : false
       reset: (cb)->
-        if (fs.existsSync('./.tmp/localDiskDb.db'))
-          fs.unlinkSync('./.tmp/localDiskDb.db')
-        if (fs.existsSync('./.tmp/testdbtestDiskDb.db'))
-          fs.unlinkSync('./.tmp/testdbtestDiskDb.db')
-        cb() if typeof cb is 'function'
+        files = ['./.tmp/localDiskDb.db', './.tmp/testdbtestDiskDb.db'].map (fileName)->
+          fs.unlinkAsync(fileName)
+        Promise.settle(files).then (results)->
+          console.log "results 0",results[0].isFulfilled()
+          console.log "results 1",results[1].isFulfilled()
+          cb() if typeof cb is 'function'
+
     'testMongoDb':
       config:
         module: 'sails-mongo'

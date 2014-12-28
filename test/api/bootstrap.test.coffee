@@ -11,7 +11,7 @@ before (done) ->
   sails.lift
     log:
       level: "error"
-    adapters: adapterHelper.set('testDiskDb')
+    adapters: adapterHelper.set('testMongoDb')
     hooks:
       grunt: false
   , (err, sails) ->
