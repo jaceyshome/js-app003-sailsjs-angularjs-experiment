@@ -1,11 +1,9 @@
-should = require("should")
-Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "(TODO) User List", (done) ->
+describe.skip "(TODO) User List", (done) ->
   csrfRes = null
   url = '/user/update'
   user =

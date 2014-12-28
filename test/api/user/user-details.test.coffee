@@ -1,65 +1,42 @@
-should = require("should")
-Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
+CommonHelper = require("../helpers/common")
 
 describe "User Details", (done) ->
   csrfRes = null
   url = '/user/specifics/'
-  user =
-    name: 'test'
-    email: 'test@test.com'
-    password: 'password'
-
-  before (done)->
-    CSRF.get().then (_csrfRes)->
-      csrfRes = _csrfRes
-      user._csrf = csrfRes.body._csrf
-      done()
+  user = null
 
   beforeEach (done)->
-    _user = JSON.parse(JSON.stringify(user))
-    _user._csrf = csrfRes.body._csrf
-    request(sails.hooks.http.app)
-    .post('/user/create')
-    .set('cookie', csrfRes.headers['set-cookie'])
-    .send(_user)
-    .expect(200)
-    .end((err, res)->
-        if (err) then throw err
-        user = res.body
+    CSRF.get().then (_csrfRes)->
+      csrfRes = _csrfRes
+      CommonHelper.createTestUser (result)->
+        user = result
         done()
-      )
-    return
+
+  afterEach ->
+    user = null
 
   it "should show user details", (done)->
     request(sails.hooks.http.app)
     .get(url+user.shortLink)
     .expect(200)
-    .end((err, res)->
-        res.body.should.have.property 'id'
-        res.body.should.have.property 'name'
-        res.body.should.have.property 'email'
-        res.body.should.have.property 'shortLink'
-        res.body.should.not.have.property 'password'
-        res.body.name.should.be.eql user.name
-        res.body.email.should.be.eql user.email
-        user = res.body
-        done()
-      )
-    return
+    .end (err, res)->
+      res.body.should.have.property 'id'
+      res.body.should.have.property 'name'
+      res.body.should.have.property 'email'
+      res.body.should.have.property 'shortLink'
+      res.body.should.not.have.property 'password'
+      res.body.name.should.be.eql user.name
+      res.body.email.should.be.eql user.email
+      user = res.body
+      done()
 
   it "should not show user details without shortLink", (done)->
     request(sails.hooks.http.app)
     .get(url)
     .expect(400)
-    .end((err, res)->
+    .end (err, res)->
       done()
-    )
-    return
-
-  return
-
-

@@ -7,10 +7,17 @@ module.exports = (->
 
   service.get = ()->
     new Promise (resolve, reject)->
-      request(config.appPath).get('/csrfToken').expect(200).end (err, res)->
-        if err then reject()
-        _csrfRes = res
+      if _csrfRes
         resolve _csrfRes
+      else
+        request(config.appPath).get('/csrfToken').expect(200).end (err, res)->
+          if err then reject()
+          _csrfRes = res
+          resolve _csrfRes
+
+  service.reset = ()->
+    _csrfRes = null
+
   service
 )()
 

@@ -5,7 +5,7 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "Project Update", (done) ->
+describe.skip "Project Update", (done) ->
   csrfRes = null
   url = '/project/update'
   project =

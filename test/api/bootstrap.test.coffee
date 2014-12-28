@@ -20,4 +20,5 @@ beforeEach (done) ->
 
 afterEach (done)->
   sails.lower ()->
+    CSRF.reset()
     adapterHelper.reset(done)
