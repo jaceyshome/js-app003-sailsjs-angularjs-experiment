@@ -22,8 +22,6 @@ module.exports =(->
         files = ['./.tmp/localDiskDb.db', './.tmp/testdbtestDiskDb.db'].map (fileName)->
           fs.unlinkAsync(fileName)
         Promise.settle(files).then (results)->
-          console.log "results 0",results[0].isFulfilled()
-          console.log "results 1",results[1].isFulfilled()
           cb() if typeof cb is 'function'
 
     'testMongoDb':
