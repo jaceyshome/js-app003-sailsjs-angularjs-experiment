@@ -4,9 +4,34 @@ Promise = require("bluebird")
 
 module.exports = (()->
   userModel = {}
-  userModel.attributes = YAML.load('assets/data/validations/user.yml')
-  delete userModel.attributes.confirmPassword
-  userModel.attributes.password.maxLength = 256
+  userModel.attributes =
+    name:
+      type: "string"
+      required: true
+      maxLength: 45
+      unique: true
+    email:
+      type: "string"
+      email: true
+      required: true
+      maxLength: 45
+    password:
+      type: "string"
+      required: true
+      maxLength: 256
+    avator:
+      type: "string"
+      maxLength: 1000
+    online:
+      type: "boolean"
+      defaultsTo: false
+    isAdmin:
+      type: "boolean"
+      defaultsTo: false
+    shortLink:
+      type: "string"
+      maxLength: 24
+      unique: true
 
   userModel.beforeCreate = (values, next) ->
     return next(err: [ "Password is required." ]) unless values.password

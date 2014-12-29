@@ -7,7 +7,13 @@ define(['app/states/signup/signup-module'], function() {
     init = function() {
       $scope.formTitle = "Sign up";
       $scope.submitBtnText = "Save";
-      return $scope.attributes = Validation.getModelAttributes('user', ['name', 'email', 'password', 'confirmPassword']);
+      $scope.attributes = Validation.getModelAttributes('User', ['name', 'email', 'password']);
+      return $scope.attributes.confirmPassword = {
+        type: "string",
+        required: true,
+        maxLength: 45,
+        match: "password"
+      };
     };
     $scope.sumbit = function() {
       var result;

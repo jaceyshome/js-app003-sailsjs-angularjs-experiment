@@ -4,7 +4,20 @@ Promise = require("bluebird")
 
 module.exports = (()->
   projectModel = {}
-  projectModel.attributes = YAML.load('assets/data/validations/project.yml')
+  projectModel.attributes =
+    name:
+      type: "string"
+      required: true
+      maxLength: 200
+    description:
+      type: "string"
+    priority:
+      type: "boolean"
+      defaultsTo: false
+    shortLink:
+      type: "string"
+      unique: true
+      maxLength: 24
 
   projectModel.beforeCreate = (values, next) ->
     CommonHelper.generateShortLink(projectModel.attributes.shortLink.maxLength)

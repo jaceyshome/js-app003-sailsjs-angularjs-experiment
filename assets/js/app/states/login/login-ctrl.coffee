@@ -8,7 +8,7 @@ define [
 
     init = ->
       $scope.attributes = Validation.getModelAttributes(
-        'user', ['name', 'password'])
+        'User', ['name', 'password'])
 
     $scope.sumbit = ()->
       message = Validation.validate(

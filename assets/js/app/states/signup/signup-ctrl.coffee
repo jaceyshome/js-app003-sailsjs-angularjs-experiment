@@ -8,8 +8,13 @@ define [
     init = ->
       $scope.formTitle = "Sign up"
       $scope.submitBtnText = "Save"
-      $scope.attributes = Validation.getModelAttributes('user',
-        ['name', 'email', 'password', 'confirmPassword'])
+      $scope.attributes = Validation.getModelAttributes('User',
+        ['name', 'email', 'password'])
+      $scope.attributes.confirmPassword =
+        type: "string"
+        required: true
+        maxLength: 45
+        match: "password"
 
     $scope.sumbit = ()->
       result = Validation.validate(

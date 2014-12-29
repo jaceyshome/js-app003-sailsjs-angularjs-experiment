@@ -1,20 +1,21 @@
-define(['angular', 'common/validation/attribute-models'], function(angular, attributeModels) {
+define(['angular', 'model-attributes'], function(angular, modelAttributes) {
   var module;
   module = angular.module('common.validation', []);
   return module.factory('Validation', function() {
-    var ConvertStringToBoolean, checkBoolean, checkDate, checkDateString, checkEmail, checkMatchingField, checkMaxLength, checkMinLength, checkNumber, checkRequired, checkType, generateAttributes, generateKeyWords, service;
-    console.log("validation data", attributeModels);
+    var ConvertStringToBoolean, checkBoolean, checkDD, checkDate, checkDateString, checkEmail, checkMM, checkMatchingField, checkMaxLength, checkMinLength, checkNumber, checkRequired, checkType, checkYYYY, generateAttributes, generateKeyWords, service, validateDate, validateDateString, validateDay, validateMonth, validateYear, _modelsAttributes;
+    console.log("validation attributes", modelAttributes);
+    _modelsAttributes = modelAttributes;
     service = {};
     service.getModelAttributes = function(modelName, keys) {
-      if (!(modelName || attributeModels[modelName])) {
+      if (!(modelName || _modelsAttributes[modelName])) {
         return null;
       }
-      if (keys && attributeModels[modelName]) {
+      if (keys && _modelsAttributes[modelName]) {
         return generateAttributes(modelName, keys);
       }
       return angular.copy(data[modelName]);
     };
-    service.validate = function(data) {
+    service.validateAttributes = function(data) {
       var key, result;
       result = null;
       for (key in data.attributes) {
@@ -41,58 +42,7 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
       }
       return result;
     };
-    service.validateDate = function(day, month, year) {
-      var remainder, tempDay, tempDob, today;
-      tempDay = parseInt(day);
-      if (isNaN(tempDay) || tempDay < 1 || tempDay > 31) {
-        return false;
-      }
-      if (month === 4 || month === 6 || month === 9 || month === 11) {
-        if (tempDay < 1 || tempDay > 30) {
-          return false;
-        }
-      }
-      if (month === 2) {
-        remainder = year % 4;
-        if (remainder === 0) {
-          if (tempDay < 1 || tempDay > 29) {
-            return false;
-          }
-        } else {
-          if (tempDay < 1 || tempDay > 28) {
-            return false;
-          }
-        }
-      }
-      tempDob = new Date();
-      tempDob.setFullYear(day, month, year);
-      today = new Date();
-      if (tempDob > today) {
-        return false;
-      }
-      return true;
-    };
-    service.validateMonth = function(month) {
-      var tempMonth;
-      if (month.length < 1 || month.length > 2) {
-        return false;
-      }
-      tempMonth = parseInt(month);
-      if (isNaN(tempMonth) || tempMonth < 1 || tempMonth > 12) {
-        return false;
-      }
-      return true;
-    };
-    service.validateYear = function(year) {
-      if (year.length !== 4) {
-        return false;
-      }
-      if (isNaN(year)) {
-        return false;
-      }
-      return true;
-    };
-    service.validateDateString = function(date) {
+    validateDateString = function(date) {
       var data;
       if (!checkDateString(date)) {
         return false;
@@ -104,7 +54,7 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
           return false;
         }
       }
-      return service.validateYear(data[2]) && service.validateMonth(data[1]) && service.validateDate(data[0], data[1], data[2]);
+      return validateYear(data[0]) && validateMonth(data[1]) && validateDate(data[0], data[1], data[2]);
     };
     checkDateString = function(date) {
       var pattern;
@@ -115,15 +65,66 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
         return false;
       }
     };
-    generateAttributes = function(modelName, keys) {
-      var attributes, key, model, _i, _len;
-      model = attributeModels[modelName];
-      attributes = {};
-      for (_i = 0, _len = keys.length; _i < _len; _i++) {
-        key = keys[_i];
-        attributes[key] = model[key];
+    validateYear = function(year) {
+      if (year.length !== 4) {
+        return false;
       }
-      return attributes;
+      if (isNaN(year)) {
+        return false;
+      }
+      return true;
+    };
+    validateMonth = function(month) {
+      var tempMonth;
+      if (month.length < 1 || month.length > 2) {
+        return false;
+      }
+      tempMonth = parseInt(month);
+      if (isNaN(tempMonth) || tempMonth < 1 || tempMonth > 12) {
+        return false;
+      }
+      return true;
+    };
+    validateDay = function(day) {
+      var tempDay;
+      if (day.length < 1 || day.length > 2) {
+        return false;
+      }
+      tempDay = parseInt(day);
+      if (isNaN(tempDay) || tempDay < 1 || tempDay > 31) {
+        return false;
+      }
+      return true;
+    };
+    validateDate = function(year, month, day) {
+      var remainder, tempDay, tempMonth, tempYear;
+      tempDay = parseInt(day);
+      tempMonth = parseInt(month);
+      tempYear = parseInt(year);
+      if (isNaN(tempDay) || isNaN(tempMonth) || isNaN(tempYear)) {
+        return false;
+      }
+      if (tempDay < 1 || tempDay > 31) {
+        return false;
+      }
+      if (tempMonth === 4 || tempMonth === 6 || tempMonth === 9 || tempMonth === 11) {
+        if (tempDay < 1 || tempDay > 30) {
+          return false;
+        }
+      }
+      if (tempMonth === 2) {
+        remainder = year % 4;
+        if (remainder === 0) {
+          if (tempDay < 1 || tempDay > 29) {
+            return false;
+          }
+        } else {
+          if (tempDay < 1 || tempDay > 28) {
+            return false;
+          }
+        }
+      }
+      return true;
     };
     checkMaxLength = function(data, key) {
       if (!data.attributes[key].maxLength) {
@@ -192,11 +193,22 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
       if ((result = checkDate(data, key))) {
         return result;
       }
+      if ((result = checkDD(data, key))) {
+        return result;
+      }
+      if ((result = checkMM(data, key))) {
+        return result;
+      }
+      if ((result = checkYYYY(data, key))) {
+        return result;
+      }
       return null;
     };
-    checkNumber = function(data, key) {
-      if (data.attributes[key].type !== 'number') {
-        return null;
+    checkNumber = function(data, key, force) {
+      if (!force) {
+        if (data.attributes[key].type !== 'number') {
+          return null;
+        }
       }
       if (!isNaN(data.values[key])) {
         return null;
@@ -205,6 +217,70 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
         key: key,
         msg: generateKeyWords(key) + ' should be number'
       };
+    };
+    checkDD = function(data, key) {
+      var result;
+      if (data.attributes[key].type !== 'dd') {
+        return null;
+      }
+      data.attributes[key].maxLength = 2;
+      if ((result = checkNumber(data, key, true))) {
+        return result;
+      }
+      if ((result = checkMaxLength(data, key))) {
+        return result;
+      }
+      if (!validateDay(data.values[key])) {
+        return {
+          key: key,
+          msg: generateKeyWords(key) + 'is not valid'
+        };
+      }
+      return null;
+    };
+    checkMM = function(data, key) {
+      var result;
+      if (data.attributes[key].type !== 'mm') {
+        return null;
+      }
+      data.attributes[key].maxLength = 2;
+      if ((result = checkNumber(data, key, true))) {
+        return result;
+      }
+      if ((result = checkMaxLength(data, key))) {
+        return result;
+      }
+      if (!validateMonth(data.values[key])) {
+        return {
+          key: key,
+          msg: generateKeyWords(key) + 'is not valid'
+        };
+      }
+      return null;
+    };
+    checkYYYY = function(data, key) {
+      var result;
+      if (data.attributes[key].type !== 'yyyy') {
+        return null;
+      }
+      data.attributes[key].maxLength = 4;
+      data.attributes[key].minLength = 4;
+      if ((result = checkNumber(data, key, true))) {
+        return result;
+      }
+      if ((result = checkMaxLength(data, key))) {
+        return result;
+      }
+      if ((result = checkMinLength(data, key))) {
+        return result;
+      }
+      if (!validateYear(data.values[key])) {
+        return {
+          key: key,
+          msg: generateKeyWords(key) + 'is not valid'
+        };
+      }
+      return null;
     };
     checkBoolean = function(data, key) {
       if (data.attributes[key].type !== 'boolean') {
@@ -237,7 +313,7 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
       if (data.attributes[key].type !== 'date') {
         return null;
       }
-      if (!service.validateDateString(data.values[key])) {
+      if (!validateDateString(data.values[key])) {
         return {
           key: key,
           msg: generateKeyWords(key) + " is not a valid date"
@@ -264,6 +340,16 @@ define(['angular', 'common/validation/attribute-models'], function(angular, attr
       var words;
       words = key.match(/[A-Z]?[a-z]+|[0-9]+/g);
       return words.join(" ").toLowerCase();
+    };
+    generateAttributes = function(modelName, keys) {
+      var attributes, key, model, _i, _len;
+      model = _modelsAttributes[modelName];
+      attributes = {};
+      for (_i = 0, _len = keys.length; _i < _len; _i++) {
+        key = keys[_i];
+        attributes[key] = model[key];
+      }
+      return attributes;
     };
     return service;
   });

@@ -5,7 +5,7 @@ define(['app/states/login/login-module', 'app/states/login/login-service'], func
     var init;
     $scope.user = [];
     init = function() {
-      return $scope.attributes = Validation.getModelAttributes('user', ['name', 'password']);
+      return $scope.attributes = Validation.getModelAttributes('User', ['name', 'password']);
     };
     $scope.sumbit = function() {
       var message;

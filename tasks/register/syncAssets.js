@@ -4,6 +4,7 @@ module.exports = function (grunt) {
     'less:dev',
     'jade:dev',
     'ngtemplates',
+    'modelattributes',
     'sync:dev',
     'coffee:dev'
   ]);

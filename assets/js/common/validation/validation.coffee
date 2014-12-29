@@ -1,18 +1,19 @@
 define [
   'angular'
-  'common/validation/attribute-models'
-], (angular, attributeModels)->
+  'model-attributes'
+], (angular, modelAttributes)->
   module = angular.module 'common.validation', []
   module.factory 'Validation', ()->
-    console.log "validation data", attributeModels
+    console.log "validation attributes", modelAttributes
+    _modelsAttributes = modelAttributes
     service = {}
 
     service.getModelAttributes = (modelName, keys)->
-      return null unless modelName or attributeModels[modelName]
-      return generateAttributes(modelName, keys) if keys and attributeModels[modelName]
+      return null unless modelName or _modelsAttributes[modelName]
+      return generateAttributes(modelName, keys) if keys and _modelsAttributes[modelName]
       return angular.copy data[modelName]
 
-    service.validate = (data)->
+    service.validateAttributes = (data)->
       result = null
       for key of data.attributes
         if data.attributes.hasOwnProperty(key)
@@ -24,60 +25,55 @@ define [
           if (result = checkMatchingField(data,key)) then return result
       return result
 
-    service.validateDate = (day, month, year)->
-      tempDay = parseInt(day)
-      return false if(isNaN(tempDay) || tempDay < 1 || tempDay > 31)
-      if(month == 4 || month == 6 || month == 9 || month == 11)
-        if(tempDay < 1 || tempDay > 30)
-          return false
-      if(month == 2)
-        remainder = year%4
-        if(remainder == 0)
-          if(tempDay < 1 || tempDay > 29)
-            return false
-        else
-          if(tempDay < 1 || tempDay > 28)
-            return false
-      tempDob = new Date()
-      tempDob.setFullYear(day, month, year)
-      today = new Date()
-      return false if(tempDob > today)
-      return true
-
-    service.validateMonth = (month)->
-      return false if(month.length < 1 || month.length > 2 )
-      tempMonth = parseInt(month)
-      return false if(isNaN(tempMonth) || tempMonth < 1 || tempMonth > 12)
-      return true
-
-    service.validateYear = (year)->
-      return false if year.length isnt 4
-      return false if isNaN(year)
-      return true
-
-    service.validateDateString = (date)->
+    #----------------------------- private functions ------------------------------------
+    validateDateString = (date)->
       return false unless checkDateString(date)
       data = date.split('-')
       if(data.length != 3)
         data = date.split('/')
         if(data.length != 3)
           return false
-      service.validateYear(data[2]) and
-      service.validateMonth(data[1]) and
-      service.validateDate(data[0], data[1], data[2])
-
-    #----------------------------- private functions ------------------------------------
+      validateYear(data[0]) and validateMonth(data[1]) and validateDate(data[0], data[1], data[2])
 
     checkDateString = (date) ->
       pattern = new RegExp("[^-/0123456789]")
       unless date.match(pattern) then return true else return false
 
-    generateAttributes = (modelName, keys)->
-      model = attributeModels[modelName]
-      attributes = {}
-      for key in keys
-        attributes[key] = model[key]
-      attributes
+    validateYear = (year)->
+      return false if year.length isnt 4
+      return false if isNaN(year)
+      return true
+
+    validateMonth = (month)->
+      return false if(month.length < 1 || month.length > 2 )
+      tempMonth = parseInt(month)
+      return false if(isNaN(tempMonth) || tempMonth < 1 || tempMonth > 12)
+      return true
+
+    validateDay = (day)->
+      return false if(day.length < 1 || day.length > 2 )
+      tempDay = parseInt(day)
+      return false if(isNaN(tempDay) || tempDay < 1 || tempDay > 31)
+      return true
+
+    validateDate = (year, month, day)->
+      tempDay = parseInt(day)
+      tempMonth = parseInt(month)
+      tempYear = parseInt(year)
+      return false if (isNaN(tempDay) || isNaN(tempMonth) || isNaN(tempYear) )
+      return false if(tempDay < 1 || tempDay > 31)
+      if(tempMonth is 4 || tempMonth is 6 || tempMonth is 9 || tempMonth is 11)
+        if(tempDay < 1 || tempDay > 30)
+          return false
+      if(tempMonth is 2)
+        remainder = year%4
+        if(remainder is 0)
+          if(tempDay < 1 || tempDay > 29)
+            return false
+        else
+          if(tempDay < 1 || tempDay > 28)
+            return false
+      return true
 
     checkMaxLength = (data, key)->
       return null unless data.attributes[key].maxLength
@@ -109,12 +105,42 @@ define [
       if (result = checkNumber(data,key)) then return result
       if (result = checkBoolean(data,key)) then return result
       if (result = checkDate(data,key)) then return result
+      if (result = checkDD(data,key)) then return result
+      if (result = checkMM(data,key)) then return result
+      if (result = checkYYYY(data,key)) then return result
       return null
 
-    checkNumber = (data, key)->
-      return null unless data.attributes[key].type is 'number'
+    checkNumber = (data, key, force)->
+      unless force
+        return null unless data.attributes[key].type is 'number'
       return null if !isNaN(data.values[key])
       return {key:key,msg:generateKeyWords(key)+' should be number'}
+
+    checkDD = (data,key)->
+      return null unless data.attributes[key].type is 'dd'
+      data.attributes[key].maxLength = 2
+      if (result = checkNumber(data,key, true)) then return result
+      if (result = checkMaxLength(data,key)) then return result
+      unless validateDay(data.values[key]) then return {key:key,msg:generateKeyWords(key)+'is not valid'}
+      return null
+
+    checkMM = (data,key)->
+      return null unless data.attributes[key].type is 'mm'
+      data.attributes[key].maxLength = 2
+      if (result = checkNumber(data,key,true)) then return result
+      if (result = checkMaxLength(data,key)) then return result
+      unless validateMonth(data.values[key]) then return {key:key,msg:generateKeyWords(key)+'is not valid'}
+      return null
+
+    checkYYYY = (data,key)->
+      return null unless data.attributes[key].type is 'yyyy'
+      data.attributes[key].maxLength = 4
+      data.attributes[key].minLength = 4
+      if (result = checkNumber(data,key, true)) then return result
+      if (result = checkMaxLength(data,key)) then return result
+      if (result = checkMinLength(data,key)) then return result
+      unless validateYear(data.values[key]) then return {key:key,msg:generateKeyWords(key)+'is not valid'}
+      return null
 
     checkBoolean = (data, key)->
       return null unless data.attributes[key].type is 'boolean'
@@ -132,7 +158,7 @@ define [
 
     checkDate = (data, key)->
       return null unless data.attributes[key].type is 'date'
-      return {key:key, msg:generateKeyWords(key)+" is not a valid date"} unless service.validateDateString(data.values[key])
+      return {key:key, msg:generateKeyWords(key)+" is not a valid date"} unless validateDateString(data.values[key])
       return null
 
     checkMatchingField = (data, key)->
@@ -147,5 +173,12 @@ define [
     generateKeyWords = (key)->
       words = key.match(/[A-Z]?[a-z]+|[0-9]+/g)
       return words.join(" ").toLowerCase()
+
+    generateAttributes = (modelName, keys)->
+      model = _modelsAttributes[modelName]
+      attributes = {}
+      for key in keys
+        attributes[key] = model[key]
+      attributes
 
     service
