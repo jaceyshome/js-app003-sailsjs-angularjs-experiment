@@ -1,10 +1,9 @@
-YAML = require('yamljs')
 CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 
 module.exports = (()->
-  projectModel = {}
-  projectModel.attributes =
+  model = {}
+  model.attributes =
     name:
       type: "string"
       required: true
@@ -18,9 +17,18 @@ module.exports = (()->
       type: "string"
       unique: true
       maxLength: 24
+    stateId:
+      type: "string"
+    currentStageId:
+      type: "string"
+    startDate:
+      type: "date"
+    endDate:
+      type: "date"
 
-  projectModel.beforeCreate = (values, next) ->
-    CommonHelper.generateShortLink(projectModel.attributes.shortLink.maxLength)
+
+  model.beforeCreate = (values, next) ->
+    CommonHelper.generateShortLink(model.attributes.shortLink.maxLength)
     .then (result)->
       values.shortLink = result
       next()
@@ -28,12 +36,12 @@ module.exports = (()->
       next(err: [ "Internal Server Error." ])
     )
 
-  projectModel.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (values, next) ->
     #TODO check admin and current user
     #TODO check user
     next()
 
-  projectModel
+  model
 )()
 
 

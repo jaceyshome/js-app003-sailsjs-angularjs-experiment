@@ -1,10 +1,9 @@
-YAML = require('yamljs')
 CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 
 module.exports = (()->
-  userModel = {}
-  userModel.attributes =
+  model = {}
+  model.attributes =
     name:
       type: "string"
       required: true
@@ -32,10 +31,12 @@ module.exports = (()->
       type: "string"
       maxLength: 24
       unique: true
+    departmentId:
+      type: "string"
 
-  userModel.beforeCreate = (values, next) ->
+  model.beforeCreate = (values, next) ->
     return next(err: [ "Password is required." ]) unless values.password
-    CommonHelper.generateShortLink(userModel.attributes.shortLink.maxLength)
+    CommonHelper.generateShortLink(model.attributes.shortLink.maxLength)
     .then (result)->
       values.shortLink = result
       CommonHelper.generateUserPassword(values.password)
@@ -46,12 +47,12 @@ module.exports = (()->
         next(err: [ "Internal Server Error." ])
       )
 
-  userModel.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (values, next) ->
     #TODO check admin and current user
     #TODO check user
     next()
 
-  userModel
+  model
 )()
 
 
