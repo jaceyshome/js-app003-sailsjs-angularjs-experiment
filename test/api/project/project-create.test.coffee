@@ -1,4 +1,3 @@
-should = require("should")
 Sails = require("sails")
 assert = require("assert")
 request = require("supertest")
@@ -49,5 +48,4 @@ describe "Project Create", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .send(_project)
     .expect(400, done)
-
 
