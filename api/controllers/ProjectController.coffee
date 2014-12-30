@@ -1,4 +1,3 @@
-CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 module.exports = (->
   ctrl = {}
@@ -76,7 +75,6 @@ module.exports = (->
       res.send 200
 
   ctrl._config = {}
-
 
   ctrl
 )()

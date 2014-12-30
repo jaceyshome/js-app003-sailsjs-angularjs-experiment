@@ -1,4 +1,3 @@
-CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 
 module.exports = (()->
@@ -25,10 +24,11 @@ module.exports = (()->
       type: "date"
     endDate:
       type: "date"
-
+    stages:
+      type: "array"
 
   model.beforeCreate = (values, next) ->
-    CommonHelper.generateShortLink(model.attributes.shortLink.maxLength)
+    Utils.generateShortLink(model.attributes.shortLink.maxLength)
     .then (result)->
       values.shortLink = result
       next()

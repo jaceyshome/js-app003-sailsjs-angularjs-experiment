@@ -1,4 +1,3 @@
-CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 
 module.exports = (()->
@@ -18,6 +17,8 @@ module.exports = (()->
       type: "string"
     taskTypeId:
       type: "string"
+    items:
+      type: "array"
 
   model.beforeCreate = (values, next) ->
     next()

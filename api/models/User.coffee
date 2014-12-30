@@ -1,4 +1,3 @@
-CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 
 module.exports = (()->
@@ -36,10 +35,10 @@ module.exports = (()->
 
   model.beforeCreate = (values, next) ->
     return next(err: [ "Password is required." ]) unless values.password
-    CommonHelper.generateShortLink(model.attributes.shortLink.maxLength)
+    Utils.generateShortLink(model.attributes.shortLink.maxLength)
     .then (result)->
       values.shortLink = result
-      CommonHelper.generateUserPassword(values.password)
+      Utils.generateUserPassword(values.password)
       .then((encryptedPassword)->
         values.password = encryptedPassword
         next()

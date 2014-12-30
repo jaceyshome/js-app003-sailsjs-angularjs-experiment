@@ -1,4 +1,3 @@
-CommonHelper = require('../helpers/Common')
 Promise = require("bluebird")
 
 module.exports = (()->
