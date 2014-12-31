@@ -54,6 +54,7 @@ module.exports.routes = {
   '/project/edit/:shortLink':'ProjectController.edit',
   '/project/specifics/:shortLink': 'ProjectController.specifics'
 
+  //------------------ stage -----------------------------
 
 
 };

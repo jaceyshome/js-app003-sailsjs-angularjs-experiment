@@ -4,7 +4,7 @@ Promise = require("bluebird")
 CSRF = require('../helpers/csrf')
 CommonHelper = require("../helpers/common")
 
-describe "User Destroy", (done) ->
+describe "Destroy User", (done) ->
   csrfRes = null
   url = '/user/destroy'
   user = null

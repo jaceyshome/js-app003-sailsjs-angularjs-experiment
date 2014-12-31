@@ -17,20 +17,18 @@ module.exports = (->
   ctrl.create = (req, res, next) ->
     User.create req.params.all(), userCreated = (err, user) ->
       return next(err) if err
-      user.save (err, user) ->
-        return next(err) if err
-        User.publishCreate
-          id: user.id
-          name: user.name
-          online: user.online
-        , req.socket
-        userJson =
-          id: user.id
-          name:user.name
-          email:user.email
-          shortLink:user.shortLink
-          online: user.online
-        res.json userJson
+      User.publishCreate
+        id: user.id
+        name: user.name
+        online: user.online
+      , req.socket
+      userJson =
+        id: user.id
+        name:user.name
+        email:user.email
+        shortLink:user.shortLink
+        online: user.online
+      res.json userJson
 
   ctrl.specifics = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")

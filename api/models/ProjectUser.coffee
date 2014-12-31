@@ -15,11 +15,10 @@ module.exports = (()->
       type: "string"
       required: true
 
-
-  model.beforeCreate = (values, next) ->
+  model.beforeCreate = (data, next) ->
     next()
 
-  model.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (data, next) ->
     next()
 
   model)()

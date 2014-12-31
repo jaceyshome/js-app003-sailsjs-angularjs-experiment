@@ -24,19 +24,17 @@ module.exports = (()->
       type: "date"
     endDate:
       type: "date"
-    stages:
-      type: "array"
 
-  model.beforeCreate = (values, next) ->
+  model.beforeCreate = (data, next) ->
     Utils.generateShortLink(model.attributes.shortLink.maxLength)
     .then (result)->
-      values.shortLink = result
+      data.shortLink = result
       next()
     .catch(()->
       next(err: [ "Internal Server Error." ])
     )
 
-  model.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (data, next) ->
     #TODO check admin and current user
     #TODO check user
     next()

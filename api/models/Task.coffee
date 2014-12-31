@@ -20,10 +20,10 @@ module.exports = (()->
     items:
       type: "array"
 
-  model.beforeCreate = (values, next) ->
+  model.beforeCreate = (data, next) ->
     next()
 
-  model.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (data, next) ->
     next()
 
   model)()

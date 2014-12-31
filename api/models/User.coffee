@@ -33,20 +33,20 @@ module.exports = (()->
     departmentId:
       type: "string"
 
-  model.beforeCreate = (values, next) ->
-    return next(err: [ "Password is required." ]) unless values.password
+  model.beforeCreate = (data, next) ->
+    return next(err: [ "Password is required." ]) unless data.password
     Utils.generateShortLink(model.attributes.shortLink.maxLength)
     .then (result)->
-      values.shortLink = result
-      Utils.generateUserPassword(values.password)
+      data.shortLink = result
+      Utils.generateUserPassword(data.password)
       .then((encryptedPassword)->
-        values.password = encryptedPassword
+          data.password = encryptedPassword
         next()
       ).catch(()->
         next(err: [ "Internal Server Error." ])
       )
 
-  model.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (data, next) ->
     #TODO check admin and current user
     #TODO check user
     next()

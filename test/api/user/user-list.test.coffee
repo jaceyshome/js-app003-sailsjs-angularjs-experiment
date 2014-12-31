@@ -3,7 +3,7 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe.skip "(TODO) User List", (done) ->
+describe.skip "(TODO)List User", (done) ->
   csrfRes = null
   url = '/user/update'
   user =

@@ -1,0 +1,44 @@
+Promise = require("bluebird")
+module.exports = (->
+  ctrl = {}
+
+  ctrl.create = (req, res, next) ->
+    Task.create req.params.all(), (err, task) ->
+      return next(err) if err
+      Task.publishCreate {}, req.socket
+      jsonData = {}
+      res.json jsonData
+
+  ctrl.specifics = (req, res, next) ->
+    Task.findOne(req.param('id')).exec((err, task)->
+      return next(err) if err or not task
+      jsonData = {}
+      res.json jsonData
+    )
+
+  ctrl.all = (req, res, next) ->
+    Task.find (err, results)->
+      return next(err) if err or not results
+      res.json results
+
+  ctrl.update = (req, res, next) ->
+    data = {}
+    Task.update req.param("id"), data, (err)->
+      return next(err) if err
+      Task.publishUpdate(req.param("id"), {}, req.socket)
+      res.send 200
+
+  ctrl.destroy = (req, res, next) ->
+    Task.destroy req.param("id"), (err) ->
+      return next(err) if err
+      Task.publishDestroy req.param("id"), req.socket
+      res.send 200
+
+  ctrl.subscribe = (req, res, next) ->
+    Task.find (err, results) ->
+      return next(err) if err
+      Task.watch req.socket
+      Task.subscribe req.socket, results
+      res.send 200
+
+  ctrl)()

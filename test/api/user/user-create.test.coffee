@@ -4,7 +4,7 @@ request = require("supertest")
 Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 
-describe "User Create", ->
+describe "Create User", ->
   csrfRes = null
   url = '/user/create'
   user =

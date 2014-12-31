@@ -11,7 +11,7 @@ beforeEach (done) ->
   sails.lift
     log:
       level: "error"
-    adapters: adapterHelper.set('testMemoryDb')
+    adapters: adapterHelper.set('testDiskDb')
     hooks:
       grunt: false
     migrate: 'drop'

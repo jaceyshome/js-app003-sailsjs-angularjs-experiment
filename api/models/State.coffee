@@ -8,10 +8,10 @@ module.exports = (()->
       maxLength: 45
 
 
-  model.beforeCreate = (values, next) ->
+  model.beforeCreate = (data, next) ->
     next()
 
-  model.beforeDestroy = (values, next) ->
+  model.beforeDestroy = (data, next) ->
     next()
 
   model)()
