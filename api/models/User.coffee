@@ -3,6 +3,8 @@ Promise = require("bluebird")
 module.exports = (()->
   model = {}
   model.attributes =
+    idDepartment:
+      type: "string"
     name:
       type: "string"
       required: true
@@ -30,8 +32,6 @@ module.exports = (()->
       type: "string"
       maxLength: 24
       unique: true
-    departmentId:
-      type: "string"
 
   model.beforeCreate = (data, next) ->
     return next(err: [ "Password is required." ]) unless data.password

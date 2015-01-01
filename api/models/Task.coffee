@@ -3,6 +3,8 @@ Promise = require("bluebird")
 module.exports = (()->
   model = {}
   model.attributes =
+    idTaskType:
+      type: "string"
     name:
       type: "string"
     description:
@@ -14,8 +16,6 @@ module.exports = (()->
     stageId:
       type: "string"
     stateId:
-      type: "string"
-    taskTypeId:
       type: "string"
     items:
       type: "array"

@@ -58,18 +58,5 @@ module.exports.policies = {
     'specifics': true, //TODO check project
     'update': ['isProjectExists'],
     'destroy': ['isProjectExists']
-  },
-
-  StageController:{
-    '*': false,
-    'subscribe':true,
-    'new': true,
-    'list': true,
-    'details': true,
-    'create': true,
-    'all': true,
-    'specifics': true, //TODO check project
-    'update': true, //TODO check project and stage
-    'destroy': true //TODO check project and stage
   }
 };

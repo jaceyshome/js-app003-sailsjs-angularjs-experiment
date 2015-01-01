@@ -3,17 +3,17 @@ Promise = require("bluebird")
 module.exports = (()->
   model = {}
   model.attributes =
+    idProject:
+      type: "string"
+      required: true
+    idUser:
+      type: "string"
+      required: true
     name:
       type: "string"
     autherization:
       type: "boolean"
       defaultsTo: false
-    projectId:
-      type: "string"
-      required: true
-    userId:
-      type: "string"
-      required: true
 
   model.beforeCreate = (data, next) ->
     next()

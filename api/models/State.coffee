@@ -7,7 +7,6 @@ module.exports = (()->
       type: "string"
       maxLength: 45
 
-
   model.beforeCreate = (data, next) ->
     next()
 

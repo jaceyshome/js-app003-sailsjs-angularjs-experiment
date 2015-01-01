@@ -12,6 +12,27 @@ module.exports = (->
     name: 'test project'
     description: 'test project description'
 
+  stage =
+    "name": "stage 1",
+    "tasks": [
+      {
+        "title": "task 1.1",
+        "items": [
+          {name:"task 1.1 item 1"}
+          {name:"task 1.1 item 2"}
+          {name:"task 1.1 item 3"}
+        ]
+      },
+      {
+        "title": "task 1.2",
+        "items": [
+          {name:"task 1.2 item 1"}
+          {name:"task 1.2 item 2"}
+          {name:"task 1.2 item 3"}
+        ]
+      }
+    ]
+
   #--------------------------------- public  functions-----------------------------
   service.getUserInstance = ()->
     return JSON.parse(JSON.stringify(user))
@@ -43,8 +64,24 @@ module.exports = (->
       .expect(200)
       .end (err, res)->
         if (err) then throw err
-        project = res.body
         if cb then cb(res.body)
+
+  service.createProjectStage = (cb)->
+    service.createProject (project)->
+      CSRF.get().then (csrfRes)->
+        _project = JSON.parse(JSON.stringify(project))
+        data =
+          idProject: _project.id
+          name: "stage 1"
+          _csrf:  csrfRes.body._csrf
+        request(sails.hooks.http.app)
+        .post('/stage/create')
+        .set('cookie', csrfRes.headers['set-cookie'])
+        .send(data)
+        .expect(200)
+        .end (err, res)->
+          if (err) then throw err
+          if cb then cb(res.body)
 
   service
 )()

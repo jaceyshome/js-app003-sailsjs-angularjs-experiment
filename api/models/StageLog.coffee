@@ -6,7 +6,6 @@ module.exports = (()->
     text:
       type: "string"
 
-
   model.beforeCreate = (data, next) ->
     next()
 

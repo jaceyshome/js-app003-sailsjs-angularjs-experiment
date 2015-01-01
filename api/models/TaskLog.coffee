@@ -3,6 +3,12 @@ Promise = require("bluebird")
 module.exports = (()->
   model = {}
   model.attributes =
+    idTask:
+      type: "string"
+      required: true
+    idUser:
+      type: "string"
+      required: true
     text:
       type: "string"
       maxLength: 1000
@@ -10,12 +16,6 @@ module.exports = (()->
       type: "float"
     spentHours:
       type: "float"
-    taskId:
-      type: "string"
-      required: true
-    userId:
-      type: "string"
-      required: true
 
   model.beforeCreate = (data, next) ->
     next()

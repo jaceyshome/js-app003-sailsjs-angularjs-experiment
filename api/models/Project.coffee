@@ -3,6 +3,10 @@ Promise = require("bluebird")
 module.exports = (()->
   model = {}
   model.attributes =
+    idState:
+      type: "string"
+    idCurrentStage:
+      type: "string"
     name:
       type: "string"
       required: true
@@ -16,10 +20,6 @@ module.exports = (()->
       type: "string"
       unique: true
       maxLength: 24
-    stateId:
-      type: "string"
-    currentStageId:
-      type: "string"
     startDate:
       type: "date"
     endDate:
