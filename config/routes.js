@@ -52,8 +52,9 @@ module.exports.routes = {
   '/project':{view:'app'},
   '/project/details/:shortLink': 'ProjectController.details',
   '/project/edit/:shortLink':'ProjectController.edit',
-  '/project/specifics/:shortLink': 'ProjectController.specifics'
+  '/project/specifics/:shortLink': 'ProjectController.specifics',
 
-
+  //------------------ stage ---------------------------
+  '/stage/all/:idProject/s/:shortLink':'StageController.all'
 
 };

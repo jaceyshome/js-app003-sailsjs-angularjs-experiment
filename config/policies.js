@@ -43,8 +43,8 @@ module.exports.policies = {
     'create': true,
     'all': true, //ToDO is admin
     'specifics':true, //TODO is  current user
-    'update': ['isUserExists'],
-    'destroy': ['isUserExists']
+    'update': ['checkUserExistence'],
+    'destroy': ['checkUserExistence']
   },
 
   ProjectController : {
@@ -56,8 +56,8 @@ module.exports.policies = {
     'create': true,
     'all': true,
     'specifics': true, //TODO check project
-    'update': ['isProjectExists'],
-    'destroy': ['isProjectExists']
+    'update': ['checkProjectExistence'],
+    'destroy': ['checkProjectExistence']
   },
 
   StageController : {
@@ -67,9 +67,9 @@ module.exports.policies = {
     'list': true,
     'details': true,
     'create': true,
-    'all': true,
+    'all': ['checkProjectExistence'],
     'specifics': true, //TODO check stage
-    'update': ['isStageExists'],
-    'destroy': ['isStageExists']
+    'update': ['checkStageExistence'],
+    'destroy': ['checkStageExistence']
   }
 };

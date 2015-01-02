@@ -34,11 +34,6 @@ module.exports = (()->
       next(err: [ "Internal Server Error." ])
     )
 
-  model.beforeDestroy = (data, next) ->
-    #TODO check admin and current user
-    #TODO check user
-    next()
-
   model
 )()
 

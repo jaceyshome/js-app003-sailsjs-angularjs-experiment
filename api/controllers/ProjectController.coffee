@@ -32,15 +32,12 @@ module.exports = (->
 
   ctrl.specifics = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
-    Project.findByShortLink(req.param('shortLink')).exec((err, project)->
-      return next(err) if err or not project
-      projectJson =
-        id: project[0].id
-        name:project[0].name
-        description:project[0].description
-        shortLink:project[0].shortLink
-      res.json projectJson
-    )
+    Project.find {
+      shortLink:req.param('shortLink')
+    } , (err, result)->
+      if result.length > 1 then return res.send(400, { message: 'Bad Request.'})
+      return next(err) if err
+      res.json result[0]
 
   ctrl.all = (req, res, next) ->
     Project.find (err,projects)->
@@ -60,13 +57,10 @@ module.exports = (->
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    ProjectService.destroyProject(req)
-    .then((result)->
-      Project.publishDestroy req.param("id"), req.socket
-      res.send 200
-    ).catch((err)->
+    DestroyService.destroyProject req.params.all(), (err)->
       return next(err) if err
-    )
+      Project.publishDestroy req.param("id"), req.socket
+      return res.send 200
 
   ctrl.subscribe = (req, res, next) ->
     Project.find (err, projects) ->

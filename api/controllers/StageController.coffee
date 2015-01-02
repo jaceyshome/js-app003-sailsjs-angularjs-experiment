@@ -15,7 +15,9 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    Stage.find (err, results)->
+    Stage.find {
+      idProject:req.param('idProject')
+    }, (err, results)->
       return next(err) if err or not results
       res.json results
 

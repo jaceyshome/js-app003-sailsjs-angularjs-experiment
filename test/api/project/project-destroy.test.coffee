@@ -7,6 +7,7 @@ CommonHelper = require("../helpers/common")
 describe "Destroy Project", (done) ->
   csrfRes = null
   url = '/project/destroy'
+  stages = []
   project = null
 
   beforeEach (done)->
@@ -14,10 +15,15 @@ describe "Destroy Project", (done) ->
       csrfRes = _csrfRes
       CommonHelper.createProject (result)->
         project = result
-        done()
+        CommonHelper.createStage project, (stage)->
+          stages.push stage
+          CommonHelper.createStage project, (stage)->
+            stages.push stage
+            done()
 
   afterEach ->
     project = null
+    stages = []
 
   it "should be able to delete a project", (done) ->
     project._csrf = csrfRes.body._csrf
@@ -28,7 +34,12 @@ describe "Destroy Project", (done) ->
     .expect(200)
     .end (err, res)->
       (err is null).should.be.empty
-      done()
+      request(sails.hooks.http.app)
+      .get("/project/specifics/"+project.shortLink)
+      .expect(200)
+      .end (err, res)->
+        res.body.should.be.empty
+        done()
 
   it "should not delete a project without csrf", (done)->
     request(sails.hooks.http.app)

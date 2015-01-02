@@ -40,16 +40,11 @@ module.exports = (()->
       data.shortLink = result
       Utils.generateUserPassword(data.password)
       .then((encryptedPassword)->
-          data.password = encryptedPassword
+        data.password = encryptedPassword
         next()
       ).catch(()->
         next(err: [ "Internal Server Error." ])
       )
-
-  model.beforeDestroy = (data, next) ->
-    #TODO check admin and current user
-    #TODO check user
-    next()
 
   model
 )()

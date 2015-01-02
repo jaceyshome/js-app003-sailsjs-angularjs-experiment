@@ -22,11 +22,12 @@ describe "List Stage", (done) ->
             done()
 
   afterEach ->
+    project = null
     stages = []
 
   it "should be able to get a list of stages for a project", (done) ->
     request(sails.hooks.http.app)
-    .get(url)
+    .get("#{url}/#{project.id}/s/#{project.shortLink}")
     .set('cookie', csrfRes.headers['set-cookie'])
     .expect(200)
     .end (err, res)->
