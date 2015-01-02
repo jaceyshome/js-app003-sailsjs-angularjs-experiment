@@ -20,8 +20,7 @@ module.exports = (->
       res.json results
 
   ctrl.update = (req, res, next) ->
-    data = {}
-    Stage.update req.param("id"), data, (err)->
+    Stage.update req.param("id"), req.params.all(), (err)->
       return next(err) if err
       Stage.publishUpdate(req.param("id"), {}, req.socket)
       res.send 200

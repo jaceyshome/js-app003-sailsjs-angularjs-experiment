@@ -60,10 +60,13 @@ module.exports = (->
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    Project.destroy req.param("id"), (err) ->
-      return next(err) if err
+    ProjectService.destroyProject(req)
+    .then((result)->
       Project.publishDestroy req.param("id"), req.socket
       res.send 200
+    ).catch((err)->
+      return next(err) if err
+    )
 
   ctrl.subscribe = (req, res, next) ->
     Project.find (err, projects) ->

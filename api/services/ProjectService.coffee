@@ -9,11 +9,14 @@ module.exports = (->
 
   service.get = (data)->
 
-  service.save = (stage,cb)->
+  service.delete = (stage,cb)->
     if stage then Stage.create(stage).then((result)->
       handleResult(null, result, cb)).catch((err)->
       handleResult(err,null,cb)
     )
+
+  service.destroyProject = (req)->
+    return null
 
   service
 )()

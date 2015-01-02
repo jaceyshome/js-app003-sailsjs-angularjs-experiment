@@ -83,5 +83,21 @@ module.exports = (->
           if (err) then throw err
           if cb then cb(res.body)
 
+  service.createStage = (project,cb)->
+    CSRF.get().then (csrfRes)->
+      _project = JSON.parse(JSON.stringify(project))
+      data =
+        idProject: _project.id
+        name: "stage 1"
+        _csrf:  csrfRes.body._csrf
+      request(sails.hooks.http.app)
+      .post('/stage/create')
+      .set('cookie', csrfRes.headers['set-cookie'])
+      .send(data)
+      .expect(200)
+      .end (err, res)->
+        if (err) then throw err
+        if cb then cb(res.body)
+
   service
 )()
