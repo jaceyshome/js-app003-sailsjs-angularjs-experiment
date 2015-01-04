@@ -1,11 +1,12 @@
 module.exports = (req, res, next)->
-  return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
+  reqId = req.param("id") || req.param("idProject")
+  return res.send(400, { message: 'Bad Request.'}) unless reqId
   return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
   Project.findOne {
-    id:req.param("id")
+    id:reqId
     shortLink:req.param("shortLink")
   }, (err, result) ->
     if (err) then return res.send({ message: err })
     return res.send(400, { message: 'Bad Request'}) unless result
-    return next() if result.id is req.param("id") and result.shortLink is req.param("shortLink")
+    return next() if result.id is reqId and result.shortLink is req.param("shortLink")
     return res.send(400, { message: 'Bad Request'})

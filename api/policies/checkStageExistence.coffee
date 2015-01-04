@@ -1,4 +1,5 @@
 module.exports = (req, res, next)->
+  console.log "check stage existence!!!!!!!!!!!"
   return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
   return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")
   Stage.findOne {

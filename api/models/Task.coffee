@@ -7,8 +7,10 @@ module.exports = (()->
       type: "string"
     idStage:
       type: "string"
+      required: true
     idProject:
       type: "string"
+      required: true
     idState:
       type: "string"
     name:

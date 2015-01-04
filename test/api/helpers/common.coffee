@@ -1,5 +1,6 @@
 CSRF = require("./csrf")
 request = require("supertest")
+extend = require("extend")
 
 module.exports = (->
   service = {}
@@ -16,7 +17,7 @@ module.exports = (->
     "name": "stage 1",
     "tasks": [
       {
-        "title": "task 1.1",
+        "name": "task 1.1",
         "items": [
           {name:"task 1.1 item 1"}
           {name:"task 1.1 item 2"}
@@ -24,13 +25,21 @@ module.exports = (->
         ]
       },
       {
-        "title": "task 1.2",
+        "name": "task 1.2",
         "items": [
           {name:"task 1.2 item 1"}
           {name:"task 1.2 item 2"}
           {name:"task 1.2 item 3"}
         ]
       }
+    ]
+
+  task =
+    name: "task 1.1"
+    items: [
+      {name:"task 1.1 item 1"}
+      {name:"task 1.1 item 2"}
+      {name:"task 1.1 item 3"}
     ]
 
   #--------------------------------- public  functions-----------------------------
@@ -94,6 +103,23 @@ module.exports = (->
       .post('/stage/create')
       .set('cookie', csrfRes.headers['set-cookie'])
       .send(data)
+      .expect(200)
+      .end (err, res)->
+        if (err) then throw err
+        if cb then cb(res.body)
+
+  service.createTask = (data,cb)->
+    unless data
+      if cb then return cb null
+      return null
+    _task = {}
+    extend false, _task, task, data
+    CSRF.get().then (csrfRes)->
+      _task._csrf = csrfRes.body._csrf
+      request(sails.hooks.http.app)
+      .post('/task/create')
+      .set('cookie', csrfRes.headers['set-cookie'])
+      .send(_task)
       .expect(200)
       .end (err, res)->
         if (err) then throw err

@@ -11,7 +11,7 @@ module.exports = (->
   ctrl.specifics = (req, res, next) ->
     Task.findOne(req.param('id')).exec((err, task)->
       return next(err) if err or not task
-      jsonData = {}
+      jsonData = task
       res.json jsonData
     )
 

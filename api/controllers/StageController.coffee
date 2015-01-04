@@ -15,6 +15,7 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
+    console.log "!!!!!!!!!!", all
     Stage.find {
       idProject:req.param('idProject')
     }, (err, results)->
