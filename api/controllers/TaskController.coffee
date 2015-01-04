@@ -5,9 +5,8 @@ module.exports = (->
   ctrl.create = (req, res, next) ->
     Task.create req.params.all(), (err, task) ->
       return next(err) if err
-      Task.publishCreate {}, req.socket
-      jsonData = {}
-      res.json jsonData
+      Task.publishCreate task, req.socket
+      res.json task
 
   ctrl.specifics = (req, res, next) ->
     Task.findOne(req.param('id')).exec((err, task)->
@@ -41,4 +40,6 @@ module.exports = (->
       Task.subscribe req.socket, results
       res.send 200
 
-  ctrl)()
+  ctrl
+
+)()

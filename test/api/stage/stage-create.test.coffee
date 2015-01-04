@@ -34,6 +34,7 @@ describe "Create Stage", (done) ->
     .expect(200)
     .end (err, res)->
       res.body.should.have.property 'id'
+      res.body.should.have.property 'idProject'
       res.body.should.have.property 'name'
       res.body.should.have.property 'budgetedHours'
       res.body.should.have.property 'createdAt'
@@ -55,7 +56,7 @@ describe "Create Stage", (done) ->
       if (err) then throw err
       done()
 
-  it "should no be done without project id", (done)->
+  it "should not be done without project id", (done)->
     data =
       name: "stage 1"
       _csrf:  csrfRes.body._csrf

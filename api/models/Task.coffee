@@ -5,6 +5,12 @@ module.exports = (()->
   model.attributes =
     idTaskType:
       type: "string"
+    idStage:
+      type: "string"
+    idProject:
+      type: "string"
+    idState:
+      type: "string"
     name:
       type: "string"
     description:
@@ -13,10 +19,6 @@ module.exports = (()->
       type: "date"
     endDate:
       type: "date"
-    stageId:
-      type: "string"
-    stateId:
-      type: "string"
     items:
       type: "array"
 
@@ -26,6 +28,8 @@ module.exports = (()->
   model.beforeDestroy = (data, next) ->
     next()
 
-  model)()
+  model
+
+)()
 
 
