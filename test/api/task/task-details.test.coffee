@@ -15,8 +15,9 @@ describe "Specify Task", (done) ->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
       CommonHelper.createProject (result)->
-        project = result
-        CommonHelper.createStage project, (result)->
+        data = {}
+        data.project = project = result
+        CommonHelper.createStage data, (result)->
           stage = result
           data =
             idProject: project.id

@@ -81,7 +81,7 @@ module.exports = (->
         _project = JSON.parse(JSON.stringify(project))
         data =
           idProject: _project.id
-          name: "stage 1"
+          name: "stage"
           _csrf:  csrfRes.body._csrf
         request(sails.hooks.http.app)
         .post('/stage/create')
@@ -92,17 +92,22 @@ module.exports = (->
           if (err) then throw err
           if cb then cb(res.body)
 
-  service.createStage = (project,cb)->
+  service.createStage = (data,cb)->
+    unless data and data.project
+      if cb then return cb null
+      return null
     CSRF.get().then (csrfRes)->
-      _project = JSON.parse(JSON.stringify(project))
-      data =
+      _stage = {}
+      _project = JSON.parse(JSON.stringify(data.project))
+      stage =
         idProject: _project.id
-        name: "stage 1"
+        name: "stage "
         _csrf:  csrfRes.body._csrf
+      extend(false, _stage, stage, data.stage)
       request(sails.hooks.http.app)
       .post('/stage/create')
       .set('cookie', csrfRes.headers['set-cookie'])
-      .send(data)
+      .send(_stage)
       .expect(200)
       .end (err, res)->
         if (err) then throw err
@@ -113,7 +118,7 @@ module.exports = (->
       if cb then return cb null
       return null
     _task = {}
-    extend false, _task, task, data
+    extend(false, _task, task, data)
     CSRF.get().then (csrfRes)->
       _task._csrf = csrfRes.body._csrf
       request(sails.hooks.http.app)
@@ -124,6 +129,9 @@ module.exports = (->
       .end (err, res)->
         if (err) then throw err
         if cb then cb(res.body)
+
+  generateHash = ()->
+    return Math.random().toString(36).substr(2)
 
   service
 )()

@@ -55,6 +55,6 @@ module.exports.routes = {
   '/project/specifics/:shortLink': 'ProjectController.specifics',
 
   //------------------ stage ---------------------------
-  '/stage/all/:idProject/s/:shortLink':'StageController.all'
+  '/stage/all/p/:idProject/s/:shortLink':'StageController.all'
 
 };

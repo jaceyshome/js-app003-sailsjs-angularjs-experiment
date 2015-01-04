@@ -14,8 +14,9 @@ describe "List Task", (done) ->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
       CommonHelper.createProject (result)->
-        project = result
-        CommonHelper.createStage project, (stage)->
+        createStageData = {}
+        createStageData.project = project = result
+        CommonHelper.createStage createStageData, (stage)->
           stage.tasks = []
           data =
             name: "stage 1 task 1"
@@ -30,30 +31,29 @@ describe "List Task", (done) ->
             CommonHelper.createTask data, (result)->
               stage.tasks.push result
               stages.push stage
-
-          CommonHelper.createStage project, (stage)->
-            stages.push stage
-            stage.tasks = []
-            data =
-              name: "stage 1 task 1"
-              idProject: project.id
-              idStage: stage.id
-            CommonHelper.createTask data, (result)->
-              stage.tasks.push result
-              data =
-                name: "stage 1 task 2"
-                idProject: project.id
-                idStage: stage.id
-              CommonHelper.createTask data, (result)->
-                stage.tasks.push result
+              CommonHelper.createStage createStageData, (stage)->
                 stages.push stage
-                done()
+                stage.tasks = []
+                data =
+                  name: "stage 1 task 1"
+                  idProject: project.id
+                  idStage: stage.id
+                CommonHelper.createTask data, (result)->
+                  stage.tasks.push result
+                  data =
+                    name: "stage 1 task 2"
+                    idProject: project.id
+                    idStage: stage.id
+                  CommonHelper.createTask data, (result)->
+                    stage.tasks.push result
+                    stages.push stage
+                    done()
 
   afterEach ->
     project = null
     stages = []
 
-  it "should be able to get list of tasks for a stage", (done) ->
+  it "should be able to get a list of tasks for a stage", (done) ->
     request(sails.hooks.http.app)
     .get("#{url}/#{project.id}/s/#{project.shortLink}/sg/#{stages[0].id}")
     .set('cookie', csrfRes.headers['set-cookie'])

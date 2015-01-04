@@ -8,5 +8,5 @@ module.exports = (req, res, next)->
   }, (err, result) ->
     if (err) then return res.send({ message: err })
     return res.send(400, { message: 'Bad Request'}) unless result
-    return next() if result.id is reqId and result.shortLink is req.param("shortLink")
+    return next() if result.id.toString() is reqId.toString() and result.shortLink is req.param("shortLink")
     return res.send(400, { message: 'Bad Request'})
