@@ -6,7 +6,7 @@ CommonHelper = require("../helpers/common")
 
 describe "Specify Task", (done) ->
   csrfRes = null
-  url = '/task/specifics/'
+  url = '/task/specifics'
   project = null
   stage = null
   task = null
@@ -32,7 +32,7 @@ describe "Specify Task", (done) ->
 
   it "should show task details", (done)->
     request(sails.hooks.http.app)
-    .get(url+task.id)
+    .get("#{url}/#{task.id}/sg/#{stage.id}/p/#{project.id}")
     .expect(200)
     .end (err, res)->
       res.body.should.have.property 'id'

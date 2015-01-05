@@ -34,11 +34,15 @@ module.exports.policies = {
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
+
   UserController : {
     '*': false,
+    //-------------- socket -------------------
     'subscribe':true, //TODO subscribe to all users related to this company
+    //------------------ views ----------------
     'list': true, //TODO is admin
     'details': true, //TODO is current user
+    //------------------ actions --------------
     'edit': true, //TODO is current user
     'create': true,
     'all': true, //ToDO is admin
@@ -49,10 +53,13 @@ module.exports.policies = {
 
   ProjectController : {
     '*': false,
+    //-------------- socket -------------------
     'subscribe':true,
+    //------------------ views ----------------
     'new': true,
     'list': true,
     'details': true,
+    //------------------ actions --------------
     'create': true,
     'all': true,
     'specifics': ['checkProjectExistence'],
@@ -62,14 +69,27 @@ module.exports.policies = {
 
   StageController : {
     '*': false,
+    //-------------- socket -------------------
     'subscribe':true,
-    'new': true,
-    'list': true,
-    'details': true,
-    'create': true,
+    //------------------ views ----------------
+    //------------------ actions --------------
+    'create': true, //TODO authorization
     'all': ['checkProjectExistence'],
     'specifics': ['checkStageExistence'],
     'update': ['checkStageExistence'],
     'destroy': ['checkStageExistence']
+  },
+
+  TaskController :{
+    '*': false,
+    //-------------- socket -------------------
+    'subscribe':true,
+    //------------------ views ----------------
+    //------------------ actions --------------
+    'create': true, //TODO authorization
+    'all': ['checkProjectExistence','checkStageExistence'],
+    'specifics': ['checkTaskExistence'], //TODO authorization
+    'update': ['checkTaskExistence'],
+    'destroy': ['checkTaskExistence']
   }
 };

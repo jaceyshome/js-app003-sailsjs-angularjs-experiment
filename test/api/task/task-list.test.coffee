@@ -4,7 +4,7 @@ Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 CommonHelper = require("../helpers/common")
 
-describe.only "List Task", (done) ->
+describe "List Task", (done) ->
   csrfRes = null
   url = '/task/all'
   stages = []
@@ -53,7 +53,7 @@ describe.only "List Task", (done) ->
     project = null
     stages = []
 
-  it.only "should be able to get a list of tasks for a stage", (done) ->
+  it "should be able to get a list of tasks for a stage", (done) ->
     request(sails.hooks.http.app)
     .get("#{url}/sg/#{stages[0].id}/p/#{project.id}/s/#{project.shortLink}/")
     .set('cookie', csrfRes.headers['set-cookie'])

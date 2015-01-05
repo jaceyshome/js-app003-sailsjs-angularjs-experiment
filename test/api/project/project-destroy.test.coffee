@@ -4,9 +4,9 @@ Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 CommonHelper = require("../helpers/common")
 
-describe "Destroy Project", (done) ->
+describe.only "Destroy Project", (done) ->
   csrfRes = null
-  url = '/project/destroy'
+  url = '/project/delete'
   stages = []
   project = null
 
@@ -28,14 +28,13 @@ describe "Destroy Project", (done) ->
   it "should be able to delete a project", (done) ->
     project._csrf = csrfRes.body._csrf
     request(sails.hooks.http.app)
-    .post(url)
+    .delete("#{url}/#{project.id}/s/#{project.shortLink}")
     .set('cookie', csrfRes.headers['set-cookie'])
-    .send(project)
     .expect(200)
     .end (err, res)->
       (err is null).should.be.empty
       request(sails.hooks.http.app)
-      .get("/project/specifics/"+project.shortLink)
+      .get("/project/specifics/#{project.id}/s/#{project.shortLink}")
       .expect(200)
       .end (err, res)->
         res.body.should.be.empty

@@ -9,7 +9,11 @@ module.exports = (->
       res.json task
 
   ctrl.specifics = (req, res, next) ->
-    Task.findOne(req.param('id')).exec((err, task)->
+    Task.findOne({
+      id: req.param('id')
+      idStage: req.param('idStage')
+      idProject: req.param('idProject')
+    }).exec((err, task)->
       return next(err) if err or not task
       jsonData = task
       res.json jsonData

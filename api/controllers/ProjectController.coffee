@@ -33,6 +33,7 @@ module.exports = (->
   ctrl.specifics = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
     Project.find {
+      id: req.param('id')
       shortLink:req.param('shortLink')
     } , (err, result)->
       if result.length > 1 then return res.send(400, { message: 'Bad Request.'})
@@ -57,6 +58,7 @@ module.exports = (->
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
+    console.log "destroy!!!!!!!!!", req.params.all()
     DestroyService.destroyProject req.params.all(), (err)->
       return next(err) if err
       Project.publishDestroy req.param("id"), req.socket
