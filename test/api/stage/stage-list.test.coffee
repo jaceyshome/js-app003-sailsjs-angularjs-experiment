@@ -32,8 +32,8 @@ describe "List Stage", (done) ->
     .set('cookie', csrfRes.headers['set-cookie'])
     .expect(200)
     .end (err, res)->
+      Object.prototype.toString.call(res.body).should.be.eql '[object Array]'
       results = res.body
-      res.body.should.not.be.empty
       for i in [0..results.length-1] by 1
         results[i].name.should.be.eql stages[i].name
         results[i].id.should.be.eql stages[i].id

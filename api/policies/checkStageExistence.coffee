@@ -1,12 +1,12 @@
 module.exports = (req, res, next)->
-  console.log "check stage existence!!!!!!!!!!!"
-  return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
+  reqId = req.param("id") || req.param("idStage")
+  return res.send(400, { message: 'Bad Request.'}) unless reqId
   return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")
   Stage.findOne {
-    id:req.param("id")
+    id:reqId
     idProject:req.param("idProject")
   }, (err, result) ->
     if (err) then return res.send({ message: err })
     return res.send(400, { message: 'Bad Request'}) unless result
-    return next() if result.id is req.param("id") and result.idProject is req.param("idProject")
+    return next() if result.id.toString() is reqId.toString() and result.idProject is req.param("idProject")
     return res.send(400, { message: 'Bad Request'})

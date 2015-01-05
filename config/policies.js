@@ -55,7 +55,7 @@ module.exports.policies = {
     'details': true,
     'create': true,
     'all': true,
-    'specifics': true, //TODO check project
+    'specifics': ['checkProjectExistence'],
     'update': ['checkProjectExistence'],
     'destroy': ['checkProjectExistence']
   },
@@ -68,7 +68,7 @@ module.exports.policies = {
     'details': true,
     'create': true,
     'all': ['checkProjectExistence'],
-    'specifics': true, //TODO check stage
+    'specifics': ['checkStageExistence'],
     'update': ['checkStageExistence'],
     'destroy': ['checkStageExistence']
   }
