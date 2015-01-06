@@ -55,17 +55,40 @@ describe "List Task", (done) ->
 
   it "should be able to get a list of tasks for a stage", (done) ->
     request(sails.hooks.http.app)
-    .get("#{url}/sg/#{stages[0].id}/p/#{project.id}/s/#{project.shortLink}/")
+    .get("#{url}/p/#{project.id}/s/#{project.shortLink}/sg/#{stages[0].id}")
     .set('cookie', csrfRes.headers['set-cookie'])
     .expect(200)
     .end (err, res)->
       Object.prototype.toString.call(res.body).should.be.eql '[object Array]'
       results = res.body
-      tasks = stages[0]
+      tasks = stages[0].tasks
       for i in [0..results.length-1] by 1
-        results[i].name.should.be.eql tasks[i].name
-        results[i].id.should.be.eql tasks[i].id
-        results[i].idProject.should.be.eql tasks[i].idProject
-        results[i].idStage.should.be.eql tasks[i].idStage
+        results[i].should.be.eql tasks[i]
       done()
 
+  it "should not be able to get a list of tasks for a stage without project id", (done) ->
+    request(sails.hooks.http.app)
+    .get("#{url}/#{project.shortLink}/sg/#{stages[0].id}")
+    .set('cookie', csrfRes.headers['set-cookie'])
+    .end (err, res)->
+      res.statusCode.should.not.be.eql 200
+      res.body.should.be.empty
+      done()
+
+  it "should not be able to get a list of tasks for a stage without project shortlink", (done) ->
+    request(sails.hooks.http.app)
+    .get("#{url}/p/#{project.id}/sg/#{stages[0].id}")
+    .set('cookie', csrfRes.headers['set-cookie'])
+    .end (err, res)->
+      res.statusCode.should.not.be.eql 200
+      res.body.should.be.empty
+      done()
+
+  it "should not be able to get a list of tasks for a stage without stage id", (done) ->
+    request(sails.hooks.http.app)
+    .get("#{url}/sg/#{stages[0].id}")
+    .set('cookie', csrfRes.headers['set-cookie'])
+    .end (err, res)->
+      res.statusCode.should.not.be.eql 200
+      res.body.should.be.empty
+      done()

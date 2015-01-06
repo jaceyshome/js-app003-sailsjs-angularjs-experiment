@@ -35,7 +35,7 @@ describe "Update Project", (done) ->
       res.body.should.be.empty
       if (err) then throw err
       request(sails.hooks.http.app)
-      .get('/project/specifics/'+project.shortLink)
+      .get("/project/specifics/#{project.id}/s/#{project.shortLink}")
       .expect(200)
       .end (err,res)->
         res.body.description.should.be.eql _project.description

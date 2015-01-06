@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Test Results &mdash; api</title>
+<title>Test Results &mdash; apiTest</title>
 <style type="text/css">
           html {
             height: 100%
@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">5.55 s</div>
-<h1>api: <strong><span class="total">48 total, </span><span class="ignored">2 ignored, </span><span class="passed">46 passed</span></strong>
+<div class="time">6.00 s</div>
+<h1>apiTest: <strong><span class="total">57 total, </span><span class="failed">2 failed, </span><span class="ignored">2 ignored, </span><span class="passed">53 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -591,12 +591,12 @@ jQuery.cookie = function(name, value, options) {
 <ul id="tree">
 <li xmlns="" class="level top open">
 <span><em class="time">
-<div class="time">273 ms</div>
+<div class="time">278 ms</div>
 </em>Create Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">100 ms</div>
+<div class="time">103 ms</div>
 </em><em class="status">passed</em>should be able to create a project with correct info</span>
 <ul>
 <li class="text">
@@ -606,44 +606,44 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">71 ms</div>
+<div class="time">78 ms</div>
 </em><em class="status">passed</em>should not be able to create the project without csrf</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">102 ms</div>
+<div class="time">97 ms</div>
 </em><em class="status">passed</em>should not be able to create the project without name</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">475 ms</div>
+<div class="time">478 ms</div>
 </em>Destroy Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">145 ms</div>
+<div class="time">140 ms</div>
 </em><em class="status">passed</em>should be able to delete a project</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">80 ms</div>
 </em><em class="status">passed</em>should not delete a project without csrf</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">93 ms</div>
+<div class="time">94 ms</div>
 </em><em class="status">passed</em>should not delete a project with wrong shortLink</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">83 ms</div>
 </em><em class="status">passed</em>should not delete a project without shortLink</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">81 ms</div>
 </em><em class="status">passed</em>should not delete a project without id</span>
 <ul>
 <li class="text">
@@ -655,23 +655,43 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">30 ms</div>
+<div class="time">56 ms</div>
 </em>Specify Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">21 ms</div>
+<div class="time">16 ms</div>
 </em><em class="status">passed</em>should show project details</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">9 ms</div>
+<div class="time">5 ms</div>
 </em><em class="status">passed</em>should not show project details without shortLink</span>
 <ul>
 <li class="text">
-<span class="stderr">(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:773:26)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:33:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:551:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:227:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:134:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:145:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:229:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:556:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:627:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:425:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:419:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:418:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:345:15)<br/></span>
+<span class="stderr">(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:796:26)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:33:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:548:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:224:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:131:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:142:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:226:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:553:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:624:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:422:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:416:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:415:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:354:15)<br/></span>
 </li>
 </ul>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">5 ms</div>
+</em><em class="status">passed</em>should not show project details without id</span>
+<ul>
+<li class="text">
+<span class="stderr">(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:796:26)<br/>  at process.once (events.js:185:8)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:28:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:548:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:224:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:131:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:142:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:226:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:553:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:624:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:422:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:416:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:415:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:354:15)<br/>(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:796:26)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:36:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:548:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:224:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:131:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:142:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:226:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:553:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:624:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:422:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:416:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:415:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:354:15)<br/>(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:796:26)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:39:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:548:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:224:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:131:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:142:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:226:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:553:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:624:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:422:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:416:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\async\lib\async.js:415:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:354:15)<br/></span>
+</li>
+</ul>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">15 ms</div>
+</em><em class="status">passed</em>should show empty result with wrong id</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">15 ms</div>
+</em><em class="status">passed</em>should show empty result with wrong shortLink</span>
 </li>
 </ul>
 </li>
@@ -688,62 +708,160 @@ jQuery.cookie = function(name, value, options) {
 </li>
 </ul>
 </li>
-<li class="level top open">
+<li class="level top failed open">
 <span><em class="time">
-<div class="time">550 ms</div>
+<div class="time">430 ms</div>
 </em>Update Project</span>
 <ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">129 ms</div>
-</em><em class="status">passed</em>should be able to update a project with correct info</span>
+<li class="level test failed open">
+<span><em class="time"></em><em class="status">failed</em>should be able to update a project with correct info</span>
 <ul>
 <li class="text">
-<span class="stderr">(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:773:26)<br/>  at process.once (events.js:185:8)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:28:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:551:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:227:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:134:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:145:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:229:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:556:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:627:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:425:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:419:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:418:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:345:15)<br/>(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:773:26)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:36:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:551:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:227:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:134:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:145:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:229:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:556:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:627:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:425:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:419:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:418:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:345:15)<br/>(node) warning: possible EventEmitter memory leak detected. 11 listeners added. Use emitter.setMaxListeners() to increase limit.<br/>Trace<br/>  at process.addListener (events.js:160:15)<br/>  at process.on.process.addListener (node.js:773:26)<br/>  at Sails.initialize (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\private\initialize.js:39:11)<br/>  at bound (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\lodash\dist\lodash.js:729:21)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:551:21<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:227:13<br/>  at iterate (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:134:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:145:25<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:229:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:556:34<br/>  at hooksLoaded (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:231:17)<br/>  at Object.async.whilst (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:627:13)<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\lib\app\load.js:205:13<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:425:17<br/>  at C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:419:17<br/>  at Array.forEach (native)<br/>  at _each (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:32:24)<br/>  at Object.taskComplete (C:\xampp\htdocs\js-app-003-palette\node_modules\sails\node_modules\async\lib\async.js:418:13)<br/>  at processImmediate [as _immediateCallback] (timers.js:345:15)<br/></span>
+<span class="stderr">TypeError: Cannot read property &#39;should&#39; of undefined<br/>  at C:\xampp\htdocs\js-app-003-palette\test\api\project\project-update.test.coffee:41:29<br/>  at Test.assert (C:\xampp\htdocs\js-app-003-palette\node_modules\supertest\lib\test.js:205:12)<br/>  at Server.assert (C:\xampp\htdocs\js-app-003-palette\node_modules\supertest\lib\test.js:132:12)<br/>  at Server.g (events.js:180:16)<br/>  at Server.emit (events.js:92:17)<br/>  at net.js:1277:10<br/>  at process._tickDomainCallback (node.js:486:13)<br/></span>
 </li>
 </ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">77 ms</div>
+<div class="time">78 ms</div>
 </em><em class="status">passed</em>should not be able to update the project without csrf</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">93 ms</div>
+<div class="time">94 ms</div>
 </em><em class="status">passed</em>should not be able to update the project shortLink</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">93 ms</div>
-</em><em class="status">passed</em>should not be able to update the project with wrong shortLink</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">79 ms</div>
-</em><em class="status">passed</em>should not be able to update the project without shortLink</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">79 ms</div>
-</em><em class="status">passed</em>should not be able to update the project without id</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
 </li>
 </ul>
 </li>
+<li class="level test">
+<span><em class="time">
+<div class="time">92 ms</div>
+</em><em class="status">passed</em>should not be able to update the project with wrong shortLink</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">82 ms</div>
+</em><em class="status">passed</em>should not be able to update the project without shortLink</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">84 ms</div>
+</em><em class="status">passed</em>should not be able to update the project without id</span>
+</li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">280 ms</div>
+<div class="time">292 ms</div>
 </em>Create Stage</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">109 ms</div>
+<div class="time">108 ms</div>
 </em><em class="status">passed</em>should be create one for a project</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">82 ms</div>
+</em><em class="status">passed</em>should not be done without csrf</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">102 ms</div>
+</em><em class="status">passed</em>should not be done without project id</span>
+</li>
+</ul>
+</li>
+<li class="level top open">
+<span><em class="time">
+<div class="time">394 ms</div>
+</em>Destroy Stage</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">124 ms</div>
+</em><em class="status">passed</em>should be able to delete a stage</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">109 ms</div>
+</em><em class="status">passed</em>should not be able to delete a stage without csrf</span>
+<ul>
+<li class="text">
+<span class="stdout"></span>
+</li>
+</ul>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">81 ms</div>
+</em><em class="status">passed</em>should not be able to delete a stage without idProject</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">80 ms</div>
+</em><em class="status">passed</em>should not be able to delete a stage without id</span>
+</li>
+</ul>
+</li>
+<li class="level top open">
+<span><em class="time">
+<div class="time">18 ms</div>
+</em>Specify Stage</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">18 ms</div>
+</em><em class="status">passed</em>should show stage details</span>
+</li>
+</ul>
+</li>
+<li class="level top open">
+<span><em class="time">
+<div class="time">31 ms</div>
+</em>List Stage</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">31 ms</div>
+</em><em class="status">passed</em>should be able to get a list of stages for a project</span>
+</li>
+</ul>
+</li>
+<li class="level top open">
+<span><em class="time">
+<div class="time">219 ms</div>
+</em>Update Stage</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">125 ms</div>
+</em><em class="status">passed</em>should be able to update a stage for a project</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">94 ms</div>
+</em><em class="status">passed</em>should not be able to update idProject</span>
+</li>
+</ul>
+</li>
+<li class="level top open">
+<span><em class="time">
+<div class="time">348 ms</div>
+</em>Create Task</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">94 ms</div>
+</em><em class="status">passed</em>should create one for a stage</span>
+<ul>
+<li class="text">
+<span class="stdout"></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
@@ -752,50 +870,48 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">92 ms</div>
-</em><em class="status">passed</em>should no be done without project id</span>
+<div class="time">91 ms</div>
+</em><em class="status">passed</em>should not be done without idProject</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">84 ms</div>
+</em><em class="status">passed</em>should not be done without idStage</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">396 ms</div>
-</em>Destroy Stage</span>
+<div class="time">15 ms</div>
+</em>Specify Task</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">129 ms</div>
-</em><em class="status">passed</em>should be able to delete a stage</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">109 ms</div>
-</em><em class="status">passed</em>should not be able to delete a stage without csrf</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">79 ms</div>
-</em><em class="status">passed</em>should not be able to delete a stage without idProject</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">79 ms</div>
-</em><em class="status">passed</em>should not be able to delete a stage without id</span>
+<div class="time">15 ms</div>
+</em><em class="status">passed</em>should show task details</span>
 </li>
 </ul>
 </li>
-<li class="level top open">
-<span><em class="time">
-<div class="time">20 ms</div>
-</em>Specify Stage</span>
+<li class="level top failed open">
+<span><em class="time"></em>List Task</span>
 <ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">20 ms</div>
-</em><em class="status">passed</em>should show stage details</span>
+<li class="level test failed open">
+<span><em class="time"></em><em class="status">failed</em>should be able to get a list of tasks for a stage</span>
 <ul>
 <li class="text">
-<span class="stdout"></span>
+<span class="stderr">AssertionError: expected &#39;[object Object]&#39; to equal &#39;[object Array]&#39;<br/></span>
+</li>
+<li class="text">
+<span class="stdout">Expected :<br/></span>
+</li>
+<li class="text">
+<span class="stderr">&quot;[object Array]&quot;<br/></span>
+</li>
+<li class="text">
+<span class="stdout">Actual   :<br/></span>
+</li>
+<li class="text">
+<span class="stderr">&quot;[object Object]&quot;<br/> <br/>  at Assertion.fail (C:\xampp\htdocs\js-app-003-palette\node_modules\should\lib\assertion.js:113:17)<br/>  at Assertion.prop.(anonymous function) [as eql] (C:\xampp\htdocs\js-app-003-palette\node_modules\should\lib\assertion.js:39:14)<br/>  at C:\xampp\htdocs\js-app-003-palette\test\api\task\task-list.test.coffee:62:58<br/>  at Test.assert (C:\xampp\htdocs\js-app-003-palette\node_modules\supertest\lib\test.js:205:12)<br/>  at Server.assert (C:\xampp\htdocs\js-app-003-palette\node_modules\supertest\lib\test.js:132:12)<br/>  at Server.g (events.js:180:16)<br/>  at Server.emit (events.js:92:17)<br/>  at net.js:1277:10<br/>  at process._tickDomainCallback (node.js:486:13)<br/></span>
 </li>
 </ul>
 </li>
@@ -803,52 +919,18 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">9 ms</div>
-</em>List Stage</span>
-<ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">9 ms</div>
-</em><em class="status">passed</em>should be able to get a list of stages for a project</span>
-</li>
-</ul>
-</li>
-<li class="level top open">
-<span><em class="time">
-<div class="time">222 ms</div>
-</em>Update Stage</span>
-<ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">129 ms</div>
-</em><em class="status">passed</em>should be able to update a stage for a project</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">93 ms</div>
-</em><em class="status">passed</em>should not be able to update idProject</span>
-</li>
-</ul>
-</li>
-<li class="level top open">
-<span><em class="time">
-<div class="time">2.23 s</div>
+<div class="time">2.39 s</div>
 </em>Create User</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">485 ms</div>
+<div class="time">506 ms</div>
 </em><em class="status">passed</em>should be able to create a user with correct info</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">1.42 s</div>
+<div class="time">1.57 s</div>
 </em><em class="status">passed</em>should not create the user with the same name</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">82 ms</div>
-</em><em class="status">passed</em>should not be able to create the user without csrf</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -857,45 +939,40 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">85 ms</div>
+<div class="time">75 ms</div>
+</em><em class="status">passed</em>should not be able to create the user without csrf</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">88 ms</div>
 </em><em class="status">passed</em>should not be able to create the user without email</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">83 ms</div>
+<div class="time">75 ms</div>
 </em><em class="status">passed</em>should not be able to create the user without name</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">80 ms</div>
+<div class="time">77 ms</div>
 </em><em class="status">passed</em>should not be able to create the user without password</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">438 ms</div>
+<div class="time">448 ms</div>
 </em>Destroy User</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">110 ms</div>
+<div class="time">109 ms</div>
 </em><em class="status">passed</em>should be able to delete a user</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">80 ms</div>
 </em><em class="status">passed</em>should not delete a user without csrf</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">93 ms</div>
-</em><em class="status">passed</em>should not delete a user with wrong shortLink</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">79 ms</div>
-</em><em class="status">passed</em>should not delete a user without shortLink</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -904,25 +981,40 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">94 ms</div>
+</em><em class="status">passed</em>should not delete a user with wrong shortLink</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">83 ms</div>
+</em><em class="status">passed</em>should not delete a user without shortLink</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">82 ms</div>
 </em><em class="status">passed</em>should not delete a user without id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">34 ms</div>
+<div class="time">20 ms</div>
 </em>Specify User</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">25 ms</div>
+<div class="time">16 ms</div>
 </em><em class="status">passed</em>should show user details</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">9 ms</div>
+<div class="time">4 ms</div>
 </em><em class="status">passed</em>should not show user details without shortLink</span>
+<ul>
+<li class="text">
+<span class="stdout"></span>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -941,18 +1033,28 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">589 ms</div>
+<div class="time">587 ms</div>
 </em>Update User</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">129 ms</div>
+<div class="time">125 ms</div>
 </em><em class="status">passed</em>should be able to update a user with correct info</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">80 ms</div>
+<div class="time">82 ms</div>
 </em><em class="status">passed</em>should not be able to update the user without csrf</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">125 ms</div>
+</em><em class="status">passed</em>should not be able to update the user name</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">93 ms</div>
+</em><em class="status">passed</em>should not be able to update the user with wrong shortLink</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -961,22 +1063,12 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">129 ms</div>
-</em><em class="status">passed</em>should not be able to update the user name</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">93 ms</div>
-</em><em class="status">passed</em>should not be able to update the user with wrong shortLink</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">82 ms</div>
 </em><em class="status">passed</em>should not be able to update the user without shortLink</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">80 ms</div>
 </em><em class="status">passed</em>should not be able to update the user without id</span>
 </li>
 </ul>
@@ -985,7 +1077,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by PhpStorm on 2/01/15 1:12 PM</p>
+<p>Generated by PhpStorm on 6/01/15 2:57 PM</p>
 </div>
 </body>
 </html>

@@ -40,3 +40,6 @@ describe "List Stage", (done) ->
         results[i].idProject.should.be.eql stages[i].idProject
       done()
 
+  it "should not be able to get a list of stages for a project without project id"
+
+  it "should not be able to get a list of stages for a project without project shortLink"

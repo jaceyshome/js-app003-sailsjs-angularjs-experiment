@@ -20,7 +20,10 @@ module.exports = (->
     )
 
   ctrl.all = (req, res, next) ->
-    Task.find (err, results)->
+    Task.find {
+      idStage: req.param('idStage')
+      idProject: req.param('idProject')
+    },(err, results)->
       return next(err) if err or not results
       res.json results
 
