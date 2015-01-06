@@ -40,6 +40,21 @@ describe "List Stage", (done) ->
         results[i].idProject.should.be.eql stages[i].idProject
       done()
 
-  it "should not be able to get a list of stages for a project without project id"
+  it "should not be able to get a list of stages for a project without project id", (done)->
+    request(sails.hooks.http.app)
+    .get("#{url}/#{project.shortLink}")
+    .set('cookie', csrfRes.headers['set-cookie'])
+    .end (err, res)->
+      res.statusCode.should.not.be.eql 200
+      res.body.should.be.empty
+      done()
 
-  it "should not be able to get a list of stages for a project without project shortLink"
+
+  it "should not be able to get a list of stages for a project without project shortLink",(done)->
+    request(sails.hooks.http.app)
+    .get("#{url}/#{project.id}")
+    .set('cookie', csrfRes.headers['set-cookie'])
+    .end (err, res)->
+      res.statusCode.should.not.be.eql 200
+      res.body.should.be.empty
+      done()
