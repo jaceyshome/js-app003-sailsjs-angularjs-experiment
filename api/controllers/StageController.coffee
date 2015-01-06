@@ -9,7 +9,12 @@ module.exports = (->
       res.json stage
 
   ctrl.specifics = (req, res, next) ->
-    Stage.findOne(req.param('id')).exec((err, stage)->
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
+    Stage.findOne({
+      id: req.param('id')
+      idProject: req.param('idProject')
+    }).exec((err, stage)->
       return next(err) if err or not stage
       res.json stage
     )
@@ -28,7 +33,10 @@ module.exports = (->
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    Stage.destroy req.param("id"), (err) ->
+    Stage.destroy {
+      id: req.param("id")
+      idProject: req.param("idProject")
+    }, (err) ->
       return next(err) if err
       Stage.publishDestroy req.param("id"), req.socket
       res.send 200

@@ -8,16 +8,21 @@ describe "Update Stage", (done) ->
   csrfRes = null
   url = '/stage/update/'
   stage = null
+  project = null
 
   beforeEach (done)->
     CSRF.get().then (_csrfRes)->
       csrfRes = _csrfRes
-      CommonHelper.createProjectStage (result)->
-        stage = result
-        done()
+      CommonHelper.createProject (result)->
+        data = {}
+        data.project = project = result
+        CommonHelper.createStage data, (result)->
+          stage = result
+          done()
 
   afterEach ->
     stage = null
+    project = null
 
   it "should be able to update a stage for a project", (done) ->
     _stage = JSON.parse(JSON.stringify(stage))
@@ -31,7 +36,7 @@ describe "Update Stage", (done) ->
       res.body.should.be.empty
       if (err) then throw err
       request(sails.hooks.http.app)
-      .get('/stage/specifics/'+stage.id)
+      .get("/stage/specifics/#{stage.id}/p/#{project.id}")
       .expect(200)
       .end (err,res)->
         res.body.name.should.be.eql _stage.name
@@ -47,4 +52,5 @@ describe "Update Stage", (done) ->
     .send(_stage)
     .expect(400)
     .end (err, res)->
+      res.body.message.should.be.eql "Bad Request."
       done()

@@ -9,7 +9,7 @@ module.exports = (req, res, next)->
     idStage:req.param("idStage")
   }, (err, result) ->
     if (err) then return res.send({ message: err })
-    return res.send(400, { message: 'Bad Request'}) unless result
+    return res.send(400, { message: 'Bad Request.'}) unless result
     if result.id.toString() is reqId.toString() and result.idProject.toString() is req.param("idProject").toString() and result.idStage.toString() is req.param("idStage").toString()
       return next()
-    return res.send(400, { message: 'Bad Request'})
+    return res.send(400, { message: 'Bad Request.'})
