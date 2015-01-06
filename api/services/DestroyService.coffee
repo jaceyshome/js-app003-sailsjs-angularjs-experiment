@@ -20,8 +20,11 @@ module.exports = (->
       return handleResult(null,true,cb)
 
   destroyProject = (project, cb)->
+    return handleResult('Bad Request', true, cb) unless project.id
+    return handleResult('Bad Request', true, cb) unless project.shortLink
     Project.destroy {
       id:project.id
+      shortLink: project.shortLink
     }, (err)->
       if err then return handleResult(err,true,cb)
       return handleResult(null,true,cb)

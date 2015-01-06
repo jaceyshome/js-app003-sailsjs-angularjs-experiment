@@ -42,7 +42,7 @@ module.exports.routes = {
   '/signup':{view:'app'},
   '/home':{view:'app'},
 
-  //----------------- user -----------------------------
+  //----------------- User -----------------------------
   //------------------- views --------------------------
   '/user':{view:'app'},
   '/user/details/:shortLink': 'UserController.details',
@@ -50,16 +50,15 @@ module.exports.routes = {
   '/user/edit/:shortLink':'UserController.edit',
   '/user/specifics/:shortLink': 'UserController.specifics',
 
-  //------------------ project -------------------------
+  //------------------ Project -------------------------
   //-------------------- views -------------------------
   '/project':{view:'app'},
   '/project/details/:shortLink': 'ProjectController.details',
   //--------------------- actions -----------------------
   '/project/edit/:shortLink':'ProjectController.edit',
   '/project/specifics/:id/s/:shortLink': 'ProjectController.specifics',
-  '/project/destroy/:id/s/:shortLink': 'ProjectController.destroy',
 
-  //-------------------- stage ---------------------------
+  //-------------------- Stage ---------------------------
   //---------------------- actions -----------------------
   '/stage/all/p/:idProject/s/:shortLink':'StageController.all',
 
