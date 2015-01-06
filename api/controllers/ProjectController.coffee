@@ -33,13 +33,12 @@ module.exports = (->
   ctrl.specifics = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
     return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
-    Project.find {
+    Project.findOne {
       id: req.param('id')
       shortLink:req.param('shortLink')
     } , (err, result)->
-      if result.length > 1 then return res.send(400, { message: 'Bad Request.'})
       return next(err) if err
-      res.json result[0]
+      res.json result
 
   ctrl.all = (req, res, next) ->
     Project.find (err,projects)->
