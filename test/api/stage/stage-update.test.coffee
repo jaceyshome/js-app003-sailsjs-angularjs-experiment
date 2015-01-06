@@ -54,3 +54,5 @@ describe "Update Stage", (done) ->
     .end (err, res)->
       res.body.message.should.be.eql "Bad Request."
       done()
+
+  it "should not be able to update id"
