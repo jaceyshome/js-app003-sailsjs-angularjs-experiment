@@ -46,3 +46,8 @@ describe "Specify Task", (done) ->
       if (err) then throw err
       done()
 
+  it "should not show task details without stage id"
+
+  it "should not show task details without project id"
+
+  it "should not show task details without task id"
