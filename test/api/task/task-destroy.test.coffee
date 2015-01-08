@@ -67,7 +67,7 @@ describe "Destroy Task", (done) ->
     .end (err, res)->
       (err is null).should.be.empty
       request(sails.hooks.http.app)
-      .get("/task/specifics/#{task.id}/sg/#{stages[0].id}/p/#{project.id}")
+      .get("/task/specifics/#{task.id}/sg/#{stages[1].id}/p/#{project.id}")
       .expect(200)
       .end (err, res)->
         res.body.should.be.empty
