@@ -63,7 +63,7 @@ module.exports.routes = {
   '/stage/specifics/:id/p/:idProject':'StageController.specifics',
   '/stage/all/p/:idProject/s/:shortLink':'StageController.all',
 
-  //--------------------- task ----------------------------
+  //--------------------- Task ----------------------------
   '/task/specifics/:id/sg/:idStage/p/:idProject': 'TaskController.specifics',
   '/task/all/p/:idProject/s/:shortLink/sg/:idStage':'TaskController.all'
 };

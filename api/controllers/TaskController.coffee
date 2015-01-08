@@ -28,14 +28,21 @@ module.exports = (->
       res.json results
 
   ctrl.update = (req, res, next) ->
-    data = {}
-    Task.update req.param("id"), data, (err)->
+    Task.update {
+      id: req.param("id")
+      idProject: req.param("idProject")
+      idStage: req.param("idStage")
+    }, req.params.all(), (err, result)->
       return next(err) if err
-      Task.publishUpdate(req.param("id"), {}, req.socket)
+      Task.publishUpdate(req.param("id"), result, req.socket) #TODO task publish update
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    Task.destroy req.param("id"), (err) ->
+    Task.destroy {
+      id: req.param("id")
+      idProject: req.param("idProject")
+      idStage: req.param("idStage")
+    }, (err) ->
       return next(err) if err
       Task.publishDestroy req.param("id"), req.socket
       res.send 200

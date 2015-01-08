@@ -27,9 +27,12 @@ module.exports = (->
       res.json results
 
   ctrl.update = (req, res, next) ->
-    Stage.update req.param("id"), req.params.all(), (err)->
+    Stage.update {
+      id: req.param("id")
+      idProject: req.param("idProject")
+    }, req.params.all(), (err, result)->
       return next(err) if err
-      Stage.publishUpdate(req.param("id"), {}, req.socket)
+      Stage.publishUpdate(req.param("id"), result, req.socket) #TODO stage publish update
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
