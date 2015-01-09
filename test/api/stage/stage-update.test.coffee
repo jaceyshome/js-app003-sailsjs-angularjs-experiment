@@ -55,7 +55,7 @@ describe "Update Stage", (done) ->
       res.body.message.should.be.eql "Bad Request."
       done()
 
-  it.only "should not be able to update id", (done)->
+  it "should not be able to update id", (done)->
     _stage = JSON.parse(JSON.stringify(stage))
     _stage.name = 'update stage'
     _stage.id = 232
