@@ -4,7 +4,7 @@ Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 CommonHelper = require("../helpers/common")
 
-describe "Specify Task", (done) ->
+describe.only "Specify Task", (done) ->
   csrfRes = null
   url = '/task/specifics'
   project = null
@@ -46,8 +46,29 @@ describe "Specify Task", (done) ->
       if (err) then throw err
       done()
 
-  it "should not show task details without stage id"
+  it "should not show task details without stage id", (done)->
+    request(sails.hooks.http.app)
+    .get("#{url}/#{task.id}/p/#{project.id}")
+    .end (err, res)->
+      if (err) then throw err
+      res.body.should.be.empty
+      res.statusCode.should.not.be.eql 200
+      done()
 
-  it "should not show task details without project id"
+  it "should not show task details without project id", (done)->
+    request(sails.hooks.http.app)
+    .get("#{url}/#{task.id}/sg/#{stage.id}")
+    .end (err, res)->
+      if (err) then throw err
+      res.body.should.be.empty
+      res.statusCode.should.not.be.eql 200
+      done()
 
-  it "should not show task details without task id"
+  it "should not show task details without task id", (done)->
+    request(sails.hooks.http.app)
+    .get("#{url}/sg/#{stage.id}/p/#{project.id}")
+    .end (err, res)->
+      if (err) then throw err
+      res.body.should.be.empty
+      res.statusCode.should.not.be.eql 200
+      done()
