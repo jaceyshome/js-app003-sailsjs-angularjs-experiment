@@ -1,9 +1,31 @@
 div.container.projectDetail
   h2 {{project.name}}
-  p {{project.description}}
-  p {{project.stateId}}
-  p {{project.startDate}}
-  p {{project.endDate}}
-  p {{project.priority}}
 
-  a.btn.btn-medium.btn-primary(data-ng-click="edit()", href="javascript:void(0)") Edit
+  div
+    h3 Status
+    p current state
+    p project health
+    p project priority
+    p project status
+    p project due date
+    p project users
+
+  div
+    h3 Description
+    a(data-click-btn, data-ng-click="editDescription()") Edit
+
+  div
+    h3 Charts
+    a(data-click-btn, data-ng-click="showAllCharts()") Show all
+    ul
+      li: a(data-click-btn, data-ng-click="showChartCurrent()") Current state
+      li: a(data-click-btn, data-ng-click="showChartALL()") All states
+    ul
+      li: a(data-click-btn, data-ng-click="showBurnDownChart()") Burn down
+      li: a(data-click-btn, data-ng-click="showProgressChart()") Process
+      li: a(data-click-btn, data-ng-click="showUsersChart()") Users
+      li: a(data-click-btn, data-ng-click="showTasksChart()") Tasks
+    div.chart-container
+
+  h3 Progress
+
