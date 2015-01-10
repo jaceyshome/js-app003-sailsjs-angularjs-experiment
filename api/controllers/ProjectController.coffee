@@ -19,16 +19,8 @@ module.exports = (->
   ctrl.create = (req, res, next) ->
     Project.create req.params.all(), (err, project) ->
       return next(err) if err
-      Project.publishCreate
-        id: project.id
-        name: project.name
-      , req.socket
-      projectJson =
-        id: project.id
-        name:project.name
-        description:project.description
-        shortLink: project.shortLink
-      res.json projectJson
+      Project.publishCreate project, req.socket
+      res.json project
 
   ctrl.specifics = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")

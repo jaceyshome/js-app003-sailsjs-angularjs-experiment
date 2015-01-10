@@ -12,20 +12,50 @@ define [
     templateUrl: "common/navigation/navigation"
     link:($scope, element, attrs) ->
       $scope.projects = null
-      $scope.dropDownItems = false
+      $scope.dropDownSettings = {data: null}
+      $scope.newProjectSettings = {
+        data: {name:''}
+        visible: false
+      }
 
       init = ->
         ProjectService.listProjects().then((results)->
           $scope.projects = results
         )
 
-      #------------------------ $scope functions -------------------------
+      handleCreatingProjectAfter = (project)->
+        goToProject(project)
+
+      reset = ()->
+        $scope.dropDownSettings = {data: null}
+        $scope.newProjectSettings = {
+          data: {name:''}
+          visible: false
+        }
+
+      goToProject = (project)->
+        reset()
+        $state.go 'project.details', {id:project.id, shortLink:project.shortLink}
+        return
+
+        #------------------------ $scope functions -------------------------
       $scope.toggleProjectsList = (e)->
         return unless $scope.projects
-        if $scope.dropdownItems is $scope.projects
-          $scope.dropdownItems = null
+        if $scope.dropDownSettings.data is $scope.projects
+          $scope.dropDownSettings.data = null
         else
-          $scope.dropdownItems = $scope.projects
+          $scope.dropDownSettings.data = $scope.projects
+        $scope.dropDownSettings.visible = ($scope.dropdownItems isnt null)
+
+      $scope.selectItem = goToProject
+
+      $scope.toggleNewProjectPanel = (e)->
+        $scope.newProjectSettings.visible = !$scope.newProjectSettings.visible
+
+      $scope.createProject = ()->
+        ProjectService.createProject($scope.newProjectSettings.data).then (result)->
+          if result
+            handleCreatingProjectAfter(result)
 
       $scope.logout = ->
         CSRF.get().then (data)->

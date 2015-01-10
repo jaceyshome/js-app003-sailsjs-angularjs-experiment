@@ -7,11 +7,10 @@ define [
   appModule.factory "ProjectService", ($http, $q, CSRF, $rootScope, MessageService, $state,$sailsSocket) ->
     #----------------------------------------------------------------------private variables
     _projects = null
-    _project = null
 
     #--------------------------------------------------------------------- socket services
-    $sailsSocket.subscribe('project',(data)->
-      console.log "project msg", data
+    $sailsSocket.subscribe('project',(project)->
+      console.log "project msg", project
     )
 
     $sailsSocket.get('/project/subscribe').success(()->
@@ -48,11 +47,9 @@ define [
       deferred = $q.defer()
       CSRF.get().then (data)->
         project._csrf = data._csrf
-#        newProject =
-#          name: project.name
-#          _csrf: data._csrf
         $http.post("#{config.baseUrl}/project/create", project)
         .then (result) ->
+          _projects.push result.data
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -61,8 +58,7 @@ define [
 
     service.getProjectDetail = (project)->
       deferred = $q.defer()
-      deferred.resolve project if angular.equals project, _project
-      $http.get("#{config.baseUrl}/project/specifics/#{project.shortLink}")
+      $http.get("#{config.baseUrl}/project/specifics/#{project.id}/s/#{project.shortLink}")
       .then (result) ->
         deferred.resolve result.data
       .catch (err)->

@@ -10,7 +10,7 @@ define [
   module.config ($stateProvider)->
     $stateProvider.state "project.details",
       parent: 'project'
-      url: "/details/:shortLink"
+      url: "/details/:id/s/:shortLink"
       views:
         'projectChildView@project':
           templateUrl: "app/states/project/details/details"
@@ -18,10 +18,10 @@ define [
       resolve:
         ProjectData: ($q, $stateParams, ProjectService) ->
           deferred = $q.defer()
-          unless $stateParams.shortLink
+          unless $stateParams.shortLink and $stateParams.id
             ProjectService.goToDefault()
             deferred.resolve undefined
-          ProjectService.getProjectDetail({shortLink:$stateParams.shortLink})
+          ProjectService.getProjectDetail({id:$stateParams.id,shortLink:$stateParams.shortLink})
           .then (result)->
             deferred.resolve result
           .catch ->

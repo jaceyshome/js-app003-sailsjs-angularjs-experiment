@@ -6,10 +6,14 @@ ul.nav.nav-pills
   li: a(data-ui-sref="signup") Signup
   li: a(href="JavaScript:void(0);", data-ng-click="logout()") Logout
 
-ul.dropdown-list-container(data-ng-if="dropdownItems")
+ul.dropdown-list-container(data-ng-show="dropDownSettings.data != null")
   li: a(data-click-btn, data-ng-click="showAll()") show all
-  li: a(data-click-btn, data-ng-click="addNewItem()") new item
+  li
+    a(data-click-btn, data-ng-click="toggleNewProjectPanel($event)") new project
+    div(data-ng-show="newProjectSettings.visible")
+      input(type="text", data-ng-model="newProjectSettings.data.name", placeholder="New project name")
+      a(data-click-btn, data-ng-click="createProject()") add
   li -----------------
-  li(data-ng-repeat="item in dropdownItems")
+  li(data-ng-repeat="item in dropDownSettings.data")
     a(data-click-btn, data-ng-click="selectItem(item)") {{item.name}}
 
