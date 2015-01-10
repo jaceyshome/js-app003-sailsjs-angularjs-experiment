@@ -13,9 +13,9 @@ define [
       url: "/"
       controller:"HomeCtrl"
       resolve:
-        UsersData: ($q, UserService) ->
+        Projects: ($q, ProjectService) ->
           deferred = $q.defer()
-          UserService.listUsers()
+          ProjectService.listProjects()
           .then (result)->
             deferred.resolve result
           .catch ->

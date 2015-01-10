@@ -1,5 +1,15 @@
+.navigation
 ul.nav.nav-pills
+  li: a(data-click-btn, data-ng-click="toggleProjectsList($event)") Projects
+  li  each type group buttons
   li: a(data-ui-sref="user.list") User
-  li: a(data-ui-sref="project") Project
   li: a(data-ui-sref="signup") Signup
   li: a(href="JavaScript:void(0);", data-ng-click="logout()") Logout
+
+ul.dropdown-list-container(data-ng-if="dropdownItems")
+  li: a(data-click-btn, data-ng-click="showAll()") show all
+  li: a(data-click-btn, data-ng-click="addNewItem()") new item
+  li -----------------
+  li(data-ng-repeat="item in dropdownItems")
+    a(data-click-btn, data-ng-click="selectItem(item)") {{item.name}}
+

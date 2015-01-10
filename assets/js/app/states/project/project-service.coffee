@@ -18,8 +18,6 @@ define [
       console.log "get project subscribe"
     )
 
-
-    #----------------------------------------------------------------------public variables
     service = {}
 
     #----------------------------------------------------------------------public functions

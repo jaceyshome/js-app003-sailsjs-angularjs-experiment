@@ -2,7 +2,7 @@ define(['angular', 'model-attributes'], function(angular, modelAttributes) {
   var module;
   module = angular.module('common.validation', []);
   return module.factory('Validation', function() {
-    var ConvertStringToBoolean, checkBoolean, checkDD, checkDate, checkDateString, checkEmail, checkMM, checkMatchingField, checkMaxLength, checkMinLength, checkNumber, checkRequired, checkType, checkYYYY, generateAttributes, generateKeyWords, service, validateDate, validateDateString, validateDay, validateMonth, validateYear, _modelsAttributes;
+    var ConvertStringToBoolean, checkBoolean, checkCreditCard, checkDD, checkDate, checkDateString, checkEmail, checkIPAddress, checkMM, checkMatchingField, checkMaxLength, checkMinLength, checkNumber, checkPostCode, checkPostalAddress, checkRequired, checkType, checkYYYY, generateAttributes, generateKeyWords, service, validateDate, validateDateString, validateDay, validateMonth, validateYear, _modelsAttributes;
     console.log("validation attributes", modelAttributes);
     _modelsAttributes = modelAttributes;
     service = {};
@@ -27,6 +27,18 @@ define(['angular', 'model-attributes'], function(angular, modelAttributes) {
             return result;
           }
           if ((result = checkEmail(data, key))) {
+            return result;
+          }
+          if ((result = checkPostalAddress(data, key))) {
+            return result;
+          }
+          if ((result = checkPostCode(data, key))) {
+            return result;
+          }
+          if ((result = checkIPAddress(data, key))) {
+            return result;
+          }
+          if ((result = checkCreditCard(data, key))) {
             return result;
           }
           if ((result = checkMaxLength(data, key))) {
@@ -164,6 +176,62 @@ define(['angular', 'model-attributes'], function(angular, modelAttributes) {
       return {
         key: key,
         msg: "Invalid email"
+      };
+    };
+    checkPostCode = function(data, key) {
+      var re;
+      if (!data.attributes[key].postCode) {
+        return null;
+      }
+      re = /^\d{5,6}(?:[-\s]\d{4})?$/;
+      if (re.test(data.values[key])) {
+        return null;
+      }
+      return {
+        key: key,
+        msg: "Invalid post code"
+      };
+    };
+    checkPostalAddress = function(data, key) {
+      var re;
+      if (!data.attributes[key].postalAddress) {
+        return null;
+      }
+      re = /[a-zA-Z\d\s\-\,\#\.\+]+/;
+      if (re.test(data.values[key])) {
+        return null;
+      }
+      return {
+        key: key,
+        msg: "Invalid postal address"
+      };
+    };
+    checkIPAddress = function(data, key) {
+      var re;
+      if (!data.attributes[key].ipAddress) {
+        return null;
+      }
+      re = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]).){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]).){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/;
+      if (re.test(data.values[key])) {
+        return null;
+      }
+      return {
+        key: key,
+        msg: "Invalid IP address"
+      };
+    };
+    checkCreditCard = function(data, key) {
+      var re;
+      if (!data.attributes[key].creditCard) {
+        return null;
+      }
+      re = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$/;
+      if (re.test(data.values[key])) {
+        return null;
+      }
+      return {
+        key: key,
+        msg: "Invalid credit card number"
       };
     };
     checkRequired = function(data, key) {
