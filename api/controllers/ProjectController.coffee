@@ -12,9 +12,6 @@ module.exports = (->
   ctrl.details = (req, res, next)->
     res.view('app')
 
-  ctrl.edit= (req, res, next)->
-    res.view('app')
-
   #------------------------- crud ------------------------
   ctrl.create = (req, res, next) ->
     Project.create req.params.all(), (err, project) ->
@@ -38,16 +35,10 @@ module.exports = (->
       res.json projects
 
   ctrl.update = (req, res, next) ->
-    data =
-      name: req.param("name")
-      description: req.param("description")
-    Project.update req.param("id"), data, (err) ->
-      return next(err)  if err
-      Project.publishUpdate(req.param("id"),{
-        id: req.param("id")
-        name: req.param("name")
-      }, req.socket)
-      res.send 200
+    Project.update req.param("id"), req.params.all(), (err, results)->
+      return next(err) if err
+      Project.publishUpdate(req.param("id"), results[0], req.socket)
+      res.send results[0]
 
   ctrl.destroy = (req, res, next) ->
     DestroyService.destroyProject req.params.all(), (err)->

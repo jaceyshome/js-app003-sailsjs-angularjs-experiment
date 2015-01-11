@@ -55,7 +55,6 @@ module.exports.routes = {
   '/project':{view:'app'},
   '/project/details/:id/s/:shortLink': 'ProjectController.details',
   //--------------------- actions -----------------------
-  '/project/edit/:shortLink':'ProjectController.edit',
   '/project/specifics/:id/s/:shortLink': 'ProjectController.specifics',
 
   //-------------------- Stage ---------------------------

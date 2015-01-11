@@ -9,8 +9,10 @@ define [
     _projects = null
 
     #--------------------------------------------------------------------- socket services
-    $sailsSocket.subscribe('project',(project)->
-      console.log "project msg", project
+    $sailsSocket.subscribe('project',(res)->
+      console.log "project msg", res
+      handleCreatedProjectAfter(res.data) if res.verb is 'created'
+      handleUpdatedProjectAfter(res.data) if res.verb is 'updated'
     )
 
     $sailsSocket.get('/project/subscribe').success(()->
@@ -49,6 +51,7 @@ define [
         project._csrf = data._csrf
         $http.post("#{config.baseUrl}/project/create", project)
         .then (result) ->
+          handleCreatedProjectAfter(result)
           _projects.push result.data
           deferred.resolve result.data
         .catch (err)->
@@ -69,14 +72,10 @@ define [
     service.updateProject = (project)->
       deferred = $q.defer()
       CSRF.get().then (data)->
-        editingProject =
-          id: project.id
-          shortLink: project.shortLink
-          name: project.name
-          description: project.description
-          _csrf: data._csrf
-        $http.put("#{config.baseUrl}/project/update", editingProject)
+        project._csrf = data._csrf
+        $http.put("#{config.baseUrl}/project/update", project)
         .then (result) ->
+          handleUpdatedProjectAfter(result)
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -99,6 +98,20 @@ define [
       deferred.promise
 
   #-------------------------------------------------------------------handlers
+    handleUpdatedProjectAfter = (project)->
+      return unless _projects
+      for proj in _projects
+        if proj.id is project.id and proj.shortLink is project.shortLink
+          angular.extend proj, project
+          return
+
+    handleCreatedProjectAfter = (project)->
+      return unless _projects
+      for proj in _projects
+        if proj.id is project.id and proj.shortLink is project.shortLink
+          return
+      _projects.push project
+
     handleErrorMsg = (err)->
       MessageService.handleServerError(err)
 

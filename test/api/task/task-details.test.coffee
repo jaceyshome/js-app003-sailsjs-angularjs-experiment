@@ -4,7 +4,7 @@ Promise = require('bluebird')
 CSRF = require('../helpers/csrf')
 CommonHelper = require("../helpers/common")
 
-describe.only "Specify Task", (done) ->
+describe "Specify Task", (done) ->
   csrfRes = null
   url = '/task/specifics'
   project = null

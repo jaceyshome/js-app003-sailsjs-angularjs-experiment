@@ -16,7 +16,7 @@ define [
           templateUrl: "app/states/project/details/details"
           controller: "ProjectDetailsCtrl"
       resolve:
-        ProjectData: ($q, $stateParams, ProjectService) ->
+        Project: ($q, $stateParams, ProjectService) ->
           deferred = $q.defer()
           unless $stateParams.shortLink and $stateParams.id
             ProjectService.goToDefault()

@@ -12,7 +12,12 @@ div.container.projectDetail
 
   div
     h3 Description
-    a(data-click-btn, data-ng-click="editDescription()") Edit
+    a(data-click-btn, data-ng-click="settings.editDescription = !settings.editDescription") Edit
+    div(data-ng-hide="settings.editDescription == true") {{project.description}}
+    div(data-ng-show="settings.editDescription == true")
+      textarea(data-ng-model="project.description",placeholder="Edit project description")
+      a(data-click-btn, data-ng-click="save()") Save
+      a(data-click-btn, data-ng-click="settings.editDescription = false") Close
 
   div
     h3 Charts
