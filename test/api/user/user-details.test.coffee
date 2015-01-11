@@ -6,7 +6,7 @@ CommonHelper = require("../helpers/common")
 
 describe "Specify User", (done) ->
   csrfRes = null
-  url = '/user/specifics/'
+  url = '/user/specify/'
   user = null
 
   beforeEach (done)->

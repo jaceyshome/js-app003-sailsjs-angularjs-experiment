@@ -6,7 +6,7 @@ CommonHelper = require("../helpers/common")
 
 describe "Specify Project", (done) ->
   csrfRes = null
-  url = '/project/specifics'
+  url = '/project/specify'
   project = null
 
   beforeEach (done)->

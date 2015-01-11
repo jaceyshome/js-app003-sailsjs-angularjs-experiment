@@ -6,7 +6,7 @@ CommonHelper = require("../helpers/common")
 
 describe "Specify Task", (done) ->
   csrfRes = null
-  url = '/task/specifics'
+  url = '/task/specify'
   project = null
   stage = null
   task = null

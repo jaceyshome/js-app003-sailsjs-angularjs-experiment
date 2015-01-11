@@ -10,7 +10,6 @@ define [
     replace: true
     templateUrl: "common/panelslist/panelslist"
     link: ($scope, $element, $attrs) ->
-      console.log "$scope.settings", $scope.settings
       init = () ->
         undefined
       init()

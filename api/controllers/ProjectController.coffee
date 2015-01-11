@@ -3,9 +3,6 @@ module.exports = (->
   ctrl = {}
 
   #------------------------- views ----------------------
-  ctrl.new = (req, res, next)->
-    res.view('app')
-
   ctrl.list = (req, res, next)->
     res.view('app')
 
@@ -19,13 +16,13 @@ module.exports = (->
       Project.publishCreate project, req.socket
       res.json project
 
-  ctrl.specifics = (req, res, next) ->
+  ctrl.specify = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
     return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
-    Project.findOne {
-      id: req.param('id')
-      shortLink:req.param('shortLink')
-    } , (err, result)->
+    data =
+      id: req.param("id")
+      shortLink: req.param("shortLink")
+    ProjectService.specifyProject data, (err, result)->
       return next(err) if err
       res.json result
 

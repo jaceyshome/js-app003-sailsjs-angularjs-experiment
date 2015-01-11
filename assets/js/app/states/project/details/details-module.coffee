@@ -21,7 +21,7 @@ define [
           unless $stateParams.shortLink and $stateParams.id
             ProjectService.goToDefault()
             deferred.resolve undefined
-          ProjectService.getProjectDetail({id:$stateParams.id,shortLink:$stateParams.shortLink})
+          ProjectService.specifyProject({id:$stateParams.id,shortLink:$stateParams.shortLink})
           .then (result)->
             deferred.resolve result
           .catch ->

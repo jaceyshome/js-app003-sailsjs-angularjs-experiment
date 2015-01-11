@@ -23,7 +23,7 @@ define [
           unless $stateParams.shortLink
             UserService.goToDefault()
             return deferred.resolve undefined
-          UserService.getUserDetail({shortLink:$stateParams.shortLink})
+          UserService.specifyUser({shortLink:$stateParams.shortLink})
           .then (result)->
             deferred.resolve result
           .catch ->

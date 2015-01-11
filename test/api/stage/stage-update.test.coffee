@@ -36,7 +36,7 @@ describe "Update Stage", (done) ->
       res.body.should.be.empty
       if (err) then throw err
       request(sails.hooks.http.app)
-      .get("/stage/specifics/#{stage.id}/p/#{project.id}")
+      .get("/stage/specify/#{stage.id}/p/#{project.id}")
       .expect(200)
       .end (err,res)->
         res.body.name.should.be.eql _stage.name

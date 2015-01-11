@@ -35,7 +35,7 @@ describe "Update User", (done) ->
       res.body.should.be.empty
       if (err) then throw err
       request(sails.hooks.http.app)
-      .get('/user/specifics/'+user.shortLink)
+      .get('/user/specify/'+user.shortLink)
       .expect(200)
       .end (err,res)->
         res.body.email.should.be.eql _user.email
@@ -75,7 +75,7 @@ describe "Update User", (done) ->
       res.body.should.be.empty
       if (err) then throw err
       request(sails.hooks.http.app)
-      .get('/user/specifics/'+_user.shortLink)
+      .get('/user/specify/'+_user.shortLink)
       .expect(200)
       .end (err,res)->
         res.body.name.should.be.eql user.name

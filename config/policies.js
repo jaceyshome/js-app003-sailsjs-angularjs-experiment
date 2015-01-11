@@ -46,7 +46,7 @@ module.exports.policies = {
     'edit': true, //TODO is current user
     'create': true,
     'all': true, //ToDO is admin
-    'specifics':true, //TODO is  current user
+    'specify':true, //TODO is  current user
     'update': ['checkUserExistence'],
     'destroy': ['checkUserExistence']
   },
@@ -62,7 +62,7 @@ module.exports.policies = {
     //------------------ actions --------------
     'create': true,
     'all': true,
-    'specifics': true,
+    'specify': true,
     'update': ['checkProjectExistence'],
     'destroy': ['checkProjectExistence']
   },
@@ -75,7 +75,7 @@ module.exports.policies = {
     //------------------ actions --------------
     'create': true, //TODO authorization
     'all': ['checkProjectExistence'],
-    'specifics': true, //TODO authorization
+    'specify': true, //TODO authorization
     'update': ['checkStageExistence'],
     'destroy': ['checkStageExistence']
   },
@@ -88,7 +88,7 @@ module.exports.policies = {
     //------------------ actions --------------
     'create': true, //TODO authorization
     'all': ['checkProjectExistence','checkStageExistence'],
-    'specifics': true, //TODO authorization
+    'specify': true, //TODO authorization
     'update': ['checkTaskExistence'],
     'destroy': ['checkTaskExistence']
   }

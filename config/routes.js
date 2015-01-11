@@ -48,21 +48,21 @@ module.exports.routes = {
   '/user/details/:shortLink': 'UserController.details',
   //-------------------- actions------------------------
   '/user/edit/:shortLink':'UserController.edit',
-  '/user/specifics/:shortLink': 'UserController.specifics',
+  '/user/specify/:shortLink': 'UserController.specify',
 
   //------------------ Project -------------------------
   //-------------------- views -------------------------
   '/project':{view:'app'},
   '/project/details/:id/s/:shortLink': 'ProjectController.details',
   //--------------------- actions -----------------------
-  '/project/specifics/:id/s/:shortLink': 'ProjectController.specifics',
+  '/project/specify/:id/s/:shortLink': 'ProjectController.specify',
 
   //-------------------- Stage ---------------------------
   //---------------------- actions -----------------------
-  '/stage/specifics/:id/p/:idProject':'StageController.specifics',
+  '/stage/specify/:id/p/:idProject':'StageController.specify',
   '/stage/all/p/:idProject/s/:shortLink':'StageController.all',
 
   //--------------------- Task ----------------------------
-  '/task/specifics/:id/sg/:idStage/p/:idProject': 'TaskController.specifics',
+  '/task/specify/:id/sg/:idStage/p/:idProject': 'TaskController.specify',
   '/task/all/p/:idProject/s/:shortLink/sg/:idStage':'TaskController.all'
 };

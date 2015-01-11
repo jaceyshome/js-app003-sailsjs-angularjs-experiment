@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">7.55 s</div>
-<h1>apiTest: <strong><span class="total">82 total, </span><span class="ignored">6 ignored, </span><span class="passed">76 passed</span></strong>
+<div class="time">7.59 s</div>
+<h1>apiTest: <strong><span class="total">82 total, </span><span class="ignored">3 ignored, </span><span class="passed">79 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -591,12 +591,12 @@ jQuery.cookie = function(name, value, options) {
 <ul id="tree">
 <li xmlns="" class="level top open">
 <span><em class="time">
-<div class="time">254 ms</div>
+<div class="time">267 ms</div>
 </em>Create Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">99 ms</div>
+<div class="time">108 ms</div>
 </em><em class="status">passed</em>should be able to create a project with correct info</span>
 <ul>
 <li class="text">
@@ -611,20 +611,25 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">84 ms</div>
+<div class="time">88 ms</div>
 </em><em class="status">passed</em>should not be able to create the project without name</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">794 ms</div>
+<div class="time">856 ms</div>
 </em>Destroy Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">158 ms</div>
+<div class="time">163 ms</div>
 </em><em class="status">passed</em>should be able to delete a project</span>
+<ul>
+<li class="text">
+<span class="stderr">error: Sending 500 (&quot;Server Error&quot;) response: <br/> TypeError: Cannot set property &#39;stages&#39; of undefined<br/>  at C:\xampp\htdocs\js-app-003-palette\api\services\ProjectService.coffee:13:7<br/>  at tryCatch1 (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\util.js:45:21)<br/>  at Promise$_callHandler [as _callHandler] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:660:13)<br/>  at Promise$_settlePromiseFromHandler [as _settlePromiseFromHandler] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:675:18)<br/>  at Promise$_settlePromiseAt [as _settlePromiseAt] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:845:14)<br/>  at Promise$_settlePromises [as _settlePromises] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:988:14)<br/>  at Async$_consumeFunctionBuffer [as _consumeFunctionBuffer] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\async.js:77:12)<br/>  at Async$consumeFunctionBuffer (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\async.js:40:14)<br/>  at process._tickDomainCallback (node.js:463:13)<br/> [TypeError: Cannot set property &#39;stages&#39; of undefined]<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
@@ -633,12 +638,12 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">158 ms</div>
+<div class="time">157 ms</div>
 </em><em class="status">passed</em>should be able to delete a project and related tasks</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">139 ms</div>
 </em><em class="status">passed</em>should not delete a project without csrf</span>
 <ul>
 <li class="text">
@@ -648,17 +653,17 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">92 ms</div>
+<div class="time">93 ms</div>
 </em><em class="status">passed</em>should not delete a project with wrong shortLink</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">80 ms</div>
+<div class="time">78 ms</div>
 </em><em class="status">passed</em>should not delete a project without shortLink</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">78 ms</div>
 </em><em class="status">passed</em>should not delete a project without id</span>
 <ul>
 <li class="text">
@@ -670,12 +675,12 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">68 ms</div>
+<div class="time">64 ms</div>
 </em>Specify Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">18 ms</div>
+<div class="time">17 ms</div>
 </em><em class="status">passed</em>should show project details</span>
 <ul>
 <li class="text">
@@ -685,7 +690,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">9 ms</div>
+<div class="time">7 ms</div>
 </em><em class="status">passed</em>should not show project details without shortLink</span>
 <ul>
 <li class="text">
@@ -695,18 +700,28 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">7 ms</div>
+<div class="time">6 ms</div>
 </em><em class="status">passed</em>should not show project details without id</span>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">17 ms</div>
 </em><em class="status">passed</em>should show empty result with wrong id</span>
+<ul>
+<li class="text">
+<span class="stderr">error: Sending 500 (&quot;Server Error&quot;) response: <br/> TypeError: Cannot set property &#39;stages&#39; of undefined<br/>  at C:\xampp\htdocs\js-app-003-palette\api\services\ProjectService.coffee:13:7<br/>  at tryCatch1 (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\util.js:45:21)<br/>  at Promise$_callHandler [as _callHandler] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:660:13)<br/>  at Promise$_settlePromiseFromHandler [as _settlePromiseFromHandler] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:675:18)<br/>  at Promise$_settlePromiseAt [as _settlePromiseAt] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:845:14)<br/>  at Promise$_settlePromises [as _settlePromises] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:988:14)<br/>  at Async$_consumeFunctionBuffer [as _consumeFunctionBuffer] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\async.js:77:12)<br/>  at Async$consumeFunctionBuffer (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\async.js:40:14)<br/>  at process._tickDomainCallback (node.js:463:13)<br/> [TypeError: Cannot set property &#39;stages&#39; of undefined]<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">17 ms</div>
 </em><em class="status">passed</em>should show empty result with wrong shortLink</span>
+<ul>
+<li class="text">
+<span class="stderr">error: Sending 500 (&quot;Server Error&quot;) response: <br/> TypeError: Cannot set property &#39;stages&#39; of undefined<br/>  at C:\xampp\htdocs\js-app-003-palette\api\services\ProjectService.coffee:13:7<br/>  at tryCatch1 (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\util.js:45:21)<br/>  at Promise$_callHandler [as _callHandler] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:660:13)<br/>  at Promise$_settlePromiseFromHandler [as _settlePromiseFromHandler] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:675:18)<br/>  at Promise$_settlePromiseAt [as _settlePromiseAt] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:845:14)<br/>  at Promise$_settlePromises [as _settlePromises] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\promise.js:988:14)<br/>  at Async$_consumeFunctionBuffer [as _consumeFunctionBuffer] (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\async.js:77:12)<br/>  at Async$consumeFunctionBuffer (C:\xampp\htdocs\js-app-003-palette\node_modules\bluebird\js\main\async.js:40:14)<br/>  at process._tickDomainCallback (node.js:463:13)<br/> [TypeError: Cannot set property &#39;stages&#39; of undefined]<br/></span>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -725,22 +740,22 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">553 ms</div>
+<div class="time">545 ms</div>
 </em>Update Project</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">127 ms</div>
+<div class="time">123 ms</div>
 </em><em class="status">passed</em>should be able to update a project with correct info</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">82 ms</div>
+<div class="time">78 ms</div>
 </em><em class="status">passed</em>should not be able to update the project without csrf</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">94 ms</div>
+<div class="time">93 ms</div>
 </em><em class="status">passed</em>should not be able to update the project shortLink</span>
 </li>
 <li class="level test">
@@ -750,7 +765,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">79 ms</div>
 </em><em class="status">passed</em>should not be able to update the project without shortLink</span>
 </li>
 <li class="level test">
@@ -767,45 +782,50 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">280 ms</div>
+<div class="time">272 ms</div>
 </em>Create Stage</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">111 ms</div>
+<div class="time">109 ms</div>
 </em><em class="status">passed</em>should be create one for a project</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">76 ms</div>
 </em><em class="status">passed</em>should not be done without csrf</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">90 ms</div>
+<div class="time">87 ms</div>
 </em><em class="status">passed</em>should not be done without project id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">540 ms</div>
+<div class="time">537 ms</div>
 </em>Destroy Stage</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">128 ms</div>
+<div class="time">127 ms</div>
 </em><em class="status">passed</em>should be able to delete a stage</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">143 ms</div>
+<div class="time">142 ms</div>
 </em><em class="status">passed</em>should be able to delete a stage with related tasks</span>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">109 ms</div>
 </em><em class="status">passed</em>should not be able to delete a stage without csrf</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">80 ms</div>
+</em><em class="status">passed</em>should not be able to delete a stage without idProject</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -814,40 +834,30 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">80 ms</div>
-</em><em class="status">passed</em>should not be able to delete a stage without idProject</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">80 ms</div>
+<div class="time">79 ms</div>
 </em><em class="status">passed</em>should not be able to delete a stage without id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">36 ms</div>
+<div class="time">30 ms</div>
 </em>Specify Stage</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">19 ms</div>
+<div class="time">17 ms</div>
 </em><em class="status">passed</em>should show stage details</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">9 ms</div>
+<div class="time">7 ms</div>
 </em><em class="status">passed</em>should not show stage details without project id</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">8 ms</div>
+<div class="time">6 ms</div>
 </em><em class="status">passed</em>should not show stage details without stage id</span>
-<ul>
-<li class="text">
-<span class="stdout"></span>
-</li>
-</ul>
 </li>
 </ul>
 </li>
@@ -858,13 +868,18 @@ jQuery.cookie = function(name, value, options) {
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">34 ms</div>
+<div class="time">33 ms</div>
 </em><em class="status">passed</em>should be able to get a list of stages for a project</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">7 ms</div>
+<div class="time">8 ms</div>
 </em><em class="status">passed</em>should not be able to get a list of stages for a project without project id</span>
+<ul>
+<li class="text">
+<span class="stdout"></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
@@ -875,7 +890,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">312 ms</div>
+<div class="time">311 ms</div>
 </em>Update Stage</span>
 <ul>
 <li class="level test">
@@ -890,20 +905,30 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">93 ms</div>
+<div class="time">92 ms</div>
 </em><em class="status">passed</em>should not be able to update id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">350 ms</div>
+<div class="time">345 ms</div>
 </em>Create Task</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">94 ms</div>
+<div class="time">92 ms</div>
 </em><em class="status">passed</em>should create one for a stage</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">81 ms</div>
+</em><em class="status">passed</em>should not be done without csrf</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">89 ms</div>
+</em><em class="status">passed</em>should not be done without idProject</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -912,29 +937,19 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
-</em><em class="status">passed</em>should not be done without csrf</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">94 ms</div>
-</em><em class="status">passed</em>should not be done without idProject</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">84 ms</div>
+<div class="time">83 ms</div>
 </em><em class="status">passed</em>should not be done without idStage</span>
 </li>
 </ul>
 </li>
 <li class="level top ignored open">
 <span><em class="time">
-<div class="time">447 ms</div>
+<div class="time">441 ms</div>
 </em>Destroy Task</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">127 ms</div>
+<div class="time">126 ms</div>
 </em><em class="status">passed</em>should be able to delete a task</span>
 </li>
 <li class="level test ignored open">
@@ -952,8 +967,13 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">82 ms</div>
+<div class="time">79 ms</div>
 </em><em class="status">passed</em>should not be able to delete a task without idProject</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">78 ms</div>
+</em><em class="status">passed</em>should not be able to delete a task without idStage</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -962,19 +982,14 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">82 ms</div>
-</em><em class="status">passed</em>should not be able to delete a task without idStage</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">80 ms</div>
 </em><em class="status">passed</em>should not be able to delete a task without id</span>
 </li>
 </ul>
 </li>
-<li class="level top ignored open">
+<li class="level top open">
 <span><em class="time">
-<div class="time">17 ms</div>
+<div class="time">36 ms</div>
 </em>Specify Task</span>
 <ul>
 <li class="level test">
@@ -982,46 +997,32 @@ jQuery.cookie = function(name, value, options) {
 <div class="time">17 ms</div>
 </em><em class="status">passed</em>should show task details</span>
 </li>
-<li class="level test ignored open">
-<span><em class="time"></em><em class="status">ignored</em>should not show task details without stage id</span>
-<ul>
-<li class="text">
-<span class="stdout">Pending test &#39;should not show task details without stage id&#39;<br/></span>
+<li class="level test">
+<span><em class="time">
+<div class="time">7 ms</div>
+</em><em class="status">passed</em>should not show task details without stage id</span>
 </li>
-</ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">6 ms</div>
+</em><em class="status">passed</em>should not show task details without project id</span>
 </li>
-<li class="level test ignored open">
-<span><em class="time"></em><em class="status">ignored</em>should not show task details without project id</span>
-<ul>
-<li class="text">
-<span class="stdout">Pending test &#39;should not show task details without project id&#39;<br/></span>
-</li>
-</ul>
-</li>
-<li class="level test ignored open">
-<span><em class="time"></em><em class="status">ignored</em>should not show task details without task id</span>
-<ul>
-<li class="text">
-<span class="stdout">Pending test &#39;should not show task details without task id&#39;<br/></span>
-</li>
-</ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">6 ms</div>
+</em><em class="status">passed</em>should not show task details without task id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">74 ms</div>
+<div class="time">69 ms</div>
 </em>List Task</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">49 ms</div>
+<div class="time">48 ms</div>
 </em><em class="status">passed</em>should be able to get a list of tasks for a stage</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">9 ms</div>
-</em><em class="status">passed</em>should not be able to get a list of tasks for a stage without project id</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -1030,40 +1031,45 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">8 ms</div>
+<div class="time">7 ms</div>
+</em><em class="status">passed</em>should not be able to get a list of tasks for a stage without project id</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">7 ms</div>
 </em><em class="status">passed</em>should not be able to get a list of tasks for a stage without project shortlink</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">8 ms</div>
+<div class="time">7 ms</div>
 </em><em class="status">passed</em>should not be able to get a list of tasks for a stage without stage id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">515 ms</div>
+<div class="time">516 ms</div>
 </em>Update Task</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">126 ms</div>
+<div class="time">127 ms</div>
 </em><em class="status">passed</em>should be able to update a task for a stage</span>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">109 ms</div>
 </em><em class="status">passed</em>should not be able to update a task without csrf</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">93 ms</div>
-</em><em class="status">passed</em>should not be able to update idProject</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
 </li>
 </ul>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">94 ms</div>
+</em><em class="status">passed</em>should not be able to update idProject</span>
 </li>
 <li class="level test">
 <span><em class="time">
@@ -1072,30 +1078,25 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">94 ms</div>
+<div class="time">93 ms</div>
 </em><em class="status">passed</em>should not be able to update id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">2.21 s</div>
+<div class="time">2.19 s</div>
 </em>Create User</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">466 ms</div>
+<div class="time">471 ms</div>
 </em><em class="status">passed</em>should be able to create a user with correct info</span>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">1.40 s</div>
 </em><em class="status">passed</em>should not create the user with the same name</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">82 ms</div>
-</em><em class="status">passed</em>should not be able to create the user without csrf</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -1104,24 +1105,29 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">96 ms</div>
+<div class="time">69 ms</div>
+</em><em class="status">passed</em>should not be able to create the user without csrf</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">84 ms</div>
 </em><em class="status">passed</em>should not be able to create the user without email</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">84 ms</div>
 </em><em class="status">passed</em>should not be able to create the user without name</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">86 ms</div>
+<div class="time">83 ms</div>
 </em><em class="status">passed</em>should not be able to create the user without password</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">439 ms</div>
+<div class="time">444 ms</div>
 </em>Destroy User</span>
 <ul>
 <li class="level test">
@@ -1131,18 +1137,8 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">79 ms</div>
 </em><em class="status">passed</em>should not delete a user without csrf</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">96 ms</div>
-</em><em class="status">passed</em>should not delete a user with wrong shortLink</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">78 ms</div>
-</em><em class="status">passed</em>should not delete a user without shortLink</span>
 <ul>
 <li class="text">
 <span class="stdout"></span>
@@ -1151,14 +1147,24 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">93 ms</div>
+</em><em class="status">passed</em>should not delete a user with wrong shortLink</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">80 ms</div>
+</em><em class="status">passed</em>should not delete a user without shortLink</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">83 ms</div>
 </em><em class="status">passed</em>should not delete a user without id</span>
 </li>
 </ul>
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">26 ms</div>
+<div class="time">25 ms</div>
 </em>Specify User</span>
 <ul>
 <li class="level test">
@@ -1168,8 +1174,13 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">8 ms</div>
+<div class="time">7 ms</div>
 </em><em class="status">passed</em>should not show user details without shortLink</span>
+<ul>
+<li class="text">
+<span class="stdout"></span>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -1188,27 +1199,22 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top open">
 <span><em class="time">
-<div class="time">583 ms</div>
+<div class="time">591 ms</div>
 </em>Update User</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">127 ms</div>
+<div class="time">126 ms</div>
 </em><em class="status">passed</em>should be able to update a user with correct info</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">82 ms</div>
 </em><em class="status">passed</em>should not be able to update the user without csrf</span>
-<ul>
-<li class="text">
-<span class="stdout"></span>
-</li>
-</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">127 ms</div>
+<div class="time">126 ms</div>
 </em><em class="status">passed</em>should not be able to update the user name</span>
 </li>
 <li class="level test">
@@ -1218,12 +1224,17 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">79 ms</div>
+<div class="time">81 ms</div>
 </em><em class="status">passed</em>should not be able to update the user without shortLink</span>
+<ul>
+<li class="text">
+<span class="stdout"></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">78 ms</div>
+<div class="time">82 ms</div>
 </em><em class="status">passed</em>should not be able to update the user without id</span>
 </li>
 </ul>
@@ -1232,7 +1243,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by PhpStorm on 10/01/15 10:52 AM</p>
+<p>Generated by PhpStorm on 12/01/15 12:05 AM</p>
 </div>
 </body>
 </html>

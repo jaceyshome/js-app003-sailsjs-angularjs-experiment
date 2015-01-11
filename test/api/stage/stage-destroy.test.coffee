@@ -63,7 +63,7 @@ describe "Destroy Stage", (done) ->
     .end (err, res)->
       (err is null).should.be.empty
       request(sails.hooks.http.app)
-      .get("/stage/specifics/#{stages[0].id}/p/#{project.id}")
+      .get("/stage/specify/#{stages[0].id}/p/#{project.id}")
       .expect(200)
       .end (err, res)->
         res.body.should.be.empty

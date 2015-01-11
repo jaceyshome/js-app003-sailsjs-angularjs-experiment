@@ -8,7 +8,7 @@ module.exports = (->
       Stage.publishCreate stage, req.socket
       res.json stage
 
-  ctrl.specifics = (req, res, next) ->
+  ctrl.specify = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")
     return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
     Stage.findOne({

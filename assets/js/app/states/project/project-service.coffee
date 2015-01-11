@@ -2,7 +2,7 @@ define [
   'angular'
   'angular_resource'
   'app/config'
-], (angular,angular_resource, config, csrf) ->
+], (angular,angular_resource, config) ->
   appModule = angular.module 'app.states.project.service', []
   appModule.factory "ProjectService", ($http, $q, CSRF, $rootScope, MessageService, $state,$sailsSocket) ->
     #------------------------------------------------------------------ private variables
@@ -52,9 +52,9 @@ define [
           deferred.resolve null
       deferred.promise
 
-    service.getProjectDetail = (project)->
+    service.specifyProject = (project)->
       deferred = $q.defer()
-      $http.get("#{config.baseUrl}/project/specifics/#{project.id}/s/#{project.shortLink}")
+      $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
       .then (result) ->
         deferred.resolve handleGetProjectDetailAfter(result.data)
       .catch (err)->
@@ -90,7 +90,13 @@ define [
           return deferred.resolve null
       deferred.promise
 
-  #-------------------------------------------------------------------handlers
+    service.handleUpdatedStage = (stage)->
+      console.log "handleUpdatedStage", stage
+
+    service.handleCreatedStage = (stage)->
+      console.log "handleCreatedStage", stage
+
+    #-------------------------------------------------------------------handlers
     handleUpdatedProjectAfter = (project)->
       return unless _projects
       for proj in _projects

@@ -6,7 +6,7 @@ CommonHelper = require("../helpers/common")
 
 describe "Specify Stage", (done) ->
   csrfRes = null
-  url = '/stage/specifics'
+  url = '/stage/specify'
   stage = null
   project = null
 

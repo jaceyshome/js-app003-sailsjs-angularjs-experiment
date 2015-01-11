@@ -62,7 +62,7 @@ describe "Destroy Project", (done) ->
     .end (err, res)->
       (err is null).should.be.empty
       request(sails.hooks.http.app)
-      .get("/project/specifics/#{project.id}/s/#{project.shortLink}")
+      .get("/project/specify/#{project.id}/s/#{project.shortLink}")
       .expect(200)
       .end (err, res)->
         res.body.should.be.empty

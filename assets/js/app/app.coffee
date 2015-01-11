@@ -19,6 +19,8 @@ define [
   'app/states/project/project-ctrl'
   'app/states/login/login-ctrl'
   'app/states/signup/signup-ctrl'
+  'app/states/project/project-service'
+  'app/states/stage/stage-service'
 ], ->
   module = angular.module 'app', [
     'ui.router'
@@ -38,6 +40,8 @@ define [
     'app.states.signup'
     'app.states.login'
     'app.states.project'
+    'app.states.project.service'
+    'app.states.stage.service'
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)

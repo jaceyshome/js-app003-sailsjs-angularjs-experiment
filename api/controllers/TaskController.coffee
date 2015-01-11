@@ -8,7 +8,7 @@ module.exports = (->
       Task.publishCreate task, req.socket
       res.json task
 
-  ctrl.specifics = (req, res, next) ->
+  ctrl.specify = (req, res, next) ->
     Task.findOne({
       id: req.param('id')
       idStage: req.param('idStage')

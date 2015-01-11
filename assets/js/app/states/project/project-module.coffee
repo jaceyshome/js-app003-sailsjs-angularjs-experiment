@@ -5,8 +5,6 @@ define [
   module = angular.module 'app.states.project', [
     'ui.router'
     'templates'
-    'app.states.project.service'
-    'app.states.project.new'
     'app.states.project.list'
     'app.states.project.details'
   ]

@@ -3,7 +3,7 @@ define [
   'app/states/project/details/details-module'
 ], ->
   module = angular.module 'app.states.project.details'
-  module.controller 'ProjectDetailsCtrl', ($scope, $state, Project, ProjectService) ->
+  module.controller 'ProjectDetailsCtrl', ($scope, $state, Project, ProjectService, StageService) ->
     $scope.project = Project
     $scope.editProject = angular.copy Project
     $scope.settings =
@@ -30,6 +30,27 @@ define [
     $scope.cancelEditing = (key)->
       $scope.editProject[key] = $scope.project[key]
       reset()
+
+    $scope.addStage = ()->
+      $scope.editProject.stages = [] unless $scope.editProject.stages
+      StageService.createStage({
+        "idProject": $scope.editProject.id
+        "name": "new stage"
+        "tasks": []
+      })
+
+    $scope.remove = (scope)->
+      scope.remove()
+
+    $scope.toggle = (scope)->
+      scope.toggle()
+
+    $scope.newTask = (scope)->
+      nodeData = scope.$modelValue
+      nodeData.tasks.push({
+        name: 'new item'
+        tasks: []
+      })
 
     #----------------------------- init() ---------------------------------
     init()

@@ -69,7 +69,7 @@ describe "Update Task", (done) ->
       res.body.should.be.empty
       if (err) then throw err
       request(sails.hooks.http.app)
-      .get("/task/specifics/#{_task.id}/sg/#{stages[1].id}/p/#{project.id}")
+      .get("/task/specify/#{_task.id}/sg/#{stages[1].id}/p/#{project.id}")
       .expect(200)
       .end (err,res)->
         res.body.name.should.be.eql _task.name

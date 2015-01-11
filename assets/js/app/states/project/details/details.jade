@@ -10,13 +10,7 @@ div.container.projectDetail
 
   div
     h3 Status
-    p current state
-    p project health
-    p project priority
-    p project status
-    p project start date
-    p project due date
-    p project users
+    p current state, project health, project priority, project status, project start date, project due date, project users
 
   div
     h3 Description
@@ -44,17 +38,13 @@ div.container.projectDetail
   div
     h3 Progress
     a.btn.btn-medium.btn-primary(data-ng-click="addStage()", href="javascript:void(0)") Add Stage
-
-    .row(data-ng-if="project.stages.length>0")
-      .col-md-6
-        div(ui-tree='ui-tree')
-          ol(ui-tree-nodes='', ng-model='project.stages')
-            li(ng-repeat='task in project.stages', ui-tree-node='ui-tree-node', ng-include="'common/stagelist/stagelist'")
-
-    a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit
+    div(data-ng-if="editProject.stages.length>0")
+      div(data-ui-tree)
+        ol(ui-tree-nodes, ng-model='editProject.stages')
+          li(ng-repeat='task in editProject.stages', data-ui-tree-node, data-ng-include="'common/uitreelist/uitreelist'")
 
     h3 Data binding
     .row
     .col-sm-6
-      pre.code {{project | json}}
+      pre.code {{editProject | json}}
 
