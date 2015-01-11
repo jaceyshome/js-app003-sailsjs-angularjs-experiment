@@ -37,7 +37,8 @@ define [
         "idProject": $scope.editProject.id
         "name": "new stage"
         "tasks": []
-      })
+      }).then (result)->
+        $scope.editProject.stages.push result
 
     $scope.remove = (scope)->
       scope.remove()

@@ -83,10 +83,10 @@ define [
 
     #-------------------------------------------------------------------handlers
     handleUpdatedStageAfter = (stage)->
-      ProjectService.handleUpdatedStage(stage)
+      ProjectService.handleUpdatedStageAfter(stage)
 
     handleCreatedStageAfter = (stage)->
-      ProjectService.handleCreatedStage(stage)
+      ProjectService.handleCreatedStageAfter(stage)
 
     handleGetStageDetailAfter = (project)->
       return unless _projects
