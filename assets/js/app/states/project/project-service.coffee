@@ -5,10 +5,10 @@ define [
 ], (angular,angular_resource, config, csrf) ->
   appModule = angular.module 'app.states.project.service', []
   appModule.factory "ProjectService", ($http, $q, CSRF, $rootScope, MessageService, $state,$sailsSocket) ->
-    #----------------------------------------------------------------------private variables
-    _projects = null
+    #------------------------------------------------------------------ private variables
+    _projects = null #All projects data should be saved here
 
-    #--------------------------------------------------------------------- socket services
+    #------------------------------------------------------------------ socket services
     $sailsSocket.subscribe('project',(res)->
       console.log "project msg", res
       handleCreatedProjectAfter(res.data) if res.verb is 'created'
@@ -21,15 +21,9 @@ define [
 
     service = {}
 
-    #----------------------------------------------------------------------public functions
+    #------------------------------------------------------------------- public functions
     service.goToDefault = ()->
       $state.go '/'
-
-    service.getProject = ()->
-      _project
-
-    service.setProject = (project)->
-      _project = project
 
     service.listProjects = ()->
       deferred = $q.defer()
@@ -51,7 +45,7 @@ define [
         project._csrf = data._csrf
         $http.post("#{config.baseUrl}/project/create", project)
         .then (result) ->
-          handleCreatedProjectAfter(result)
+          handleCreatedProjectAfter(result.data)
           _projects.push result.data
           deferred.resolve result.data
         .catch (err)->
@@ -63,7 +57,7 @@ define [
       deferred = $q.defer()
       $http.get("#{config.baseUrl}/project/specifics/#{project.id}/s/#{project.shortLink}")
       .then (result) ->
-        deferred.resolve result.data
+        deferred.resolve handleGetProjectDetailAfter(result.data)
       .catch (err)->
         handleErrorMsg(err)
         deferred.resolve null
@@ -75,7 +69,7 @@ define [
         project._csrf = data._csrf
         $http.put("#{config.baseUrl}/project/update", project)
         .then (result) ->
-          handleUpdatedProjectAfter(result)
+          handleUpdatedProjectAfter(result.data)
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -111,6 +105,13 @@ define [
         if proj.id is project.id and proj.shortLink is project.shortLink
           return
       _projects.push project
+
+    handleGetProjectDetailAfter = (project)->
+      return unless _projects
+      for proj in _projects
+        if proj.id is project.id and proj.shortLink is project.shortLink
+          angular.extend proj, project
+          return proj
 
     handleErrorMsg = (err)->
       MessageService.handleServerError(err)

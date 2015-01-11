@@ -4,15 +4,15 @@ define [
 ], ->
   module = angular.module 'app.states.project.details'
   module.controller 'ProjectDetailsCtrl', ($scope, $state, Project, ProjectService) ->
-    $scope.project = angular.copy Project #a copy of the project
+    $scope.project = Project
+    $scope.editProject = angular.copy Project
     $scope.settings =
       editDescription: false
 
     init = ->
 
-
     handleUpdatingProjectAfter = (result)->
-      $scope.project = angular.copy result
+      $scope.editProject = angular.copy result
       reset()
 
     reset = ()->
@@ -21,13 +21,14 @@ define [
 
     #----------------------------- $scope functions -----------------------
     $scope.save = ()->
-      ProjectService.updateProject($scope.project).then((result)->
+      ProjectService.updateProject($scope.editProject).then((result)->
         if result then handleUpdatingProjectAfter(result)
       ).catch(()->
         console.log "Server Error"
       )
 
-
+    $scope.cancelEditing = (key)->
+      $scope.editProject[key] = $scope.project[key]
 
     #----------------------------- init() ---------------------------------
     init()
