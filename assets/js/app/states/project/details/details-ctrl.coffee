@@ -7,7 +7,7 @@ define [
     $scope.project = Project
     $scope.editProject = angular.copy Project
     $scope.settings =
-      editDescription: false
+      editKey: null
 
     init = ->
 
@@ -17,7 +17,7 @@ define [
 
     reset = ()->
       $scope.settings =
-        editDescription: false
+        editKey: null
 
     #----------------------------- $scope functions -----------------------
     $scope.save = ()->
@@ -29,6 +29,7 @@ define [
 
     $scope.cancelEditing = (key)->
       $scope.editProject[key] = $scope.project[key]
+      reset()
 
     #----------------------------- init() ---------------------------------
     init()

@@ -1,5 +1,12 @@
 div.container.projectDetail
-  h2 {{project.name}}
+  div
+    div(data-ng-hide="settings.editKey == 'name'")
+      h2 {{project.name}}
+      a(data-click-btn, data-ng-click="settings.editKey = 'name'") Edit
+    div(data-ng-show="settings.editKey == 'name'")
+      textarea(data-ng-model="editProject.name",placeholder="Edit name description")
+      a(data-click-btn, data-ng-click="save()") Save
+      a(data-click-btn, data-ng-click="cancelEditing('name')") Close
 
   div
     h3 Status
@@ -7,14 +14,16 @@ div.container.projectDetail
     p project health
     p project priority
     p project status
+    p project start date
     p project due date
     p project users
 
   div
     h3 Description
-    a(data-click-btn, data-ng-click="settings.editDescription = !settings.editDescription") Edit
-    div(data-ng-hide="settings.editDescription == true") {{project.description}}
-    div(data-ng-show="settings.editDescription == true")
+    div(data-ng-hide="settings.editKey == 'description'")
+      a(data-click-btn, data-ng-click="settings.editKey = 'description'") Edit
+      div {{project.description}}
+    div(data-ng-show="settings.editKey == 'description'")
       textarea(data-ng-model="editProject.description",placeholder="Edit project description")
       a(data-click-btn, data-ng-click="save()") Save
       a(data-click-btn, data-ng-click="cancelEditing('description')") Close
@@ -32,5 +41,20 @@ div.container.projectDetail
       li: a(data-click-btn, data-ng-click="showTasksChart()") Tasks
     div.chart-container
 
-  h3 Progress
+  div
+    h3 Progress
+    a.btn.btn-medium.btn-primary(data-ng-click="addStage()", href="javascript:void(0)") Add Stage
+
+    .row(data-ng-if="project.stages.length>0")
+      .col-md-6
+        div(ui-tree='ui-tree')
+          ol(ui-tree-nodes='', ng-model='project.stages')
+            li(ng-repeat='task in project.stages', ui-tree-node='ui-tree-node', ng-include="'common/stagelist/stagelist'")
+
+    a.btn.btn-medium.btn-primary(data-ng-click="submit()", href="javascript:void(0)") Submit
+
+    h3 Data binding
+    .row
+    .col-sm-6
+      pre.code {{project | json}}
 

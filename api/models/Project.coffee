@@ -24,6 +24,9 @@ module.exports = (()->
       type: "date"
     endDate:
       type: "date"
+    isClosed:
+      type: "boolean"
+      defaultsTo: false
 
   model.beforeCreate = (data, next) ->
     Utils.generateShortLink(model.attributes.shortLink.maxLength)

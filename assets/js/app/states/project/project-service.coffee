@@ -45,7 +45,6 @@ define [
         project._csrf = data._csrf
         $http.post("#{config.baseUrl}/project/create", project)
         .then (result) ->
-          handleCreatedProjectAfter(result.data)
           _projects.push result.data
           deferred.resolve result.data
         .catch (err)->
