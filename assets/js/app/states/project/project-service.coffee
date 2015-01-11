@@ -100,14 +100,15 @@ define [
               return
 
     service.handleCreatedStageAfter = (stage)->
-      console.log "handleCreatedStage", stage
+      console.log "handleCreatedStageAfter", stage
       for proj in _projects
-        if proj.id is stage.idProject
+        if proj.id.toString() is stage.idProject.toString()
           proj.stages = [] unless proj.stages
-          for _stage in proj.stages
-            if _stage.id is stage.id and _stage.idProject is stage.idProject
+          for _sg in proj.stages
+            if _sg.id is stage.id and _sg.idProject is stage.idProject
               return
           proj.stages.push stage
+          return
 
     #-------------------------------------------------------------------handlers
     handleUpdatedProjectAfter = (project)->

@@ -38,13 +38,13 @@ div.container.projectDetail
   div
     h3 Progress
     a.btn.btn-medium.btn-primary(data-ng-click="addStage()", href="javascript:void(0)") Add Stage
-    div(data-ng-if="editProject.stages.length>0")
+    div(data-ng-if="project.stages.length>0")
       div(data-ui-tree)
-        ol(ui-tree-nodes, ng-model='editProject.stages')
-          li(ng-repeat='task in editProject.stages', data-ui-tree-node, data-ng-include="'common/uitreelist/uitreelist'")
+        ol(ui-tree-nodes, ng-model='project.stages')
+          li(ng-repeat='task in project.stages', data-ui-tree-node, data-ng-include="'common/uitreelist/uitreelist'")
 
     h3 Data binding
     .row
     .col-sm-6
-      pre.code {{editProject | json}}
+      pre.code {{project | json}}
 

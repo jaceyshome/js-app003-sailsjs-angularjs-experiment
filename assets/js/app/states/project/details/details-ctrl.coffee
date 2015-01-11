@@ -32,13 +32,13 @@ define [
       reset()
 
     $scope.addStage = ()->
-      $scope.editProject.stages = [] unless $scope.editProject.stages
+      $scope.project.stages = [] unless $scope.project.stages
       StageService.createStage({
-        "idProject": $scope.editProject.id
+        "idProject": $scope.project.id
         "name": "new stage"
         "tasks": []
       }).then (result)->
-        $scope.editProject.stages.push result
+        $scope.project.stages.push result
 
     $scope.remove = (scope)->
       scope.remove()
