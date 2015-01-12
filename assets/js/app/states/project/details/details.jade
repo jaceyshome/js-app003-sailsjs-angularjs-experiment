@@ -37,11 +37,16 @@ div.container.projectDetail
 
   div
     h3 Progress
-    a.btn.btn-medium.btn-primary(data-ng-click="addStage()", href="javascript:void(0)") Add Stage
-    div(data-ng-if="project.stages.length>0")
-      div(data-ui-tree)
-        ol(ui-tree-nodes, ng-model='project.stages')
-          li(ng-repeat='task in project.stages', data-ui-tree-node, data-ng-include="'common/uitreelist/uitreelist'")
+    div
+      a.btn.btn-medium.btn-primary(data-ng-click="settings.editKey = 'newStage'", href="javascript:void(0)", data-ng-hide="settings.editKey == 'newStage'") Add Stage
+      div(data-ng-show="settings.editKey == 'newStage'")
+        input(data-ng-model="newStage.name", placeholder="new stage name")
+        a(data-click-btn, data-ng-click="addStage()") Save
+        a(data-click-btn, data-ng-click="cancelEditing('newStage')") Close
+    div
+      ul
+        li(data-ng-repeat="stage in project.stages") {{stage.name}}
+
 
     h3 Data binding
     .row

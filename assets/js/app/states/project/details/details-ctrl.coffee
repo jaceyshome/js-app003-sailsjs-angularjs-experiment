@@ -6,6 +6,9 @@ define [
   module.controller 'ProjectDetailsCtrl', ($scope, $state, Project, ProjectService, StageService) ->
     $scope.project = Project
     $scope.editProject = angular.copy Project
+    $scope.newStage =
+      idProject: Project.id
+      name: ""
     $scope.settings =
       editKey: null
 
@@ -32,15 +35,15 @@ define [
       reset()
 
     $scope.addStage = ()->
-      reset()
       $scope.project.stages = [] unless $scope.project.stages
-      StageService.createStage({
-        "idProject": $scope.project.id
-        "name": "new stage"
-        "tasks": []
-      })
+      StageService.createStage($scope.newStage).then ()->
+        reset()
+        $scope.newStage =
+          idProject: Project.id
+          name: ""
 
     $scope.remove = (scope)->
+      console.log "removeNode", scope
       scope.remove()
 
     $scope.toggle = (scope)->
@@ -48,6 +51,7 @@ define [
 
     $scope.newTask = (scope)->
       nodeData = scope.$modelValue
+      console.log "node Data", nodeData
       nodeData.tasks.push({
         name: 'new item'
         tasks: []

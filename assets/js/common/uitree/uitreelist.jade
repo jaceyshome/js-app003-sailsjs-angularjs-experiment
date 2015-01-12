@@ -5,7 +5,7 @@
     a.btn.btn-success.btn-xs(data-nodrag, data-ng-click='toggle(this)')
       span.glyphicon(data-ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}")
     | {{task.name}}
-    a.pull-right.btn.btn-danger.btn-xs(data-nodrag, data-ng-click='removeTask(this)')
+    a.pull-right.btn.btn-danger.btn-xs(data-nodrag, data-ng-click='remove(this)')
       span.glyphicon.glyphicon-remove
       span.sr-only Remove
     a.pull-right.btn.btn-primary.btn-xs(data-nodrag, data-ng-click='edit(this)')
@@ -16,4 +16,4 @@
       span.sr-only Add
 
   ol(data-ui-tree-nodes, data-ng-model='task.tasks', data-ng-class='{hidden: collapsed}')
-    li(data-ng-repeat='task in task.tasks', data-ui-tree-node, data-ng-include="'common/uitreelist/uitreelist'")
+    li(data-ng-repeat='task in task.tasks', data-ui-tree-node, data-ng-include="'common/uitree/uitreelist'")

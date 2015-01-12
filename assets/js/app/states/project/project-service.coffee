@@ -100,7 +100,6 @@ define [
               return
 
     service.handleCreatedStageAfter = (stage)->
-      console.log "handleCreatedStageAfter", stage
       for proj in _projects
         if proj.id.toString() is stage.idProject.toString() #TODO  currently is for testing on sails disk
           proj.stages = [] unless proj.stages
