@@ -39,6 +39,7 @@ describe "Create Stage", (done) ->
       res.body.should.have.property 'budgetedHours'
       res.body.should.have.property 'createdAt'
       res.body.should.have.property 'updatedAt'
+      res.body.should.have.property 'order'
       res.body.should.not.have.property 'projectShortLink'
       if (err) then throw err
       done()
