@@ -70,3 +70,5 @@ describe "Create Stage", (done) ->
       done()
 
   it "should be created with the correct order attribute"
+
+  it "should not be able to create stage with empty name"

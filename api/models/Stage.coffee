@@ -11,6 +11,7 @@ module.exports = (->
     name:
       type: "string"
       maxLength: 200
+      required: true
     description:
       type: "string"
       maxLength: 3000
