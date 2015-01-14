@@ -17,10 +17,14 @@ define [
 
         dropped: (event) ->
           sourceNode = event.source.nodeScope
-          destNode = event.dest.nodesScope
-          unless sourceNode.stage.order is sourceNode.$index
-            console.log "dropped sourceNode", sourceNode
-            console.log "dropped destNodes", destNode
+          destNode = event.dest.nodeScope
+          console.log "sourceNode.stage order", sourceNode.stage.order
+          console.log "sourceNode.$index", sourceNode.$index
+#          console.log "destNode.stage", destNode.stage.order
+#          console.log "destNode.$index", destNode.$index
+#          unless sourceNode.stage.order is sourceNode.$index
+#            console.log "dropped sourceNode", sourceNode
+#            console.log "dropped destNodes", destNode
           # update changes to server
           if destNode.isParent(sourceNode) and destNode.$element.attr("type") is "stage" # If it moves in the same group, then only update group
             group = destNode.$nodeScope.$modelValue
