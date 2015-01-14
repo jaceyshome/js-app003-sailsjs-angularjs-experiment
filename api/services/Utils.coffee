@@ -23,6 +23,9 @@ module.exports = (()->
         return reject() if err
         return resolve(hash)
 
+  service.copy = (obj)->
+    return JSON.parse(JSON.stringify(obj))
+
 #  service.checkUserPassword = (user)->
 #    new Promise (resolve, reject)->
 #      query = "

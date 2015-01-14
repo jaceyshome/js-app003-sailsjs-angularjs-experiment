@@ -68,3 +68,5 @@ describe "Create Stage", (done) ->
       res.statusCode.should.not.be.equal 200
       if (err) then throw err
       done()
+
+  it "should be created with the correct order attribute"

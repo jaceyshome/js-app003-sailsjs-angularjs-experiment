@@ -1,10 +1,12 @@
 define [
   'angular'
   'angular_ui_router'
+  'app/states/project/details/projectstages/projectstages'
 ], ->
   module = angular.module 'app.states.project.details', [
     'ui.router'
     'templates'
+    'app.states.project.details.projectstages'
   ]
 
   module.config ($stateProvider)->

@@ -3,10 +3,14 @@ module.exports = (->
   ctrl = {}
 
   ctrl.create = (req, res, next) ->
-    Stage.create req.params.all(), (err, stage) ->
+    StageService.getStageOrder req.params.all(), (err, result)->
       return next(err) if err
-      Stage.publishCreate stage, req.socket
-      res.json stage
+      data = Utils.copy req.params.all()
+      data.order = parseInt result
+      Stage.create data, (err, stage) ->
+        return next(err) if err
+        Stage.publishCreate stage, req.socket
+        res.json stage
 
   ctrl.specify = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")

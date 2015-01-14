@@ -14,15 +14,19 @@ module.exports = (->
     description:
       type: "string"
       maxLength: 3000
+    budgetedHours:
+      type: "float"
+      defaultsTo: 0
+    order:
+      type: "integer"
+      defaultsTo: null
     startDate:
       type: "date"
     endDate:
       type: "date"
-    budgetedHours:
-      type: "float"
-      defaultsTo: 0
 
   model.beforeCreate = (data, next) ->
+    console.log "dadfa", data
     Project.findOne {
       id: data.idProject
     }, (err, result) ->

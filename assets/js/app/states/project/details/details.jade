@@ -43,13 +43,10 @@ div.container.projectDetail
         input(data-ng-model="newStage.name", placeholder="new stage name")
         a(data-click-btn, data-ng-click="addStage()") Save
         a(data-click-btn, data-ng-click="cancelEditing('newStage')") Close
-    div
-      ul
-        li(data-ng-repeat="stage in project.stages") {{stage.name}}
 
+    div(data-project-stages, data-settings="projectStagesSettings")
 
     h3 Data binding
     .row
-    .col-sm-6
-      pre.code {{project | json}}
-
+      .col-sm-12
+        pre.code {{project | json}}

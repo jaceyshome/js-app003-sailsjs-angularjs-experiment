@@ -6,6 +6,7 @@ define [
   module.controller 'ProjectDetailsCtrl', ($scope, $state, Project, ProjectService, StageService) ->
     $scope.project = Project
     $scope.editProject = angular.copy Project
+    $scope.projectStagesSettings = null
     $scope.newStage =
       idProject: Project.id
       name: ""
@@ -13,6 +14,11 @@ define [
       editKey: null
 
     init = ->
+      setProjectStagesSettings()
+
+    setProjectStagesSettings = ->
+      $scope.projectStagesSettings =
+        data: Project
 
     handleUpdatingProjectAfter = (result)->
       $scope.editProject = angular.copy result
@@ -52,6 +58,7 @@ define [
     $scope.newTask = (scope)->
       nodeData = scope.$modelValue
       console.log "node Data", nodeData
+      nodeData.tasks = [] unless nodeData.tasks
       nodeData.tasks.push({
         name: 'new item'
         tasks: []

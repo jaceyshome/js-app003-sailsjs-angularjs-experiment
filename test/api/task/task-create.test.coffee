@@ -102,3 +102,5 @@ describe "Create Task", (done) ->
     .end (err, res)->
       res.statusCode.should.not.be.eql 200
       done()
+
+  it "should be created with the correct order attribute"
