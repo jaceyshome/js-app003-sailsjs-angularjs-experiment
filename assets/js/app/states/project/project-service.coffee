@@ -93,11 +93,11 @@ define [
     service.handleUpdatedStageAfter = (stage)->
       for proj in _projects
         if proj.id is stage.idProject
-          return unless proj.stages and proj.stages.length > 0
+          return handleSortProjectStages(proj) unless proj.stages and proj.stages.length > 0
           for _stage in proj.stages
             if _stage.id is stage.id and _stage.idProject is stage.idProject
               angular.extend _stage, stage
-              return
+              return handleSortProjectStages(proj)
 
     service.handleCreatedStageAfter = (stage)->
       for proj in _projects
@@ -105,9 +105,9 @@ define [
           proj.stages = [] unless proj.stages
           for _sg in proj.stages
             if _sg.id is stage.id and _sg.idProject is stage.idProject
-              return
+              return handleSortProjectStages(proj)
           proj.stages.push stage
-          return
+          return handleSortProjectStages(proj)
 
     #-------------------------------------------------------------------handlers
     handleUpdatedProjectAfter = (project)->
@@ -130,6 +130,16 @@ define [
         if proj.id is project.id and proj.shortLink is project.shortLink
           angular.extend proj, project
           return proj
+
+    handleSortProjectStages = (project)->
+      project.stages.sort(compareStageByPos)
+
+    compareStageByPos = (a, b)->
+      if (a.pos < b.pos)
+        return -1
+      if (a.pos > b.pos)
+        return 1
+      return 0
 
     handleErrorMsg = (err)->
       MessageService.handleServerError(err)

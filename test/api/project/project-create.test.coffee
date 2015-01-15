@@ -49,4 +49,4 @@ describe "Create Project", (done) ->
     .send(_project)
     .expect(400, done)
 
-  it "should be created with the correct order attribute"
+  it "should be created with the correct pos attribute"

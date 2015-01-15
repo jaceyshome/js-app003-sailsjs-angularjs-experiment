@@ -23,9 +23,9 @@ module.exports = (()->
       type: "date"
     items:
       type: "array"
-    order:
-      type: "integer"
-      defaultsTo: null
+    pos:
+      type: "float"
+      defaultsTo: 0
 
   model.beforeCreate = (data, next) ->
     next()

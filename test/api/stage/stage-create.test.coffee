@@ -70,6 +70,6 @@ describe "Create Stage", (done) ->
       if (err) then throw err
       done()
 
-  it "should be created with the correct order attribute"
+  it "should be created with the correct pos"
 
   it "should not be able to create stage with empty name"

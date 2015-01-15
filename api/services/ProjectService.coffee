@@ -24,9 +24,7 @@ module.exports = (->
     })
 
   getProjectStagesAsync = (project)->
-    Stage.find({
-      idProject:project.id
-    })
+    Stage.find({idProject:project.id}).sort({pos:1})
 
   handleResult = (err, result,cb)->
     return cb(err,result) if typeof cb is 'function'

@@ -3,10 +3,10 @@ module.exports = (->
   ctrl = {}
 
   ctrl.create = (req, res, next) ->
-    StageService.getStageOrder req.params.all(), (err, result)->
+    StageService.getStagePos req.params.all(), (err, pos)->
       return next(err) if err
-      data = Utils.copy req.params.all()
-      data.order = parseInt result
+      data = req.params.all()
+      data.pos = pos
       Stage.create data, (err, stage) ->
         return next(err) if err
         Stage.publishCreate stage, req.socket
@@ -34,9 +34,9 @@ module.exports = (->
     Stage.update {
       id: req.param("id")
       idProject: req.param("idProject")
-    }, req.params.all(), (err, result)->
+    }, req.params.all(), (err, results)->
       return next(err) if err
-      Stage.publishUpdate(req.param("id"), result, req.socket) #TODO stage publish update
+      Stage.publishUpdate(req.param("id"), results[0], req.socket) #TODO stage publish update
       res.send 200
 
   ctrl.destroy = (req, res, next) ->

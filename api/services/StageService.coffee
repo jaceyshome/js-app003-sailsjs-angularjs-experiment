@@ -4,9 +4,9 @@ extend = require("extend")
 module.exports = (->
   service = {}
 
-  service.getStageOrder = (data, cb)->
-    if data.order
-      retrun cb(null, data.order)
+  service.getStagePos = (data, cb)->
+    if data.pos
+      retrun cb(null, data.pos)
     else
       Stage.find {
         idProject: data.idProject
@@ -14,7 +14,7 @@ module.exports = (->
         if err
           return cb(err, null)
         else
-          return cb(null, results.length)
+          return cb(null, (results.length+1)*1000)
 
   service
 )()

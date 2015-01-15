@@ -14,9 +14,9 @@ module.exports = (()->
     autherization:
       type: "boolean"
       defaultsTo: false
-    order:
-      type: "number"
-      defaultsTo: null
+    pos:
+      type: "float"
+      defaultsTo: 0
 
   model.beforeCreate = (data, next) ->
     next()
