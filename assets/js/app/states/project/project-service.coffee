@@ -109,6 +109,13 @@ define [
           proj.stages.push stage
           return handleSortProjectStages(proj)
 
+    service.handleDestroyedStageAfter = (stageId)->
+      return unless stageId
+      for proj in _projects
+        for stage in proj.stages
+          if stage?.id is stageId
+            proj.stages.splice(proj.stages.indexOf(stage),1)
+
     #-------------------------------------------------------------------handlers
     handleUpdatedProjectAfter = (project)->
       return unless _projects

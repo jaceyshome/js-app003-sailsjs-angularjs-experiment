@@ -44,10 +44,13 @@ define [
       $scope.editStage = (stage)->
         $scope.editingStage = angular.copy(stage)
 
+      $scope.removeStage = (stage)->
+        StageService.destroyStage(stage)
+
       $scope.saveEditingStage = (stage)->
         #TODO validation
         return unless $scope.editingStage?.id is stage?.id
-        StageService.updateStage($scope.editingStage).then(cancelEditingStage).catch(cancelEditingStage)
+        StageService.updateStage($scope.editingStage).then(cancelEditingStage)
 
       $scope.cancelEditingStage = cancelEditingStage
 

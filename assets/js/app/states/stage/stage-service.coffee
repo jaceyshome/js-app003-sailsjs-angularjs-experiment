@@ -12,6 +12,7 @@ define [
       console.log "stage msg", res
       handleCreatedStageAfter(res.data) if res.verb is 'created'
       handleUpdatedStageAfter(res.data) if res.verb is 'updated'
+      handleDestroyedStageAfter(res.id) if res.verb is 'destroyed'
     )
 
     $sailsSocket.get('/stage/subscribe').success(()->
@@ -75,6 +76,7 @@ define [
         stage._csrf = data._csrf
         $http.post("#{config.baseUrl}/stage/destroy", stage)
         .then (result) ->
+          handleDestroyedStageAfter(stage.id)
           return deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -87,6 +89,9 @@ define [
 
     handleCreatedStageAfter = (stage)->
       ProjectService.handleCreatedStageAfter(stage)
+
+    handleDestroyedStageAfter = (stageId)->
+      ProjectService.handleDestroyedStageAfter(stageId)
 
     handleGetStageDetailAfter = (project)->
       return unless _projects

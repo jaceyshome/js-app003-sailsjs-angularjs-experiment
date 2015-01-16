@@ -43,7 +43,7 @@ module.exports = (->
     Stage.destroy {
       id: req.param("id")
       idProject: req.param("idProject")
-    }, (err) ->
+    }, (err, result) ->
       return next(err) if err
       Stage.publishDestroy req.param("id"), req.socket
       res.send 200

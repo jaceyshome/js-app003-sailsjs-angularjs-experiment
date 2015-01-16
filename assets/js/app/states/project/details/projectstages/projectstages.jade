@@ -2,6 +2,9 @@
   ul(data-ui-tree-nodes, data-ng-model="settings.data.stages", data-type="stage")
     li(data-ng-repeat="stage in settings.data.stages ", data-ui-tree-node, data-ng-style="{'min-height':'32px'}")
       div(data-ng-hide="editingStage.id == stage.id")
+        a.btn.btn-danger.btn-xs.pull-right(data-click-btn, data-ng-click="removeStage(stage)", data-nodrag)
+          i.glyphicon.glyphicon-remove
+          i.sr-only Remove stage
         a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editStage(stage)", data-nodrag)
           i.glyphicon.glyphicon-pencil
           i.sr-only Edit stage
