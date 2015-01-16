@@ -1,6 +1,19 @@
 .projectStages(data-ui-tree="options", data-drag-delay="10", data-max-depth="5")
   ul(data-ui-tree-nodes, data-ng-model="settings.data.stages", data-type="stage")
-    li(data-ng-repeat="stage in settings.data.stages ", data-ui-tree-node) {{stage.name}}
-
-
-
+    li(data-ng-repeat="stage in settings.data.stages ", data-ui-tree-node, data-ng-style="{'min-height':'32px'}")
+      div(data-ng-hide="editingStage.id == stage.id")
+        a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editStage(stage)", data-nodrag)
+          i.glyphicon.glyphicon-pencil
+          i.sr-only Edit stage
+        div &nbsp;{{stage.name}}
+      div.col-lg-6(data-ng-show="editingStage.id == stage.id")
+        div.input-group
+          label.sr-only(for="editingStageName") Stage name
+          input.form-control(type="text", placeholder="Stage name", data-ng-model="editingStage.name")
+        span.input-group-btn
+          a.btn.btn-success.btn-xs(data-click-btn, data-ng-click="saveEditingStage(stage)", data-nodrag)
+            i.glyphicon.glyphicon-ok
+            i.sr-only Save editing stage
+          a.btn.btn-default.btn-xs(data-click-btn, data-ng-click="cancelEditingStage()", data-nodrag)
+            i.glyphicon.glyphicon-remove
+            i.sr-only Save editing stage

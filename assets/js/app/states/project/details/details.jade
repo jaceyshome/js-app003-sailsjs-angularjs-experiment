@@ -4,7 +4,7 @@ div.container.projectDetail
       h2 {{project.name}}
       a(data-click-btn, data-ng-click="settings.editKey = 'name'") Edit
     div(data-ng-show="settings.editKey == 'name'")
-      textarea(data-ng-model="editProject.name",placeholder="Edit name description")
+      textarea(data-ng-model="editingProject.name",placeholder="Edit name description")
       a(data-click-btn, data-ng-click="save()") Save
       a(data-click-btn, data-ng-click="cancelEditing('name')") Close
 
@@ -18,7 +18,7 @@ div.container.projectDetail
       a(data-click-btn, data-ng-click="settings.editKey = 'description'") Edit
       div {{project.description}}
     div(data-ng-show="settings.editKey == 'description'")
-      textarea(data-ng-model="editProject.description",placeholder="Edit project description")
+      textarea(data-ng-model="editingProject.description",placeholder="Edit project description")
       a(data-click-btn, data-ng-click="save()") Save
       a(data-click-btn, data-ng-click="cancelEditing('description')") Close
 
