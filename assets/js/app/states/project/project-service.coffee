@@ -101,7 +101,7 @@ define [
 
     service.handleCreatedStageAfter = (stage)->
       for proj in _projects
-        if proj.id.toString() is stage.idProject.toString() #TODO  currently is for testing on sails disk
+        if proj.id.toString() is stage.idProject.toString()
           proj.stages = [] unless proj.stages
           for _sg in proj.stages
             if _sg.id is stage.id and _sg.idProject is stage.idProject

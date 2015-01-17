@@ -1,4 +1,5 @@
 module.exports.constants = {
-  POS_STEP:0.01
+  POS_STEP:2,
+  POS_INITIATION_VALUE: 10000
 };
 

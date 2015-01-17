@@ -3,7 +3,7 @@ module.exports = (->
   ctrl = {}
 
   ctrl.create = (req, res, next) ->
-    StageService.getStagePos req.params.all(), (err, pos)->
+    PosService.getStagePos req.params.all(), (err, pos)->
       return next(err) if err
       data = req.params.all()
       data.pos = pos
