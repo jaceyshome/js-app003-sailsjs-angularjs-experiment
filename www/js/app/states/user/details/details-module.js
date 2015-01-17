@@ -19,7 +19,7 @@ define(['angular', 'angular_ui_router'], function() {
             UserService.goToDefault();
             return deferred.resolve(void 0);
           }
-          UserService.getUserDetail({
+          UserService.specifyUser({
             shortLink: $stateParams.shortLink
           }).then(function(result) {
             return deferred.resolve(result);

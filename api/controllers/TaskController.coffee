@@ -3,12 +3,19 @@ module.exports = (->
   ctrl = {}
 
   ctrl.create = (req, res, next) ->
-    Task.create req.params.all(), (err, task) ->
+    PosService.getTaskPos req.params.all(), (err, pos)->
       return next(err) if err
-      Task.publishCreate task, req.socket
-      res.json task
+      data = req.params.all()
+      data.pos = pos
+      Task.create data, (err, task) ->
+        return next(err) if err
+        Task.publishCreate task, req.socket
+        res.json task
 
   ctrl.specify = (req, res, next) ->
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("idStage")
+    return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
     Task.findOne({
       id: req.param('id')
       idStage: req.param('idStage')
@@ -34,7 +41,7 @@ module.exports = (->
       idStage: req.param("idStage")
     }, req.params.all(), (err, result)->
       return next(err) if err
-      Task.publishUpdate(req.param("id"), result, req.socket) #TODO task publish update
+      Task.publishUpdate(req.param("id"), result, req.socket)
       res.send 200
 
   ctrl.destroy = (req, res, next) ->

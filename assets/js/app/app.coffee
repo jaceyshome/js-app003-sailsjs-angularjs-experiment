@@ -1,4 +1,5 @@
 define [
+  'jquery'
   'angular'
   'angular_sails'
   'angular_ui_router'
@@ -6,7 +7,9 @@ define [
   'angular_material'
   'app/config'
   'app/app-service'
-  'jquery'
+  'app/states/project/project-service'
+  'app/states/stage/stage-service'
+  'app/states/task/task-service'
   'common/constants/constants'
   'common/csrf/csrf'
   'common/clickbtn/clickbtn'
@@ -21,8 +24,6 @@ define [
   'app/states/project/project-ctrl'
   'app/states/login/login-ctrl'
   'app/states/signup/signup-ctrl'
-  'app/states/project/project-service'
-  'app/states/stage/stage-service'
 ], ->
   module = angular.module 'app', [
     'ui.router'
@@ -30,22 +31,24 @@ define [
     'sails.io'
     'ngAnimate'
     'app.service'
+    'common.message.service'
+    'app.states.project.service'
+    'app.states.stage.service'
+    'app.states.task.service'
     'common.csrf'
     'common.constants'
     'common.panelslist'
     'common.clickbtn'
     'common.utility'
     'common.navigation'
-    'common.fieldmatch.directive'
-    'common.message.service'
     'common.validation'
+    'common.fieldmatch'
     'app.states.home'
     'app.states.user'
     'app.states.signup'
     'app.states.login'
     'app.states.project'
-    'app.states.project.service'
-    'app.states.stage.service'
+
   ]
   module.config ($locationProvider, $urlRouterProvider)->
     $locationProvider.html5Mode(true)

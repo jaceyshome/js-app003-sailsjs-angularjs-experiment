@@ -57,13 +57,13 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       });
       return deferred.promise;
     };
-    service.getUserDetail = function(user) {
+    service.specifyUser = function(user) {
       var deferred;
       deferred = $q.defer();
       if (angular.equals(user, _user)) {
         deferred.resolve(user);
       }
-      $http.get("" + config.baseUrl + "/user/specifics/" + user.shortLink).then(function(result) {
+      $http.get("" + config.baseUrl + "/user/specify/" + user.shortLink).then(function(result) {
         return deferred.resolve(result.data);
       })["catch"](function(err) {
         handleErrorMsg(err);

@@ -1,6 +1,6 @@
 define(['angular', 'angular_ui_router'], function() {
   var module;
-  module = angular.module('app.states.user.edit', ['ui.router', 'templates', 'common.utility', 'common.fieldmatch.directive', 'app.states.user.service']);
+  module = angular.module('app.states.user.edit', ['ui.router', 'templates', 'common.utility', 'common.fieldmatch', 'app.states.user.service']);
   return module.config(function($stateProvider) {
     return $stateProvider.state("user.edit", {
       parent: 'user',

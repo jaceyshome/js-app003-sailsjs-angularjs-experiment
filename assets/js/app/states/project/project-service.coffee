@@ -112,9 +112,27 @@ define [
     service.handleDestroyedStageAfter = (stageId)->
       return unless stageId
       for proj in _projects
+        for task in proj.tasks
+          if task?.idStage is stageId
+            proj.tasks.splice(proj.tasks.indexOf(task),1)
         for stage in proj.stages
           if stage?.id is stageId
             proj.stages.splice(proj.stages.indexOf(stage),1)
+
+    service.handleCreatedTaskAfter = (task)->
+      for proj in _projects
+        if proj.id.toString() is task.idProject.toString()
+          return unless proj.stages
+          for stage in proj.stages
+            if stage.id is task.idStage and proj.id is stage.idProject
+              stage.tasks = [] unless stage.tasks
+              for _task in stage.tasks
+                if( _task.id is task.id and
+                    _task.idStage is task.idStage and
+                    _task.idProject is task.idProject)
+                  return handleSortStageTasks(proj)
+              stage.tasks.push task
+              return handleSortStageTasks(stage)
 
     #-------------------------------------------------------------------handlers
     handleUpdatedProjectAfter = (project)->
@@ -133,15 +151,28 @@ define [
 
     handleGetProjectDetailAfter = (project)->
       return unless _projects
+      formatProjectStagesTasks(project)
       for proj in _projects
         if proj.id is project.id and proj.shortLink is project.shortLink
           angular.extend proj, project
           return proj
 
-    handleSortProjectStages = (project)->
-      project.stages.sort(compareStageByPos)
+    formatProjectStagesTasks = (project)->
+      return unless project?.stages
+      return unless project?.tasks
+      for stage in project.stages
+        stage.tasks = []
+        for task in project.tasks
+          if task.idStage.toString() is stage.id.toString()
+            stage.tasks.push task
 
-    compareStageByPos = (a, b)->
+    handleSortProjectStages = (project)->
+      project.stages.sort(compareByPos)
+
+    handleSortStageTasks = (stage)->
+      stage.tasks.sort(compareByPos)
+
+    compareByPos = (a, b)->
       if (a.pos < b.pos)
         return -1
       if (a.pos > b.pos)

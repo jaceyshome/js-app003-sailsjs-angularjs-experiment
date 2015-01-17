@@ -8,9 +8,11 @@ module.exports = (->
     Promise.props({
       project: getProjectAsync(project)
       stages: getProjectStagesAsync(project)
+      tasks: getProjectTasksAsync(project)
     }).then((result)->
       data = result.project
-      data.stages = result.stages
+      data.stages = result.stages if result.stages
+      data.tasks = result.tasks if result.tasks
       handleResult null, data, cb
     ).catch((err)->
       handleResult err, null, cb
@@ -25,6 +27,9 @@ module.exports = (->
 
   getProjectStagesAsync = (project)->
     Stage.find({idProject:project.id}).sort({pos:1})
+
+  getProjectTasksAsync = (project)->
+    Task.find({idProject:project.id}).sort({pos:1})
 
   handleResult = (err, result,cb)->
     return cb(err,result) if typeof cb is 'function'

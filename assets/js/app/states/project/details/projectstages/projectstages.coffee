@@ -2,7 +2,7 @@ define [
   'angular'
 ], ->
   module = angular.module 'app.states.project.details.projectstages', []
-  module.directive 'projectStages', (StageService, ProjectService, Constants, AppService) ->
+  module.directive 'projectStages', (StageService, ProjectService, TaskService, Constants, AppService) ->
     restrict: "A"
     scope: {
       settings: "="
@@ -10,6 +10,7 @@ define [
     templateUrl: "app/states/project/details/projectstages/projectstages"
     link: ($scope, $element, $attrs) ->
       $scope.editingStage = null
+      $scope.editingTask = {name: ""}
       $scope.options =
         accept: (sourceNode, destNodes, destIndex) ->
           data = sourceNode.$modelValue
@@ -37,8 +38,16 @@ define [
       init = () ->
         undefined
 
-      cancelEditingStage = ()->
+      reset = ()->
+        resetEditingStage()
+        resetEditingTask()
+
+      resetEditingStage = ()->
         $scope.editingStage = null
+
+      resetEditingTask = ()->
+        $scope.editingTask = {name: ""}
+
 
       #------------------------ Scope functions -------------------------
       $scope.editStage = (stage)->
@@ -50,10 +59,15 @@ define [
       $scope.saveEditingStage = (stage)->
         #TODO validation
         return unless $scope.editingStage?.id is stage?.id
-        StageService.updateStage($scope.editingStage).then(cancelEditingStage)
+        StageService.updateStage($scope.editingStage).then(resetEditingStage)
 
-      $scope.cancelEditingStage = cancelEditingStage
+      $scope.resetEditingStage = resetEditingStage
 
+      $scope.addTaskToStage = (stage)->
+        data = angular.copy($scope.editingTask)
+        data.idStage = stage.id
+        data.idProject = stage.idProject
+        TaskService.createTask(data).then(resetEditingTask)
 
       #------------------------ init ------------------------------------
       init()

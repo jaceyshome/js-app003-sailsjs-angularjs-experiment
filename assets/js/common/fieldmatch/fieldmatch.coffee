@@ -1,7 +1,7 @@
 define [
   'angular'
 ], ->
-  module = angular.module 'common.fieldmatch.directive', []
+  module = angular.module 'common.fieldmatch', []
   module.directive 'fieldMatch', ($parse) ->
     scope:{}
     restrict: "A"

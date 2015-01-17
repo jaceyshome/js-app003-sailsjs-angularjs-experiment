@@ -1,10 +1,10 @@
-define(['angular', 'angular_ui_router'], function() {
+define(['angular', 'angular_ui_router', 'app/states/project/details/projectstages/projectstages'], function() {
   var module;
-  module = angular.module('app.states.project.details', ['ui.router', 'templates']);
+  module = angular.module('app.states.project.details', ['ui.router', 'templates', 'app.states.project.details.projectstages']);
   return module.config(function($stateProvider) {
     return $stateProvider.state("project.details", {
       parent: 'project',
-      url: "/details/:shortLink",
+      url: "/details/:id/s/:shortLink",
       views: {
         'projectChildView@project': {
           templateUrl: "app/states/project/details/details",
@@ -12,14 +12,15 @@ define(['angular', 'angular_ui_router'], function() {
         }
       },
       resolve: {
-        ProjectData: function($q, $stateParams, ProjectService) {
+        Project: function($q, $stateParams, ProjectService) {
           var deferred;
           deferred = $q.defer();
-          if (!$stateParams.shortLink) {
+          if (!($stateParams.shortLink && $stateParams.id)) {
             ProjectService.goToDefault();
             deferred.resolve(void 0);
           }
-          ProjectService.getProjectDetail({
+          ProjectService.specifyProject({
+            id: $stateParams.id,
             shortLink: $stateParams.shortLink
           }).then(function(result) {
             return deferred.resolve(result);

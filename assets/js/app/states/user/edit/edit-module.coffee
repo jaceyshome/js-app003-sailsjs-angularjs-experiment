@@ -6,7 +6,7 @@ define [
     'ui.router'
     'templates'
     'common.utility'
-    'common.fieldmatch.directive'
+    'common.fieldmatch'
     'app.states.user.service'
   ]
 

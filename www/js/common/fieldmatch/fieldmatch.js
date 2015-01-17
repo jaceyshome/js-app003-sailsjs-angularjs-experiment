@@ -1,6 +1,6 @@
 define(['angular'], function() {
   var module;
-  module = angular.module('common.fieldmatch.directive', []);
+  module = angular.module('common.fieldmatch', []);
   return module.directive('fieldMatch', function($parse) {
     return {
       scope: {},

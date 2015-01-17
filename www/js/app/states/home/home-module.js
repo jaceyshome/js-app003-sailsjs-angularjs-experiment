@@ -7,10 +7,10 @@ define(['angular', 'angular_ui_router'], function() {
       url: "/",
       controller: "HomeCtrl",
       resolve: {
-        UsersData: function($q, UserService) {
+        Projects: function($q, ProjectService) {
           var deferred;
           deferred = $q.defer();
-          UserService.listUsers().then(function(result) {
+          ProjectService.listProjects().then(function(result) {
             return deferred.resolve(result);
           })["catch"](function() {
             return deferred.resolve(null);

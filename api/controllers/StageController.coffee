@@ -40,7 +40,7 @@ module.exports = (->
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
-    Stage.destroy {
+    DestroyService.destroyStage {
       id: req.param("id")
       idProject: req.param("idProject")
     }, (err, result) ->

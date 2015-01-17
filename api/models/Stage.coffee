@@ -25,6 +25,9 @@ module.exports = (->
       type: "date"
     endDate:
       type: "date"
+    tasks:
+      type: "array"
+      defaultsTo: []
 
   model.beforeCreate = (data, next) ->
     Project.findOne {
