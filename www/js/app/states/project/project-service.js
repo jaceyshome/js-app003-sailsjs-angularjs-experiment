@@ -136,19 +136,26 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       }
     };
     service.handleDestroyedStageAfter = function(stageId) {
-      var proj, stage, _i, _len, _results;
+      var proj, stage, task, _i, _j, _len, _len1, _ref, _results;
       if (!stageId) {
         return;
       }
       _results = [];
       for (_i = 0, _len = _projects.length; _i < _len; _i++) {
         proj = _projects[_i];
+        _ref = proj.tasks;
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          task = _ref[_j];
+          if ((task != null ? task.idStage : void 0) === stageId) {
+            proj.tasks.splice(proj.tasks.indexOf(task), 1);
+          }
+        }
         _results.push((function() {
-          var _j, _len1, _ref, _results1;
-          _ref = proj.stages;
+          var _k, _len2, _ref1, _results1;
+          _ref1 = proj.stages;
           _results1 = [];
-          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-            stage = _ref[_j];
+          for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+            stage = _ref1[_k];
             if ((stage != null ? stage.id : void 0) === stageId) {
               _results1.push(proj.stages.splice(proj.stages.indexOf(stage), 1));
             } else {
@@ -160,7 +167,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       }
       return _results;
     };
-    service.handleCreateTaskAfter = function(task) {
+    service.handleCreatedTaskAfter = function(task) {
       var proj, stage, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _task;
       for (_i = 0, _len = _projects.length; _i < _len; _i++) {
         proj = _projects[_i];
