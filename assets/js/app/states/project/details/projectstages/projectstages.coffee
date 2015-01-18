@@ -16,14 +16,18 @@ define [
           data = sourceNode.$modelValue
           destType = destNodes.$element.attr("type")
           data.type is destType # only accept the same type
-
         dropped: (event) ->
           source = event.source
           dest = event.dest
+          console.log "source.nodeScope", source.nodeScope
+          console.log "dest", dest
+          console.log "dest node scope parent", dest.nodesScope.isParent(source.nodeScope)
+          console.log "dest node attr", dest.nodesScope.$element.attr("type")
           if source.index isnt dest.index
             stage = source.nodeScope.$modelValue
-            AppService.updatePos(stage,dest.nodesScope.$modelValue)
-            StageService.updateStage(stage)
+#            console.log "source.nodeScope.$modelValue", source.nodeScope.$modelValue
+#            AppService.updatePos(stage,dest.nodesScope.$modelValue)
+#            StageService.updateStage(stage)
           # update changes to server
 #          if destNode.isParent(sourceNode) and destNode.$element.attr("type") is "stage" # If it moves in the same group, then only update group
 #            group = destNode.$nodeScope.$modelValue
