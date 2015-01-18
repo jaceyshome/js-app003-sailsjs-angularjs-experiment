@@ -48,7 +48,6 @@ define [
       resetEditingTask = ()->
         $scope.editingTask = {name: ""}
 
-
       #------------------------ Scope functions -------------------------
       $scope.editStage = (stage)->
         $scope.editingStage = angular.copy(stage)
@@ -62,6 +61,12 @@ define [
         StageService.updateStage($scope.editingStage).then(resetEditingStage)
 
       $scope.resetEditingStage = resetEditingStage
+
+      $scope.showEditingTaskToStage = (stage)->
+        if typeof $scope.settings.resetParent is 'function'
+          $scope.settings.resetParent()
+        reset()
+        $scope.settings.editKey = 'newTask_'+stage.id
 
       $scope.addTaskToStage = (stage)->
         data = angular.copy($scope.editingTask)
