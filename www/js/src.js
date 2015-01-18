@@ -10,7 +10,7 @@ requirejs.config({
     angular_sanitize: "lib/angular-sanitize/angular-sanitize",
     angular_animate: "lib/angular-animate/angular-animate",
     angular_sails: "lib/angularSails/dist/ngsails.io",
-    angular_ui_tree: "lib/angular-ui-tree/dist/angular-ui-tree",
+    angular_ui_tree: "lib/angular-ui-tree",
     angular_material: "lib/angular-material/angular-material",
     sails_io: "lib/sails.io.js/dist/sails.io",
     angular_toaster: "lib/AngularJS-Toaster/toaster"

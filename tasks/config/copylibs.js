@@ -1,3 +1,4 @@
+var fs = require('fs');
 module.exports = function(grunt) {
   grunt.registerTask('copylibs', 'Copy requried libs in app/main.coffee from bower_component', function() {
     var bowerComponentPath, fileString, fromPath, libPath, options, path, pathString, pathStrings, toPath, _i, _len, _results,srcPath;
@@ -18,7 +19,9 @@ module.exports = function(grunt) {
       }
       toPath = eval(path.replace("lib", libPath)) + '.js';
       fromPath = eval(path.replace("lib", bowerComponentPath)) + '.js';
-      _results.push(grunt.file.copy(fromPath, toPath, options));
+      if (fs.existsSync(fromPath)){
+        _results.push(grunt.file.copy(fromPath, toPath, options));
+      }
     }
     return _results;
   });
