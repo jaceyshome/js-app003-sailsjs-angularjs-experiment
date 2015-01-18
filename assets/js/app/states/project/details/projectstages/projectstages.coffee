@@ -64,7 +64,7 @@ define [
       $scope.resetEditingStage = resetEditingStage
 
       $scope.addTaskToStage = (stage)->
-        data = angular.copy($scope.editingTask)
+        data = $scope.editingTask
         data.idStage = stage.id
         data.idProject = stage.idProject
         TaskService.createTask(data).then(resetEditingTask)

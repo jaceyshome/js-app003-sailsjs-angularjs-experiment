@@ -26,8 +26,8 @@
 
       //---------------------------- task ----------------------------------
       div(data-nodrag)
-        label.sr-only(for="editingTaskName") Task name
-        input(data-ng-model="editingTask.name", placeholder="task name", type="text", id="editingTaskName")
+        label.sr-only(for="editingTaskName{{$index}}") Task name
+        input(data-ng-model="stage.newTaskName", placeholder="task name", type="text", id="editingTaskName{{$index}}")
         a(data-click-btn, data-ng-click="addTaskToStage(stage)", data-nodrag) Save
 
       //-------------------------- task list -------------------------------
