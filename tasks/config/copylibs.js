@@ -1,6 +1,6 @@
-var fs = require('fs');
 module.exports = function(grunt) {
   grunt.registerTask('copylibs', 'Copy requried libs in app/main.coffee from bower_component', function() {
+    var fs = require('fs');
     var bowerComponentPath, fileString, fromPath, libPath, options, path, pathString, pathStrings, toPath, _i, _len, _results,srcPath;
     bowerComponentPath = 'bower_components';
     libPath = ".tmp/public/js/lib";
