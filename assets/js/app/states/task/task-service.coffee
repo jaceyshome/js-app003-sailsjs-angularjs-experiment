@@ -88,10 +88,10 @@ define [
       ProjectService.handleCreatedTaskAfter(task)
 
     handleUpdatedTaskAfter = (task)->
-#      ProjectService.handleUpdatedTaskAfter(task)
+      ProjectService.handleUpdatedTaskAfter(task)
 
     handleDestroyedTaskAfter = (taskId)->
-#      ProjectService.handleDestroyedTaskAfter(taskId)
+      ProjectService.handleDestroyedTaskAfter(taskId)
 
     handleGetTaskDetailAfter = (project)->
 #      return unless _projects

@@ -130,9 +130,37 @@ define [
                 if( _task.id is task.id and
                     _task.idStage is task.idStage and
                     _task.idProject is task.idProject)
-                  return handleSortStageTasks(proj)
+                  return handleSortStageTasks(stage)
               stage.tasks.push task
               return handleSortStageTasks(stage)
+
+    service.handleUpdatedTaskAfter = (task)->
+      for proj in _projects
+        if proj.id is task.idProject
+          continue unless proj.stages
+          for stage in proj.stages
+            continue unless stage.tasks
+            for _task in stage.tasks
+              if( _task.id is task.id and
+              _task.idStage is task.idStage and
+              _task.idProject is task.idProject)
+                angular.extend _task, task
+                return handleSortStageTasks(stage)
+
+    service.handleDestroyedTaskAfter = (taskId)->
+      return unless taskId
+      for proj in _projects
+        continue unless proj.tasks
+        for task in proj.tasks
+          if task?.id is taskId
+            proj.tasks.splice(proj.tasks.indexOf(task),1)
+        continue unless proj.stages
+        for stage in proj.stages
+          continue unless stage.tasks
+          for task in stage.tasks
+            if task?.id is taskId
+              stage.tasks.splice(stage.tasks.indexOf(task),1)
+      return
 
     #-------------------------------------------------------------------handlers
     handleUpdatedProjectAfter = (project)->
