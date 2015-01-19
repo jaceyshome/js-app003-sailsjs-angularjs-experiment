@@ -15,11 +15,12 @@ define [
         accept: (sourceNode, destNodes, destIndex) ->
           data = sourceNode.$modelValue
           destType = destNodes.$element.attr("type")
+          console.log "data", data
           data.type is destType # only accept the same type
         dropped: (event) ->
           source = event.source
           dest = event.dest
-          console.log "source.nodeScope", source.nodeScope
+          console.log "source.nodeScope", source.nodeScope.$modelValue
           console.log "dest", dest
           console.log "dest node scope parent", dest.nodesScope.isParent(source.nodeScope)
           console.log "dest node attr", dest.nodesScope.$element.attr("type")
@@ -36,7 +37,9 @@ define [
 ##            $scope.saveGroups()
 #          return
         beforeDrop: (event) ->
-#          event.source.nodeScope.$$apply = false  unless window.confirm("Are you sure you want to drop it here?")
+          console.log "before drop", event.source
+          console.log "before drop", event.dest
+          event.source.nodeScope.$$apply = false  unless window.confirm("Are you sure you want to drop it here?")
           return
 
       init = () ->
