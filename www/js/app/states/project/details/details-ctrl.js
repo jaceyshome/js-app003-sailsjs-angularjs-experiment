@@ -45,25 +45,6 @@ define(['angular', 'app/states/project/details/details-module'], function() {
         };
       });
     };
-    $scope.remove = function(scope) {
-      console.log("removeNode", scope);
-      return scope.remove();
-    };
-    $scope.toggle = function(scope) {
-      return scope.toggle();
-    };
-    $scope.newTask = function(scope) {
-      var nodeData;
-      nodeData = scope.$modelValue;
-      console.log("node Data", nodeData);
-      if (!nodeData.tasks) {
-        nodeData.tasks = [];
-      }
-      return nodeData.tasks.push({
-        name: 'new item',
-        tasks: []
-      });
-    };
     return init();
   });
 });

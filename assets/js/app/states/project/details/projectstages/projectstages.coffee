@@ -73,6 +73,7 @@ define [
         $scope.settings.editKey = 'newTask_'+stage.id
 
       $scope.addTaskToStage = (stage)->
+        return unless $scope.editingTask.name?.length > 0
         data = angular.copy($scope.editingTask)
         data.idStage = stage.id
         data.idProject = stage.idProject
