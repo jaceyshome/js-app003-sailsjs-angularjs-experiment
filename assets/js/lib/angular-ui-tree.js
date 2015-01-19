@@ -642,10 +642,8 @@
           }
 
           scope.$watch('$nodesScope.$modelValue.length', function(val) {
-            if((typeof val) != 'undefined'){
-              if (scope.$nodesScope.$modelValue) {
-                scope.resetEmptyElement();
-              }
+            if((typeof val) != 'undefined' && scope.$nodesScope.$modelValue){
+              scope.resetEmptyElement();
             }
           }, true);
 
