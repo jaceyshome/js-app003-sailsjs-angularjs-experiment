@@ -19,18 +19,16 @@ define(['angular'], function() {
             var data, destType;
             data = sourceNode.$modelValue;
             destType = destNodes.$element.attr("type");
-            return data.type === destType;
+            return true;
           },
           dropped: function(event) {
-            var dest, source, stage;
+            var dest, destNodeType, source, stage;
             source = event.source;
             dest = event.dest;
-            console.log("source.nodeScope", source.nodeScope);
-            console.log("dest", dest);
-            console.log("dest node scope parent", dest.nodesScope.isParent(source.nodeScope));
-            console.log("dest node attr", dest.nodesScope.$element.attr("type"));
+            destNodeType = event.dest.nodesScope.$element.attr('type');
+            console.log("destNode type", destNodeType);
             if (source.index !== dest.index) {
-              return stage = source.nodeScope.$modelValue;
+              stage = source.nodeScope.$modelValue;
             }
           },
           beforeDrop: function(event) {}

@@ -1,0 +1,22 @@
+.stageTasks(data-ui-tree="options", data-drag-delay="10", data-max-depth="5")
+  ul(data-ui-tree-nodes, data-ng-model="stage.tasks", type="task")
+    li(data-ng-repeat="task in stage.tasks ", data-ui-tree-node, data-ng-style="{'min-height':'32px'}")
+      div(data-ng-hide="editingTask.id == task.id")
+        a.btn.btn-danger.btn-xs.pull-right(data-click-btn, data-ng-click="removeTask(task)", data-nodrag)
+          i.glyphicon.glyphicon-remove
+          i.sr-only Remove task
+        a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editTask(task)", data-nodrag)
+          i.glyphicon.glyphicon-pencil
+          i.sr-only Edit task
+        div &nbsp;{{task.name}}
+      div(data-ng-show="editingTask.id == task.id")
+        div.input-group
+          label.sr-only(for="editingTaskName") Task name
+          input.form-control(type="text", placeholder="Task name", data-ng-model="editingTask.name", id="editingTaskName")
+        span.input-group-btn
+          a.btn.btn-success.btn-xs(data-click-btn, data-ng-click="saveEditingTask(task)", data-nodrag)
+            i.glyphicon.glyphicon-ok
+            i.sr-only Save editing task
+          a.btn.btn-default.btn-xs(data-click-btn, data-ng-click="resetEditingTask()", data-nodrag)
+            i.glyphicon.glyphicon-remove
+            i.sr-only Save editing task

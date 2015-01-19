@@ -39,9 +39,9 @@ module.exports = (->
       id: req.param("id")
       idProject: req.param("idProject")
       idStage: req.param("idStage")
-    }, req.params.all(), (err, result)->
+    }, req.params.all(), (err, results)->
       return next(err) if err
-      Task.publishUpdate(req.param("id"), result, req.socket)
+      Task.publishUpdate(req.param("id"), results[0], req.socket)
       res.send 200
 
   ctrl.destroy = (req, res, next) ->
