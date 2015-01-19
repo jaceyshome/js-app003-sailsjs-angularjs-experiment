@@ -40,21 +40,5 @@ define [
           idProject: Project.id
           name: ""
 
-    $scope.remove = (scope)->
-      console.log "removeNode", scope
-      scope.remove()
-
-    $scope.toggle = (scope)->
-      scope.toggle()
-
-    $scope.newTask = (scope)->
-      nodeData = scope.$modelValue
-      console.log "node Data", nodeData
-      nodeData.tasks = [] unless nodeData.tasks
-      nodeData.tasks.push({
-        name: 'new item'
-        tasks: []
-      })
-
     #----------------------------- init() ---------------------------------
     init()
