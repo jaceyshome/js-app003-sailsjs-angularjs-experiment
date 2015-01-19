@@ -26,11 +26,11 @@
 
       //---------------------------- task ----------------------------------
       div(data-nodrag)
-        a.btn.btn-small(data-ng-click="showEditingTaskToStage(stage)", href="javascript:void(0)", data-ng-hide="settings.editingKey == stage.id+'_task'") Add Task
+        a.btn.btn-small(data-ng-click="showNewTaskFieldToStage(stage)", href="javascript:void(0)", data-ng-hide="settings.editingKey == stage.id+'_task'") Add Task
       div(data-ng-show="settings.editingKey == stage.id+'_task'", data-nodrag)
         label.sr-only(for="editingTaskName_{{stage.id}}") Task name
-        input(data-ng-model="editingTask.name", placeholder="task name", type="text", id="editingTaskName_{{stage.id}}")
+        input(data-ng-model="newTask.name", placeholder="task name", type="text", id="editingTaskName_{{stage.id}}")
         a(data-click-btn, data-ng-click="addTaskToStage(stage)", data-nodrag) Save
         a(data-click-btn, data-ng-click="settings.editingKey = null") Close
 
-      div(data-stage-tasks, data-tasks="stage.tasks")
+      div(data-stage-tasks, data-stage="stage")

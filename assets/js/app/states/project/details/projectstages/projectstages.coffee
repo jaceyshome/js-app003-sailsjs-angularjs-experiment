@@ -10,7 +10,7 @@ define [
     templateUrl: "app/states/project/details/projectstages/projectstages"
     link: ($scope, $element, $attrs) ->
       $scope.editingStage = null
-      $scope.editingTask = {name: ""}
+      $scope.newTask = {name: ""}
       $scope.options =
         accept: (sourceNode, destNodes, destIndex) ->
           return destNodes.$element.attr("type") is 'stage'
@@ -34,13 +34,13 @@ define [
       reset = ()->
         $scope.settings.editingKey = null
         resetEditingStage()
-        resetEditingTask()
+        resetNewTask()
 
       resetEditingStage = ()->
         $scope.editingStage = null
 
-      resetEditingTask = ()->
-        $scope.editingTask = {name: ""}
+      resetNewTask = ()->
+        $scope.newTask = {name: ""}
 
       #------------------------ Scope functions -------------------------
       $scope.editStage = (stage)->
@@ -57,15 +57,15 @@ define [
 
       $scope.resetEditingStage = resetEditingStage
 
-      $scope.showEditingTaskToStage = (stage)->
+      $scope.showNewTaskFieldToStage = (stage)->
         reset()
         $scope.settings.editingKey = "#{stage.id}_task"
 
       $scope.addTaskToStage = (stage)->
-        return unless $scope.editingTask.name?.length > 0
-        data = angular.copy($scope.editingTask)
+        return unless $scope.newTask.name?.length > 0
+        data = angular.copy($scope.newTask)
         data.idStage = stage.id
         data.idProject = stage.idProject
-        TaskService.createTask(data).then(resetEditingTask)
+        TaskService.createTask(data).then(resetNewTask)
 
       init()
