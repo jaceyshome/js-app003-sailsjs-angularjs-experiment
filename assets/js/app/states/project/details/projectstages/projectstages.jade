@@ -26,32 +26,11 @@
 
       //---------------------------- task ----------------------------------
       div(data-nodrag)
-        a.btn.btn-small(data-ng-click="showEditingTaskToStage(stage)", href="javascript:void(0)", data-ng-hide="settings.editKey == 'newTask_'+stage.id") Add Task
-      div(data-ng-show="settings.editKey == 'newTask_'+stage.id", data-nodrag)
+        a.btn.btn-small(data-ng-click="showEditingTaskToStage(stage)", href="javascript:void(0)", data-ng-hide="settings.editingKey == stage.id+'_task'") Add Task
+      div(data-ng-show="settings.editingKey == stage.id+'_task'", data-nodrag)
         label.sr-only(for="editingTaskName_{{stage.id}}") Task name
         input(data-ng-model="editingTask.name", placeholder="task name", type="text", id="editingTaskName_{{stage.id}}")
         a(data-click-btn, data-ng-click="addTaskToStage(stage)", data-nodrag) Save
-        a(data-click-btn, data-ng-click="settings.editKey = null") Close
+        a(data-click-btn, data-ng-click="settings.editingKey = null") Close
 
-      //-------------------------- task list -------------------------------
-      ol(data-ur-tree-nodes, data-ng-model="stage.tasks", type="task", data-ng-if="stage.tasks && stage.tasks.length > 0")
-        li(data-ng-repeat="task in stage.tasks", data-ui-tree-node, data-ng-style="{'min-height':'32px'}")
-          div(data-ng-hide="editingTask.id == task.id")
-            a.btn.btn-danger.btn-xs.pull-right(data-click-btn, data-ng-click="removeTask(task)", data-nodrag)
-              i.glyphicon.glyphicon-remove
-              i.sr-only Remove task
-            a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editTask(task)", data-nodrag)
-              i.glyphicon.glyphicon-pencil
-              i.sr-only Edit task
-            div &nbsp;{{task.name}}
-          div(data-ng-show="editingTask.id == task.id")
-            div.input-group
-              label.sr-only(for="editingTaskName") Task name
-              input.form-control(type="text", placeholder="Task name", data-ng-model="editingTask.name", id="editingTaskName")
-            span.input-group-btn
-              a.btn.btn-success.btn-xs(data-click-btn, data-ng-click="saveEditingTask(task,stage)", data-nodrag)
-                i.glyphicon.glyphicon-ok
-                i.sr-only Save editing task
-              a.btn.btn-default.btn-xs(data-click-btn, data-ng-click="cancelEditingTask()", data-nodrag)
-                i.glyphicon.glyphicon-remove
-                i.sr-only Save editing task
+      div(data-stage-tasks, data-tasks="stage.tasks")
