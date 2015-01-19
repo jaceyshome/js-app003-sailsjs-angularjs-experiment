@@ -641,9 +641,11 @@
             scope.$emptyElm.addClass(config.emptyTreeClass);
           }
 
-          scope.$watch('$nodesScope.$modelValue.length', function() {
-            if (scope.$nodesScope.$modelValue) {
-              scope.resetEmptyElement();
+          scope.$watch('$nodesScope.$modelValue.length', function(val) {
+            if((typeof val) != 'undefined'){
+              if (scope.$nodesScope.$modelValue) {
+                scope.resetEmptyElement();
+              }
             }
           }, true);
 
