@@ -28,8 +28,8 @@
       div(data-nodrag)
         a.btn.btn-small(data-ng-click="showNewTaskFieldToStage(stage)", href="javascript:void(0)", data-ng-hide="settings.editingKey == stage.id+'_task'") Add Task
       div(data-ng-show="settings.editingKey == stage.id+'_task'", data-nodrag)
-        label.sr-only(for="editingTaskName_{{stage.id}}") Task name
-        input(data-ng-model="newTask.name", placeholder="task name", type="text", id="editingTaskName_{{stage.id}}")
+        label.sr-only(for="newTaskName_{{stage.id}}") Task name
+        input(data-ng-model="newTask.name", placeholder="task name", type="text", id="newTaskName_{{stage.id}}")
         a(data-click-btn, data-ng-click="addTaskToStage(stage)", data-nodrag) Save
         a(data-click-btn, data-ng-click="settings.editingKey = null") Close
 
