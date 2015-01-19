@@ -94,11 +94,8 @@ define [
       ProjectService.handleDestroyedTaskAfter(taskId)
 
     handleGetTaskDetailAfter = (project)->
-#      return unless _projects
-#      for proj in _projects
-#        if proj.id is project.id and proj.shortLink is project.shortLink
-#          angular.extend proj, project
-#          return proj
+      #TODO handleGetTaskDetailAfter
+      return
 
     handleErrorMsg = (err)->
       MessageService.handleServerError(err)
