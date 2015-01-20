@@ -4,8 +4,8 @@ define [
 ], (angular) ->
   appModule = angular.module 'common.constants', []
   appModule.factory "Constants", () ->
-    service = {}
-
-    service.POS_STEP = 2
+    service =
+      POS_STEP: 2
+      POS_INITIATION_VALUE: 100
 
     service
