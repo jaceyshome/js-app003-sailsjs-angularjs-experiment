@@ -16,16 +16,17 @@ define [
         dropped: (event) ->
           source = event.source
           dest = event.dest
-          if source.index isnt dest.index
-            task = source.nodeScope.$modelValue
+          idStage = event.dest.nodesScope.$element.attr("data-stage-id")
+          task = source.nodeScope.$modelValue
+          if source.index isnt dest.index or task.idStage isnt idStage
             AppService.updatePos(task,dest.nodesScope.$modelValue)
             data =
               id: task.id
               pos: task.pos
+            data.idStage = idStage unless idStage is task.idStage
             TaskService.updateTask(data)
             return
         beforeDrop: (event) ->
-#          destNodes.$element.attr("data-stage-id")
           unless event.dest.nodesScope.$element.attr("type") is 'task'
             event.source.nodeScope.$$apply = false
           return
@@ -54,7 +55,6 @@ define [
         TaskService.destroyTask(task)
 
       $scope.resetEditingTask = resetEditingTask
-
 
       #------------------------ init ------------------------------------
       init()

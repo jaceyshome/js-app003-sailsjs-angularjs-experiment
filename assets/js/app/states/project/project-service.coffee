@@ -135,17 +135,7 @@ define [
               return handleSortStageTasks(stage)
 
     service.handleUpdatedTaskAfter = (task)->
-      for proj in _projects
-        if proj.id is task.idProject
-          continue unless proj.stages
-          for stage in proj.stages
-            continue unless stage.tasks
-            for _task in stage.tasks
-              if( _task.id is task.id and
-              _task.idStage is task.idStage and
-              _task.idProject is task.idProject)
-                angular.extend _task, task
-                return handleSortStageTasks(stage)
+      handleUpdatingTaskPos(handleUpdatingTask(task))
 
     service.handleDestroyedTaskAfter = (taskId)->
       return unless taskId
@@ -163,6 +153,31 @@ define [
       return
 
     #-------------------------------------------------------------------handlers
+    handleUpdatingTask = (task)->
+      for proj in _projects
+        continue unless proj.tasks
+        for _task in proj.tasks
+          if _task.id is task.id
+            angular.extend _task, task
+            return _task
+
+    handleUpdatingTaskPos = (task)->
+      for proj in _projects
+        continue unless proj.stages
+        for stage in proj.stages
+          stage.tasks = [] unless proj.stages
+          taskIndex = stage.tasks.indexOf(task)
+          console.log "taskIndex", taskIndex
+          if task.idStage is stage.id and taskIndex >= 0
+            handleSortStageTasks(stage)
+          else if task.idStage is stage.id and taskIndex < 0
+            stage.tasks.push task
+            handleSortStageTasks(stage)
+          else if task.idStage isnt stage.id and taskIndex >= 0
+            stage.tasks.splice task,1
+            handleSortStageTasks(stage)
+      return
+
     handleUpdatedProjectAfter = (project)->
       return unless _projects
       for proj in _projects
