@@ -8,7 +8,7 @@ define [
 
     service.updatePos = (item,items)->
       index = items.indexOf item
-      if index is 0 and items.length is 1  #first one
+      if index is 0 and items.length is 1                     #first one
         item.pos = Constants.POS_INITIATION_VALUE
       else if index is 0 and items.length > 1
         item.pos = (items[index+1].pos - Constants.POS_STEP)
