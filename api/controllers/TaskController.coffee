@@ -40,7 +40,7 @@ module.exports = (->
     }, req.params.all(), (err, results)->
       return next(err) if err
       Task.publishUpdate(req.param("id"), results[0], req.socket)
-      res.send results[0]
+      res.send 200
 
   ctrl.delete = (req, res, next) ->
     Task.destroy {
