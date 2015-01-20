@@ -66,7 +66,7 @@ define [
         _task._csrf = data._csrf
         $http.put("#{config.baseUrl}/task/update/#{task.id}", _task)
         .then (result) ->
-          handleUpdatedTaskAfter(result.data)
+          angular.extend task, result
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
