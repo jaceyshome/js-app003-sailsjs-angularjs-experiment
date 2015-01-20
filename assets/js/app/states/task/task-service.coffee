@@ -58,10 +58,13 @@ define [
       deferred.promise
 
     service.updateTask = (task)->
+      return unless task.id
       deferred = $q.defer()
+      _task = JSON.parse(JSON.stringify(task))
+      delete _task.id
       CSRF.get().then (data)->
-        task._csrf = data._csrf
-        $http.put("#{config.baseUrl}/task/update", task)
+        _task._csrf = data._csrf
+        $http.put("#{config.baseUrl}/task/update/#{task.id}", _task)
         .then (result) ->
           handleUpdatedTaskAfter(result.data)
           deferred.resolve result.data
