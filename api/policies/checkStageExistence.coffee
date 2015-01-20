@@ -1,7 +1,6 @@
 module.exports = (req, res, next)->
   reqId = req.param("id") || req.param("idStage")
   return res.send(400, { message: 'Bad Request.'}) unless reqId
-  return res.send(400, { message: 'Bad Request.'}) unless req.param("idProject")
   Stage.findOne {
     id:reqId
     idProject:req.param("idProject")
