@@ -19,9 +19,13 @@ define [
           if source.index isnt dest.index
             task = source.nodeScope.$modelValue
             AppService.updatePos(task,dest.nodesScope.$modelValue)
-            TaskService.updateTask(task)
+            data =
+              id: task.id
+              pos: task.pos
+            TaskService.updateTask(data)
             return
         beforeDrop: (event) ->
+#          destNodes.$element.attr("data-stage-id")
           unless event.dest.nodesScope.$element.attr("type") is 'task'
             event.source.nodeScope.$$apply = false
           return
@@ -41,14 +45,16 @@ define [
         return unless $scope.editingTask?.id is task?.id
         TaskService.updateTask($scope.editingTask).then(resetEditingTask)
 
-      $scope.editTask = (task)->
+      $scope.editTask = (task, key)->
         reset()
-        $scope.editingTask = angular.copy(task)
+        $scope.editingTask = {id: task.id }
+        $scope.editingTask[key] = task[key]
 
-      $scope.removeTask = (task)->
+      $scope.destroyTask = (task)->
         TaskService.destroyTask(task)
 
       $scope.resetEditingTask = resetEditingTask
+
 
       #------------------------ init ------------------------------------
       init()

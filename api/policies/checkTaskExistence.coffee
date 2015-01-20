@@ -3,8 +3,6 @@ module.exports = (req, res, next)->
   return res.send(400, { message: 'Bad Request.'}) unless reqId
   Task.findOne {
     id:reqId
-    idProject:req.param("idProject")
-    idStage:req.param("idStage")
   }, (err, result) ->
     if (err) then return res.send({ message: err })
     return res.send(400, { message: 'Bad Request.'}) unless result

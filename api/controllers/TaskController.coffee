@@ -37,14 +37,12 @@ module.exports = (->
   ctrl.update = (req, res, next) ->
     Task.update {
       id: req.param("id")
-      idProject: req.param("idProject")
-      idStage: req.param("idStage")
     }, req.params.all(), (err, results)->
       return next(err) if err
       Task.publishUpdate(req.param("id"), results[0], req.socket)
       res.send 200
 
-  ctrl.destroy = (req, res, next) ->
+  ctrl.delete = (req, res, next) ->
     Task.destroy {
       id: req.param("id")
       idProject: req.param("idProject")

@@ -15,6 +15,7 @@ module.exports = (()->
       type: "string"
     name:
       type: "string"
+      required: true
     description:
       type: "string"
     startDate:

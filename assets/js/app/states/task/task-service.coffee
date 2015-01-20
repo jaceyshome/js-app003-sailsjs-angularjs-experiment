@@ -77,7 +77,7 @@ define [
       deferred = $q.defer()
       CSRF.get().then (data)->
         task._csrf = data._csrf
-        $http.post("#{config.baseUrl}/task/destroy", task)
+        $http.delete("#{config.baseUrl}/task/destroy/#{task.id}")
         .then (result) ->
           handleDestroyedTaskAfter(task.id)
           return deferred.resolve result.data

@@ -1,11 +1,11 @@
 .stageTasks(data-ui-tree="options", data-drag-delay="10", data-max-depth="5")
-  ul(data-ui-tree-nodes, data-ng-model="stage.tasks", type="task")
+  ul(data-ui-tree-nodes, data-ng-model="stage.tasks", type="task", data-stage-id="{{stage.id}}")
     li(data-ng-repeat="task in stage.tasks ", data-ui-tree-node, data-ng-style="{'min-height':'32px'}")
       div(data-ng-hide="editingTask.id == task.id")
-        a.btn.btn-danger.btn-xs.pull-right(data-click-btn, data-ng-click="removeTask(task)", data-nodrag)
+        a.btn.btn-danger.btn-xs.pull-right(data-click-btn, data-ng-click="destroyTask(task)", data-nodrag)
           i.glyphicon.glyphicon-remove
           i.sr-only Remove task
-        a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editTask(task)", data-nodrag)
+        a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editTask(task, 'name')", data-nodrag)
           i.glyphicon.glyphicon-pencil
           i.sr-only Edit task
         div &nbsp;{{task.name}}
