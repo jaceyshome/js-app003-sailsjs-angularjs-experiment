@@ -4,10 +4,10 @@ module.exports = (->
   model = {}
   model.attributes =
     idProject:
-      type: "string"
+      model: "project"
       required: true
     idState:
-      type: "string"
+      model: "state"
     name:
       type: "string"
       maxLength: 200
@@ -26,8 +26,8 @@ module.exports = (->
     endDate:
       type: "date"
     tasks:
-      type: "array"
-      defaultsTo: []
+      collection: 'task'
+      via: 'idStage'
 
   model.beforeCreate = (data, next) ->
     Project.findOne {

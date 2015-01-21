@@ -27,6 +27,10 @@ module.exports = (()->
     isClosed:
       type: "boolean"
       defaultsTo: false
+    stages:
+      collection: 'stage'
+      via: 'idProject'
+
 
   model.beforeCreate = (data, next) ->
     Utils.generateShortLink(model.attributes.shortLink.maxLength)
