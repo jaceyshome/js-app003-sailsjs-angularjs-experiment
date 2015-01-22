@@ -21,7 +21,7 @@ define [
       resolve:
         UsersData: ($q, UserService) ->
           deferred = $q.defer()
-          UserService.listUsers()
+          UserService.fetchUsers()
           .then (result)->
             deferred.resolve result
           .catch ->

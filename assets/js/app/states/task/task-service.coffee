@@ -25,7 +25,7 @@ define [
     service.goToDefault = ()->
       $state.go '/'
 
-    service.listStages = ()->
+    service.fetchTasks = ()->
       deferred = $q.defer()
       $http.get("#{config.baseUrl}/task/all")
       .then (result) ->
@@ -47,7 +47,7 @@ define [
           deferred.resolve null
       deferred.promise
 
-    service.specifyTask = (task)->
+    service.fetchTask = (task)->
       deferred = $q.defer()
       $http.get("#{config.baseUrl}/task/specify/#{task.id}/sg/#{task.idStage}/p/#{task.idProject}")
       .then (result) ->

@@ -19,7 +19,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
           visible: false
         };
         init = function() {
-          return ProjectService.listProjects().then(function(results) {
+          return ProjectService.fetchProjects().then(function(results) {
             return $scope.projects = results;
           });
         };

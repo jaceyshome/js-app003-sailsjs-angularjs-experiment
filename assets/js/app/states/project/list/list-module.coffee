@@ -18,7 +18,7 @@ define [
       resolve:
         Projects: ($q, ProjectService) ->
           deferred = $q.defer()
-          ProjectService.listProjects()
+          ProjectService.fetchProjects()
           .then (result)->
             deferred.resolve result
           .catch ->

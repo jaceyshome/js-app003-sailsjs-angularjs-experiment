@@ -3,8 +3,10 @@ define(['angular', 'angular_resource'], function(angular) {
   appModule = angular.module('common.constants', []);
   return appModule.factory("Constants", function() {
     var service;
-    service = {};
-    service.POS_STEP = 2;
+    service = {
+      POS_STEP: 2,
+      POS_INITIATION_VALUE: 100
+    };
     return service;
   });
 });

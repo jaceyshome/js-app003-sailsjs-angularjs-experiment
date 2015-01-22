@@ -22,7 +22,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
     service.goToDefault = function() {
       return $state.go('/');
     };
-    service.listStages = function() {
+    service.fetchStages = function() {
       var deferred;
       deferred = $q.defer();
       $http.get("" + config.baseUrl + "/stage/all").then(function(result) {
@@ -47,7 +47,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       });
       return deferred.promise;
     };
-    service.specifyStage = function(stage) {
+    service.fetchStage = function(stage) {
       var deferred;
       deferred = $q.defer();
       $http.get("" + config.baseUrl + "/stage/specify/" + stage.id + "/s/" + stage.shortLink).then(function(result) {

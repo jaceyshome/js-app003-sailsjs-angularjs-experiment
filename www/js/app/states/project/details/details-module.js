@@ -1,6 +1,6 @@
-define(['angular', 'angular_ui_router', 'app/states/project/details/projectstages/projectstages'], function() {
+define(['angular', 'angular_ui_router', 'app/states/project/details/projectstages/projectstages', 'app/states/project/details/stagetasks/stagetasks'], function() {
   var module;
-  module = angular.module('app.states.project.details', ['ui.router', 'templates', 'app.states.project.details.projectstages']);
+  module = angular.module('app.states.project.details', ['ui.router', 'templates', 'app.states.project.details.projectstages', 'app.states.project.details.stagetasks']);
   return module.config(function($stateProvider) {
     return $stateProvider.state("project.details", {
       parent: 'project',
@@ -19,7 +19,7 @@ define(['angular', 'angular_ui_router', 'app/states/project/details/projectstage
             ProjectService.goToDefault();
             deferred.resolve(void 0);
           }
-          ProjectService.specifyProject({
+          ProjectService.fetchProject({
             id: $stateParams.id,
             shortLink: $stateParams.shortLink
           }).then(function(result) {

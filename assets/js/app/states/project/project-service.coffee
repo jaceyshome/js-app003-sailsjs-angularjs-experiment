@@ -25,7 +25,7 @@ define [
     service.goToDefault = ()->
       $state.go '/'
 
-    service.listProjects = ()->
+    service.fetchProjects = ()->
       deferred = $q.defer()
       if _projects
         deferred.resolve _projects
@@ -52,7 +52,7 @@ define [
           deferred.resolve null
       deferred.promise
 
-    service.specifyProject = (project)->
+    service.fetchProject = (project)->
       deferred = $q.defer()
       $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
       .then (result) ->

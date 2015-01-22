@@ -5,15 +5,16 @@ define(['angular'], function(angular) {
     var service;
     service = {};
     service.updatePos = function(item, items) {
-      var index, _items;
+      var index;
       index = items.indexOf(item);
-      _items = angular.copy(items);
-      if ((index + 1) === items.length) {
-        item.pos = _items[index - 1].pos + Constants.POS_STEP;
-      } else if (index === 0) {
-        item.pos = _items[index + 1].pos - Constants.POS_STEP;
+      if (index === 0 && items.length === 1) {
+        item.pos = Constants.POS_INITIATION_VALUE;
+      } else if (index === 0 && items.length > 1) {
+        item.pos = items[index + 1].pos - Constants.POS_STEP;
+      } else if ((index + 1) === items.length) {
+        item.pos = items[index - 1].pos + Constants.POS_STEP;
       } else {
-        item.pos = _items[index - 1].pos + (_items[index + 1].pos - _items[index - 1].pos) / 2;
+        item.pos = items[index - 1].pos + (items[index + 1].pos - items[index - 1].pos) / 2;
       }
       return item;
     };

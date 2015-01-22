@@ -15,7 +15,7 @@ define(['angular', 'angular_ui_router'], function() {
         UsersData: function($q, UserService) {
           var deferred;
           deferred = $q.defer();
-          UserService.listUsers().then(function(result) {
+          UserService.fetchUsers().then(function(result) {
             return deferred.resolve(result);
           })["catch"](function() {
             UserService.goToDefault();

@@ -19,7 +19,7 @@ define [
       }
 
       init = ->
-        ProjectService.listProjects().then((results)->
+        ProjectService.fetchProjects().then((results)->
           $scope.projects = results
         )
 
