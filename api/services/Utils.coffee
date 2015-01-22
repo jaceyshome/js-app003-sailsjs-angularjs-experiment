@@ -7,10 +7,10 @@ module.exports = (()->
   service.generateShortLink = (length)->
     new Promise (resolve, reject)->
       length = length || 24
-      result = service.randomValueBase64(length)
+      result = service.generateBase64(length)
       resolve(result)
 
-  service.randomValueBase64 = (length)->
+  service.generateBase64 = (length)->
     Crypto.randomBytes(Math.ceil(length * 3 / 4))
     .toString('base64')   # convert to base64 format
     .slice(0, length)     # return required number of characters
