@@ -73,8 +73,7 @@ define [
     service.destroyStage = (stage)->
       deferred = $q.defer()
       CSRF.get().then (data)->
-        stage._csrf = data._csrf
-        $http.post("#{config.baseUrl}/stage/destroy", stage)
+        $http.delete("#{config.baseUrl}/stage/destroy/#{stage.id}/?_csrf=#{encodeURIComponent(data._csrf)}")
         .then (result) ->
           handleDestroyedStageAfter(stage.id)
           return deferred.resolve result.data

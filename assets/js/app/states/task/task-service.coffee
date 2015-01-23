@@ -76,8 +76,7 @@ define [
     service.destroyTask = (task)->
       deferred = $q.defer()
       CSRF.get().then (data)->
-        task._csrf = data._csrf
-        $http.delete("#{config.baseUrl}/task/destroy/#{task.id}")
+        $http.delete("#{config.baseUrl}/task/destroy/#{task.id}/?_csrf=#{encodeURIComponent(data._csrf)}")
         .then (result) ->
           handleDestroyedTaskAfter(task.id)
           return deferred.resolve result.data

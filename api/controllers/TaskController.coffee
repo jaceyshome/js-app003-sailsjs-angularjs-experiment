@@ -45,8 +45,6 @@ module.exports = (->
   ctrl.delete = (req, res, next) ->
     Task.destroy {
       id: req.param("id")
-      idProject: req.param("idProject")
-      idStage: req.param("idStage")
     }, (err) ->
       return next(err) if err
       Task.publishDestroy req.param("id"), req.socket

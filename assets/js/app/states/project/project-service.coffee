@@ -78,11 +78,7 @@ define [
     service.destroyProject = (project)->
       deferred = $q.defer()
       CSRF.get().then (data)->
-        deletingProject =
-          id: project.id
-          shortLink: project.shortLink
-          _csrf: data._csrf
-        $http.post("#{config.baseUrl}/project/destroy", deletingProject)
+        $http.delete("#{config.baseUrl}/project/destroy/#{project.id}/s/#{project.shortLink}/?_csrf=#{encodeURIComponent(data._csrf)}")
         .then (result) ->
           return deferred.resolve result.data
         .catch (err)->

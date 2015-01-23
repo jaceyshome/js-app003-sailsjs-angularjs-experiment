@@ -42,7 +42,6 @@ module.exports = (->
   ctrl.destroy = (req, res, next) ->
     DestroyService.destroyStage {
       id: req.param("id")
-      idProject: req.param("idProject")
     }, (err, result) ->
       return next(err) if err
       Stage.publishDestroy req.param("id"), req.socket
