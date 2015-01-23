@@ -30,6 +30,9 @@ module.exports = (()->
     stages:
       collection: 'stage'
       via: 'idProject'
+    tasks:
+      collection: 'task'
+      via: 'idProject'
 
 
   model.beforeCreate = (data, next) ->

@@ -19,10 +19,10 @@ module.exports = (->
   ctrl.specify = (req, res, next) ->
     return res.send(400, { message: 'Bad Request.'}) unless req.param("shortLink")
     return res.send(400, { message: 'Bad Request.'}) unless req.param("id")
-    data =
+    restriction =
       id: req.param("id")
       shortLink: req.param("shortLink")
-    ProjectService.specifyProject data, (err, result)->
+    ProjectService.specifyProject restriction, (err, result)->
       return next(err) if err
       res.json result
 
