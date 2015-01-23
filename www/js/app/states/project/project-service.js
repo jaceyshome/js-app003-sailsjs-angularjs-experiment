@@ -2,7 +2,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
   var appModule;
   appModule = angular.module('app.states.project.service', []);
   return appModule.factory("ProjectService", function($http, $q, CSRF, $rootScope, MessageService, $state, $sailsSocket) {
-    var compareByPos, formatProjectStagesTasks, handleCreatedProjectAfter, handleErrorMsg, handleGetProjectDetailAfter, handleSortProjectStages, handleSortStageTasks, handleUpdatedProjectAfter, service, _projects;
+    var compareByPos, formatProjectStagesTasks, handleCreatedProjectAfter, handleErrorMsg, handleGetProjectDetailAfter, handleSortProjectStages, handleSortStageTasks, handleTaskPos, handleUpdatedProjectAfter, service, updateTask, _projects;
     _projects = null;
     $sailsSocket.subscribe('project', function(res) {
       console.log("project msg", res);
@@ -20,7 +20,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
     service.goToDefault = function() {
       return $state.go('/');
     };
-    service.listProjects = function() {
+    service.fetchProjects = function() {
       var deferred;
       deferred = $q.defer();
       if (_projects) {
@@ -51,7 +51,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       });
       return deferred.promise;
     };
-    service.specifyProject = function(project) {
+    service.fetchProject = function(project) {
       var deferred;
       deferred = $q.defer();
       $http.get("" + config.baseUrl + "/project/specify/" + project.id + "/s/" + project.shortLink).then(function(result) {
@@ -186,12 +186,94 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
               for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
                 _task = _ref1[_k];
                 if (_task.id === task.id && _task.idStage === task.idStage && _task.idProject === task.idProject) {
-                  return handleSortStageTasks(proj);
+                  return handleSortStageTasks(stage);
                 }
               }
               stage.tasks.push(task);
               return handleSortStageTasks(stage);
             }
+          }
+        }
+      }
+    };
+    service.handleUpdatedTaskAfter = function(task) {
+      return handleTaskPos(updateTask(task));
+    };
+    service.handleDestroyedTaskAfter = function(taskId) {
+      var proj, stage, task, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
+      if (!taskId) {
+        return;
+      }
+      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
+        proj = _projects[_i];
+        if (!proj.tasks) {
+          continue;
+        }
+        _ref = proj.tasks;
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          task = _ref[_j];
+          if ((task != null ? task.id : void 0) === taskId) {
+            proj.tasks.splice(proj.tasks.indexOf(task), 1);
+          }
+        }
+        if (!proj.stages) {
+          continue;
+        }
+        _ref1 = proj.stages;
+        for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+          stage = _ref1[_k];
+          if (!stage.tasks) {
+            continue;
+          }
+          _ref2 = stage.tasks;
+          for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
+            task = _ref2[_l];
+            if ((task != null ? task.id : void 0) === taskId) {
+              stage.tasks.splice(stage.tasks.indexOf(task), 1);
+            }
+          }
+        }
+      }
+    };
+    updateTask = function(task) {
+      var proj, _i, _j, _len, _len1, _ref, _task;
+      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
+        proj = _projects[_i];
+        if (!proj.tasks) {
+          continue;
+        }
+        _ref = proj.tasks;
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          _task = _ref[_j];
+          if (_task.id === task.id) {
+            angular.extend(_task, task);
+            return _task;
+          }
+        }
+      }
+    };
+    handleTaskPos = function(task) {
+      var proj, stage, taskIndex, _i, _j, _len, _len1, _ref;
+      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
+        proj = _projects[_i];
+        if (!proj.stages) {
+          continue;
+        }
+        _ref = proj.stages;
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          stage = _ref[_j];
+          if (!proj.stages) {
+            stage.tasks = [];
+          }
+          taskIndex = stage.tasks.indexOf(task);
+          if (task.idStage === stage.id && taskIndex >= 0) {
+            handleSortStageTasks(stage);
+          } else if (task.idStage === stage.id && taskIndex < 0) {
+            stage.tasks.push(task);
+            handleSortStageTasks(stage);
+          } else if (task.idStage !== stage.id && taskIndex >= 0) {
+            stage.tasks.splice(task, 1);
+            handleSortStageTasks(stage);
           }
         }
       }

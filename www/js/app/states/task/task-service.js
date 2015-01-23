@@ -22,7 +22,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
     service.goToDefault = function() {
       return $state.go('/');
     };
-    service.listStages = function() {
+    service.fetchTasks = function() {
       var deferred;
       deferred = $q.defer();
       $http.get("" + config.baseUrl + "/task/all").then(function(result) {
@@ -47,7 +47,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       });
       return deferred.promise;
     };
-    service.specifyTask = function(task) {
+    service.fetchTask = function(task) {
       var deferred;
       deferred = $q.defer();
       $http.get("" + config.baseUrl + "/task/specify/" + task.id + "/sg/" + task.idStage + "/p/" + task.idProject).then(function(result) {
@@ -59,12 +59,17 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       return deferred.promise;
     };
     service.updateTask = function(task) {
-      var deferred;
+      var deferred, _task;
+      if (!task.id) {
+        return;
+      }
       deferred = $q.defer();
+      _task = JSON.parse(JSON.stringify(task));
+      delete _task.id;
       return CSRF.get().then(function(data) {
-        task._csrf = data._csrf;
-        $http.put("" + config.baseUrl + "/task/update", task).then(function(result) {
-          handleUpdatedTaskAfter(result.data);
+        _task._csrf = data._csrf;
+        $http.put("" + config.baseUrl + "/task/update/" + task.id, _task).then(function(result) {
+          angular.extend(task, result);
           return deferred.resolve(result.data);
         })["catch"](function(err) {
           handleErrorMsg(err);
@@ -78,7 +83,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       deferred = $q.defer();
       CSRF.get().then(function(data) {
         task._csrf = data._csrf;
-        return $http.post("" + config.baseUrl + "/task/destroy", task).then(function(result) {
+        return $http["delete"]("" + config.baseUrl + "/task/destroy/" + task.id).then(function(result) {
           handleDestroyedTaskAfter(task.id);
           return deferred.resolve(result.data);
         })["catch"](function(err) {
@@ -91,8 +96,12 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
     handleCreatedTaskAfter = function(task) {
       return ProjectService.handleCreatedTaskAfter(task);
     };
-    handleUpdatedTaskAfter = function(task) {};
-    handleDestroyedTaskAfter = function(taskId) {};
+    handleUpdatedTaskAfter = function(task) {
+      return ProjectService.handleUpdatedTaskAfter(task);
+    };
+    handleDestroyedTaskAfter = function(taskId) {
+      return ProjectService.handleDestroyedTaskAfter(taskId);
+    };
     handleGetTaskDetailAfter = function(project) {};
     handleErrorMsg = function(err) {
       return MessageService.handleServerError(err);

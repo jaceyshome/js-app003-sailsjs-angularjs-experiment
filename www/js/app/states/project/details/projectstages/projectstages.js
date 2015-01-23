@@ -9,46 +9,52 @@ define(['angular'], function() {
       },
       templateUrl: "app/states/project/details/projectstages/projectstages",
       link: function($scope, $element, $attrs) {
-        var init, reset, resetEditingStage, resetEditingTask;
+        var init, reset, resetEditingStage, resetNewTask;
         $scope.editingStage = null;
-        $scope.editingTask = {
+        $scope.newTask = {
           name: ""
         };
         $scope.options = {
           accept: function(sourceNode, destNodes, destIndex) {
-            var data, destType;
-            data = sourceNode.$modelValue;
-            destType = destNodes.$element.attr("type");
-            return true;
+            return destNodes.$element.attr("type") === 'stage';
           },
           dropped: function(event) {
-            var dest, destNodeType, source, stage;
+            var dest, source, stage;
             source = event.source;
             dest = event.dest;
-            destNodeType = event.dest.nodesScope.$element.attr('type');
-            console.log("destNode type", destNodeType);
             if (source.index !== dest.index) {
               stage = source.nodeScope.$modelValue;
+              AppService.updatePos(stage, dest.nodesScope.$modelValue);
+              StageService.updateStage(stage);
             }
           },
-          beforeDrop: function(event) {}
+          beforeDrop: function(event) {
+            if (event.dest.nodesScope.$element.attr("type") !== 'stage') {
+              event.source.nodeScope.$$apply = false;
+            }
+          }
         };
         init = function() {
-          return void 0;
+          if (!$scope.settings) {
+            $scope.settings = {};
+          }
+          return $scope.settings.editingKey = null;
         };
         reset = function() {
+          $scope.settings.editingKey = null;
           resetEditingStage();
-          return resetEditingTask();
+          return resetNewTask();
         };
         resetEditingStage = function() {
           return $scope.editingStage = null;
         };
-        resetEditingTask = function() {
-          return $scope.editingTask = {
+        resetNewTask = function() {
+          return $scope.newTask = {
             name: ""
           };
         };
         $scope.editStage = function(stage) {
+          reset();
           return $scope.editingStage = angular.copy(stage);
         };
         $scope.removeStage = function(stage) {
@@ -56,28 +62,28 @@ define(['angular'], function() {
         };
         $scope.saveEditingStage = function(stage) {
           var _ref;
+          if (!$scope.editingStage.name) {
+            return;
+          }
           if (((_ref = $scope.editingStage) != null ? _ref.id : void 0) !== (stage != null ? stage.id : void 0)) {
             return;
           }
           return StageService.updateStage($scope.editingStage).then(resetEditingStage);
         };
         $scope.resetEditingStage = resetEditingStage;
-        $scope.showEditingTaskToStage = function(stage) {
-          if (typeof $scope.settings.resetParent === 'function') {
-            $scope.settings.resetParent();
-          }
+        $scope.showNewTaskFieldToStage = function(stage) {
           reset();
-          return $scope.settings.editKey = 'newTask_' + stage.id;
+          return $scope.settings.editingKey = "" + stage.id + "_task";
         };
         $scope.addTaskToStage = function(stage) {
           var data, _ref;
-          if (!(((_ref = $scope.editingTask.name) != null ? _ref.length : void 0) > 0)) {
+          if (!(((_ref = $scope.newTask.name) != null ? _ref.length : void 0) > 0)) {
             return;
           }
-          data = angular.copy($scope.editingTask);
+          data = angular.copy($scope.newTask);
           data.idStage = stage.id;
           data.idProject = stage.idProject;
-          return TaskService.createTask(data).then(resetEditingTask);
+          return TaskService.createTask(data).then(resetNewTask);
         };
         return init();
       }

@@ -21,7 +21,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
     service.setUser = function(user) {
       return _user = user;
     };
-    service.listUsers = function() {
+    service.fetchUsers = function() {
       var deferred;
       deferred = $q.defer();
       if (_users) {
@@ -57,7 +57,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       });
       return deferred.promise;
     };
-    service.specifyUser = function(user) {
+    service.fetchUser = function(user) {
       var deferred;
       deferred = $q.defer();
       if (angular.equals(user, _user)) {

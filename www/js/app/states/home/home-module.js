@@ -10,7 +10,7 @@ define(['angular', 'angular_ui_router'], function() {
         Projects: function($q, ProjectService) {
           var deferred;
           deferred = $q.defer();
-          ProjectService.listProjects().then(function(result) {
+          ProjectService.fetchProjects().then(function(result) {
             return deferred.resolve(result);
           })["catch"](function() {
             return deferred.resolve(null);

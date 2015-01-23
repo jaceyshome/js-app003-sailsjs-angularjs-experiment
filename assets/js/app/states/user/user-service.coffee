@@ -33,7 +33,7 @@ define [
     service.setUser = (user)->
       _user = user
 
-    service.listUsers = ()->
+    service.fetchUsers = ()->
       deferred = $q.defer()
       if _users
         deferred.resolve _users
@@ -63,7 +63,7 @@ define [
           deferred.resolve null
       deferred.promise
 
-    service.specifyUser = (user)->
+    service.fetchUser = (user)->
       deferred = $q.defer()
       deferred.resolve user if angular.equals user, _user
       $http.get("#{config.baseUrl}/user/specify/#{user.shortLink}")

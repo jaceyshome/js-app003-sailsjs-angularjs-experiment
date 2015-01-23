@@ -3,7 +3,7 @@ extend = require("extend")
 module.exports = (->
   service = {}
 
-  service.getStagePos = (data, cb)->
+  service.setStagePos = (data, cb)->
     if data.pos
       retrun cb(null, data.pos)
     else
@@ -17,7 +17,7 @@ module.exports = (->
           data.pos = (results[results.length-1].pos + sails.config.constants.POS_INITIATION_VALUE)
         return cb(null, data.pos)
 
-  service.getTaskPos = (data, cb)->
+  service.setTaskPos = (data, cb)->
     if data.pos
       retrun cb(null, data.pos)
     else
