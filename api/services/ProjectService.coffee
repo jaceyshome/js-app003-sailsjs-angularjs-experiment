@@ -1,35 +1,20 @@
 Promise = require("bluebird")
 extend = require("extend")
+_ = require('lodash')
+
 module.exports = (->
   service = {}
 
   #------------------ api functions ---------------
-  service.specifyProject = (project,cb)->
-    Promise.props({
-      project: getProjectAsync(project)
-      stages: getProjectStagesAsync(project)
-      tasks: getProjectTasksAsync(project)
-    }).then((result)->
-      data = result.project
-      data.stages = result.stages if result.stages
-      data.tasks = result.tasks if result.tasks
-      handleResult null, data, cb
+  service.specifyProject = (restriction,cb)->
+    Project.findOne(restriction)
+    .populate('stages').sort({pos:1})
+    .populate('tasks').sort({pos:1})
+    .then((project)->
+      handleResult null, project, cb
     ).catch((err)->
-      handleResult err, null, cb
+      if err then  handleResult err, null, cb
     )
-
-  #------------------ private functions -----------
-  getProjectAsync = (project)->
-    Project.findOne({
-      id: project.id
-      shortLink: project.shortLink
-    })
-
-  getProjectStagesAsync = (project)->
-    Stage.find({idProject:project.id}).sort({pos:1})
-
-  getProjectTasksAsync = (project)->
-    Task.find({idProject:project.id}).sort({pos:1})
 
   handleResult = (err, result,cb)->
     return cb(err,result) if typeof cb is 'function'

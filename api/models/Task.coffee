@@ -4,18 +4,17 @@ module.exports = (()->
   model = {}
   model.attributes =
     idTaskType:
-      type: "string"
+      model: "taskType"
     idStage:
-      type: "string"
+      model: "stage"
       required: true
     idProject:
-      type: "string"
+      model: "project"
       required: true
     idState:
-      type: "string"
+      model: "state"
     name:
       type: "string"
-      required: true
     description:
       type: "string"
     startDate:
