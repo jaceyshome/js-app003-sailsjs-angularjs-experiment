@@ -34,9 +34,10 @@
     "sails.io.js": "~0.10.3",
     "angularSails": "https://github.com/balderdashy/angularSails.git",
     "requirejs": "~2.1.14",
-    "almond": "0.2.9"
+    "almond": "0.2.9",
+    "lodash": "~3.0.0"
   },
-  "devDependencies":{
+  "devDependencies": {
     "protractor-mock": "https://github.com/unDemian/protractor-mock.git",
     "angular-mocks": "1.2.18"
   }
