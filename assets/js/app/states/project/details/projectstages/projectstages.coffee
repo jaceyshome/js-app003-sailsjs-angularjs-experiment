@@ -43,9 +43,10 @@ define [
         $scope.newTask = {name: ""}
 
       #------------------------ Scope functions -------------------------
-      $scope.editStage = (stage)->
+      $scope.editStage = (stage, key)->
         reset()
-        $scope.editingStage = angular.copy(stage)
+        $scope.editingStage = {id: stage.id }
+        $scope.editingStage[key] = stage[key]
 
       $scope.removeStage = (stage)->
         StageService.destroyStage(stage)

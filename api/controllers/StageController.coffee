@@ -31,9 +31,11 @@ module.exports = (->
       res.json results
 
   ctrl.update = (req, res, next) ->
+    data = req.params.all()
+    delete data.tasks
+    delete data._csrf
     Stage.update {
       id: req.param("id")
-      idProject: req.param("idProject")
     }, req.params.all(), (err, results)->
       return next(err) if err
       Stage.publishUpdate(req.param("id"), results[0], req.socket) #TODO stage publish update

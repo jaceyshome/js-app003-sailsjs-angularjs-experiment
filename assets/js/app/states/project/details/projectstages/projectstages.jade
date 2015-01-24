@@ -7,7 +7,7 @@
         a.btn.btn-danger.btn-xs.pull-right(data-click-btn, data-ng-click="removeStage(stage)", data-nodrag)
           i.glyphicon.glyphicon-remove
           i.sr-only Remove stage
-        a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editStage(stage)", data-nodrag)
+        a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editStage(stage, 'name')", data-nodrag)
           i.glyphicon.glyphicon-pencil
           i.sr-only Edit stage
         div &nbsp;{{stage.name}}

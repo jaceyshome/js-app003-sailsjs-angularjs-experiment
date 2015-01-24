@@ -38,6 +38,11 @@ module.exports = (->
       return next() if result.id.toString() is data.idProject.toString()
       return next(err: [ "Bad Request." ])
 
+  model.beforeUpdate = (data, next)->
+    delete data.tasks
+    delete data._csrf
+    next()
+
   model
 
 )()

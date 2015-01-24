@@ -58,10 +58,13 @@ define [
       deferred.promise
 
     service.updateStage = (stage)->
+      return unless stage.id
       deferred = $q.defer()
+      _stage = JSON.parse(JSON.stringify(stage))
+      delete _stage.id
       CSRF.get().then (data)->
-        stage._csrf = data._csrf
-        $http.put("#{config.baseUrl}/stage/update", stage)
+        _stage._csrf = data._csrf
+        $http.put("#{config.baseUrl}/stage/update/#{stage.id}", _stage)
         .then (result) ->
           handleUpdatedStageAfter(result.data)
           deferred.resolve result.data

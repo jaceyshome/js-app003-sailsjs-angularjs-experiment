@@ -24,7 +24,6 @@ define [
               id: task.id
               pos: task.pos
             data.idStage = idStage unless idStage is task.idStage
-            console.log "data!!!!!!!!!", data
             TaskService.updateTask(data)
             return
         beforeDrop: (event) ->
