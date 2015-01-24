@@ -33,7 +33,7 @@ define [
       else
         $http.get("#{config.baseUrl}/project/all")
         .then (result) ->
-          _projects = _.indexBy(result.data,'id')
+          _projects = result.data
           deferred.resolve _projects
         .catch (err)->
           deferred.resolve null
@@ -57,7 +57,9 @@ define [
       deferred = $q.defer()
       $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
       .then (result) ->
-        deferred.resolve handleFetchProjectAfter(result.data)
+        _project = handleFetchProjectAfter(result.data)
+        console.log "_project",_project
+        deferred.resolve _project
       .catch (err)->
         handleErrorMsg(err)
         deferred.resolve null
@@ -183,15 +185,16 @@ define [
 
     handleCreatedProjectAfter = (project)->
       return unless _projects
-      for proj in _projects
-        if proj.id is project.id and proj.shortLink is project.shortLink
-          return
-      _projects.push project
+      if project.id is _projects[project.id].id and project.shortLink is _projects[project.id].shortLink
+        return
+      _projects[project.id] = project
+      return
 
     handleFetchProjectAfter = (project)->
       return unless _projects
-      if _projects[project.id]
-        angular.extend(_projects[project.id], formatProject(project))
+      if _projects
+        _project = _.where(_projects, {'id':project.id})
+        return angular.extend(_project, formatProject(project))
 
     formatProject = (project)->
       return unless project?.stages
@@ -199,12 +202,10 @@ define [
       if project.stages
         stages = _.map project.stages, (_stage)->
           if project.tasks
-            _stage.tasks = _.indexBy(_.where(project.tasks,{'idStage': _stage.id}), 'id')
+            _stage.tasks = _.where(project.tasks,{'idStage': _stage.id})
             return _stage
-      _project = {
-        stages: _.indexBy(stages,'id')
-        tasks: _.indexBy(project.tasks,'id')
-      }
+      _project =
+        stages: stages
       return angular.extend project, _project
 
     handleSortProjectStages = (project)->
