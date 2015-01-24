@@ -2,7 +2,8 @@ define [
   'angular'
   'angular_resource'
   'app/config'
-], (angular,angular_resource, config) ->
+  'lodash'
+], (angular,angular_resource, config, _) ->
   appModule = angular.module 'app.states.project.service', []
   appModule.factory "ProjectService", ($http, $q, CSRF, $rootScope, MessageService, $state,$sailsSocket) ->
     #------------------------------------------------------------------ private variables
@@ -32,8 +33,8 @@ define [
       else
         $http.get("#{config.baseUrl}/project/all")
         .then (result) ->
-          _projects = result.data
-          deferred.resolve result.data
+          _projects = _.indexBy(result.data,'id')
+          deferred.resolve _projects
         .catch (err)->
           deferred.resolve null
           handleErrorMsg(err)
@@ -56,7 +57,7 @@ define [
       deferred = $q.defer()
       $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
       .then (result) ->
-        deferred.resolve handleGetProjectDetailAfter(result.data)
+        deferred.resolve handleFetchProjectAfter(result.data)
       .catch (err)->
         handleErrorMsg(err)
         deferred.resolve null
@@ -187,22 +188,24 @@ define [
           return
       _projects.push project
 
-    handleGetProjectDetailAfter = (project)->
+    handleFetchProjectAfter = (project)->
       return unless _projects
-      formatProjectStagesTasks(project)
-      for proj in _projects
-        if proj.id is project.id and proj.shortLink is project.shortLink
-          angular.extend proj, project
-          return proj
+      if _projects[project.id]
+        angular.extend(_projects[project.id], formatProject(project))
 
-    formatProjectStagesTasks = (project)->
+    formatProject = (project)->
       return unless project?.stages
       return unless project?.tasks
-      for stage in project.stages
-        stage.tasks = []
-        for task in project.tasks
-          if task.idStage.toString() is stage.id.toString()
-            stage.tasks.push task
+      if project.stages
+        stages = _.map project.stages, (_stage)->
+          if project.tasks
+            _stage.tasks = _.indexBy(_.where(project.tasks,{'idStage': _stage.id}), 'id')
+            return _stage
+      _project = {
+        stages: _.indexBy(stages,'id')
+        tasks: _.indexBy(project.tasks,'id')
+      }
+      return angular.extend project, _project
 
     handleSortProjectStages = (project)->
       project.stages.sort(compareByPos)
