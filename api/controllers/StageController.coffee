@@ -39,7 +39,7 @@ module.exports = (->
     }, req.params.all(), (err, results)->
       return next(err) if err
       Stage.publishUpdate(req.param("id"), results[0], req.socket) #TODO stage publish update
-      res.send 200
+      res.send results[0]
 
   ctrl.destroy = (req, res, next) ->
     DestroyService.destroyStage {

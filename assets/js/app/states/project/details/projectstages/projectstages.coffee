@@ -20,7 +20,10 @@ define [
           if source.index isnt dest.index
             stage = source.nodeScope.$modelValue
             AppService.updatePos(stage,dest.nodesScope.$modelValue)
-            StageService.updateStage(stage)
+            data =
+              id: stage.id
+              pos: stage.pos
+            StageService.updateStage(data)
             return
         beforeDrop: (event) ->
           unless event.dest.nodesScope.$element.attr("type") is 'stage'

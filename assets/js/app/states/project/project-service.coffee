@@ -58,7 +58,6 @@ define [
       $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
       .then (result) ->
         _project = handleFetchProjectAfter(result.data)
-        console.log "_project",_project
         deferred.resolve _project
       .catch (err)->
         handleErrorMsg(err)
@@ -89,35 +88,36 @@ define [
           return deferred.resolve null
       deferred.promise
 
+    #------------------------------- Stage handlers --------------------------
     service.handleUpdatedStageAfter = (stage)->
-      for proj in _projects
-        if proj.id is stage.idProject
-          return handleSortProjectStages(proj) unless proj.stages and proj.stages.length > 0
-          for _stage in proj.stages
-            if _stage.id is stage.id and _stage.idProject is stage.idProject
-              angular.extend _stage, stage
-              return handleSortProjectStages(proj)
+      _project = _.find(_projects, {'id':stage.idProject})
+      unless _project.stages and _project.stages.length > 0
+        return sortProjectStages(_project)
+      _stage = _.find(_project.stages, {'id':stage.id})
+      if _stage.id is stage.id and _stage.idProject is stage.idProject
+        angular.extend _stage, stage
+        return sortProjectStages(_project)
 
     service.handleCreatedStageAfter = (stage)->
-      for proj in _projects
-        if proj.id.toString() is stage.idProject.toString()
-          proj.stages = [] unless proj.stages
-          for _sg in proj.stages
-            if _sg.id is stage.id and _sg.idProject is stage.idProject
-              return handleSortProjectStages(proj)
-          proj.stages.push stage
-          return handleSortProjectStages(proj)
+      _project = _.find(_projects, {'id':stage.idProject})
+      _project.stages = [] unless _project.stages
+      _stage = _.find(_project.stages, {'id':stage.id})
+      unless _stage and _stage.id is stage.id
+        _project.stages.push stage
+      return sortProjectStages(_project)
 
     service.handleDestroyedStageAfter = (stageId)->
       return unless stageId
-      for proj in _projects
-        for task in proj.tasks
-          if task?.idStage is stageId
-            proj.tasks.splice(proj.tasks.indexOf(task),1)
-        for stage in proj.stages
-          if stage?.id is stageId
-            proj.stages.splice(proj.stages.indexOf(stage),1)
+      for _project in _projects
+        if _project.tasks
+          for task in _project.tasks
+            if task?.idStage is stageId
+              _project.tasks.splice(_project.tasks.indexOf(task),1)
+        stage = _.find(_project.stages, {'id':stageId})
+        if stage?.id is stageId
+          _project.stages.splice(_project.stages.indexOf(stage),1)
 
+    #------------------------------- Task handlers --------------------------
     service.handleCreatedTaskAfter = (task)->
       for proj in _projects
         if proj.id.toString() is task.idProject.toString()
@@ -193,7 +193,7 @@ define [
     handleFetchProjectAfter = (project)->
       return unless _projects
       if _projects
-        _project = _.where(_projects, {'id':project.id})
+        _project = _.find(_projects, {'id':project.id})
         return angular.extend(_project, formatProject(project))
 
     formatProject = (project)->
@@ -206,10 +206,12 @@ define [
             return _stage
       _project =
         stages: stages
+      sortProjectStages(_project)
       return angular.extend project, _project
 
-    handleSortProjectStages = (project)->
-      project.stages.sort(compareByPos)
+    sortProjectStages = (project)->
+      project.stages = _.sortBy(project.stages, 'pos')
+      return project
 
     handleSortStageTasks = (stage)->
       stage.tasks.sort(compareByPos)

@@ -66,7 +66,6 @@ define [
         _stage._csrf = data._csrf
         $http.put("#{config.baseUrl}/stage/update/#{stage.id}", _stage)
         .then (result) ->
-          handleUpdatedStageAfter(result.data)
           deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
@@ -78,7 +77,6 @@ define [
       CSRF.get().then (data)->
         $http.delete("#{config.baseUrl}/stage/destroy/#{stage.id}/?_csrf=#{encodeURIComponent(data._csrf)}")
         .then (result) ->
-          handleDestroyedStageAfter(stage.id)
           return deferred.resolve result.data
         .catch (err)->
           handleErrorMsg(err)
