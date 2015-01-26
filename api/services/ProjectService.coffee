@@ -8,8 +8,8 @@ module.exports = (->
   #------------------ api functions ---------------
   service.specifyProject = (restriction,cb)->
     Project.findOne(restriction)
-    .populate('stages').sort({pos:1})
-    .populate('tasks').sort({pos:1})
+    .populate('stages')
+    .populate('tasks')
     .then((project)->
       handleResult null, project, cb
     ).catch((err)->

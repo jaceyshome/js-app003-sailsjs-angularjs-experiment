@@ -95,7 +95,7 @@ define [
         return sortProjectStages(_project)
       _stage = _.find(_project.stages, {'id':stage.id})
       if _stage.id is stage.id and _stage.idProject is stage.idProject
-        angular.extend _stage, stage
+        _.merge _stage, stage
         return sortProjectStages(_project)
 
     service.handleCreatedStageAfter = (stage)->
@@ -154,7 +154,7 @@ define [
               stage.tasks.splice(stage.tasks.indexOf(task),1)
       return
 
-    #-------------------------------------------------------------------handlers
+    #------------------------------- handlers --------------------------
     getTaskStatus = (task)->
       result =
         currentTask: null
@@ -193,7 +193,7 @@ define [
       return
 
     handleCurrentTask = (currentTask, task)->
-      angular.extend currentTask, task
+      _.merge currentTask, task
       _project = _.find _projects, {'id':currentTask.idProject}
       return unless _project
       _stage = _.find _project.stages, {'id':currentTask.idStage}
@@ -205,7 +205,7 @@ define [
       return unless _projects
       for proj in _projects
         if proj.id is project.id and proj.shortLink is project.shortLink
-          angular.extend proj, project
+          _.merge proj, project
           return
 
     handleCreatedProjectAfter = (project)->
@@ -219,7 +219,7 @@ define [
       return unless _projects
       if _projects
         _project = _.find(_projects, {'id':project.id})
-        return angular.extend(_project, formatProject(project))
+        return _.merge(_project, formatProject(project))
 
     formatProject = (project)->
       return unless project?.stages
@@ -228,11 +228,12 @@ define [
         stages = _.map project.stages, (_stage)->
           if project.tasks
             _stage.tasks = _.where(project.tasks,{'idStage': _stage.id})
+            sortStageTasks(_stage)
             return _stage
       _project =
         stages: stages
       sortProjectStages(_project)
-      return angular.extend project, _project
+      return _.merge project, _project
 
     sortProjectStages = (project)->
       return unless project.stages

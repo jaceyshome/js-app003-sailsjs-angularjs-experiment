@@ -2,7 +2,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
   var appModule;
   appModule = angular.module('app.states.project.service', []);
   return appModule.factory("ProjectService", function($http, $q, CSRF, $rootScope, MessageService, $state, $sailsSocket) {
-    var compareByPos, formatProject, handleCreatedProjectAfter, handleErrorMsg, handleFetchProjectAfter, handleTaskPos, handleUpdatedProjectAfter, service, sortProjectStages, sortStageTasks, updateTask, _projects;
+    var compareByPos, formatProject, getTaskStatus, handleCreatedProjectAfter, handleCurrentTask, handleErrorMsg, handleFetchProjectAfter, handleNewTask, handleOldTask, handleUpdatedProjectAfter, service, sortProjectStages, sortStageTasks, _projects;
     _projects = null;
     $sailsSocket.subscribe('project', function(res) {
       console.log("project msg", res);
@@ -178,7 +178,17 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       return sortStageTasks(_stage);
     };
     service.handleUpdatedTaskAfter = function(task) {
-      return handleTaskPos(updateTask(task));
+      var result;
+      result = getTaskStatus(task);
+      if (result.oldTask) {
+        handleOldTask(result.oldTask);
+      }
+      if (result.newTask) {
+        handleNewTask(result.newTask);
+      }
+      if (result.currentTask) {
+        handleCurrentTask(result.currentTask, task);
+      }
     };
     service.handleDestroyedTaskAfter = function(taskId) {
       var proj, stage, task, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
@@ -216,48 +226,89 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
         }
       }
     };
-    updateTask = function(task) {
-      var _project, _task;
-      _project = _.find(_projects, {
-        'id': task.idProject
-      });
-      if (!_project.tasks) {
+    getTaskStatus = function(task) {
+      var result, _i, _len, _project, _task;
+      result = {
+        currentTask: null,
+        oldTask: null,
+        newTask: null
+      };
+      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
+        _project = _projects[_i];
         _task = _.find(_project.tasks, {
-          'id': task.id
+          id: task.id
         });
         if (_task) {
-          angular.extend(_task, task);
-          return _task;
+          if (_task.idProject !== task.idProject || _task.idStage !== task.idStage) {
+            result.oldTask = _task;
+            result.newTask = task;
+          } else {
+            result.currentTask = _task;
+          }
         }
-      } else {
-        return task;
       }
+      return result;
     };
-    handleTaskPos = function(task) {
-      var proj, stage, taskIndex, _i, _j, _len, _len1, _ref;
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (!proj.stages) {
-          continue;
-        }
-        _ref = proj.stages;
-        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-          stage = _ref[_j];
-          if (!proj.stages) {
-            stage.tasks = [];
-          }
-          taskIndex = stage.tasks.indexOf(task);
-          if (task.idStage === stage.id && taskIndex >= 0) {
-            sortStageTasks(stage);
-          } else if (task.idStage === stage.id && taskIndex < 0) {
-            stage.tasks.push(task);
-            sortStageTasks(stage);
-          } else if (task.idStage !== stage.id && taskIndex >= 0) {
-            stage.tasks.splice(task, 1);
-            sortStageTasks(stage);
-          }
-        }
+    handleNewTask = function(newTask) {
+      var _project, _stage, _task;
+      _project = _.find(_projects, {
+        'id': newTask.idProject
+      });
+      if (!_project) {
+        return;
       }
+      _stage = _.find(_project.stages, {
+        'id': newTask.idStage
+      });
+      if (!_stage) {
+        return;
+      }
+      if (!_stage.tasks) {
+        _stage.tasks = [];
+      }
+      _task = _.find(_stage.tasks, {
+        'id': newTask.id
+      });
+      if (!_task) {
+        _stage.tasks.push(newTask);
+      }
+      sortStageTasks(_stage);
+    };
+    handleOldTask = function(oldTask) {
+      var _project, _stage;
+      _project = _.find(_projects, {
+        'id': oldTask.idProject
+      });
+      if (!_project) {
+        return;
+      }
+      _stage = _.find(_project.stages, {
+        'id': oldTask.idStage
+      });
+      if (!_stage) {
+        return;
+      }
+      _.remove(_stage.tasks, function(task) {
+        return task.id === oldTask.id;
+      });
+      sortStageTasks(_stage);
+    };
+    handleCurrentTask = function(currentTask, task) {
+      var _project, _stage;
+      angular.extend(currentTask, task);
+      _project = _.find(_projects, {
+        'id': currentTask.idProject
+      });
+      if (!_project) {
+        return;
+      }
+      _stage = _.find(_project.stages, {
+        'id': currentTask.idStage
+      });
+      if (!_stage) {
+        return;
+      }
+      sortStageTasks(_stage);
     };
     handleUpdatedProjectAfter = function(project) {
       var proj, _i, _len;
@@ -318,10 +369,16 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       return angular.extend(project, _project);
     };
     sortProjectStages = function(project) {
-      project.stages = _.sortBy(project.stages, 'pos');
+      if (!project.stages) {
+        return;
+      }
+      project.stages.sort(compareByPos);
       return project;
     };
     sortStageTasks = function(stage) {
+      if (!stage.tasks) {
+        return;
+      }
       return stage.tasks.sort(compareByPos);
     };
     compareByPos = function(a, b) {

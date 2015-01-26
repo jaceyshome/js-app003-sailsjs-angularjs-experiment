@@ -32,8 +32,6 @@ module.exports = (->
 
   ctrl.update = (req, res, next) ->
     data = req.params.all()
-    delete data.tasks
-    delete data._csrf
     Stage.update {
       id: req.param("id")
     }, req.params.all(), (err, results)->

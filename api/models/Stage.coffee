@@ -39,8 +39,12 @@ module.exports = (->
       return next(err: [ "Bad Request." ])
 
   model.beforeUpdate = (data, next)->
+    #TODO validation
     delete data.tasks
     delete data._csrf
+    next()
+
+  model.afterUpdate = (data, next)->
     next()
 
   model
