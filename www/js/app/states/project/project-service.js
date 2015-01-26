@@ -1,8 +1,8 @@
-define(['angular', 'angular_resource', 'app/config'], function(angular, angular_resource, config) {
+define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular, angular_resource, config, _) {
   var appModule;
   appModule = angular.module('app.states.project.service', []);
   return appModule.factory("ProjectService", function($http, $q, CSRF, $rootScope, MessageService, $state, $sailsSocket) {
-    var compareByPos, formatProjectStagesTasks, handleCreatedProjectAfter, handleErrorMsg, handleGetProjectDetailAfter, handleSortProjectStages, handleSortStageTasks, handleTaskPos, handleUpdatedProjectAfter, service, updateTask, _projects;
+    var compareByPos, formatProject, handleCreatedProjectAfter, handleErrorMsg, handleFetchProjectAfter, handleTaskPos, handleUpdatedProjectAfter, service, sortProjectStages, sortStageTasks, updateTask, _projects;
     _projects = null;
     $sailsSocket.subscribe('project', function(res) {
       console.log("project msg", res);
@@ -28,7 +28,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       } else {
         $http.get("" + config.baseUrl + "/project/all").then(function(result) {
           _projects = result.data;
-          return deferred.resolve(result.data);
+          return deferred.resolve(_projects);
         })["catch"](function(err) {
           deferred.resolve(null);
           return handleErrorMsg(err);
@@ -55,7 +55,9 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       var deferred;
       deferred = $q.defer();
       $http.get("" + config.baseUrl + "/project/specify/" + project.id + "/s/" + project.shortLink).then(function(result) {
-        return deferred.resolve(handleGetProjectDetailAfter(result.data));
+        var _project;
+        _project = handleFetchProjectAfter(result.data);
+        return deferred.resolve(_project);
       })["catch"](function(err) {
         handleErrorMsg(err);
         return deferred.resolve(null);
@@ -81,13 +83,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       var deferred;
       deferred = $q.defer();
       CSRF.get().then(function(data) {
-        var deletingProject;
-        deletingProject = {
-          id: project.id,
-          shortLink: project.shortLink,
-          _csrf: data._csrf
-        };
-        return $http.post("" + config.baseUrl + "/project/destroy", deletingProject).then(function(result) {
+        return $http["delete"]("" + config.baseUrl + "/project/destroy/" + project.id + "/s/" + project.shortLink + "/?_csrf=" + (encodeURIComponent(data._csrf))).then(function(result) {
           return deferred.resolve(result.data);
         })["catch"](function(err) {
           handleErrorMsg(err);
@@ -97,104 +93,89 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       return deferred.promise;
     };
     service.handleUpdatedStageAfter = function(stage) {
-      var proj, _i, _j, _len, _len1, _ref, _stage;
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (proj.id === stage.idProject) {
-          if (!(proj.stages && proj.stages.length > 0)) {
-            return handleSortProjectStages(proj);
-          }
-          _ref = proj.stages;
-          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-            _stage = _ref[_j];
-            if (_stage.id === stage.id && _stage.idProject === stage.idProject) {
-              angular.extend(_stage, stage);
-              return handleSortProjectStages(proj);
-            }
-          }
-        }
+      var _project, _stage;
+      _project = _.find(_projects, {
+        'id': stage.idProject
+      });
+      if (!(_project.stages && _project.stages.length > 0)) {
+        return sortProjectStages(_project);
+      }
+      _stage = _.find(_project.stages, {
+        'id': stage.id
+      });
+      if (_stage.id === stage.id && _stage.idProject === stage.idProject) {
+        angular.extend(_stage, stage);
+        return sortProjectStages(_project);
       }
     };
     service.handleCreatedStageAfter = function(stage) {
-      var proj, _i, _j, _len, _len1, _ref, _sg;
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (proj.id.toString() === stage.idProject.toString()) {
-          if (!proj.stages) {
-            proj.stages = [];
-          }
-          _ref = proj.stages;
-          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-            _sg = _ref[_j];
-            if (_sg.id === stage.id && _sg.idProject === stage.idProject) {
-              return handleSortProjectStages(proj);
-            }
-          }
-          proj.stages.push(stage);
-          return handleSortProjectStages(proj);
-        }
+      var _project, _stage;
+      _project = _.find(_projects, {
+        'id': stage.idProject
+      });
+      if (!_project.stages) {
+        _project.stages = [];
       }
+      _stage = _.find(_project.stages, {
+        'id': stage.id
+      });
+      if (!(_stage && _stage.id === stage.id)) {
+        _project.stages.push(stage);
+      }
+      return sortProjectStages(_project);
     };
     service.handleDestroyedStageAfter = function(stageId) {
-      var proj, stage, task, _i, _j, _len, _len1, _ref, _results;
+      var stage, task, _i, _j, _len, _len1, _project, _ref, _results;
       if (!stageId) {
         return;
       }
       _results = [];
       for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        _ref = proj.tasks;
-        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-          task = _ref[_j];
-          if ((task != null ? task.idStage : void 0) === stageId) {
-            proj.tasks.splice(proj.tasks.indexOf(task), 1);
-          }
-        }
-        _results.push((function() {
-          var _k, _len2, _ref1, _results1;
-          _ref1 = proj.stages;
-          _results1 = [];
-          for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
-            stage = _ref1[_k];
-            if ((stage != null ? stage.id : void 0) === stageId) {
-              _results1.push(proj.stages.splice(proj.stages.indexOf(stage), 1));
-            } else {
-              _results1.push(void 0);
+        _project = _projects[_i];
+        if (_project.tasks) {
+          _ref = _project.tasks;
+          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+            task = _ref[_j];
+            if ((task != null ? task.idStage : void 0) === stageId) {
+              _project.tasks.splice(_project.tasks.indexOf(task), 1);
             }
           }
-          return _results1;
-        })());
+        }
+        stage = _.find(_project.stages, {
+          'id': stageId
+        });
+        if ((stage != null ? stage.id : void 0) === stageId) {
+          _results.push(_project.stages.splice(_project.stages.indexOf(stage), 1));
+        } else {
+          _results.push(void 0);
+        }
       }
       return _results;
     };
     service.handleCreatedTaskAfter = function(task) {
-      var proj, stage, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _task;
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (proj.id.toString() === task.idProject.toString()) {
-          if (!proj.stages) {
-            return;
-          }
-          _ref = proj.stages;
-          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-            stage = _ref[_j];
-            if (stage.id === task.idStage && proj.id === stage.idProject) {
-              if (!stage.tasks) {
-                stage.tasks = [];
-              }
-              _ref1 = stage.tasks;
-              for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
-                _task = _ref1[_k];
-                if (_task.id === task.id && _task.idStage === task.idStage && _task.idProject === task.idProject) {
-                  return handleSortStageTasks(stage);
-                }
-              }
-              stage.tasks.push(task);
-              return handleSortStageTasks(stage);
-            }
-          }
-        }
+      var _project, _stage, _task;
+      if (!task.idProject) {
+        return;
       }
+      if (!task.idStage) {
+        return;
+      }
+      _project = _.find(_projects, {
+        'id': task.idProject
+      });
+      _stage = _.find(_project.stages, {
+        'id': task.idStage
+      });
+      if (!_stage.tasks) {
+        _stage.tasks = [];
+      }
+      _task = _.find(_stage.tasks, {
+        'id': task.id
+      });
+      if (!_task) {
+        _stage.tasks.push(task);
+      }
+      return sortStageTasks(_stage);
     };
     service.handleUpdatedTaskAfter = function(task) {
       return handleTaskPos(updateTask(task));
@@ -236,20 +217,20 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       }
     };
     updateTask = function(task) {
-      var proj, _i, _j, _len, _len1, _ref, _task;
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (!proj.tasks) {
-          continue;
+      var _project, _task;
+      _project = _.find(_projects, {
+        'id': task.idProject
+      });
+      if (!_project.tasks) {
+        _task = _.find(_project.tasks, {
+          'id': task.id
+        });
+        if (_task) {
+          angular.extend(_task, task);
+          return _task;
         }
-        _ref = proj.tasks;
-        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-          _task = _ref[_j];
-          if (_task.id === task.id) {
-            angular.extend(_task, task);
-            return _task;
-          }
-        }
+      } else {
+        return task;
       }
     };
     handleTaskPos = function(task) {
@@ -267,13 +248,13 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
           }
           taskIndex = stage.tasks.indexOf(task);
           if (task.idStage === stage.id && taskIndex >= 0) {
-            handleSortStageTasks(stage);
+            sortStageTasks(stage);
           } else if (task.idStage === stage.id && taskIndex < 0) {
             stage.tasks.push(task);
-            handleSortStageTasks(stage);
+            sortStageTasks(stage);
           } else if (task.idStage !== stage.id && taskIndex >= 0) {
             stage.tasks.splice(task, 1);
-            handleSortStageTasks(stage);
+            sortStageTasks(stage);
           }
         }
       }
@@ -292,66 +273,55 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       }
     };
     handleCreatedProjectAfter = function(project) {
-      var proj, _i, _len;
       if (!_projects) {
         return;
       }
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (proj.id === project.id && proj.shortLink === project.shortLink) {
-          return;
-        }
+      if (project.id === _projects[project.id].id && project.shortLink === _projects[project.id].shortLink) {
+        return;
       }
-      return _projects.push(project);
+      _projects[project.id] = project;
     };
-    handleGetProjectDetailAfter = function(project) {
-      var proj, _i, _len;
+    handleFetchProjectAfter = function(project) {
+      var _project;
       if (!_projects) {
         return;
       }
-      formatProjectStagesTasks(project);
-      for (_i = 0, _len = _projects.length; _i < _len; _i++) {
-        proj = _projects[_i];
-        if (proj.id === project.id && proj.shortLink === project.shortLink) {
-          angular.extend(proj, project);
-          return proj;
-        }
+      if (_projects) {
+        _project = _.find(_projects, {
+          'id': project.id
+        });
+        return angular.extend(_project, formatProject(project));
       }
     };
-    formatProjectStagesTasks = function(project) {
-      var stage, task, _i, _len, _ref, _results;
+    formatProject = function(project) {
+      var stages, _project;
       if (!(project != null ? project.stages : void 0)) {
         return;
       }
       if (!(project != null ? project.tasks : void 0)) {
         return;
       }
-      _ref = project.stages;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        stage = _ref[_i];
-        stage.tasks = [];
-        _results.push((function() {
-          var _j, _len1, _ref1, _results1;
-          _ref1 = project.tasks;
-          _results1 = [];
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            task = _ref1[_j];
-            if (task.idStage.toString() === stage.id.toString()) {
-              _results1.push(stage.tasks.push(task));
-            } else {
-              _results1.push(void 0);
-            }
+      if (project.stages) {
+        stages = _.map(project.stages, function(_stage) {
+          if (project.tasks) {
+            _stage.tasks = _.where(project.tasks, {
+              'idStage': _stage.id
+            });
+            return _stage;
           }
-          return _results1;
-        })());
+        });
       }
-      return _results;
+      _project = {
+        stages: stages
+      };
+      sortProjectStages(_project);
+      return angular.extend(project, _project);
     };
-    handleSortProjectStages = function(project) {
-      return project.stages.sort(compareByPos);
+    sortProjectStages = function(project) {
+      project.stages = _.sortBy(project.stages, 'pos');
+      return project;
     };
-    handleSortStageTasks = function(stage) {
+    sortStageTasks = function(stage) {
       return stage.tasks.sort(compareByPos);
     };
     compareByPos = function(a, b) {

@@ -19,13 +19,17 @@ define(['angular'], function() {
             return destNodes.$element.attr("type") === 'stage';
           },
           dropped: function(event) {
-            var dest, source, stage;
+            var data, dest, source, stage;
             source = event.source;
             dest = event.dest;
             if (source.index !== dest.index) {
               stage = source.nodeScope.$modelValue;
               AppService.updatePos(stage, dest.nodesScope.$modelValue);
-              StageService.updateStage(stage);
+              data = {
+                id: stage.id,
+                pos: stage.pos
+              };
+              StageService.updateStage(data);
             }
           },
           beforeDrop: function(event) {
@@ -53,9 +57,12 @@ define(['angular'], function() {
             name: ""
           };
         };
-        $scope.editStage = function(stage) {
+        $scope.editStage = function(stage, key) {
           reset();
-          return $scope.editingStage = angular.copy(stage);
+          $scope.editingStage = {
+            id: stage.id
+          };
+          return $scope.editingStage[key] = stage[key];
         };
         $scope.removeStage = function(stage) {
           return StageService.destroyStage(stage);

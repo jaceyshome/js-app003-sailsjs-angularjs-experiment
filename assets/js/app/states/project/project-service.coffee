@@ -119,22 +119,25 @@ define [
 
     #------------------------------- Task handlers --------------------------
     service.handleCreatedTaskAfter = (task)->
-      for proj in _projects
-        if proj.id.toString() is task.idProject.toString()
-          return unless proj.stages
-          for stage in proj.stages
-            if stage.id is task.idStage and proj.id is stage.idProject
-              stage.tasks = [] unless stage.tasks
-              for _task in stage.tasks
-                if( _task.id is task.id and
-                    _task.idStage is task.idStage and
-                    _task.idProject is task.idProject)
-                  return handleSortStageTasks(stage)
-              stage.tasks.push task
-              return handleSortStageTasks(stage)
+      return unless task.idProject
+      return unless task.idStage
+      _project = _.find(_projects,{'id':task.idProject})
+      _stage = _.find(_project.stages,{'id':task.idStage})
+      _stage.tasks = [] unless _stage.tasks
+      _task = _.find(_stage.tasks,{'id':task.id})
+      unless _task
+        _stage.tasks.push task
+      return sortStageTasks(_stage)
 
     service.handleUpdatedTaskAfter = (task)->
-      handleTaskPos(updateTask(task))
+      result = getTaskStatus(task)
+      if result.oldTask
+        handleOldTask(result.oldTask)
+      if result.newTask
+        handleNewTask(result.newTask)
+      if result.currentTask
+        handleCurrentTask(result.currentTask, task)
+      return
 
     service.handleDestroyedTaskAfter = (taskId)->
       return unless taskId
@@ -152,28 +155,50 @@ define [
       return
 
     #-------------------------------------------------------------------handlers
-    updateTask = (task)->
-      for proj in _projects
-        continue unless proj.tasks
-        for _task in proj.tasks
-          if _task.id is task.id
-            angular.extend _task, task
-            return _task
+    getTaskStatus = (task)->
+      result =
+        currentTask: null
+        oldTask: null
+        newTask: null
+      for _project in _projects
+        _task = _.find(_project.tasks, {id:task.id})
+        if _task
+          if _task.idProject isnt task.idProject or _task.idStage isnt task.idStage
+            result.oldTask = _task
+            result.newTask = task
+          else
+            result.currentTask = _task
+      return result
 
-    handleTaskPos = (task)->
-      for proj in _projects
-        continue unless proj.stages
-        for stage in proj.stages
-          stage.tasks = [] unless proj.stages
-          taskIndex = stage.tasks.indexOf(task)
-          if task.idStage is stage.id and taskIndex >= 0
-            handleSortStageTasks(stage)
-          else if task.idStage is stage.id and taskIndex < 0
-            stage.tasks.push task
-            handleSortStageTasks(stage)
-          else if task.idStage isnt stage.id and taskIndex >= 0
-            stage.tasks.splice task,1
-            handleSortStageTasks(stage)
+    handleNewTask = (newTask)->
+      _project = _.find _projects, {'id':newTask.idProject}
+      return unless _project
+      _stage = _.find _project.stages, {'id':newTask.idStage}
+      return unless _stage
+      _stage.tasks = [] unless _stage.tasks
+      _task = _.find _stage.tasks, {'id': newTask.id}
+      _stage.tasks.push newTask unless _task
+      sortStageTasks(_stage)
+      return
+
+    handleOldTask = (oldTask)->
+      _project = _.find _projects, {'id':oldTask.idProject}
+      return unless _project
+      _stage = _.find _project.stages, {'id':oldTask.idStage}
+      return unless _stage
+      _.remove(_stage.tasks, (task)->
+        return task.id is oldTask.id
+      )
+      sortStageTasks(_stage)
+      return
+
+    handleCurrentTask = (currentTask, task)->
+      angular.extend currentTask, task
+      _project = _.find _projects, {'id':currentTask.idProject}
+      return unless _project
+      _stage = _.find _project.stages, {'id':currentTask.idStage}
+      return unless _stage
+      sortStageTasks(_stage)
       return
 
     handleUpdatedProjectAfter = (project)->
@@ -210,10 +235,12 @@ define [
       return angular.extend project, _project
 
     sortProjectStages = (project)->
-      project.stages = _.sortBy(project.stages, 'pos')
+      return unless project.stages
+      project.stages.sort(compareByPos)
       return project
 
-    handleSortStageTasks = (stage)->
+    sortStageTasks = (stage)->
+      return unless stage.tasks
       stage.tasks.sort(compareByPos)
 
     compareByPos = (a, b)->

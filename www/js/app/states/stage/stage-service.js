@@ -59,12 +59,16 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       return deferred.promise;
     };
     service.updateStage = function(stage) {
-      var deferred;
+      var deferred, _stage;
+      if (!stage.id) {
+        return;
+      }
       deferred = $q.defer();
+      _stage = JSON.parse(JSON.stringify(stage));
+      delete _stage.id;
       return CSRF.get().then(function(data) {
-        stage._csrf = data._csrf;
-        $http.put("" + config.baseUrl + "/stage/update", stage).then(function(result) {
-          handleUpdatedStageAfter(result.data);
+        _stage._csrf = data._csrf;
+        $http.put("" + config.baseUrl + "/stage/update/" + stage.id, _stage).then(function(result) {
           return deferred.resolve(result.data);
         })["catch"](function(err) {
           handleErrorMsg(err);
@@ -77,9 +81,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       var deferred;
       deferred = $q.defer();
       CSRF.get().then(function(data) {
-        stage._csrf = data._csrf;
-        return $http.post("" + config.baseUrl + "/stage/destroy", stage).then(function(result) {
-          handleDestroyedStageAfter(stage.id);
+        return $http["delete"]("" + config.baseUrl + "/stage/destroy/" + stage.id + "/?_csrf=" + (encodeURIComponent(data._csrf))).then(function(result) {
           return deferred.resolve(result.data);
         })["catch"](function(err) {
           handleErrorMsg(err);

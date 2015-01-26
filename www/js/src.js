@@ -3,6 +3,7 @@ requirejs.config({
   urlArgs: "bust=" + (new Date()).getTime(),
   paths: {
     jquery: "lib/jquery/dist/jquery",
+    lodash: "lib/lodash/lodash.min",
     bootstrap: "lib/bootstrap/dist/js/bootstrap",
     angular: "lib/angular/angular",
     angular_resource: "lib/angular-resource/angular-resource",
@@ -25,7 +26,7 @@ requirejs.config({
       exports: 'angular_sails'
     },
     angular: {
-      deps: ['jquery'],
+      deps: ['jquery', 'lodash'],
       exports: 'angular'
     },
     angular_ui_tree: {

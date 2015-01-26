@@ -82,8 +82,7 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       var deferred;
       deferred = $q.defer();
       CSRF.get().then(function(data) {
-        task._csrf = data._csrf;
-        return $http["delete"]("" + config.baseUrl + "/task/destroy/" + task.id).then(function(result) {
+        return $http["delete"]("" + config.baseUrl + "/task/destroy/" + task.id + "/?_csrf=" + (encodeURIComponent(data._csrf))).then(function(result) {
           handleDestroyedTaskAfter(task.id);
           return deferred.resolve(result.data);
         })["catch"](function(err) {
