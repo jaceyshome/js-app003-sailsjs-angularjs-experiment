@@ -46,19 +46,13 @@ module.exports.routes = {
   //------------------- views --------------------------
   '/user':{view:'app'},
   '/user/details/:shortLink': 'UserController.details',
-  //-------------------- actions------------------------
-  '/user/edit/:shortLink':'UserController.edit',
-  '/user/specify/:shortLink': 'UserController.specify',
 
   //------------------ Project -------------------------
-  //-------------------- views -------------------------
   '/project':{view:'app'},
   '/project/details/:id/s/:shortLink': 'ProjectController.details',
-  //--------------------- actions -----------------------
   '/project/specify/:id/s/:shortLink': 'ProjectController.specify',
 
   //-------------------- Stage ---------------------------
-  //---------------------- actions -----------------------
   '/stage/specify/:id/p/:idProject':'StageController.specify',
   '/stage/all/p/:idProject/s/:shortLink':'StageController.all',
 
