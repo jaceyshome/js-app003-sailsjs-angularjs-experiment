@@ -137,6 +137,9 @@ define [
         handleNewTask(result.newTask)
       if result.currentTask
         handleCurrentTask(result.currentTask, task)
+      _project = _.find _projects, {'id': task.idProject}
+      _stage = _.find _project.stages, {'id':task.idStage}
+      sortStageTasks(_stage)
       return
 
     service.handleDestroyedTaskAfter = (taskId)->
@@ -178,7 +181,6 @@ define [
       _stage.tasks = [] unless _stage.tasks
       _task = _.find _stage.tasks, {'id': newTask.id}
       _stage.tasks.push newTask unless _task
-      sortStageTasks(_stage)
       return
 
     handleOldTask = (oldTask)->
@@ -189,7 +191,6 @@ define [
       _.remove(_stage.tasks, (task)->
         return task.id is oldTask.id
       )
-      sortStageTasks(_stage)
       return
 
     handleCurrentTask = (currentTask, task)->
@@ -198,8 +199,6 @@ define [
       return unless _project
       _stage = _.find _project.stages, {'id':currentTask.idStage}
       return unless _stage
-      sortStageTasks(_stage)
-      return
 
     handleUpdatedProjectAfter = (project)->
       return unless _projects
