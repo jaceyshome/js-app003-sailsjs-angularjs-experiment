@@ -165,12 +165,15 @@ define [
         newTask: null
       for _project in _projects
         _task = _.find(_project.tasks, {id:task.id})
+        console.log "_task", _task
         if _task
           if _task.idProject isnt task.idProject or _task.idStage isnt task.idStage
             result.oldTask = _task
             result.newTask = task
+            console.log "result old and new", result
           else
             result.currentTask = _task
+            console.log "current task", result
       return result
 
     handleNewTask = (newTask)->
@@ -181,6 +184,7 @@ define [
       _stage.tasks = [] unless _stage.tasks
       _task = _.find _stage.tasks, {'id': newTask.id}
       _stage.tasks.push newTask unless _task
+#      console.log "newTask", newTask
       return
 
     handleOldTask = (oldTask)->
@@ -188,6 +192,7 @@ define [
       return unless _project
       _stage = _.find _project.stages, {'id':oldTask.idStage}
       return unless _stage
+#      console.log "remove oldTask", oldTask
       _.remove(_stage.tasks, (task)->
         return task.id is oldTask.id
       )
@@ -195,10 +200,8 @@ define [
 
     handleCurrentTask = (currentTask, task)->
       _.merge currentTask, task
-      _project = _.find _projects, {'id':currentTask.idProject}
-      return unless _project
-      _stage = _.find _project.stages, {'id':currentTask.idStage}
-      return unless _stage
+#      console.log "current task", currentTask
+      return
 
     handleUpdatedProjectAfter = (project)->
       return unless _projects

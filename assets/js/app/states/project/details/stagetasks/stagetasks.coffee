@@ -24,6 +24,7 @@ define [
               id: task.id
               pos: task.pos
             data.idStage = idStage unless idStage is task.idStage
+            task.idStage = idStage
             TaskService.updateTask(data)
             return
         beforeDrop: (event) ->
