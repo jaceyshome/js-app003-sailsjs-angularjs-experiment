@@ -104,7 +104,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
         'id': stage.id
       });
       if (_stage.id === stage.id && _stage.idProject === stage.idProject) {
-        angular.extend(_stage, stage);
+        _.merge(_stage, stage);
         return sortProjectStages(_project);
       }
     };
@@ -178,7 +178,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       return sortStageTasks(_stage);
     };
     service.handleUpdatedTaskAfter = function(task) {
-      var result;
+      var result, _project, _stage;
       result = getTaskStatus(task);
       if (result.oldTask) {
         handleOldTask(result.oldTask);
@@ -189,6 +189,13 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       if (result.currentTask) {
         handleCurrentTask(result.currentTask, task);
       }
+      _project = _.find(_projects, {
+        'id': task.idProject
+      });
+      _stage = _.find(_project.stages, {
+        'id': task.idStage
+      });
+      sortStageTasks(_stage);
     };
     service.handleDestroyedTaskAfter = function(taskId) {
       var proj, stage, task, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
@@ -272,7 +279,6 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       if (!_task) {
         _stage.tasks.push(newTask);
       }
-      sortStageTasks(_stage);
     };
     handleOldTask = function(oldTask) {
       var _project, _stage;
@@ -291,11 +297,10 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       _.remove(_stage.tasks, function(task) {
         return task.id === oldTask.id;
       });
-      sortStageTasks(_stage);
     };
     handleCurrentTask = function(currentTask, task) {
       var _project, _stage;
-      angular.extend(currentTask, task);
+      _.merge(currentTask, task);
       _project = _.find(_projects, {
         'id': currentTask.idProject
       });
@@ -306,9 +311,8 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
         'id': currentTask.idStage
       });
       if (!_stage) {
-        return;
+
       }
-      sortStageTasks(_stage);
     };
     handleUpdatedProjectAfter = function(project) {
       var proj, _i, _len;
@@ -318,7 +322,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       for (_i = 0, _len = _projects.length; _i < _len; _i++) {
         proj = _projects[_i];
         if (proj.id === project.id && proj.shortLink === project.shortLink) {
-          angular.extend(proj, project);
+          _.merge(proj, project);
           return;
         }
       }
@@ -341,7 +345,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
         _project = _.find(_projects, {
           'id': project.id
         });
-        return angular.extend(_project, formatProject(project));
+        return _.merge(_project, formatProject(project));
       }
     };
     formatProject = function(project) {
@@ -358,6 +362,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
             _stage.tasks = _.where(project.tasks, {
               'idStage': _stage.id
             });
+            sortStageTasks(_stage);
             return _stage;
           }
         });
@@ -366,7 +371,7 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
         stages: stages
       };
       sortProjectStages(_project);
-      return angular.extend(project, _project);
+      return _.merge(project, _project);
     };
     sortProjectStages = function(project) {
       if (!project.stages) {

@@ -3,7 +3,7 @@ requirejs.config({
   urlArgs: "bust=" + (new Date()).getTime(),
   paths: {
     jquery: "lib/jquery/dist/jquery",
-    lodash: "lib/lodash/lodash.min",
+    lodash: "lib/lodash/dist/lodash.min",
     bootstrap: "lib/bootstrap/dist/js/bootstrap",
     angular: "lib/angular/angular",
     angular_resource: "lib/angular-resource/angular-resource",

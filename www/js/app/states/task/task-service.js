@@ -69,7 +69,6 @@ define(['angular', 'angular_resource', 'app/config'], function(angular, angular_
       return CSRF.get().then(function(data) {
         _task._csrf = data._csrf;
         $http.put("" + config.baseUrl + "/task/update/" + task.id, _task).then(function(result) {
-          angular.extend(task, result);
           return deferred.resolve(result.data);
         })["catch"](function(err) {
           handleErrorMsg(err);
