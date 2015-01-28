@@ -193,9 +193,10 @@ define [
       _stage = _.find _project.stages, {'id':oldTask.idStage}
       return unless _stage
 #      console.log "remove oldTask", oldTask
-      _.remove(_stage.tasks, (task)->
-        return task.id is oldTask.id
-      )
+      _stage.tasks.splice(_stage.tasks.indexOf(oldTask),1)
+#      _.remove(_stage.tasks, (task)->
+#        return task.id is oldTask.id
+#      )
       return
 
     handleCurrentTask = (currentTask, task)->
