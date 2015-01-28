@@ -165,9 +165,9 @@ define [
         newTask: null
       for _project in _projects
         _task = _.find(_project.tasks, {id:task.id})
-        console.log "_task", _task
         if _task
-          if _task.idProject isnt task.idProject or _task.idStage isnt task.idStage
+          console.log "_task", _task
+          if !angular.equals(_task.idProject, task.idProject) or !angular.equals(_task.idStage,task.idStage)
             result.oldTask = _task
             result.newTask = task
             console.log "result old and new", result

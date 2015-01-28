@@ -8,7 +8,7 @@
         a.btn.btn-primary.btn-xs.pull-jright(data-click-btn, data-ng-click="editTask(task, 'name')", data-nodrag)
           i.glyphicon.glyphicon-pencil
           i.sr-only Edit task
-        div &nbsp;{{task.name}}
+        div &nbsp;{{task.name}}:idStage:{{task.idStage}}
       div(data-ng-show="editingTask.id == task.id")
         div.input-group
           label.sr-only(for="editingTaskName") Task name

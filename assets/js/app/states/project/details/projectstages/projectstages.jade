@@ -10,7 +10,7 @@
         a.btn.btn-primary.btn-xs.pull-right(data-click-btn, data-ng-click="editStage(stage, 'name')", data-nodrag)
           i.glyphicon.glyphicon-pencil
           i.sr-only Edit stage
-        div &nbsp;{{stage.name}}
+        div &nbsp;{{stage.name}} id:{{stage.id}}
 
       div(data-ng-show="editingStage.id == stage.id")
         div.input-group
