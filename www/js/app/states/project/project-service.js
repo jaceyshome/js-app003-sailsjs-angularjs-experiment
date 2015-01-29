@@ -246,11 +246,14 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
           id: task.id
         });
         if (_task) {
-          if (_task.idProject !== task.idProject || _task.idStage !== task.idStage) {
+          console.log("_task", _task);
+          if (!angular.equals(_task.idProject, task.idProject) || !angular.equals(_task.idStage, task.idStage)) {
             result.oldTask = _task;
             result.newTask = task;
+            console.log("result old and new", result);
           } else {
             result.currentTask = _task;
+            console.log("current task", result);
           }
         }
       }
@@ -294,25 +297,10 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
       if (!_stage) {
         return;
       }
-      _.remove(_stage.tasks, function(task) {
-        return task.id === oldTask.id;
-      });
+      _stage.tasks.splice(_stage.tasks.indexOf(oldTask), 1);
     };
     handleCurrentTask = function(currentTask, task) {
-      var _project, _stage;
       _.merge(currentTask, task);
-      _project = _.find(_projects, {
-        'id': currentTask.idProject
-      });
-      if (!_project) {
-        return;
-      }
-      _stage = _.find(_project.stages, {
-        'id': currentTask.idStage
-      });
-      if (!_stage) {
-
-      }
     };
     handleUpdatedProjectAfter = function(project) {
       var proj, _i, _len;
