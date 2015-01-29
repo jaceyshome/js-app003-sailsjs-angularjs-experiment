@@ -1,11 +1,14 @@
 module.exports = function (grunt) {
   grunt.registerTask('syncAssets', [
-    'jst:dev',
+    'newer:jst:dev',
     'less:dev',
-    'jade:dev',
+    'newer:jade:dev',
     'ngtemplates',
     'modelattributes',
     'sync:dev',
-    'coffee:dev'
+    'newer:coffee:dev'
   ]);
+
+  grunt.loadNpmTasks('grunt-newer');
+
 };

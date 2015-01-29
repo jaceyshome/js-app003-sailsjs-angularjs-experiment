@@ -246,14 +246,19 @@ define(['angular', 'angular_resource', 'app/config', 'lodash'], function(angular
           id: task.id
         });
         if (_task) {
+          console.log("---------------------------");
           console.log("_task", _task);
+          console.log("!angular.equals(_task.idProject, task.idProject)", !angular.equals(_task.idProject, task.idProject));
+          console.log("!angular.equals(_task.idStage,task.idStage)", !angular.equals(_task.idStage, task.idStage));
           if (!angular.equals(_task.idProject, task.idProject) || !angular.equals(_task.idStage, task.idStage)) {
             result.oldTask = _task;
             result.newTask = task;
             console.log("result old and new", result);
+            return result;
           } else {
             result.currentTask = _task;
             console.log("current task", result);
+            return result;
           }
         }
       }
