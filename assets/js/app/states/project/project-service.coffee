@@ -181,6 +181,7 @@ define [
 
     service.handleUpdatedTaskAfter = (task)->
       result = getTaskStatus(task)
+      console.log "B------1"
       if result.oldTask
         handleOldTask(result.oldTask)
       if result.newTask
@@ -197,22 +198,26 @@ define [
         currentTask: null
         oldTask: null
         newTask: null
+      console.log "A------1"
       for _project in _projects
         _task = _.find(_project.tasks, {id:task.id})
         if _task
-          console.log "---------------------------"
-          console.log "_task", _task
-          console.log "!angular.equals(_task.idProject, task.idProject)", !angular.equals(_task.idProject, task.idProject)
-          console.log "!angular.equals(_task.idStage,task.idStage)", !angular.equals(_task.idStage,task.idStage)
+#          console.log "---------------------------"
+#          console.log "_task", _task
+#          console.log "!angular.equals(_task.idProject, task.idProject)", !angular.equals(_task.idProject, task.idProject)
+#          console.log "!angular.equals(_task.idStage,task.idStage)", !angular.equals(_task.idStage,task.idStage)
+          console.log "AAAAAAAA_task_idStage", _task.idStage
+          console.log "BBBBBBtask.idStage", task.idStage
           if !angular.equals(_task.idProject, task.idProject) or !angular.equals(_task.idStage,task.idStage)
             result.oldTask = _task
             result.newTask = task
-            console.log "result old and new", result
+#            console.log "result old and new", result
             return result
           else
             result.currentTask = _task
-            console.log "current task", result
+#            console.log "current task", result
             return result
+      console.log "A------2"
       return result
 
     handleNewTask = (newTask)->
@@ -222,8 +227,10 @@ define [
       return unless _stage
       _stage.tasks = [] unless _stage.tasks
       _task = _.find _stage.tasks, {'id': newTask.id}
+      console.log "new---------------1"
       _stage.tasks.push newTask unless _task
-#      console.log "newTask", newTask
+      console.log "new---------------2"
+      #      console.log "newTask", newTask
       return
 
     handleOldTask = (oldTask)->
@@ -232,15 +239,19 @@ define [
       _stage = _.find _project.stages, {'id':oldTask.idStage}
       return unless _stage
 #      console.log "remove oldTask", oldTask
+      console.log "old---------------1"
       _stage.tasks.splice(_stage.tasks.indexOf(oldTask),1)
-#      _.remove(_stage.tasks, (task)->
+      console.log "old---------------2"
+      #      _.remove(_stage.tasks, (task)->
 #        return task.id is oldTask.id
 #      )
       return
 
     handleCurrentTask = (currentTask, task)->
+      console.log "current task----------1"
       _.merge currentTask, task
-#      console.log "current task", currentTask
+      console.log "current task----------2"
+      #      console.log "current task", currentTask
       return
 
 
