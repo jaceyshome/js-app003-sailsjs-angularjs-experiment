@@ -121,6 +121,7 @@ define [
       _project =
         stages: stages
       sortProjectStages(_project)
+      delete project.tasks
       return _.merge project, _project
 
     #------------------------------- Stage handlers --------------------------
@@ -194,30 +195,22 @@ define [
       return
 
     getTaskStatus = (task)->
+      _task = null
       result =
         currentTask: null
         oldTask: null
         newTask: null
-      console.log "A------1"
       for _project in _projects
-        _task = _.find(_project.tasks, {id:task.id})
-        if _task
-#          console.log "---------------------------"
-#          console.log "_task", _task
-#          console.log "!angular.equals(_task.idProject, task.idProject)", !angular.equals(_task.idProject, task.idProject)
-#          console.log "!angular.equals(_task.idStage,task.idStage)", !angular.equals(_task.idStage,task.idStage)
-          console.log "AAAAAAAA_task_idStage", _task.idStage
-          console.log "BBBBBBtask.idStage", task.idStage
-          if !angular.equals(_task.idProject, task.idProject) or !angular.equals(_task.idStage,task.idStage)
-            result.oldTask = _task
-            result.newTask = task
-#            console.log "result old and new", result
-            return result
-          else
-            result.currentTask = _task
-#            console.log "current task", result
-            return result
-      console.log "A------2"
+        continue unless _project.stages and _project.stages.length > 0
+        break if _task
+        for _stage in _project.stages
+          _task = _.find(_stage.tasks, {id:task.id})
+          break if _task
+      if !angular.equals(_task.idProject, task.idProject) or !angular.equals(_task.idStage,task.idStage)
+        result.oldTask = _task
+        result.newTask = task
+      else
+        result.currentTask = _task
       return result
 
     handleNewTask = (newTask)->
