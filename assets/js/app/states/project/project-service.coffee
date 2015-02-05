@@ -207,7 +207,7 @@ define [
         for _stage in _project.stages
           _task = _.find(_stage.tasks, {id:task.id})
           break if _task
-      if !angular.equals(_task.idProject, task.idProject) or !angular.equals(_task.idStage,task.idStage)
+      if !angular.equals(task.idProject, _task.idProject) or !angular.equals(task.idStage,_task.idStage)
         result.oldTask = _task
         result.newTask = task
       else
