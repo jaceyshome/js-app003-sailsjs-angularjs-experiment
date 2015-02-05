@@ -239,14 +239,14 @@ define [
     #------------------------ General helpers ------------------------------------
     sortProjectStages = (project)->
       return unless project.stages
-      project.stages.sort(sortPosAsc)
+      project.stages.sort(comparePosAsc)
       return project
 
     sortStageTasks = (stage)->
       return unless stage.tasks
-      stage.tasks.sort(sortPosAsc)
+      stage.tasks.sort(comparePosAsc)
 
-    sortPosAsc = (a, b)->
+    comparePosAsc = (a, b)->
       if (a.pos < b.pos)
         return -1
       if (a.pos > b.pos)
