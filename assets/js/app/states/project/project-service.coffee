@@ -22,10 +22,10 @@ define [
 
     service = {}
 
-    #------------------------------------------------------------------- public functions
     service.goToDefault = ()->
       $state.go '/'
 
+    #---------------------------- Project services-------------------------------
     service.createProject = (project)->
       deferred = $q.defer()
       CSRF.get().then (data)->
@@ -50,6 +50,17 @@ define [
           return deferred.resolve null
       deferred.promise
 
+    service.fetchProject = (project)->
+      deferred = $q.defer()
+      $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
+      .then (result) ->
+        _project = handleFetchProjectAfter(result.data)
+        deferred.resolve _project
+      .catch (err)->
+        handleErrorMsg(err)
+        deferred.resolve null
+      deferred.promise
+
     service.fetchProjects = ()->
       deferred = $q.defer()
       if _projects
@@ -62,17 +73,6 @@ define [
         .catch (err)->
           deferred.resolve null
           handleErrorMsg(err)
-      deferred.promise
-
-    service.fetchProject = (project)->
-      deferred = $q.defer()
-      $http.get("#{config.baseUrl}/project/specify/#{project.id}/s/#{project.shortLink}")
-      .then (result) ->
-        _project = handleFetchProjectAfter(result.data)
-        deferred.resolve _project
-      .catch (err)->
-        handleErrorMsg(err)
-        deferred.resolve null
       deferred.promise
 
     service.updateProject = (project)->
@@ -88,20 +88,13 @@ define [
           deferred.resolve null
         deferred.promise
 
-    #-------------------------- project handlers -------------------
+    #------------------------------ Project handlers ---------------------------------
     handleCreatedProjectAfter = (project)->
       return unless _projects
       if project.id is _projects[project.id]?.id and project.shortLink is _projects[project.id]?.shortLink
         return
       _projects[project.id] = project
       return
-
-    handleUpdatedProjectAfter = (project)->
-      return unless _projects
-      for proj in _projects
-        if proj.id is project.id and proj.shortLink is project.shortLink
-          _.merge proj, project
-          return
 
     handleFetchProjectAfter = (project)->
       return unless _projects
@@ -124,7 +117,14 @@ define [
       delete project.tasks
       return _.merge project, _project
 
-    #------------------------------- Stage handlers --------------------------
+    handleUpdatedProjectAfter = (project)->
+      return unless _projects
+      for proj in _projects
+        if proj.id is project.id and proj.shortLink is project.shortLink
+          _.merge proj, project
+          return
+
+    #------------------------------- Stage services -------------------------------
     service.handleCreatedStageAfter = (stage)->
       _project = _.find(_projects, {'id':stage.idProject})
       _project.stages = [] unless _project.stages
@@ -153,7 +153,7 @@ define [
         _.merge _stage, stage
         return sortProjectStages(_project)
 
-    #------------------------------- Task handlers --------------------------
+    #------------------------------- Task services --------------------------
     service.handleCreatedTaskAfter = (task)->
       return unless task.idProject
       return unless task.idStage
@@ -181,8 +181,7 @@ define [
       return
 
     service.handleUpdatedTaskAfter = (task)->
-      result = getTaskStatus(task)
-      console.log "B------1"
+      result = compareUpdatedTaskWithProjectTask(task)
       if result.oldTask
         handleOldTask(result.oldTask)
       if result.newTask
@@ -194,7 +193,9 @@ define [
       sortStageTasks(_stage)
       return
 
-    getTaskStatus = (task)->
+    #------------------------------- Task services helpers --------------------------
+    compareUpdatedTaskWithProjectTask = (task)->
+      #Define updated task with current task
       _task = null
       result =
         currentTask: null
@@ -213,6 +214,10 @@ define [
         result.currentTask = _task
       return result
 
+    handleCurrentTask = (currentTask, task)->
+      _.merge currentTask, task
+      return
+
     handleNewTask = (newTask)->
       _project = _.find _projects, {'id':newTask.idProject}
       return unless _project
@@ -220,10 +225,7 @@ define [
       return unless _stage
       _stage.tasks = [] unless _stage.tasks
       _task = _.find _stage.tasks, {'id': newTask.id}
-      console.log "new---------------1"
       _stage.tasks.push newTask unless _task
-      console.log "new---------------2"
-      #      console.log "newTask", newTask
       return
 
     handleOldTask = (oldTask)->
@@ -231,34 +233,20 @@ define [
       return unless _project
       _stage = _.find _project.stages, {'id':oldTask.idStage}
       return unless _stage
-#      console.log "remove oldTask", oldTask
-      console.log "old---------------1"
       _stage.tasks.splice(_stage.tasks.indexOf(oldTask),1)
-      console.log "old---------------2"
-      #      _.remove(_stage.tasks, (task)->
-#        return task.id is oldTask.id
-#      )
       return
 
-    handleCurrentTask = (currentTask, task)->
-      console.log "current task----------1"
-      _.merge currentTask, task
-      console.log "current task----------2"
-      #      console.log "current task", currentTask
-      return
-
-
-    #------------------------ Generate handlers ------------------------------------
+    #------------------------ General helpers ------------------------------------
     sortProjectStages = (project)->
       return unless project.stages
-      project.stages.sort(compareByPos)
+      project.stages.sort(sortPosAsc)
       return project
 
     sortStageTasks = (stage)->
       return unless stage.tasks
-      stage.tasks.sort(compareByPos)
+      stage.tasks.sort(sortPosAsc)
 
-    compareByPos = (a, b)->
+    sortPosAsc = (a, b)->
       if (a.pos < b.pos)
         return -1
       if (a.pos > b.pos)
@@ -268,5 +256,5 @@ define [
     handleErrorMsg = (err)->
       MessageService.handleServerError(err)
 
-  #-----------------------------------------------------------------------return object
+  #--------------------------return object ------------------
     service
