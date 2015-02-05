@@ -195,18 +195,20 @@ define [
 
     #------------------------------- Task services helpers --------------------------
     compareUpdatedTaskWithProjectTask = (task)->
-      #Define updated task with current task
+      # Define updated task with current task
       _task = null
       result =
         currentTask: null
         oldTask: null
         newTask: null
+      # Find task
       for _project in _projects
-        continue unless _project.stages and _project.stages.length > 0
         break if _task
+        continue unless _project.stages and _project.stages.length > 0
         for _stage in _project.stages
           _task = _.find(_stage.tasks, {id:task.id})
           break if _task
+      # Compare tasks and set result
       if !angular.equals(task.idProject, _task.idProject) or !angular.equals(task.idStage,_task.idStage)
         result.oldTask = _task
         result.newTask = task
