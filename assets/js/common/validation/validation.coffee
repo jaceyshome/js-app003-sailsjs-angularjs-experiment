@@ -17,16 +17,16 @@ define [
       result = null
       for key of data.attributes
         if data.attributes.hasOwnProperty(key)
-          if (result = checkRequired(data,key)) then return result
-          if (result = checkType(data,key)) then return result
-          if (result = checkEmail(data,key)) then return result
-          if (result = checkPostalAddress(data,key)) then return result
-          if (result = checkPostCode(data,key)) then return result
-          if (result = checkIPAddress(data,key)) then return result
           if (result = checkCreditCard(data,key)) then return result
+          if (result = checkEmail(data,key)) then return result
+          if (result = checkIPAddress(data,key)) then return result
           if (result = checkMaxLength(data,key)) then return result
           if (result = checkMinLength(data,key)) then return result
           if (result = checkMatchingField(data,key)) then return result
+          if (result = checkPostalAddress(data,key)) then return result
+          if (result = checkPostCode(data,key)) then return result
+          if (result = checkRequired(data,key)) then return result
+          if (result = checkType(data,key)) then return result
       return result
 
     #----------------------------- private functions ------------------------------------
@@ -38,10 +38,6 @@ define [
         if(data.length != 3)
           return false
       validateYear(data[0]) and validateMonth(data[1]) and validateDate(data[0], data[1], data[2])
-
-    checkDateString = (date) ->
-      pattern = new RegExp("[^-/0123456789]")
-      unless date.match(pattern) then return true else return false
 
     validateYear = (year)->
       return false if year.length isnt 4
@@ -78,6 +74,10 @@ define [
           if(tempDay < 1 || tempDay > 28)
             return false
       return true
+
+    checkDateString = (date) ->
+      pattern = new RegExp("[^-/0123456789]")
+      unless date.match(pattern) then return true else return false
 
     checkMaxLength = (data, key)->
       return null unless data.attributes[key].maxLength
