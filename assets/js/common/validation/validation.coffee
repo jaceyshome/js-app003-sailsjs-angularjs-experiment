@@ -172,10 +172,10 @@ define [
 
     checkBoolean = (data, key)->
       return null unless data.attributes[key].type is 'boolean'
-      return null if typeof ConvertStringToBoolean(data.values[key]) is 'boolean'
+      return null if typeof convertStringToBoolean(data.values[key]) is 'boolean'
       return {key:key,msg:generateKeyWords(key)+' should be boolean true or false'}
 
-    ConvertStringToBoolean = (string) ->
+    convertStringToBoolean = (string) ->
       switch string.toLowerCase()
         when "true", "yes", "1"
           true
