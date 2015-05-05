@@ -1,8 +1,8 @@
 {
-  "name": "js-restructure",
+  "name": "js-sails-angular-experiment",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "a sails angular application",
   "keywords": [],
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
